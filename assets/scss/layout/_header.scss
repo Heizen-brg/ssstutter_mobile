@@ -1,0 +1,30 @@
+@import "../abstracts/mixins";
+
+.header {
+  @include shadow;
+  @include position(fixed, 0, null, null, 0);
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  z-index: 1000;
+  .nav {
+    @include grid(repeat(3, 1fr), 1fr, 10px);
+    height: 100%;
+    &__left {
+      @include grid();
+      place-content: center;
+    }
+    &__logo {
+      @include grid();
+      place-content: center;
+      width: 100%;
+      svg {
+        width: 30px;
+      }
+    }
+    &__right {
+      @include grid();
+      place-content: center;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@import "abstracts/abstracts.scss";
+@import "layout/layout.scss";
+@import "base/base.scss";
+@import "pages/pages.scss";
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: "Barlow", sans-serif;
+  overflow-x: hidden;
+  font-weight: 400;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+
+button,
+li,
+label,
+svg {
+  cursor: pointer;
+}

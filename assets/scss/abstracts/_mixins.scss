@@ -1,0 +1,42 @@
+@import "./variables";
+@mixin flex($direction: row, $justify: null, $align: null, $wrap: null) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $content;
+  align-items: $items;
+  flex-wrap: $wrap;
+}
+@mixin flexCenter($dir: row) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $dir;
+}
+@mixin grid($col: null, $row: null, $gap: null) {
+  display: grid;
+  grid-template-columns: $col;
+  grid-template-rows: $row;
+  grid-gap: $gap;
+}
+@mixin border($color, $radius: null) {
+  border: thin solid $color;
+  border-radius: $radius;
+}
+@mixin transition {
+  transition: all ease-in-out 0.2s;
+}
+@mixin shadow {
+  box-shadow: 1px 1px 5px $gray;
+}
+@mixin font($size: null, $align: null, $weight: null) {
+  font-size: $size;
+  text-align: $align;
+  font-weight: $weight;
+}
+@mixin position($pos: null, $top: null, $right: null, $bot: null, $left: null) {
+  position: $pos;
+  top: $top;
+  right: $right;
+  bottom: $bot;
+  left: $left;
+}

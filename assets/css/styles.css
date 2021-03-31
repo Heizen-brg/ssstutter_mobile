@@ -1,0 +1,256 @@
+.header {
+  box-shadow: 1px 1px 5px #808080;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  z-index: 1000; }
+  .header .nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    height: 100%; }
+    .header .nav__left {
+      display: grid;
+      place-content: center; }
+    .header .nav__logo {
+      display: grid;
+      place-content: center;
+      width: 100%; }
+      .header .nav__logo svg {
+        width: 30px; }
+    .header .nav__right {
+      display: grid;
+      place-content: center; }
+
+/* main menu */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  /* font: inherit; */
+  vertical-align: baseline; }
+
+* {
+  box-sizing: border-box; }
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol,
+ul {
+  list-style: none; }
+
+blockquote,
+q {
+  quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* ===== CUSTOM RESET ===== */
+object {
+  outline: none;
+  display: block;
+  overflow: hidden; }
+
+/* force redraw on IE8, fix outline/scroll bug on Firefox 3.6, remove unnecessary margin (copied from swffit)  */
+input,
+button {
+  outline: none;
+  font-family: "Barlow", sans-serif; }
+
+textarea {
+  overflow: auto; }
+
+/* fix IE */
+iframe {
+  border: 0; }
+
+a {
+  text-decoration: none;
+  color: #808080;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Barlow", sans-serif; }
+
+a:visited {
+  color: #808080; }
+
+a:hover {
+  color: var(--black); }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-transform: uppercase;
+  font-family: "Barlow", sans-serif;
+  /* font-family: Noto Sans Semi; */ }
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
+
+input[type="number"] {
+  -moz-appearance: textfield; }
+
+input[type="text"] {
+  /*background: transparent !important;*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+input::placeholder {
+  font-family: "Barlow", sans-serif; }
+
+button:focus,
+button:blur {
+  border: none; }
+
+.hidden_scroll {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */ }
+
+.hidden_scroll::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */ }
+
+div,
+li,
+ul,
+a {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent; }
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: uppercase; }
+
+html {
+  font-size: 14px; }
+
+body {
+  font-family: "Barlow", sans-serif;
+  overflow-x: hidden;
+  font-weight: 400;
+  width: 100vw;
+  padding: 0;
+  margin: 0; }
+
+button,
+li,
+label,
+svg {
+  cursor: pointer; }
+
+/*# sourceMappingURL=styles.css.map */
