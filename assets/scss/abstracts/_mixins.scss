@@ -1,9 +1,8 @@
-@import "./variables";
 @mixin flex($direction: row, $justify: null, $align: null, $wrap: null) {
   display: flex;
   flex-direction: $direction;
-  justify-content: $content;
-  align-items: $items;
+  justify-content: $justify;
+  align-items: $align;
   flex-wrap: $wrap;
 }
 @mixin flexCenter($dir: row) {
@@ -18,15 +17,15 @@
   grid-template-rows: $row;
   grid-gap: $gap;
 }
-@mixin border($color, $radius: null) {
+@mixin border($color: null, $radius: null) {
   border: thin solid $color;
   border-radius: $radius;
 }
 @mixin transition {
   transition: all ease-in-out 0.2s;
 }
-@mixin shadow {
-  box-shadow: 1px 1px 5px $gray;
+@mixin shadow($w, $h, $blur, $color: null) {
+  box-shadow: $w $h $blur $color;
 }
 @mixin font($size: null, $align: null, $weight: null) {
   font-size: $size;
@@ -39,4 +38,12 @@
   right: $right;
   bottom: $bot;
   left: $left;
+}
+@mixin ratio($w, $h) {
+  display: block;
+  width: 100%;
+  padding-top: ($h / $w) * 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

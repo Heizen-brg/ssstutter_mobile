@@ -1,3 +1,4 @@
+import { __megamenu } from './share/_data.js';
 import { __templates_header } from './_header.js';
 import { __templates_home } from './_homepage.js';
 import { __templates_footer } from './_footer.js';
@@ -29,8 +30,9 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-      })
-    ];
+      }),
+      __templates_header.megamenu()
+    ]
     this.build(blocks);
   }
 };
