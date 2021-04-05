@@ -7,6 +7,7 @@
     @include grid(repeat(3, 1fr), 1fr, 10px);
     height: 100%;
     padding: 0 5%;
+    background-color: $white;
     &__left {
       @include grid();
       place-content: center start;
@@ -74,7 +75,7 @@
   width: 100%;
   padding: 20px 5%;
   background-color: $white;
-  position: absolute;
+  position: fixed;
   z-index: 100;
   &.active {
     @include fade-in;
@@ -127,7 +128,7 @@
   width: 100%;
   padding: 20px 5%;
   background-color: $white;
-  position: absolute;
+  position: fixed;
   z-index: 100;
   &.active {
     @include fade-in;
@@ -149,7 +150,7 @@
   grid-template-columns: 1fr;
   width: 100%;
   background-color: transparent;
-  position: absolute;
+  position: fixed;
   z-index: 100;
   place-items: start end;
   &.active {

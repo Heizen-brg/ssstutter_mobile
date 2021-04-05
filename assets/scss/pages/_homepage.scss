@@ -1,0 +1,89 @@
+.slide__banner {
+  width: 100%;
+  .glide__slide {
+    div {
+      @include ratio(18, 7);
+    }
+  }
+  .glide__arrows {
+    svg {
+      width: 40px;
+      height: 40px;
+      stroke: transparent;
+      fill: $light;
+    }
+  }
+}
+
+.categories__banner {
+  @include grid(repeat(2, 1fr), 1fr, 20px);
+  padding: 20px 0;
+  div {
+    a {
+      @include ratio(7, 4);
+      @include transition;
+      background-color: rgba($color: black, $alpha: 0.4);
+      background-blend-mode: normal;
+      &:hover {
+        background-blend-mode: multiply;
+      }
+    }
+  }
+}
+
+.new-arrivals__slide {
+  @include grid(1fr, 1fr, 20px);
+  padding: 5%;
+  h2 {
+    @include font(x-large, center, bold);
+    place-self: center;
+  }
+  .gender__toggle {
+    place-self: center;
+    button {
+      @include font(medium, center, 600);
+      border: thin solid transparent;
+      background-color: transparent;
+      margin: 0 10px;
+      padding: 10px;
+      position: relative;
+      &::before {
+        @include position(absolute, 0, 0, null, null);
+        content: "";
+        width: 5px;
+        height: 5px;
+        background-color: $red;
+        border-radius: 50px;
+        opacity: 0;
+        @include transition;
+      }
+      &::after {
+        @include position(absolute, null, null, 0, 0);
+        content: "";
+        width: 0%;
+        height: 3px;
+        background-color: $black;
+        border-radius: 4px;
+        @include transition;
+      }
+      &.active,
+      &:hover {
+        &::before {
+          opacity: 1;
+        }
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .products__slider {
+    .product {
+      .thumbnail {
+        span {
+          @include ratio(4, 5);
+        }
+      }
+    }
+  }
+}

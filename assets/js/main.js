@@ -34,6 +34,11 @@ export const __render = {
       __templates_header.megamenu(),
       __templates_header.search(),
       __templates_header.cart(),
+      __templates_home.banner(),
+      __templates_home.categories(),
+      __templates_home.new_arrivals(),
+      __templates_home.lookbook(),
+      __templates_home.blog(),
     ]
     this.build(blocks);
   }
