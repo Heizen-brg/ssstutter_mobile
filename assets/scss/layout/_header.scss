@@ -14,7 +14,7 @@
         @include flex(row, flex-start, center);
         div {
           @include font(medium, center);
-          padding: 20px;
+          padding: 25px 20px;
           text-transform: uppercase;
           letter-spacing: 1.3px;
           margin: 0 15px;
@@ -53,7 +53,15 @@
       &--items {
         @include flex(row, flex-start, center);
         div {
+          @include transition;
+          @include border(transparent, 4px);
           padding: 10px;
+          &:hover {
+            background-color: rgba($light, 0.6);
+          }
+          &.active {
+            background-color: rgba($light, 0.6);
+          }
         }
       }
     }
@@ -69,6 +77,7 @@
   position: absolute;
   z-index: 100;
   &.active {
+    @include fade-in;
     @include grid(0.5fr 0.5fr 1fr, 1fr, 10px);
   }
   div {
@@ -101,13 +110,123 @@
       }
     }
   }
+
+  .megamenu__banner {
+    @include grid(repeat(2, 1fr), 1fr, 10px);
+    li {
+      a {
+        @include ratio(4, 5);
+      }
+    }
+  }
 }
 
-.megamenu__banner {
-  @include grid(repeat(2, 1fr), 1fr, 10px);
-  li {
-    a {
-      @include ratio(4, 5);
+.search__container {
+  @include shadow(1px, 5px, 4px, $light);
+  display: none;
+  width: 100%;
+  padding: 20px 5%;
+  background-color: $white;
+  position: absolute;
+  z-index: 100;
+  &.active {
+    @include fade-in;
+    display: block;
+  }
+  div {
+    @include grid(1fr);
+    place-items: center;
+    input {
+      @include border($silver);
+      width: 50%;
+      padding: 10px;
+    }
+  }
+}
+
+.cart__container {
+  display: none;
+  grid-template-columns: 1fr;
+  width: 100%;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+  place-items: start end;
+  &.active {
+    @include fade-right;
+    display: grid;
+  }
+  .mini__cart {
+    @include shadow(1px, 5px, 4px, $light);
+    width: 30%;
+    background-color: $white;
+    ul {
+      width: 100%;
+      padding: 20px 0;
+      max-height: 60vh;
+      overflow: auto;
+      li {
+        @include grid((25% 1fr), 1fr, 20px);
+        .product__thumbnail {
+          @include ratio(1, 1);
+        }
+        div {
+          h6 {
+            font-size: medium;
+            margin-bottom: 5px;
+          }
+          span {
+            color: $silver;
+            margin-bottom: 5px;
+            display: block;
+          }
+          strong {
+            margin-bottom: 5px;
+          }
+          .add__product {
+            @include flex(row, flex-start, center);
+            button {
+              background-color: transparent;
+              margin: 0 5px;
+              border: transparent;
+              padding: 10px;
+              font-size: large;
+            }
+          }
+        }
+      }
+    }
+    .cart__total {
+      @include flex(row, flex-end, center);
+      padding: 20px;
+      border-top: thin solid $light;
+      span {
+        font-size: medium;
+      }
+      strong {
+        font-size: large;
+      }
+    }
+    .cart__btn {
+      @include grid(1fr 1fr, 1fr);
+      button {
+        @include shadow(1px, 1px, 5px, $light);
+        @include transition;
+        width: 100%;
+        padding: 10px;
+        background-color: $white;
+        border: transparent;
+        text-transform: uppercase;
+        font-weight: bold;
+        &:hover {
+          background-color: $black;
+          color: $white;
+        }
+        &.checkout__btn {
+          background-color: $black;
+          color: $white;
+        }
+      }
     }
   }
 }

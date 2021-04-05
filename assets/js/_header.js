@@ -2,6 +2,22 @@ import { __icons } from './share/_icons.js';
 import { __render } from './main.js';
 
 export const __templates_header = {
+  hide_menu() {
+    let menu = document.querySelectorAll('[data-menu]');
+    let triggers = document.querySelectorAll('[data-active]')
+    triggers.forEach(item => item.classList.remove('active'));
+    menu.forEach(block => {
+      block.classList.remove('active');
+    });
+  },
+  show_menu(item) {
+    item.classList.remove('fade-out');
+    item.classList.add('active');
+    let menu = document.querySelectorAll('[data-menu]');
+    menu.forEach(container => {
+      container.dataset.menu == item.dataset.action ? container.classList.add('active') : container.classList.remove('active');
+    })
+  },
   header(params = {}) {
     let header = document.createElement('header');
     header.className = 'header';
@@ -32,16 +48,14 @@ export const __templates_header = {
     let div = document.createElement('div');
     div.className = 'nav__left--items';
     div.innerHTML = `
-      <div data-action="for_him"><a href="/">nam</a></div>
-      <div data-action="for_her"><a href="/">nữ</a></div>
+      <div data-active="" data-action="megamenu"><a href="/">nam</a></div>
+      <div data-active="" data-action="megamenu"><a href="/">nữ</a></div>
     `;
     let menu = div.querySelectorAll('[data-action]');
     menu.forEach(item => {
       item.addEventListener('mouseenter', (e) => {
-        menu.forEach(item => item.classList.remove('active'));
-        let megamenu__container = document.querySelector('.megamenu__container');
-        item.classList.add('active');
-        megamenu__container.classList.add('active');
+        this.hide_menu();
+        this.show_menu(item);
       })
     })
     return div;
@@ -51,16 +65,28 @@ export const __templates_header = {
     let div = document.createElement('div');
     div.className = 'nav__right--items';
     div.innerHTML = `
-      <div>${__icons.search}</div>
-      <div>${__icons.user}</div>
-      <div>${__icons.cart}</div>
+      <div data-active="" data-action="search">${__icons.search}</div>
+      <div data-active="" data-action="">${__icons.user}</div>
+      <div data-active="" data-action="cart">${__icons.cart}</div>
     `;
-    return div
+    let triggers = div.querySelectorAll('[data-action]');
+    triggers.forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (item.classList.contains('active')) {
+          this.hide_menu();
+        } else {
+          this.hide_menu();
+          this.show_menu(item);
+        }
+      })
+    })
+    return div;
   },
 
   megamenu(params = {}) {
     let div = document.createElement('div');
     div.className = 'megamenu__container';
+    div.dataset.menu = 'megamenu';
     div.innerHTML = `
     <div>
       <h1 class="title">danh mục</h1>
@@ -92,12 +118,52 @@ export const __templates_header = {
   search(params = {}) {
     let div = document.createElement('div');
     div.className = 'search__container';
-    div.innerHTML = html`
+    div.dataset.menu = 'search';
+    div.innerHTML = `
       <div>
         <input type="text" placeholder="Tìm kiếm..." />
       </div>
       <div class="options__block"></div>
     `;
+    return div;
+  },
+  cart(params = {}) {
+    let div = document.createElement('div');
+    div.className = 'cart__container';
+    div.dataset.menu = 'cart';
+    div.innerHTML = `
+      <div class="mini__cart">
+        <ul>
+          <li>
+            <span class="product__thumbnail" style="background-image:url(https://ssstutter.com/wp-content/uploads/2021/03/RetroDenimShirt_Dam_FL_1.jpg)"></span>
+            <div>
+              <h6>name</h6>
+              <span>
+                <p>Color, size</p>
+              </span>
+              <strong>price</strong>
+              <div class="add__product">
+                <button>-</button>
+                <div>1</div>
+                <button>+</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="cart__total">
+          <span>Tổng tiền: </span>
+          <strong>499.000 VND</strong>
+        </div>
+        <div class="cart__btn">
+          <button data-action="close">tiếp tục mua sắm</button>
+          <button class="checkout__btn">thanh toán</button>
+        </div>
+      </div>
+    `;
+    let close_btn = div.querySelector('[data-action="close"]');
+    close_btn.addEventListener('click', () => {
+      this.hide_menu();
+    })
     return div;
   }
 };

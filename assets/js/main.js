@@ -31,7 +31,9 @@ export const __render = {
         left: __templates_header.left(),
         right: __templates_header.right(),
       }),
-      __templates_header.megamenu()
+      __templates_header.megamenu(),
+      __templates_header.search(),
+      __templates_header.cart(),
     ]
     this.build(blocks);
   }
