@@ -1779,3 +1779,5 @@ export const __products = [
     ]
   }
 ]
+
+export const __categories = ['áo thun','sơ mi','áo blazer','quần','phụ kiện']

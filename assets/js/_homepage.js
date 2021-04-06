@@ -2,6 +2,7 @@ import { __banners, __products } from "./share/_data.js";
 import { __icons } from "./share/_icons.js";
 
 
+
 export const __templates_home = {
   banner() {
     let section = document.createElement('section');
