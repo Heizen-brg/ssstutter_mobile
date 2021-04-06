@@ -1,0 +1,49 @@
+.products__slider {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.product {
+  width: 100%;
+  position: relative;
+  .thumbnail {
+    a {
+      width: 100%;
+      span {
+        @include ratio(4, 5);
+        background-color: rgba($color: $light, $alpha: 0.6);
+        &:hover {
+          background-blend-mode: multiply;
+        }
+      }
+    }
+  }
+  .name {
+    @include font(medium, center, 600);
+    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  .price {
+    @include grid(repeat(auto-fit, minmax(10%, auto)), 1fr);
+    place-items: center;
+    .discount {
+      color: $silver;
+      text-decoration: line-through;
+    }
+  }
+  .tag {
+    @include position(absolute, 0, 0, null, null);
+    padding: 10px;
+    background-color: $red;
+    color: $white;
+    border-radius: 0 0 0 4px;
+    text-align: center;
+  }
+}

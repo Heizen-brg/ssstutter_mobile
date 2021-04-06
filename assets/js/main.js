@@ -37,8 +37,11 @@ export const __render = {
       __templates_home.banner(),
       __templates_home.categories(),
       __templates_home.new_arrivals(),
-      __templates_home.lookbook(),
+      __templates_home.stylepick(),
+      __templates_home.weekly(),
       __templates_home.blog(),
+      __templates_home.lookbook(),
+      __templates_footer.footer(),
     ]
     this.build(blocks);
   }

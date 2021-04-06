@@ -1,0 +1,73 @@
+.footer {
+  width: 100%;
+  padding: 2.5% 5% 0 5%;
+  background-color: #f7f7f7;
+  div {
+    @include flex(row, space-between, center);
+    margin-bottom: 20px;
+    .company__info {
+      @include flex(column, flext-start, start);
+      img {
+        width: 50%;
+      }
+      ul {
+        margin: 10px 0;
+        li {
+          line-height: 2;
+          color: $gray;
+        }
+      }
+    }
+    .company__policy {
+      ul {
+        margin: 0 20px;
+        li {
+          line-height: 2;
+          text-transform: capitalize;
+          text-align: end;
+          a {
+            color: $gray;
+          }
+        }
+      }
+    }
+    .about__us {
+      flex-direction: column;
+      width: 50%;
+      line-height: 2;
+      color: $gray;
+    }
+    .social__network {
+      a {
+        margin: 0 15px;
+        svg {
+          fill: $silver;
+        }
+      }
+    }
+    &.end__footer {
+      @include flex(row, space-between, center);
+      border-top: thin solid $light;
+      padding: 20px 0;
+      margin: 0;
+      h1 {
+        @include font(medium, start);
+        color: $silver;
+        text-transform: capitalize;
+      }
+      .mobile__app {
+        @include flex(row, center, center);
+        margin: 0;
+        a {
+          margin: 0 10px;
+          svg {
+            fill: $silver;
+          }
+        }
+        p {
+          color: $silver;
+        }
+      }
+    }
+  }
+}
