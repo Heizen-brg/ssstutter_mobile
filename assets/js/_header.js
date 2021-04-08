@@ -48,8 +48,8 @@ export const __templates_header = {
     let div = document.createElement('div');
     div.className = 'nav__left--items';
     div.innerHTML = `
-      <div data-active="" data-action="megamenu"><a href="/">nam</a></div>
-      <div data-active="" data-action="megamenu"><a href="/">nữ</a></div>
+      <div data-active="" data-action="megamenu"><a href="/c/for-him">nam</a></div>
+      <div data-active="" data-action="megamenu"><a href="//c/for-her">nữ</a></div>
     `;
     let menu = div.querySelectorAll('[data-action]');
     menu.forEach(item => {

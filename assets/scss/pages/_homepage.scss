@@ -1,189 +1,191 @@
-.slide__banner {
-  width: 100%;
-  .glide__slide {
+.home {
+  .slide__banner {
+    width: 100%;
+    .glide__slide {
+      div {
+        @include ratio(18, 7);
+      }
+    }
+  }
+
+  .categories__banner {
+    @include grid(repeat(2, 1fr), 1fr, 20px);
+    padding: 20px 0;
     div {
-      @include ratio(18, 7);
-    }
-  }
-}
-
-.categories__banner {
-  @include grid(repeat(2, 1fr), 1fr, 20px);
-  padding: 20px 0;
-  div {
-    a {
-      @include ratio(7, 4);
-      @include transition;
-      background-color: rgba($color: black, $alpha: 0.4);
-      background-blend-mode: normal;
-      &:hover {
-        background-blend-mode: multiply;
-      }
-    }
-  }
-}
-
-.new-arrivals__slide {
-  padding: 5%;
-  h2 {
-    @include font(3rem, center, bold);
-    cursor: pointer;
-  }
-  .gender__toggle {
-    @include flex(row, center, center);
-    margin: 20px 0;
-    button {
-      @include font(medium, center, 600);
-      border: thin solid transparent;
-      background-color: transparent;
-      margin: 0 10px;
-      padding: 10px;
-      position: relative;
-      &::before {
-        @include position(absolute, 0, 0, null, null);
-        content: "";
-        width: 5px;
-        height: 5px;
-        background-color: $red;
-        border-radius: 50px;
-        opacity: 0;
-        @include transition;
-      }
-      &::after {
-        @include position(absolute, null, null, 0, 0);
-        content: "";
-        width: 0%;
-        height: 3px;
-        background-color: $black;
-        border-radius: 4px;
-        @include transition;
-      }
-      &.active,
-      &:hover {
-        &::before {
-          opacity: 1;
-        }
-        &::after {
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-
-.stylepick__slide {
-  padding: 5%;
-  background-color: #adbabf;
-  h2 {
-    @include font(3rem, center, bold);
-    color: $white;
-    margin-bottom: 50px;
-    cursor: pointer;
-  }
-}
-
-.weekly__best {
-  padding: 5%;
-  h2 {
-    @include font(3rem, center, bold);
-    cursor: pointer;
-  }
-  .gender__toggle {
-    @include flex(row, center, center);
-    margin: 20px 0;
-    button {
-      @include font(medium, center, 600);
-      border: thin solid transparent;
-      background-color: transparent;
-      margin: 0 10px;
-      padding: 10px;
-      position: relative;
-      &::before {
-        @include position(absolute, 0, 0, null, null);
-        content: "";
-        width: 5px;
-        height: 5px;
-        background-color: $red;
-        border-radius: 50px;
-        opacity: 0;
-        @include transition;
-      }
-      &::after {
-        @include position(absolute, null, null, 0, 0);
-        content: "";
-        width: 0%;
-        height: 3px;
-        background-color: $black;
-        border-radius: 4px;
-        @include transition;
-      }
-      &.active,
-      &:hover {
-        &::before {
-          opacity: 1;
-        }
-        &::after {
-          width: 100%;
-        }
-      }
-    }
-  }
-  ul {
-    @include grid(repeat(auto-fit, minmax(23%, 1fr)), null, 20px);
-  }
-}
-
-.blog {
-  padding: 5%;
-  h2 {
-    @include font(3rem, center, bold);
-    margin-bottom: 50px;
-    cursor: pointer;
-  }
-  .blog__list {
-    @include grid(repeat(auto-fit, 45%), null, 5%);
-    margin: 20px 0;
-    li {
-      width: 100%;
       a {
-        width: 100%;
-        span {
-          @include ratio(16, 9);
+        @include ratio(7, 4);
+        @include transition;
+        background-color: rgba($color: black, $alpha: 0.4);
+        background-blend-mode: normal;
+        &:hover {
+          background-blend-mode: multiply;
         }
-        p {
-          @include font(large, center, 600);
-          word-break: break-word;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          width: 100%;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          margin-top: 20px;
-          cursor: pointer;
-        }
-      }
-      &:nth-child(even) {
-        margin-top: 50px;
       }
     }
   }
-}
 
-.lookbook {
-  padding: 5% 0;
-  h2 {
-    @include font(3rem, center, bold);
-    margin-bottom: 50px;
-    cursor: pointer;
+  .new-arrivals__slide {
+    padding: 5%;
+    h2 {
+      @include font(3rem, center, bold);
+      cursor: pointer;
+    }
+    .gender__toggle {
+      @include flex(row, center, center);
+      margin: 20px 0;
+      button {
+        @include font(medium, center, 600);
+        border: thin solid transparent;
+        background-color: transparent;
+        margin: 0 10px;
+        padding: 10px;
+        position: relative;
+        &::before {
+          @include position(absolute, 0, 0, null, null);
+          content: "";
+          width: 5px;
+          height: 5px;
+          background-color: $red;
+          border-radius: 50px;
+          opacity: 0;
+          @include transition;
+        }
+        &::after {
+          @include position(absolute, null, null, 0, 0);
+          content: "";
+          width: 0%;
+          height: 3px;
+          background-color: $black;
+          border-radius: 4px;
+          @include transition;
+        }
+        &.active,
+        &:hover {
+          &::before {
+            opacity: 1;
+          }
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
-  .lookbook__list {
-    margin: 20px 0;
+
+  .stylepick__slide {
+    padding: 5%;
+    background-color: #adbabf;
+    h2 {
+      @include font(3rem, center, bold);
+      color: $white;
+      margin-bottom: 50px;
+      cursor: pointer;
+    }
+  }
+
+  .weekly__best {
+    padding: 5%;
+    h2 {
+      @include font(3rem, center, bold);
+      cursor: pointer;
+    }
+    .gender__toggle {
+      @include flex(row, center, center);
+      margin: 20px 0;
+      button {
+        @include font(medium, center, 600);
+        border: thin solid transparent;
+        background-color: transparent;
+        margin: 0 10px;
+        padding: 10px;
+        position: relative;
+        &::before {
+          @include position(absolute, 0, 0, null, null);
+          content: "";
+          width: 5px;
+          height: 5px;
+          background-color: $red;
+          border-radius: 50px;
+          opacity: 0;
+          @include transition;
+        }
+        &::after {
+          @include position(absolute, null, null, 0, 0);
+          content: "";
+          width: 0%;
+          height: 3px;
+          background-color: $black;
+          border-radius: 4px;
+          @include transition;
+        }
+        &.active,
+        &:hover {
+          &::before {
+            opacity: 1;
+          }
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
     ul {
+      @include grid(repeat(auto-fit, minmax(23%, 1fr)), null, 20px);
+    }
+  }
+
+  .blog {
+    padding: 5%;
+    h2 {
+      @include font(3rem, center, bold);
+      margin-bottom: 50px;
+      cursor: pointer;
+    }
+    .blog__list {
+      @include grid(repeat(auto-fit, 45%), null, 5%);
+      margin: 20px 0;
       li {
         width: 100%;
         a {
-          @include ratio(7, 4);
+          width: 100%;
+          span {
+            @include ratio(16, 9);
+          }
+          p {
+            @include font(large, center, 600);
+            word-break: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            cursor: pointer;
+          }
+        }
+        &:nth-child(even) {
+          margin-top: 50px;
+        }
+      }
+    }
+  }
+
+  .lookbook {
+    padding: 5% 0;
+    h2 {
+      @include font(3rem, center, bold);
+      margin-bottom: 50px;
+      cursor: pointer;
+    }
+    .lookbook__list {
+      margin: 20px 0;
+      ul {
+        li {
+          width: 100%;
+          a {
+            @include ratio(7, 4);
+          }
         }
       }
     }

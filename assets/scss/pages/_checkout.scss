@@ -1,0 +1,161 @@
+.checkout__page {
+  @include grid(repeat(6, 1fr), null, 40px);
+  .checkout__form {
+    @include grid(1fr, null, 20px);
+    grid-area: 1 / 1 / 3 / 4;
+    padding: 5% 0 5% 10%;
+    h1 {
+      @include font(medium, center, bold);
+    }
+    p {
+      @include font(small, center);
+    }
+    form {
+      width: 100%;
+      input {
+        @include border($silver, 4px);
+        padding: 10px 15px;
+        width: 100%;
+        margin: 10px 0;
+        &:hover {
+          @include border($black, 4px);
+        }
+        &:focus {
+          @include border($black, 4px);
+        }
+      }
+    }
+    div {
+      @include grid(repeat(3, 1fr), null, 20px);
+      margin: 10px 0;
+      select {
+        @include border($silver, 4px);
+        padding: 10px 15px;
+      }
+    }
+  }
+  .checkout__method {
+    padding: 5% 0 5% 10%;
+    grid-area: 3/ 1 / 4 / 4;
+    h1 {
+      @include font(medium, center, bold);
+    }
+    form {
+      input:checked + label {
+        @include border($black, 4px);
+        background-color: $black;
+        color: $white;
+      }
+      label {
+        @include border($silver, 4px);
+        @include font(medium, center);
+        @include transition;
+        display: block;
+        padding: 10px 15px;
+        margin: 10px 0;
+        width: 100%;
+        &:hover {
+          @include border($black, 4px);
+          background-color: $black;
+          color: $white;
+        }
+      }
+    }
+  }
+  .checkout__cart {
+    grid-area: 1 / 4 / 4 / 7;
+    background-color: $light;
+    border-radius: 4px;
+    margin: 5% 10% 5% 0;
+    padding: 20px;
+    .product__list {
+      width: 100%;
+      min-height: 45vh;
+      overflow: auto;
+      li {
+        @include grid((15% 1fr), 1fr, 20px);
+        .product__thumbnail {
+          @include ratio(1, 1);
+        }
+        div {
+          h6 {
+            font-size: medium;
+            margin-bottom: 5px;
+          }
+          span {
+            color: $silver;
+            margin-bottom: 5px;
+            display: block;
+          }
+          strong {
+            margin-bottom: 5px;
+          }
+          .add__product {
+            @include flex(row, flex-start, center);
+            button {
+              background-color: transparent;
+              margin: 0 5px;
+              border: transparent;
+              padding: 10px;
+              font-size: large;
+            }
+          }
+        }
+      }
+    }
+    .discount__code {
+      @include grid(1fr auto);
+      input {
+        margin: 0;
+        border: 1px solid$silver;
+        height: 100%;
+        padding: 10px;
+        border-radius: 0;
+      }
+      button {
+        background-color: #eaeaea;
+        color: #333;
+        font-weight: 700;
+        border: none;
+        font-size: 14px;
+        padding: 10px;
+        width: auto;
+        margin: 0;
+        height: 100%;
+      }
+    }
+    .total__cart {
+      @include flex(row, flex-end, center);
+      border-top: thin solid $silver;
+      padding: 10px 20px;
+      margin: 20px 0;
+      p {
+        @include font(x-large, center, 600);
+        margin-right: 15px;
+      }
+      strong {
+        @include font(xx-large, center, bold);
+      }
+    }
+    > button {
+      @include transition;
+      width: 100%;
+      color: #fff;
+      font-size: medium;
+      text-transform: uppercase;
+      background-color: $black;
+      padding: 20px;
+      border: thin solid transparent;
+      border-radius: 4px;
+      color: $white;
+      &:hover {
+        background-color: $white;
+        color: $black;
+        border: thin solid $black;
+      }
+    }
+  }
+  .footer {
+    grid-area: 4 / 1 / 5 / 7;
+  }
+}

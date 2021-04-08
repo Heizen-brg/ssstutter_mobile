@@ -1,0 +1,56 @@
+.blog__page {
+  .highlight {
+    @include grid(repeat(3, 30%), null, 20px 50px);
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 5% 10%;
+    &__item {
+      @include flex(column, center, center);
+      a {
+        width: 100%;
+        span {
+          @include ratio(4, 5);
+          @include transition;
+          &:hover {
+            filter: grayscale(1);
+          }
+        }
+      }
+      p {
+        @include font(medium, center, 600);
+        line-height: 1.3;
+        margin-top: 15px;
+        padding: 20px 30px;
+      }
+    }
+  }
+  .category {
+    padding: 5% 10%;
+    background-color: $light;
+    h1 {
+      @include font(x-large, center, 600);
+    }
+    ul {
+      @include grid(repeat(4, 1fr), null, 10px);
+      margin-top: 40px;
+      li {
+        width: 100%;
+        a {
+          width: 100%;
+          span {
+            @include ratio(16, 9);
+            @include transition;
+            &:hover {
+              filter: grayscale(1);
+              background-position: top left;
+            }
+          }
+        }
+        p {
+          @include font(medium, center, 500);
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

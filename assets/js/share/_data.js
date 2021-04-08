@@ -1780,4 +1780,20 @@ export const __products = [
   }
 ]
 
-export const __categories = ['áo thun','sơ mi','áo blazer','quần','phụ kiện']
+export const __categories = ['áo thun', 'sơ mi', 'áo blazer', 'quần', 'phụ kiện'];
+
+export const __product_detail = {
+  gallery: [
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Xanh_PT_1.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Nau_PT_2.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Den_PT_3.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Xanh_PT_3.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Den_PT_1.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Nau_PT_3.jpg'
+  ],
+  flatlay: [
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Den_FL_1.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Nau_FL_1.jpg',
+    'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Xanh_FL_1.jpg'
+  ]
+}
