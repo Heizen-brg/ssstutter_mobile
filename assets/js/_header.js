@@ -120,11 +120,16 @@ export const __templates_header = {
     div.className = 'search__container';
     div.dataset.menu = 'search';
     div.innerHTML = `
-      <div>
+      <div class="search__input">
         <input type="text" placeholder="Tìm kiếm..." />
       </div>
       <div class="options__block"></div>
     `;
+    let block = div.querySelector(`.options__block`);
+    __render.build_in_block({
+      block: block,
+      target: params.option
+    })
     return div;
   },
   cart(params = {}) {

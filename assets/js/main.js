@@ -5,9 +5,10 @@ import { __templates_categories } from './_categories.js';
 import { __templates_product } from './_product.js';
 import { __templates_checkout } from './_checkout.js';
 import { __templates_blog } from './_blog.js';
+import { __template_article } from './_article.js';
 import { __templates_footer } from './_footer.js';
-
-
+import { __templates } from './share/_components.js';
+import { __template_search } from "./_search.js";
 
 
 export const __render = {
@@ -37,7 +38,9 @@ export const __render = {
         right: __templates_header.right(),
       }),
       __templates_header.megamenu(),
-      __templates_header.search(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
       __templates_header.cart(),
       __templates_home.banner(),
       __templates_home.categories(),
@@ -58,7 +61,9 @@ export const __render = {
         right: __templates_header.right(),
       }),
       __templates_header.megamenu(),
-      __templates_header.search(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
       __templates_header.cart(),
       __template_categories.infomation(),
       __template_categories.categories(),
@@ -76,13 +81,16 @@ export const __render = {
         right: __templates_header.right(),
       }),
       __templates_header.megamenu(),
-      __templates_header.search(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
       __templates_header.cart(),
       __templates_product.product_gallery(),
       __templates_product.model_info(),
       __templates_product.flatlay_view(),
       __templates_product.attributes(),
       __templates_product.variation(),
+      __templates.related_product(),
       __templates_footer.footer(),
     ];
     this.build('product__page', blocks);
@@ -94,7 +102,9 @@ export const __render = {
         right: __templates_header.right(),
       }),
       __templates_header.megamenu(),
-      __templates_header.search(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
       __templates_header.cart(),
       __templates_checkout.checkout_form(),
       __templates_checkout.checkout__method(),
@@ -110,7 +120,9 @@ export const __render = {
         right: __templates_header.right(),
       }),
       __templates_header.megamenu(),
-      __templates_header.search(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
       __templates_header.cart(),
       __templates_blog.blog_highlight(),
       __templates_blog.blog_categories(),
@@ -119,7 +131,59 @@ export const __render = {
     ];
     this.build('blog__page', blocks);
   },
+  article_page() {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
+      __templates_header.cart(),
+      __template_article.related(),
+      __template_article.content(),
+      __templates_footer.footer(),
+    ];
+    this.build('article__page', blocks);
+  },
+  campaign_page() {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
+      __templates_header.cart(),
+      __templates.banner(),
+      __templates.gender_filter(),
+      __templates_categories.filter(),
+      __templates_categories.products(),
+      __templates_footer.footer(),
+    ];
+    this.build('campaign__page', blocks);
+  },
+  search_page() {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
+      __template_search.input(),
+      __templates.gender_filter(),
+      __templates_categories.filter(),
+      __templates_categories.products(),
+      __templates_footer.footer(),
+    ];
+    this.build('search__page', blocks);
+  },
 };
 
 // __render.homepage();
-__render.blog_page();
+__render.search_page();

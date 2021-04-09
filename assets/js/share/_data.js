@@ -1780,6 +1780,879 @@ export const __products = [
   }
 ]
 
+export const __related = [
+  {
+    "id": 39680,
+    "sku": "103/131/0902",
+    "cat_id": [
+      35,
+      373,
+      374
+    ],
+    "name": "lux shorts",
+    "photo": "/wp-content/uploads/2021/04/LuxShorts_Nau_PT_3.jpg",
+    "link": "/p/lux-shorts/",
+    "price": 399000,
+    "sale_price": "399000",
+    "discount": 0,
+    "coupon_tag": "",
+    "variations": [],
+    "highlight_photo": "/wp-content/uploads/2021/04/LuxShorts_Xam_FL_2.jpg",
+    "cat_name": "For+Him QU%E1%BA%A6N+SHORT QU%E1%BA%A6N+SHORT",
+    "cat_name_string": "For Him > QUẦN SHORT > QUẦN SHORT",
+    "gender": "male",
+    "color_name": [
+      "Đen",
+      "Nâu",
+      "Xám 03.2"
+    ],
+    "child": [
+      {
+        "id": 39682,
+        "sku": "103/131/0902-800-00",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Den_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Đen",
+        "size": "0"
+      },
+      {
+        "id": 39683,
+        "sku": "103/131/0902-800-1",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Den_PT_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39684,
+        "sku": "103/131/0902-800-2",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Den_PT_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39685,
+        "sku": "103/131/0902-800-3",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Den_FL_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      },
+      {
+        "id": 39686,
+        "sku": "103/131/0902-500-00",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Nau_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Nâu",
+        "size": "0"
+      },
+      {
+        "id": 39687,
+        "sku": "103/131/0902-500-1",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Nau_PT_3.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39688,
+        "sku": "103/131/0902-500-2",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Nau_PT_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39689,
+        "sku": "103/131/0902-500-3",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Nau_PT_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      },
+      {
+        "id": 39690,
+        "sku": "103/131/0902-805-00",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Xam_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Xám 03.2",
+        "size": "0"
+      },
+      {
+        "id": 39691,
+        "sku": "103/131/0902-805-1",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Xam_PT_3.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39692,
+        "sku": "103/131/0902-805-2",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Xam_PT_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39693,
+        "sku": "103/131/0902-805-3",
+        "photo": "/wp-content/uploads/2021/04/LuxShorts_Xam_PT_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      }
+    ],
+    "color": {
+      "ids": [
+        319,
+        299,
+        315
+      ],
+      "colors": [
+        "#000000",
+        "#8B4513",
+        "#828282"
+      ],
+      "preview": [
+        {
+          "color": "#000000",
+          "photo": "/wp-content/uploads/2021/04/LuxShorts_Den_FL_1.jpg"
+        },
+        {
+          "color": "#8B4513",
+          "photo": "/wp-content/uploads/2021/04/LuxShorts_Nau_FL_1.jpg"
+        },
+        {
+          "color": "#828282",
+          "photo": "/wp-content/uploads/2021/04/LuxShorts_Xam_FL_1.jpg"
+        }
+      ]
+    },
+    "size": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "id": 39556,
+    "sku": "103/131/0910",
+    "cat_id": [
+      35,
+      373,
+      374
+    ],
+    "name": "gap shorts",
+    "photo": "/wp-content/uploads/2021/04/DSC00595-scaled.jpg",
+    "link": "/p/gap-shorts/",
+    "price": 399000,
+    "sale_price": "399000",
+    "discount": 0,
+    "coupon_tag": "",
+    "variations": [],
+    "highlight_photo": "/wp-content/uploads/2021/04/GapShorts_Den_FL_1.jpg",
+    "cat_name": "For+Him QU%E1%BA%A6N+SHORT QU%E1%BA%A6N+SHORT",
+    "cat_name_string": "For Him > QUẦN SHORT > QUẦN SHORT",
+    "gender": "male",
+    "color_name": [
+      "Nâu",
+      "Xám 03.2",
+      "Đen"
+    ],
+    "child": [
+      {
+        "id": 39568,
+        "sku": "103/131/0910-500-3",
+        "photo": "/wp-content/uploads/2021/04/DSC00599-scaled.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Nâu",
+        "size": "3"
+      },
+      {
+        "id": 39567,
+        "sku": "103/131/0910-500-2",
+        "photo": "/wp-content/uploads/2021/04/DSC00595-scaled.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39566,
+        "sku": "103/131/0910-500-1",
+        "photo": "/wp-content/uploads/2021/04/GapShorts_Be_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39565,
+        "sku": "103/131/0910-500-00",
+        "photo": "/wp-content/uploads/2021/04/GapShorts_Be_FL_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "0"
+      },
+      {
+        "id": 39564,
+        "sku": "103/131/0910-805-3",
+        "photo": "/wp-content/uploads/2021/04/SSS-41-of-58-scaled.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Xám 03.2",
+        "size": "3"
+      },
+      {
+        "id": 39563,
+        "sku": "103/131/0910-805-2",
+        "photo": "/wp-content/uploads/2021/04/SSS-40-of-58-scaled.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39562,
+        "sku": "103/131/0910-805-1",
+        "photo": "/wp-content/uploads/2021/04/GapShorts_Xam_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39561,
+        "sku": "103/131/0910-805-00",
+        "photo": "/wp-content/uploads/2021/04/GapShorts_Xam_FL_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "0"
+      },
+      {
+        "id": 39560,
+        "sku": "103/131/0910-800-3",
+        "photo": "/wp-content/uploads/2021/04/SSS-28-of-58-scaled.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Đen",
+        "size": "3"
+      },
+      {
+        "id": 39559,
+        "sku": "103/131/0910-800-2",
+        "photo": "/wp-content/uploads/2021/04/SSS-32-of-58-scaled.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39558,
+        "sku": "103/131/0910-800-1",
+        "photo": "/wp-content/uploads/2021/04/GapShorts_Den_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39557,
+        "sku": "103/131/0910-800-00",
+        "photo": "/wp-content/uploads/2021/04/GapShorts_Den_FL_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "0"
+      }
+    ],
+    "color": {
+      "ids": [
+        299,
+        315,
+        319
+      ],
+      "colors": [
+        "#8B4513",
+        "#828282",
+        "#000000"
+      ],
+      "preview": [
+        {
+          "color": "#8B4513",
+          "photo": "/wp-content/uploads/2021/04/DSC00599-scaled.jpg"
+        },
+        {
+          "color": "#828282",
+          "photo": "/wp-content/uploads/2021/04/SSS-41-of-58-scaled.jpg"
+        },
+        {
+          "color": "#000000",
+          "photo": "/wp-content/uploads/2021/04/SSS-28-of-58-scaled.jpg"
+        }
+      ]
+    },
+    "size": [
+      "3",
+      "2",
+      "1",
+      "0"
+    ]
+  },
+  {
+    "id": 39543,
+    "sku": "103/131/0915",
+    "cat_id": [
+      35,
+      373,
+      374
+    ],
+    "name": "wise short",
+    "photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_PT_3.jpg",
+    "link": "/p/wise-short/",
+    "price": 399000,
+    "sale_price": "399000",
+    "discount": 0,
+    "coupon_tag": "",
+    "variations": [],
+    "highlight_photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_FL_1.jpg",
+    "cat_name": "For+Him QU%E1%BA%A6N+SHORT QU%E1%BA%A6N+SHORT",
+    "cat_name_string": "For Him > QUẦN SHORT > QUẦN SHORT",
+    "gender": "male",
+    "color_name": [
+      "Đen",
+      "Xám 03.2",
+      "Nâu"
+    ],
+    "child": [
+      {
+        "id": 39544,
+        "sku": "103/131/0915-800-00",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Den_FL_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Đen",
+        "size": "0"
+      },
+      {
+        "id": 39545,
+        "sku": "103/131/0915-800-1",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Den_PT_3.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39546,
+        "sku": "103/131/0915-800-2",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Den_PT_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39547,
+        "sku": "103/131/0915-800-3",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Den_PT_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      },
+      {
+        "id": 39548,
+        "sku": "103/131/0915-805-00",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_FL_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Xám 03.2",
+        "size": "0"
+      },
+      {
+        "id": 39549,
+        "sku": "103/131/0915-805-1",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_PT_3.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39550,
+        "sku": "103/131/0915-805-2",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_PT_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39551,
+        "sku": "103/131/0915-805-3",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_PT_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      },
+      {
+        "id": 39552,
+        "sku": "103/131/0915-500-00",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Be_FL_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Nâu",
+        "size": "0"
+      },
+      {
+        "id": 39553,
+        "sku": "103/131/0915-500-1",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Be_PT_2.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39554,
+        "sku": "103/131/0915-500-2",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Be_PT_1.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39555,
+        "sku": "103/131/0915-500-3",
+        "photo": "/wp-content/uploads/2021/04/WiseShorts_Be_PT_3.jpg",
+        "price": 399000,
+        "sale_price": 399000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      }
+    ],
+    "color": {
+      "ids": [
+        319,
+        315,
+        299
+      ],
+      "colors": [
+        "#000000",
+        "#828282",
+        "#8B4513"
+      ],
+      "preview": [
+        {
+          "color": "#000000",
+          "photo": "/wp-content/uploads/2021/04/WiseShorts_Den_FL_1.jpg"
+        },
+        {
+          "color": "#828282",
+          "photo": "/wp-content/uploads/2021/04/WiseShorts_Xam_FL_2.jpg"
+        },
+        {
+          "color": "#8B4513",
+          "photo": "/wp-content/uploads/2021/04/WiseShorts_Be_FL_2.jpg"
+        }
+      ]
+    },
+    "size": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "id": 39021,
+    "sku": "102/141/0202",
+    "cat_id": [
+      35,
+      340,
+      339
+    ],
+    "name": "sss' oval shirt",
+    "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+    "link": "/p/sss-oval-shirt/",
+    "price": 449000,
+    "sale_price": "449000",
+    "discount": 0,
+    "coupon_tag": "",
+    "variations": [],
+    "highlight_photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Den_FL_1.jpg",
+    "cat_name": "For+Him S%C6%A0+MI+%26amp%3B+%C3%81O+KI%E1%BB%82U S%C6%A0+MI",
+    "cat_name_string": "For Him > SƠ MI &amp; ÁO KIỂU > SƠ MI",
+    "gender": "male",
+    "color_name": [
+      "Trắng",
+      "Đen",
+      "Xám 03.2",
+      "Đỏ",
+      "Xanh Navy 3"
+    ],
+    "child": [
+      {
+        "id": 39024,
+        "sku": "102/141/0202-100-3",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Trang_PT_3.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Trắng",
+        "size": "3"
+      },
+      {
+        "id": 39023,
+        "sku": "102/141/0202-100-2",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Trang_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39022,
+        "sku": "102/141/0202-100-1",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Trang_PT_1.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39042,
+        "sku": "102/141/0202-100-00",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Trang_FL_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "0"
+      },
+      {
+        "id": 39028,
+        "sku": "102/141/0202-800-3",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Den_PT_1.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Đen",
+        "size": "3"
+      },
+      {
+        "id": 39027,
+        "sku": "102/141/0202-800-2",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Den_PT_3.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39026,
+        "sku": "102/141/0202-800-1",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Den_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39025,
+        "sku": "102/141/0202-800-00",
+        "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Den_FL_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "0"
+      },
+      {
+        "id": 39032,
+        "sku": "102/141/0202-805-3",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_1.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "Xám 03.2",
+        "size": "3"
+      },
+      {
+        "id": 39031,
+        "sku": "102/141/0202-805-2",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_3.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39030,
+        "sku": "102/141/0202-805-1",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39029,
+        "sku": "102/141/0202-805-00",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_FL_1.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "0"
+      },
+      {
+        "id": 39033,
+        "sku": "102/141/0202-700-00",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "Đỏ",
+        "size": "0"
+      },
+      {
+        "id": 39034,
+        "sku": "102/141/0202-700-1",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39035,
+        "sku": "102/141/0202-700-2",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39036,
+        "sku": "102/141/0202-700-3",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": false,
+        "color": "",
+        "size": "3"
+      },
+      {
+        "id": 39037,
+        "sku": "102/141/0202-404-00",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "Xanh Navy 3",
+        "size": "0"
+      },
+      {
+        "id": 39038,
+        "sku": "102/141/0202-404-1",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "1"
+      },
+      {
+        "id": 39039,
+        "sku": "102/141/0202-404-2",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "2"
+      },
+      {
+        "id": 39040,
+        "sku": "102/141/0202-404-3",
+        "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg",
+        "price": 449000,
+        "sale_price": 449000,
+        "discount": 0,
+        "in_stock": true,
+        "color": "",
+        "size": "3"
+      }
+    ],
+    "color": {
+      "ids": [
+        322,
+        319,
+        315,
+        188,
+        124
+      ],
+      "colors": [
+        "#ffffff",
+        "#000000",
+        "#828282",
+        "#FF0000",
+        "#191970"
+      ],
+      "preview": [
+        {
+          "color": "#ffffff",
+          "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Trang_PT_3.jpg"
+        },
+        {
+          "color": "#000000",
+          "photo": "/wp-content/uploads/2021/04/SSSOvalShirt_Den_PT_1.jpg"
+        },
+        {
+          "color": "#828282",
+          "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_1.jpg"
+        },
+        {
+          "color": "#FF0000",
+          "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg"
+        },
+        {
+          "color": "#191970",
+          "photo": "/wp-content/uploads/2021/04/PackedShirt_Xanh_PT_2.jpg"
+        }
+      ]
+    },
+    "size": [
+      "3",
+      "2",
+      "1",
+      "0"
+    ]
+  },
+]
+
 export const __categories = ['áo thun', 'sơ mi', 'áo blazer', 'quần', 'phụ kiện'];
 
 export const __product_detail = {

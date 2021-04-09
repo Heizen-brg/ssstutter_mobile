@@ -134,7 +134,7 @@
     @include fade-in;
     display: block;
   }
-  div {
+  .search__input {
     @include grid(1fr);
     place-items: center;
     input {
@@ -142,6 +142,9 @@
       width: 50%;
       padding: 10px;
     }
+  }
+  .options__block {
+    width: 100%;
   }
 }
 

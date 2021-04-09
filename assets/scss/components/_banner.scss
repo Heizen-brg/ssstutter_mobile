@@ -1,0 +1,6 @@
+.hero__banner {
+  width: 100%;
+  div {
+    @include ratio(18, 7);
+  }
+}

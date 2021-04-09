@@ -1,0 +1,21 @@
+.gender__filter {
+  width: 100%;
+  ul {
+    @include grid(repeat(2, 1fr), null, 20px);
+    li {
+      @include border($silver, 4px);
+      @include font(large, center, 600);
+      @include transition;
+      width: 100%;
+      padding: 20px;
+      &:hover {
+        background-color: $black;
+        color: $white;
+      }
+      &.active {
+        background-color: $black;
+        color: $white;
+      }
+    }
+  }
+}

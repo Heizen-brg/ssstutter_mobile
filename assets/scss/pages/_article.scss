@@ -1,0 +1,78 @@
+.article__page {
+  .article__related {
+    border-bottom: thin solid $light;
+    ul {
+      @include grid(repeat(3, 1fr), null, 20px);
+      padding: 2.5% 10%;
+      li {
+        @include grid(30% 1fr, null, 20px);
+        align-items: center;
+        a {
+          width: 100%;
+          span {
+            @include ratio(1, 1);
+          }
+        }
+        p {
+          a {
+            @include flex(column, center, start);
+            i {
+              margin: 5px 0;
+            }
+            strong {
+              display: inline-block;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              max-width: 250px;
+              margin-top: 10px;
+              line-height: 1.5;
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+    }
+  }
+  .article__content {
+    padding: 2.5% 10%;
+    h1 {
+      @include font(x-large, center, bold);
+      padding: 20px;
+      line-height: 1.5;
+    }
+    .main__banner {
+      @include ratio(16, 9);
+    }
+    .main__description {
+      @include font(medium, justify, 600);
+      padding: 5%;
+      line-height: 2;
+      &:first-letter {
+        float: left;
+        font-size: 4rem;
+        line-height: 0.8;
+        margin-right: 3px;
+      }
+    }
+    ul {
+      padding: 0 5%;
+      li {
+        h2 {
+          @include font(large, start, 600);
+          margin-bottom: 20px;
+        }
+        figure {
+          img {
+            width: 100%;
+          }
+        }
+        p {
+          @include font(medium);
+          line-height: 1.5;
+          margin: 5px 0;
+        }
+      }
+    }
+  }
+}

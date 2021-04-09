@@ -1,0 +1,11 @@
+.related_product {
+  padding: 5%;
+  h1 {
+    @include font(large, center, 600);
+    margin-bottom: 20px;
+  }
+  ul {
+    width: 100%;
+    @include grid(repeat(auto-fit, minmax(23%, 1fr)), null, 20px);
+  }
+}
