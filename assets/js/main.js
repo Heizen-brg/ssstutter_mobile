@@ -186,4 +186,4 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.search_page();
+__render.homepage();

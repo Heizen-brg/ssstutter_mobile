@@ -138,11 +138,8 @@ export const __templates_home = {
         hoverpause: true,
         breakpoints: {
           800: {
-            perView: 3
-          },
-          480: {
             perView: 2
-          }
+          },
         }
       }).mount();
     }, 100);
@@ -254,7 +251,7 @@ export const __templates_home = {
         },
         breakpoints: {
           800: {
-            perView: 2
+            perView: 1
           },
         }
       }).mount();

@@ -138,8 +138,12 @@ svg {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
 }
-@media (max-width: 429px) {
+@media (max-width: 426px) {
   .glide__bullets {
     bottom: -15px;
+  }
+  .glide__arrow svg {
+    width: 20px;
+    height: 20px;
   }
 }

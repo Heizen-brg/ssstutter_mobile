@@ -47,3 +47,9 @@ svg {
     }
   }
 }
+
+@media (max-width: 425px) {
+  main {
+    padding-top: 0;
+  }
+}
