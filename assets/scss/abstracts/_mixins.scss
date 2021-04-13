@@ -22,7 +22,7 @@
   border-radius: $radius;
 }
 @mixin transition {
-  transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.3s;
 }
 @mixin shadow($w, $h, $blur, $color: null) {
   box-shadow: $w $h $blur $color;
@@ -125,4 +125,9 @@
       opacity: 1;
     }
   }
+}
+
+@mixin hidden_scroll {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }

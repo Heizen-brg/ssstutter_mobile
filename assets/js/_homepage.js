@@ -1,4 +1,4 @@
-import { __banners, __products } from "./share/_data.js";
+import { __banners, __products, __banners_mobile } from "./share/_data.js";
 import { __icons } from "./share/_icons.js";
 
 
@@ -8,18 +8,43 @@ export const __templates_home = {
     let section = document.createElement('section');
     section.className = 'slide__banner';
     section.innerHTML = `
-    <div class="glide">
-      <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides">
-        ${(__banners || []).map(item => ` <li class="glide__slide"><div style="background-image:url(${item.url})"></div></li>`).join('')}
-        </ul>
-      </div>
-      <div class="glide__arrows" data-glide-el="controls">
-        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
-        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
-      </div>
-    </div>  
-    `;
+      <div class="glide">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+          ${(__banners || []).map(item => ` <li class="glide__slide"><div style="background-image:url(${item.url})"></div></li>`).join('')}
+          </ul>
+        </div>
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
+          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
+        </div>
+      </div>  
+      `;
+    setTimeout(() => {
+      new Glide('.glide', {
+        type: "slider",
+        perView: 1,
+        autoplay: 5000,
+      }).mount();
+    }, 100);
+    return section;
+  },
+  mobile_banner() {
+    let section = document.createElement('section');
+    section.className = 'slide__banner';
+    section.innerHTML = `
+      <div class="glide">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+          ${(__banners_mobile || []).map(item => ` <li class="glide__slide"><div style="background-image:url(${item.url})"></div></li>`).join('')}
+          </ul>
+        </div>
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
+          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
+        </div>
+      </div>  
+      `;
     setTimeout(() => {
       new Glide('.glide', {
         type: "slider",
@@ -97,6 +122,81 @@ export const __templates_home = {
     }, 100);
     return section;
   },
+  mobile_new_arrivals() {
+    let section = document.createElement('section');
+    section.className = 'new-arrivals__slide';
+    section.innerHTML = `
+      <h2>what's new</h2>
+      <div class="gender__toggle">
+        <button>For Him</button>
+        <button>For Her</button>
+      </div>
+      <div class="products__slider">
+        <div class="glide" id="new_arrivals">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              ${(__products || []).map((item, index) => {
+      return `       
+                <li class="glide__slide">
+                  <div class="product">
+                    <div class="thumbnail">
+                      <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+                    </div>
+                    <h6 class="name">${item.name}</h6>
+                    <div class="price">
+                      ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+                      <p>${item.price}<sup>đ</sup></p>
+                    </div>
+                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+                  </div>
+                  <div class="product">
+                    <div class="thumbnail">
+                      <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+                    </div>
+                    <h6 class="name">${item.name}</h6>
+                    <div class="price">
+                      ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+                      <p>${item.price}<sup>đ</sup></p>
+                    </div>
+                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+                  </div>
+                </li>
+                  `
+    }
+    ).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+    setTimeout(() => {
+      new Glide('#new_arrivals', {
+        type: "carousel",
+        bound: true,
+        perView: 4,
+        autoplay: 5000,
+        gap: 10,
+        hoverpause: true,
+        peek: {
+          before: 0,
+          after: 100
+        },
+        breakpoints: {
+          800: {
+            perView: 3
+          },
+          480: {
+            perView: 2,
+            peek: {
+              before: 0,
+              after: 0
+            },
+          }
+        }
+      }).mount();
+    }, 100);
+    return section;
+  },
   stylepick() {
     let section = document.createElement('section');
     section.className = 'stylepick__slide';
@@ -134,11 +234,18 @@ export const __templates_home = {
         bound: true,
         perView: 3,
         autoplay: 5000,
-        gap: 20,
+        gap: 10,
         hoverpause: true,
         breakpoints: {
           800: {
             perView: 2
+          },
+          460: {
+            perView: 1,
+            peek: {
+              before: 50,
+              after: 50
+            }
           },
         }
       }).mount();
@@ -251,7 +358,11 @@ export const __templates_home = {
         },
         breakpoints: {
           800: {
-            perView: 1
+            perView: 1,
+            peek: {
+              before: 50,
+              after: 50
+            },
           },
         }
       }).mount();

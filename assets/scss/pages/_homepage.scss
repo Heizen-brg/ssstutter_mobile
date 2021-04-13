@@ -81,6 +81,14 @@
       margin-bottom: 50px;
       cursor: pointer;
     }
+    .product {
+      .name {
+        color: $white;
+      }
+      .price {
+        color: $white;
+      }
+    }
   }
 
   .weekly__best {
@@ -192,7 +200,58 @@
   }
 }
 
-@media (max-width: 769px) {
+@media (max-width: 425px) {
   .home {
+    .slide__banner {
+      .glide__slide {
+        div {
+          @include ratio(4, 5);
+        }
+      }
+    }
+    .new-arrivals__slide {
+      h2 {
+        @include font(x-large, center, bold);
+      }
+    }
+    .stylepick__slide {
+      padding: 5% 0;
+      h2 {
+        @include font(x-large, center, bold);
+        margin: 5% 0;
+      }
+    }
+    .weekly__best {
+      h2 {
+        @include font(x-large, center, bold);
+      }
+      ul {
+        @include grid(repeat(auto-fit, minmax(45%, 1fr)), null, 20px);
+      }
+    }
+    .blog {
+      h2 {
+        @include font(x-large, center, bold);
+        margin: 5% 0;
+      }
+      .blog__list {
+        @include grid(repeat(auto-fit, 100%), null, 3%);
+        margin: 20px 0;
+        li {
+          width: 100%;
+          &:nth-child(even) {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+    .lookbook {
+      margin-top: 50px;
+      padding: 5% 0;
+      h2 {
+        @include font(x-large, center, bold);
+        margin: 5%;
+      }
+    }
   }
 }

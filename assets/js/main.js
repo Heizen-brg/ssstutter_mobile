@@ -10,7 +10,9 @@ import { __templates_footer } from './_footer.js';
 import { __templates } from './share/_components.js';
 import { __template_search } from "./_search.js";
 
-
+let mobile = window.innerWidth <= 425;
+let tablet = window.innerWidth <= 768 && window.innerWidth > 425;
+let desktop = window.innerWidth > 780;
 export const __render = {
   build(page, blocks) {
     let app = document.getElementById('root');
@@ -32,6 +34,8 @@ export const __render = {
 
 
   homepage() {
+    let banner = mobile ? __templates_home.mobile_banner() : __templates_home.banner();
+    let new_arrivals = mobile ? __templates_home.mobile_new_arrivals() : __templates_home.new_arrivals();
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
@@ -42,9 +46,9 @@ export const __render = {
         option: __templates.related_product()
       }),
       __templates_header.cart(),
-      __templates_home.banner(),
+      banner,
       __templates_home.categories(),
-      __templates_home.new_arrivals(),
+      new_arrivals,
       __templates_home.stylepick(),
       __templates_home.weekly(),
       __templates_home.blog(),
@@ -65,10 +69,10 @@ export const __render = {
         option: __templates.related_product()
       }),
       __templates_header.cart(),
-      __template_categories.infomation(),
-      __template_categories.categories(),
-      __template_categories.filter(),
-      __template_categories.products(),
+      __templates_categories.infomation(),
+      __templates_categories.categories(),
+      __templates_categories.filter(),
+      __templates_categories.products(),
       __templates_footer.footer(),
     ];
     this.build('categories', blocks);
@@ -186,4 +190,4 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.homepage();
+__render.categories_page();

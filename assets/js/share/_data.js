@@ -91,6 +91,17 @@ export const __banners = [
     url: `https://ssstutter.com/wp-content/uploads/2021/04/banner-final.jpg`
   }
 ]
+export const __banners_mobile = [
+  {
+    url: `https://ssstutter.com/wp-content/uploads/2021/03/02.LBRR_.gif`
+  },
+  {
+    url: `https://ssstutter.com/wp-content/uploads/2021/03/06.WINCOAT.gif`
+  },
+  {
+    url: `https://ssstutter.com/wp-content/uploads/2021/03/05.LBTETA.gif`
+  }
+]
 
 export const __products = [
   {

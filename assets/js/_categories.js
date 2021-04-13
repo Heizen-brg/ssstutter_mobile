@@ -25,6 +25,7 @@ export const __templates_categories = {
     let div = document.createElement('div');
     div.className = 'categories__filter';
     div.innerHTML = `
+    <div data-toggle="filter" class="filter__toggle">${__icons.filter} FILTER</div>
     <div class="filter__list">
       <ul>
         <li class="color">
@@ -218,8 +219,22 @@ export const __templates_categories = {
           </ul>
         </li>
       </ul>
+      <div class="filter__action">
+        <button>Áp dụng</button>
+        <button data-toggle="filter">Trở lại</button>
+      </div>
     </div>
     `;
+    let filter_toggle = div.querySelectorAll('[data-toggle="filter"')
+    filter_toggle.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        if (div.querySelector('.filter__list').classList.contains('active')) {
+          div.querySelector('.filter__list').classList.remove('active');
+        } else {
+          div.querySelector('.filter__list').classList.add('active');
+        }
+      })
+    })
     return div;
   },
   products() {

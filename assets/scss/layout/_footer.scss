@@ -71,3 +71,70 @@
     }
   }
 }
+
+@media (max-width: 426px) {
+  .footer {
+    padding: 5%;
+    div {
+      @include flex(column, center, center);
+      margin-bottom: 10px;
+      .company__info {
+        @include flex(column, center, center);
+        img {
+          width: 70%;
+        }
+        ul {
+          @include flex(column, center, center);
+          margin: 10px 0;
+          li {
+            line-height: 2;
+            color: $gray;
+          }
+        }
+      }
+      .company__policy {
+        display: none;
+      }
+      .about__us {
+        text-align: center;
+        width: 80%;
+        line-height: 2;
+        color: $gray;
+        p:nth-child(2) {
+          display: none;
+        }
+      }
+      .social__network {
+        flex-direction: row;
+        order: -1;
+        a {
+          margin: 0 15px;
+          svg {
+            fill: $silver;
+          }
+        }
+      }
+      &.end__footer {
+        padding: 0;
+        justify-content: center;
+        border: none;
+        h1 {
+          display: none;
+        }
+        .mobile__app {
+          @include flex(row, center, center);
+          margin: 0;
+          a {
+            margin: 0 10px;
+            svg {
+              fill: $silver;
+            }
+          }
+          p {
+            color: $silver;
+          }
+        }
+      }
+    }
+  }
+}

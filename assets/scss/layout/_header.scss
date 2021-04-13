@@ -26,7 +26,7 @@
             @include transition;
             width: 0%;
             height: 3px;
-            background-color: $brown;
+            background-color: $black;
           }
           &.active {
             &::after {

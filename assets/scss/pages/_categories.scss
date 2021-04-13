@@ -14,6 +14,7 @@
   .categories__list {
     grid-area: 2 / 1 / 3 / 7;
     padding: 0 5%;
+    border-bottom: thin solid $light;
     ul {
       @include grid(repeat(5, minmax(auto, 18%)), null, 10px);
       @include transition;
@@ -24,9 +25,35 @@
         @include font(medium, start, 500);
         line-height: 1.5;
         text-transform: uppercase;
-        text-decoration: underline;
+        position: relative;
+        &::before {
+          @include position(absolute, 0, 0, null, null);
+          content: "";
+          width: 5px;
+          height: 5px;
+          background-color: $red;
+          border-radius: 50px;
+          opacity: 0;
+          @include transition;
+        }
+        &::after {
+          @include position(absolute, null, null, 0, 0);
+          content: "";
+          width: 0%;
+          height: 3px;
+          background-color: $black;
+          border-radius: 4px;
+          @include transition;
+        }
+        &.active,
         &:hover {
           color: $black;
+          &::before {
+            opacity: 1;
+          }
+          &::after {
+            width: 100%;
+          }
         }
       }
     }
@@ -36,6 +63,9 @@
     grid-area: 3 / 1 / 5 / 2;
     padding-left: 30%;
     position: relative;
+    .filter__toggle {
+      display: none;
+    }
     .filter__list {
       position: sticky;
       top: 100px;
@@ -117,6 +147,9 @@
           }
         }
       }
+      .filter__action {
+        display: none;
+      }
     }
   }
 
@@ -127,11 +160,94 @@
     ul {
       @include grid(repeat(auto-fit, minmax(30%, 1fr)), null, 20px);
       li {
+        &:first-child {
+          grid-column: 1/3;
+        }
         width: 100%;
       }
     }
   }
   .footer {
     grid-area: 5 / 1 / 7 / 7;
+  }
+}
+
+@media (max-width: 426px) {
+  .categories {
+    padding-top: 0;
+    grid-gap: 20px;
+    .categories__info {
+      h1 {
+        display: none;
+      }
+      p {
+        display: none;
+      }
+    }
+
+    .categories__list {
+      grid-area: 1 / 1 / 2 / 7;
+      padding: 5%;
+      ul {
+        @include grid(repeat(5, minmax(100px, 18%)), null, 10px);
+        @include hidden_scroll;
+        max-width: 371px;
+        overflow: auto;
+        li {
+          text-align: center;
+        }
+      }
+    }
+
+    .categories__filter {
+      grid-area: 2 / 1 / 3 / 7;
+      padding-left: 5%;
+      .filter__toggle {
+        @include flex(row, start, center);
+        display: inline-flex;
+        cursor: pointer;
+        svg {
+          margin-right: 10px;
+          padding: 3px;
+        }
+      }
+      .filter__list {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: -9999px;
+        background: $white;
+        z-index: 10;
+        @include transition;
+        &.active {
+          left: 0%;
+        }
+        ul {
+          padding: 5%;
+        }
+        .filter__action {
+          @include flex(row, space-around, center);
+          button {
+            @include border($black, 4px);
+            padding: 10px 15px;
+            background-color: transparent;
+            width: 40%;
+          }
+        }
+      }
+    }
+
+    .categories__products {
+      grid-area: 3 / 1 / 5 / 7;
+      padding: 0 5%;
+      width: 100%;
+      ul {
+        @include grid(repeat(auto-fit, minmax(30%, 1fr)), null, 20px);
+        li {
+          width: 100%;
+        }
+      }
+    }
   }
 }
