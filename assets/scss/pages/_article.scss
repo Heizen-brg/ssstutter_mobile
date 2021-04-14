@@ -76,3 +76,37 @@
     }
   }
 }
+
+@media (max-width: 426px) {
+  .article__page {
+    .article__related {
+      ul {
+        padding: 5%;
+        width: 100vw;
+        display: block;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        scroll-snap-type: x mandatory;
+        scroll-snap-stop: always;
+        overscroll-behavior: none;
+        li {
+          scroll-snap-align: start;
+          display: inline-grid;
+          width: 100%;
+          padding: 10px;
+          p {
+            a {
+              strong {
+                max-width: 150px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .article__content {
+    padding: 5%;
+  }
+}

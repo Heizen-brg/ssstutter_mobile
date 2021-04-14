@@ -86,3 +86,51 @@
     }
   }
 }
+
+@media (max-width: 426px) {
+  .blog__page {
+    .highlight {
+      padding: 5%;
+      grid-gap: 10px;
+      &__item {
+        p {
+          padding: 10px;
+          a {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            font-weight: bold;
+            font-size: small;
+          }
+        }
+      }
+    }
+    .category {
+      padding: 5%;
+      ul {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+      }
+    }
+    .latest {
+      padding: 5%;
+      margin: 0;
+      ul {
+        padding: 0;
+        li {
+          p {
+            font-size: small;
+            padding: 0;
+            a {
+              i {
+                margin-bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

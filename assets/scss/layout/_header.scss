@@ -253,7 +253,7 @@
   .header {
     @include position(fixed, auto, auto, 0, 0);
     .nav {
-      border-top: thin solid $light;
+      box-shadow: -2px -2px 5px $light;
       &__left {
         place-content: initial;
         &--items {
@@ -310,6 +310,19 @@
           }
           ul {
             display: none;
+            margin-left: 30px;
+            &.active {
+              display: block;
+            }
+            li {
+              a {
+                padding: 0px;
+                font-size: small;
+                font-weight: normal;
+                text-transform: capitalize;
+                margin: 10px 0;
+              }
+            }
           }
         }
       }
@@ -341,6 +354,14 @@
           color: var(--silver);
           text-align: center;
         }
+      }
+    }
+  }
+  .cart__container {
+    .mini__cart {
+      width: 100%;
+      ul {
+        max-height: 80vh;
       }
     }
   }

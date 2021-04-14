@@ -110,3 +110,53 @@
     grid-area: 5 / 1 / 7 / 7;
   }
 }
+
+@media (max-width: 426px) {
+  .campaign__page {
+    grid-gap: 20px;
+    .categories__filter {
+      grid-area: 3 / 1 / 4 / 7;
+      padding-left: 5%;
+      .filter__toggle {
+        @include flex(row, start, center);
+        display: inline-flex;
+        cursor: pointer;
+        svg {
+          margin-right: 10px;
+          padding: 3px;
+        }
+      }
+      .filter__list {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: -9999px;
+        background: $white;
+        z-index: 10;
+        @include transition;
+        &.active {
+          left: 0%;
+        }
+        ul {
+          padding: 5%;
+        }
+        .filter__action {
+          @include flex(row, space-around, center);
+          button {
+            @include border($black, 4px);
+            padding: 10px 15px;
+            background-color: transparent;
+            width: 40%;
+          }
+        }
+      }
+    }
+    .gender__filter {
+      grid-area: 2 / 1 / 3 / 7;
+    }
+    .categories__products {
+      grid-area: 4 / 1 / 5 / 7;
+    }
+  }
+}

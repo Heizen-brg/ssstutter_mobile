@@ -6,6 +6,6 @@
   }
   ul {
     width: 100%;
-    @include grid(repeat(auto-fit, minmax(23%, 1fr)), null, 20px);
+    @include grid(repeat(auto-fit, minmax(43%, 1fr)), null, 20px);
   }
 }

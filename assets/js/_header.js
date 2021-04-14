@@ -55,7 +55,7 @@ export const __templates_header = {
           <div class="close">${__icons.close}</div>
         </div>
         <ul>
-          <li data-megamenu="toggle" class=""><a href="javascript:" data-src="/c/for-him">Nam</a>
+          <li data-cat="toggle" class=""><a href="javascript:" data-src="/c/for-him">Nam</a>
             <ul class="side__items">
               <li><a href="https://sss.leanservices.work/c/for-him/so-mi-ao-kieu/">sơ mi &amp; áo kiểu</a></li>
               <li><a href="https://sss.leanservices.work/c/for-him/ao-thun/">áo thun</a></li>
@@ -70,7 +70,7 @@ export const __templates_header = {
               <li><a href="https://sss.leanservices.work/c/for-him/hoodies-sweatshirt/">hoodies &amp; sweatshirt</a></li>
             </ul>
           </li>
-          <li data-megamenu="toggle" class=""><a href="javascript:" data-src="/c/for-her">Nữ</a>
+          <li data-cat="toggle" class=""><a href="javascript:" data-src="/c/for-her">Nữ</a>
             <ul class="side__items">
               <li><a href="https://sss.leanservices.work/c/for-her/so-mi-ao-kieu-for-her/">sơ mi &amp; áo kiểu</a></li>
               <li><a href="https://sss.leanservices.work/c/for-her/ao-blazer-ao-khoac-for-her/">áo blazer &amp; áo khoác</a>
@@ -111,6 +111,17 @@ export const __templates_header = {
       } else block.innerHTML = params[pos];
     })
     header.querySelector('.close').addEventListener('click', () => { this.hide_menu() });
+    let cat_toggle = header.querySelectorAll('[data-cat="toggle"]');
+    cat_toggle.forEach(item => {
+      let cat_link = item.querySelector('a');
+      cat_link.addEventListener('click', () => {
+        if (item.querySelector('ul').classList.contains('active')) {
+          item.querySelector('ul').classList.remove('active');
+        } else {
+          item.querySelector('ul').classList.add('active');
+        }
+      })
+    })
     return header
   },
 
@@ -120,7 +131,7 @@ export const __templates_header = {
     if (desktop || tablet) {
       div.innerHTML = `
       <div data-active="" data-action="megamenu"><a href="/c/for-him">nam</a></div>
-      <div data-active="" data-action="megamenu"><a href="//c/for-her">nữ</a></div>
+      <div data-active="" data-action="megamenu"><a href="/c/for-her">nữ</a></div>
     `;
     } else {
       div.innerHTML = `

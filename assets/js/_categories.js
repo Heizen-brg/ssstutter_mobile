@@ -27,7 +27,7 @@ export const __templates_categories = {
     div.innerHTML = `
     <div data-toggle="filter" class="filter__toggle">${__icons.filter} FILTER</div>
     <div class="filter__list">
-      <ul>
+      <ul class="filter__list--wrapper">
         <li class="color">
           <h4>Màu sắc
             ${__icons.right}
@@ -232,6 +232,18 @@ export const __templates_categories = {
           div.querySelector('.filter__list').classList.remove('active');
         } else {
           div.querySelector('.filter__list').classList.add('active');
+        }
+      })
+    })
+    let filter_label = div.querySelectorAll('.filter__list--wrapper > li');
+    filter_label.forEach(label => {
+      let trigger = label.querySelector('h4');
+      let ul = label.querySelector('ul');
+      trigger.addEventListener('click', () => {
+        if (ul.classList.contains('active')) {
+          ul.classList.remove('active');
+        } else {
+          ul.classList.add('active');
         }
       })
     })

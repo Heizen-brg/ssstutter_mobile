@@ -190,4 +190,4 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.categories_page();
+__render.homepage();
