@@ -139,6 +139,12 @@
     }
     ul {
       @include grid(repeat(auto-fit, minmax(23%, 1fr)), null, 20px);
+      visibility: hidden;
+      height: 0;
+      &.active {
+        visibility: visible;
+        height: auto;
+      }
     }
   }
 

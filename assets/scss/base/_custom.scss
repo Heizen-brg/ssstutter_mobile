@@ -147,3 +147,31 @@ svg {
     height: 25px;
   }
 }
+
+.busy__loader {
+  width: 100%;
+  display: grid;
+  place-content: center;
+  padding: 20px;
+  z-index: 2;
+  svg {
+    width: 200px;
+    height: auto;
+  }
+}
+.preview__loader {
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(225, 225, 225, 0.5);
+  display: grid;
+  place-content: center;
+  padding: 20px;
+  z-index: 2;
+  svg {
+    width: 200px;
+    height: auto;
+  }
+}

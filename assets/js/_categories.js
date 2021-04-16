@@ -1,5 +1,8 @@
 import { __icons } from "./share/_icons.js";
 import { __categories, __products } from "./share/_data.js";
+import { __templates } from "./share/_components.js";
+import { __requests } from "./main.js";
+
 export const __templates_categories = {
   infomation(params = {}) {
     let section = document.createElement('section');
@@ -16,7 +19,7 @@ export const __templates_categories = {
     section.className = 'categories__list';
     section.innerHTML = `
       <ul>
-        ${(__categories || []).map(item => `<li data-cate="">${item}</li>`).join('')}
+        ${(__categories || []).map(item => `<li data-cate=""><p>${item}</p></li>`).join('')}
       </ul>
     `;
     return section;
@@ -249,27 +252,61 @@ export const __templates_categories = {
     })
     return div;
   },
-  products() {
+  products(params = {}) {
     let div = document.createElement('div');
     div.className = 'categories__products';
     div.innerHTML = ` 
     <ul>
-      ${(__products || []).map(item => `
-      <li>
-        <div class="product">
-          <div class="thumbnail">
-            <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
-          </div>
-          <h6 class="name">${item.name}</h6>
-          <div class="price">
-            ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-            <p>${item.price}<sup>đ</sup></p>
-          </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
-        </div>
-      </li>`).join('')}
+      ${__templates.busy_loading('show')}
     </ul>
     `;
+    let product_container = div.querySelector('ul');
+    let product_list = () => {
+      __requests({
+        method: 'GET',
+        url: `https://sss.leanservices.work/services/sssearch?cat=35&exclude=${window.product_ids}`,
+        header: {
+          authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+        },
+      }, (res) => {
+        let products = (res || []).map(item => {
+          let el_li = document.createElement('li');
+          el_li.innerHTML = `
+          <div class="product">
+            <div class="thumbnail">
+              <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+            </div>
+            <h6 class="name">${item.name}</h6>
+            <div class="price">
+              ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+              <p>${item.price}<sup>đ</sup></p>
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+          </div>
+          `;
+          product_container.appendChild(el_li);
+          return el_li
+        })
+        infinity_scroll(products[products.length - 3]);
+        __templates.busy_loading('hide');
+      })
+    }
+    product_list();
+    let infinity_scroll = (anchor) => {
+      let block_loader = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let block = entry.target;
+            product_container.innerHTML += __templates.busy_loading('show');
+            product_list();
+            block_loader.unobserve(block);
+          }
+        })
+      });
+      block_loader.observe(anchor);
+    };
+
     return div;
-  }
+  },
 }
+

@@ -1,6 +1,14 @@
 .products__slider {
   width: 100%;
   margin: 20px 0;
+  .glide {
+    visibility: hidden;
+    height: 0;
+    &.active {
+      visibility: visible;
+      height: auto;
+    }
+  }
 }
 
 .product {

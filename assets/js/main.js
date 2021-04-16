@@ -10,6 +10,45 @@ import { __templates_footer } from './_footer.js';
 import { __templates } from './share/_components.js';
 import { __template_search } from "./_search.js";
 
+
+const __requests = (params, callback, by_pass_error = false) => {
+  let header = Object.assign({
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }, params.header || {})
+
+  let options = {
+    method: params.method || 'GET',
+    headers: header,
+  }
+  if (options.method !== 'GET') options.body = params.body;
+  return fetch(params.url, options).then((response) => {
+    if (response.status >= 400 && response.status < 600) {
+      // __push_notification('fail', __lang[languages].system_error);
+      // __templates.loader('hide');
+      return Promise.resolve(false);
+    }
+    if (response.headers.get("content-type").indexOf("application/json") !== -1) {
+      response = response.json();
+      if (typeof response == ' string') response = JSON.parse(response);
+    }
+    else response = response.text();
+    return response;
+  }).then(data => {
+    // if ((data.success == 0 || data.success == false) && by_pass_error == false) {
+    //   if (data.error) __push_notification('fail', __lang[languages][data.error]);
+    //   if (data.action) return Promise.resolve(data);
+    //   return Promise.resolve(false);
+    // }
+    if (callback) callback(data);
+    return Promise.resolve(data);
+  });
+};
+export { __requests }
+
+
+
+
 let mobile = window.innerWidth <= 425;
 let tablet = window.innerWidth <= 768 && window.innerWidth > 425;
 let desktop = window.innerWidth > 780;
@@ -36,6 +75,7 @@ export const __render = {
   homepage() {
     let banner = mobile ? __templates_home.mobile_banner() : __templates_home.banner();
     let new_arrivals = mobile ? __templates_home.mobile_new_arrivals() : __templates_home.new_arrivals();
+
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
@@ -190,4 +230,9 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.homepage();
+__render.categories_page();
+
+
+
+
+

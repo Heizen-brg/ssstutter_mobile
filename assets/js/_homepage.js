@@ -1,9 +1,25 @@
 import { __banners, __products, __banners_mobile } from "./share/_data.js";
 import { __icons } from "./share/_icons.js";
-
+import { __requests } from "./main.js";
+import { __templates } from "./share/_components.js";
 
 
 export const __templates_home = {
+  hide_menu() {
+    let gender = document.querySelectorAll('[data-gender]');
+    let triggers = document.querySelectorAll('[data-active]')
+    triggers.forEach(item => item.classList.remove('active'));
+    gender.forEach(block => {
+      block.classList.remove('active');
+    });
+  },
+  show_menu(item) {
+    item.classList.add('active');
+    let gender = document.querySelectorAll('[data-gender]');
+    gender.forEach(container => {
+      container.dataset.gender == item.dataset.active ? container.classList.add('active') : container.classList.remove('active');
+    })
+  },
   banner() {
     let section = document.createElement('section');
     section.className = 'slide__banner';
@@ -63,44 +79,60 @@ export const __templates_home = {
     `;
     return section;
   },
-  new_arrivals() {
+  new_arrivals(product = {}) {
     let section = document.createElement('section');
     section.className = 'new-arrivals__slide';
     section.innerHTML = `
       <h2>what's new</h2>
       <div class="gender__toggle">
-        <button>For Him</button>
-        <button>For Her</button>
+        <button data-active="male_arrivals" class="active">For Him</button>
+        <button data-active="female_arrivals">For Her</button>
       </div>
       <div class="products__slider">
-        <div class="glide" id="new_arrivals">
+        <div class="glide active" data-gender="male_arrivals" id="male_arrivals">
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
-              ${(__products || []).map(item =>
-      `
-                <li class="glide__slide">
-                  <div class="product">
-                    <div class="thumbnail">
-                      <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
-                    </div>
-                    <h6 class="name">${item.name}</h6>
-                    <div class="price">
-                      ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-                      <p>${item.price}<sup>đ</sup></p>
-                    </div>
-                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
-                  </div>
-                </li>
-                  `
-    ).join('')}
+                ${__templates.busy_loading('show')}
+            </ul>
+          </div>
+        </div>
+        <div class="glide" data-gender="female_arrivals" id="female_arrivals">
+        <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+                ${__templates.busy_loading('show')}
             </ul>
           </div>
         </div>
       </div>
     `;
-    setTimeout(() => {
-      new Glide('#new_arrivals', {
-        type: "carousel",
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=35&limit=10',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let products = (res || []).map(item =>
+        `
+          <li class="glide__slide">
+            <div class="product">
+              <div class="thumbnail">
+                <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+              </div>
+              <h6 class="name">${item.name}</h6>
+              <div class="price">
+                ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+                <p>${item.price}<sup>đ</sup></p>
+              </div>
+              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+            </div>
+          </li>
+        `
+      ).join('');
+      let glide__track = section.querySelector('#male_arrivals .glide__slides');
+      glide__track.innerHTML = products;
+      new Glide('#male_arrivals', {
+        type: "slider",
         bound: true,
         perView: 4,
         autoplay: 5000,
@@ -119,7 +151,65 @@ export const __templates_home = {
           }
         }
       }).mount();
-    }, 100);
+    })
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=39&limit=10',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let products = (res || []).map(item =>
+        `
+          <li class="glide__slide">
+            <div class="product">
+              <div class="thumbnail">
+                <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+              </div>
+              <h6 class="name">${item.name}</h6>
+              <div class="price">
+                ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+                <p>${item.price}<sup>đ</sup></p>
+              </div>
+              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+            </div>
+          </li>
+        `
+      ).join('');
+      let glide__track = section.querySelector('#female_arrivals .glide__slides');
+      glide__track.innerHTML = products;
+      new Glide('#female_arrivals', {
+        type: "slider",
+        bound: true,
+        perView: 4,
+        autoplay: 5000,
+        gap: 20,
+        hoverpause: true,
+        peek: {
+          before: 0,
+          after: 100
+        },
+        breakpoints: {
+          800: {
+            perView: 3
+          },
+          480: {
+            perView: 2
+          }
+        }
+      }).mount();
+    })
+    let toggle_gender = section.querySelectorAll('[data-active]');
+    toggle_gender.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('active')) {
+          return false;
+        } else {
+          this.hide_menu();
+          this.show_menu(btn);
+        }
+      })
+    })
     return section;
   },
   mobile_new_arrivals() {
@@ -128,49 +218,88 @@ export const __templates_home = {
     section.innerHTML = `
       <h2>what's new</h2>
       <div class="gender__toggle">
-        <button>For Him</button>
-        <button>For Her</button>
+        <button class="active" data-active="male_arrivals">For Him</button>
+        <button data-active="female_arrivals">For Her</button>
       </div>
       <div class="products__slider">
-        <div class="glide" id="new_arrivals">
+        <div class="glide active" data-gender="male_arrivals" id="male_arrivals">
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
-              ${(__products || []).map((item, index) => {
-      return `       
-                <li class="glide__slide">
-                  <div class="product">
-                    <div class="thumbnail">
-                      <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
-                    </div>
-                    <h6 class="name">${item.name}</h6>
-                    <div class="price">
-                      ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-                      <p>${item.price}<sup>đ</sup></p>
-                    </div>
-                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
-                  </div>
-                  <div class="product">
-                    <div class="thumbnail">
-                      <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
-                    </div>
-                    <h6 class="name">${item.name}</h6>
-                    <div class="price">
-                      ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-                      <p>${item.price}<sup>đ</sup></p>
-                    </div>
-                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
-                  </div>
-                </li>
-                  `
-    }
-    ).join('')}
+                ${__templates.busy_loading('show')}
+            </ul>
+          </div>
+        </div>
+        <div class="glide" data-gender="female_arrivals" id="female_arrivals">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+                ${__templates.busy_loading('show')}
             </ul>
           </div>
         </div>
       </div>
     `;
-    setTimeout(() => {
-      new Glide('#new_arrivals', {
+    let toggle_gender = section.querySelectorAll('[data-active]');
+    toggle_gender.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('active')) {
+          return false;
+        } else {
+          this.hide_menu();
+          this.show_menu(btn);
+        }
+      })
+    })
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=35&limit=10',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let item_per_view = 4;
+      let stop_loop = Math.ceil(res.length / item_per_view);
+      let products = (res || []).map((item, index) => {
+        let current_index = index * 2;
+        if (index - 1 > stop_loop) return '';
+        item = res[current_index];
+        if (!item) return '';
+        let next_item = res[current_index + 1];
+        if (next_item) {
+          next_item = `
+          <div class="product">
+            <div class="thumbnail">
+              <a href="/"><span style="background-image:url(https://ssstutter.com${next_item.photo})"></span></a>
+            </div>
+            <h6 class="name">${next_item.name}</h6>
+            <div class="price">
+              ${next_item.sale_price == next_item.price ? '' : `<p class="discount">${next_item.sale_price}<sup>đ</sup></p>`}
+              <p>${next_item.price}<sup>đ</sup></p>
+            </div>
+            ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ''}
+          </div>
+          `
+        } else next_item = '';
+
+        return `
+      <li class="glide__slide">
+        <div class="product">
+          <div class="thumbnail">
+            <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+          </div>
+          <h6 class="name">${item.name}</h6>
+          <div class="price">
+            ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+            <p>${item.price}<sup>đ</sup></p>
+          </div>
+          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+        </div>
+          ${next_item}
+      </li>
+        `
+      }).join('');
+      let glide__track = section.querySelector('#male_arrivals .glide__slides');
+      glide__track.innerHTML = products;
+      new Glide('#male_arrivals', {
         type: "carousel",
         bound: true,
         perView: 4,
@@ -194,7 +323,82 @@ export const __templates_home = {
           }
         }
       }).mount();
-    }, 100);
+    })
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=39&limit=10',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let item_per_view = 4;
+      let stop_loop = Math.ceil(res.length / item_per_view);
+      let products = (res || []).map((item, index) => {
+        let current_index = index * 2;
+        if (index - 1 > stop_loop) return '';
+        item = res[current_index];
+        if (!item) return '';
+        let next_item = res[current_index + 1];
+        if (next_item) {
+          next_item = `
+          <div class="product">
+            <div class="thumbnail">
+              <a href="/"><span style="background-image:url(https://ssstutter.com${next_item.photo})"></span></a>
+            </div>
+            <h6 class="name">${next_item.name}</h6>
+            <div class="price">
+              ${next_item.sale_price == next_item.price ? '' : `<p class="discount">${next_item.sale_price}<sup>đ</sup></p>`}
+              <p>${next_item.price}<sup>đ</sup></p>
+            </div>
+            ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ''}
+          </div>
+          `
+        } else next_item = '';
+
+        return `
+      <li class="glide__slide">
+        <div class="product">
+          <div class="thumbnail">
+            <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+          </div>
+          <h6 class="name">${item.name}</h6>
+          <div class="price">
+            ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+            <p>${item.price}<sup>đ</sup></p>
+          </div>
+          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+        </div>
+          ${next_item}
+      </li>
+        `
+      }).join('');
+      let glide__track = section.querySelector('#female_arrivals .glide__slides');
+      glide__track.innerHTML = products;
+      new Glide('#female_arrivals', {
+        type: "carousel",
+        bound: true,
+        perView: 4,
+        autoplay: 5000,
+        gap: 10,
+        hoverpause: true,
+        peek: {
+          before: 0,
+          after: 100
+        },
+        breakpoints: {
+          800: {
+            perView: 3
+          },
+          480: {
+            perView: 2,
+            peek: {
+              before: 0,
+              after: 0
+            },
+          }
+        }
+      }).mount();
+    })
     return section;
   },
   stylepick() {
@@ -203,26 +407,10 @@ export const __templates_home = {
     section.innerHTML = `
       <h2>style pick</h2>
       <div class="products__slider">
-        <div class="glide" id="stylepick">
+        <div class="glide active" id="stylepick">
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
-              ${(__products || []).map(item =>
-      `
-                <li class="glide__slide">
-                  <div class="product">
-                    <div class="thumbnail">
-                      <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
-                    </div>
-                    <h6 class="name">${item.name}</h6>
-                    <div class="price">
-                      ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-                      <p>${item.price}<sup>đ</sup></p>
-                    </div>
-                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
-                  </div>
-                </li>
-                  `
-    ).join('')}
+                ${__templates.busy_loading('show')}
             </ul>
           </div>
           <div class="glide__arrows" data-glide-el="controls">
@@ -232,7 +420,32 @@ export const __templates_home = {
         </div>
       </div>
     `;
-    setTimeout(() => {
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=35&limit=10',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let product = (res || []).map(item =>
+        `
+                  <li class="glide__slide">
+                    <div class="product">
+                      <div class="thumbnail">
+                        <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+                      </div>
+                      <h6 class="name">${item.name}</h6>
+                      <div class="price">
+                        ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+                        <p>${item.price}<sup>đ</sup></p>
+                      </div>
+                      ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+                    </div>
+                  </li>
+                    `
+      ).join('');
+      let glide = section.querySelector('.glide__slides')
+      glide.innerHTML = product;
       new Glide('#stylepick', {
         type: "carousel",
         bound: true,
@@ -253,7 +466,8 @@ export const __templates_home = {
           },
         }
       }).mount();
-    }, 100);
+
+    });
     return section;
   },
   weekly() {
@@ -262,27 +476,76 @@ export const __templates_home = {
     section.innerHTML = `
       <h2>weekly best</h2>
       <div class="gender__toggle">
-        <button>For Him</button>
-        <button>For Her</button>
+        <button class="active" data-active="male_arrivals">For Him</button>
+        <button data-active="female_arrivals">For Her</button>
       </div>
-      <ul class="weekly__best--list">
-        ${(__products || []).map(item => ` 
-        <li>
-          <div class="product">
-          <div class="thumbnail">
-            <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
-          </div>
-          <h6 class="name">${item.name}</h6>
-          <div class="price">
-            ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-            <p>${item.price}<sup>đ</sup></p>
-          </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
-          </div>
-        </li>`).join('')}
+      <ul data-gender="male_arrivals" class="weekly__best--list active">
+        ${__templates.busy_loading('show')}
+      </ul>
+      <ul data-gender="female_arrivals" class="weekly__best--list">
+        ${__templates.busy_loading('show')}
       </ul>
     `;
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=35&limit=8',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let product = (res || []).map(item => ` 
+      <li>
+        <div class="product">
+        <div class="thumbnail">
+          <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+        </div>
+        <h6 class="name">${item.name}</h6>
+        <div class="price">
+          ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+          <p>${item.price}<sup>đ</sup></p>
+        </div>
+        ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+        </div>
+      </li>`).join('');
+      let glide = section.querySelector('[data-gender="male_arrivals"]')
+      glide.innerHTML = product;
 
+    });
+    __requests({
+      method: 'GET',
+      url: 'https://sss.leanservices.work/services/sssearch?cat=39&limit=8',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      let product = (res || []).map(item => ` 
+      <li>
+        <div class="product">
+        <div class="thumbnail">
+          <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+        </div>
+        <h6 class="name">${item.name}</h6>
+        <div class="price">
+          ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
+          <p>${item.price}<sup>đ</sup></p>
+        </div>
+        ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+        </div>
+      </li>`).join('');
+      let glide = section.querySelector('[data-gender="female_arrivals"]')
+      glide.innerHTML = product;
+    });
+    let toggle_gender = section.querySelectorAll('[data-active]');
+    toggle_gender.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('active')) {
+          return false;
+        } else {
+          this.hide_menu();
+          this.show_menu(btn);
+        }
+      })
+    })
     return section;
   },
   blog() {
