@@ -1,8 +1,8 @@
 import { __icons } from "./share/_icons.js";
 import { __categories, __products } from "./share/_data.js";
 import { __templates } from "./share/_components.js";
-import { __requests } from "./main.js";
-
+import { __render, __requests } from "./main.js";
+import { __remove_item_in_array, __init_filter } from "./share/_function.js";
 export const __templates_categories = {
   infomation(params = {}) {
     let section = document.createElement('section');
@@ -250,28 +250,100 @@ export const __templates_categories = {
         }
       })
     })
+    let data_filter = {
+      existed_ids: [],
+      q: [{
+        tax: 'color',
+        data: []
+      }, {
+        tax: 'size',
+        data: []
+      }],
+      price: null,
+    }
+    let color_filter_list = div.querySelectorAll('[data-name="pa_color"]')
+    color_filter_list.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let color_attr = btn.dataset.color;
+        let size_attr = btn.dataset.size;
+        let btn_input = btn.querySelector('input');
+        btn_input.checked = true;
+        if (btn.classList.contains('active')) {
+          if (data_filter.q[0].data) {
+            let d = data_filter.q[0].data;
+            data_filter.q[0].data = __remove_item_in_array(color_attr, d);
+            btn_input.checked = false;
+          }
+          btn.classList.remove('active');
+        } else {
+          btn.classList.add('active');
+          if (color_attr) {
+            data_filter.q[0].data.push(color_attr);
+            btn_input.checked = true
+          }
+        }
+        __init_filter(data_filter);
+        this.products({ query: __init_filter(data_filter) })
+      })
+    });
+    let size_filter_list = div.querySelectorAll('[data-name="pa_size"]')
+    size_filter_list.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let color_attr = btn.dataset.color;
+        let size_attr = btn.dataset.size;
+        let btn_input = btn.querySelector('input');
+        btn_input.checked = true;
+        if (btn.classList.contains('active')) {
+          if (data_filter.q[1].data) {
+            let d = data_filter.q[1].data;
+            data_filter.q[1].data = __remove_item_in_array(size_attr, d);
+            btn_input.checked = false;
+          }
+          btn.classList.remove('active');
+        } else {
+          btn.classList.add('active');
+          if (size_attr) {
+            data_filter.q[1].data.push(size_attr);
+            btn_input.checked = true
+          }
+        }
+        __init_filter(data_filter);
+        this.products({ query: __init_filter(data_filter) })
+      })
+    })
     return div;
   },
   products(params = {}) {
     let div = document.createElement('div');
     div.className = 'categories__products';
     div.innerHTML = ` 
-    <ul>
+    <ul data-cate="35">
       ${__templates.busy_loading('show')}
     </ul>
     `;
     let product_container = div.querySelector('ul');
-    let product_list = () => {
+    let product_list = (product_ids) => {
+      window.product_ids = product_ids || (window.product_ids ? window.product_ids : []);
+      let query = params.query ? params.query : `?cat=35&exclude=${window.product_ids.join(',')}`;
       __requests({
         method: 'GET',
-        url: `https://sss.leanservices.work/services/sssearch?cat=35&exclude=${window.product_ids}`,
+        url: `https://sss.leanservices.work/services/sssearch${query}`,
         header: {
           authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
         },
       }, (res) => {
+        console.log(res);
         let products = (res || []).map(item => {
-          let el_li = document.createElement('li');
-          el_li.innerHTML = `
+          window.product_ids.push(item.id);
+          let product_template = document.createElement('li');
+          product_template.dataset.gender = item.gender;
+          product_template.dataset.price = item.price;
+          product_template.dataset.sale = item.discount;
+          product_template.innerHTML = `
           <div class="product">
             <div class="thumbnail">
               <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
@@ -284,8 +356,8 @@ export const __templates_categories = {
             ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
           </div>
           `;
-          product_container.appendChild(el_li);
-          return el_li
+          product_container.appendChild(product_template);
+          return product_template
         })
         infinity_scroll(products[products.length - 3]);
         __templates.busy_loading('hide');

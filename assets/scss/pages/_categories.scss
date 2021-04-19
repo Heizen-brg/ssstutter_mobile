@@ -105,6 +105,16 @@
             }
             li {
               margin: 0;
+              // &.active {
+              //   span:before {
+              //     transform: scale(1.04);
+              //     background: $yellow;
+              //   }
+              //   span:after {
+              //     transform: scale(0.4);
+              //     transition: transform 0.3s ease;
+              //   }
+              // }
               label {
                 display: block;
                 cursor: pointer;
@@ -127,7 +137,7 @@
                   text-transform: capitalize;
                   line-height: 15px;
                   height: 15px;
-                  padding-left: 15px;
+                  padding-left: 25px;
                   &::before {
                     content: "";
                     width: 15px;
