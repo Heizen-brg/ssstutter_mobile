@@ -111,8 +111,8 @@ export const __render = {
       __templates_header.cart(),
       __templates_categories.infomation(),
       __templates_categories.categories(),
-      __templates_categories.filter(),
       __templates_categories.products(),
+      __templates_categories.filter(),
       __templates_footer.footer(),
     ];
     this.build('categories', blocks);
