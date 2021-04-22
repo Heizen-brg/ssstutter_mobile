@@ -24,7 +24,6 @@ export const __init_product_list = (container, query, product_ids) => {
       authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
     },
   }, (res) => {
-    console.log(res);
     let products = (res || []).map(item => {
       window.product_ids.push(item.id);
       let product_template = document.createElement('li');

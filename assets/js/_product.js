@@ -1,13 +1,13 @@
 import { __product_detail } from "./share/_data.js";
 import { __icons } from "./share/_icons.js";
-
 export const __templates_product = {
   product_gallery(params = {}) {
+    let gallery = params.extensions.media;
     let div = document.createElement('div');
     div.className = 'gallery';
     div.innerHTML = `
     <ul>
-      ${(__product_detail.gallery || []).map(img => `<li style="background-image:url(${img})"></li>`).join('')}
+      ${(gallery[`color_${params.color}_gallery`] || []).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
     </ul>
     
     `;
@@ -204,27 +204,25 @@ export const __templates_product = {
     return div;
   },
   variation(params = {}) {
+    let info = params.master;
     let div = document.createElement('div');
     div.className = 'variation';
     div.innerHTML = `
       <div>
-        <h1 class="name">italy shirt 2021</h1>
+        <h1 class="name">${info.name}</h1>
         <div class="price">
-          <p>449.000<sup>đ</sup></p>
+          <p>${info.price}<sup>đ</sup></p>
         </div>
         <div class="color">
           <p>chọn màu</p>
           <ul>
-            ${(__product_detail.flatlay || []).map(img => `<li style="background-image:url(${img})"></li>`).join('')}
+           
           </ul>
         </div>
         <div class="size">
           <p>chọn size</p>
           <ul>
-            <li><span>0</span></li>
-            <li><span>1</span></li>
-            <li><span>2</span></li>
-            <li><span>3</span></li>
+          ${info.size.sort((a, b) => a - b).map(i => ` <li data-value="${i}"><span>${i}</span></li>`).join('')}
           </ul>
         </div>
         <button>Thêm vào giỏ hàng</button>
@@ -243,6 +241,36 @@ export const __templates_product = {
         </ul>
       </div>
     `;
+    let init_flatlay_img = (value) => {
+      let media = params.master.extensions.media;
+      let colors_arr = params.master.color;
+      let color_value = colors_arr.map(color => {
+        return {
+          id: color.values,
+          photo: media[`color_${color.values}_thumbnail`]
+        }
+      });
+      color_value.map(item => {
+        let flat_color = document.createElement('li');
+        flat_color.className = 'color__variation';
+        flat_color.dataset.value = item.id;
+        flat_color.style.backgroundImage = `url(https://leanservices.work/pd/static/${item.photo == null ? 'no_image.png' : item.photo.o})`
+        let color_variation = div.querySelector('.color > ul');
+        color_variation.appendChild(flat_color);
+        return flat_color;
+      });
+    };
+    init_flatlay_img();
+    let on_change_variation = () => {
+      let color_variation = div.querySelectorAll('.color__variation');
+      color_variation.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log(btn.dataset.value);
+        })
+      })
+    };
+    on_change_variation();
     return div
   }
 }

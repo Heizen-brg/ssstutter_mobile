@@ -119,25 +119,37 @@ export const __render = {
   },
 
   product_page() {
-    let blocks = [
-      __templates_header.header({
-        left: __templates_header.left(),
-        right: __templates_header.right(),
-      }),
-      __templates_header.megamenu(),
-      __templates_header.search({
-        option: __templates.related_product()
-      }),
-      __templates_header.cart(),
-      __templates_product.product_gallery(),
-      __templates_product.model_info(),
-      __templates_product.flatlay_view(),
-      __templates_product.attributes(),
-      __templates_product.variation(),
-      __templates.related_product(),
-      __templates_footer.footer(),
-    ];
-    this.build('product__page', blocks);
+    __templates.api_loading('show');
+    __requests({
+      method: 'GET',
+      url: 'https://leanservices.work/pd/master/WH0JpLd8SHXH257V8m31HGXY1ZuWvG37 ',
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      }
+    }, (res) => {
+      __templates.api_loading('hide');
+      let product = res.data
+      console.log(product);
+      let blocks = [
+        __templates_header.header({
+          left: __templates_header.left(),
+          right: __templates_header.right(),
+        }),
+        __templates_header.megamenu(),
+        __templates_header.search({
+          option: __templates.related_product(product.master)
+        }),
+        __templates_header.cart(),
+        __templates_product.product_gallery(product.master),
+        __templates_product.model_info(),
+        __templates_product.flatlay_view(),
+        __templates_product.attributes(),
+        __templates_product.variation(product),
+        __templates.related_product(product.master),
+        __templates_footer.footer(),
+      ];
+      this.build('product__page', blocks);
+    });
   },
   checkout_page() {
     let blocks = [
@@ -230,7 +242,7 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.categories_page();
+__render.product_page();
 
 
 

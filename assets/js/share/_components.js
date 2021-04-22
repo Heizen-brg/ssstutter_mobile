@@ -1,3 +1,4 @@
+import { __requests } from "../main.js";
 import { __related } from "./_data.js";
 
 export const __templates = {
@@ -80,14 +81,26 @@ export const __templates = {
     `;
     return div;
   },
-  related_product() {
+  related_product(params = {}) {
     let div = document.createElement('div');
-    div.className = 'related_product';
+    div.className = 'related__product';
     div.innerHTML = `
       <h1>Gợi ý cho bạn</h1>
-     <ul>
-      ${(__related || []).map(item => `
-      <li>
+     <ul class="related__product--list"></ul>
+    `;
+    __requests({
+      method: 'GET',
+      url: `https://sss.leanservices.work/services/sssearch/?color=${params.color[0].values}&limit=4`,
+      header: {
+        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+      },
+    }, (res) => {
+      (res || []).map(item => {
+        let product_template = document.createElement('li');
+        product_template.dataset.gender = item.gender;
+        product_template.dataset.price = item.price;
+        product_template.dataset.sale = item.discount;
+        product_template.innerHTML = `
         <div class="product">
           <div class="thumbnail">
             <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
@@ -99,9 +112,12 @@ export const __templates = {
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
         </div>
-      </li>`).join('')}
-     </ul>
-    `;
+        `;
+        let container = div.querySelector('.related__product--list');
+        container.appendChild(product_template);
+        return product_template
+      })
+    })
     return div;
   }
 }
