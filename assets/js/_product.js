@@ -7,7 +7,7 @@ export const __templates_product = {
     div.className = 'gallery';
     div.innerHTML = `
     <ul>
-      ${(gallery[`color_${params.color}_gallery`] || []).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
+      ${(gallery.color_500_gallery).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
     </ul>
     
     `;
