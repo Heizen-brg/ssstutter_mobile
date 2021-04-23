@@ -1,15 +1,16 @@
-import { __product_detail } from "./share/_data.js";
+import { __currency_format } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
+let user_selection = [];
 export const __templates_product = {
-  product_gallery(params = {}) {
+  product_gallery(params = {}, color_id) {
     let gallery = params.extensions.media;
+    let color = color_id ? color_id : params.color[0].value;
     let div = document.createElement('div');
     div.className = 'gallery';
     div.innerHTML = `
     <ul>
-      ${(gallery.color_500_gallery).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
+      ${(gallery[`color_${color}_gallery`]).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
     </ul>
-    
     `;
     return div;
   },
@@ -40,10 +41,27 @@ export const __templates_product = {
     div.innerHTML = `
       <h1>Chi tiết</h1>
         <ul>
-        ${(__product_detail.flatlay || []).map(img => `<li style="background-image:url(${img})"></li>`).join('')}
         </ul>
       </div>
     `;
+    let init_flatlay_img = () => {
+      let media = params.extensions.media;
+      let colors_arr = params.color;
+      let color_value = colors_arr.map(color => {
+        return {
+          id: color.value,
+          photo: media[`color_${color.value}_thumbnail`]
+        }
+      });
+      color_value.map((item, index) => {
+        let flat_img = document.createElement('li');
+        flat_img.style.backgroundImage = `url(https://leanservices.work/pd/static/${item.photo == null ? 'no_image.png' : item.photo.o})`
+        let color_variation = div.querySelector('.flatlay > ul');
+        color_variation.appendChild(flat_img);
+        return flat_img;
+      });
+    };
+    init_flatlay_img();
     return div;
   },
   attributes(params = {}) {
@@ -211,7 +229,7 @@ export const __templates_product = {
       <div>
         <h1 class="name">${info.name}</h1>
         <div class="price">
-          <p>${info.price}<sup>đ</sup></p>
+          <p>${__currency_format(info.price)}</p>
         </div>
         <div class="color">
           <p>chọn màu</p>
@@ -222,10 +240,10 @@ export const __templates_product = {
         <div class="size">
           <p>chọn size</p>
           <ul>
-          ${info.size.sort((a, b) => a - b).map(i => ` <li data-value="${i}"><span>${i}</span></li>`).join('')}
+          ${info.size.sort((a, b) => a - b).map((i, index) => ` <li class=" size__variation ${index == 0 ? 'active' : ''} " data-value="${i}"><span>${i}</span></li>`).join('')}
           </ul>
         </div>
-        <button>Thêm vào giỏ hàng</button>
+        <button class="add">Thêm vào giỏ hàng</button>
         <div class="interact">
           <div>
             ${__icons.wishlist}
@@ -241,19 +259,22 @@ export const __templates_product = {
         </ul>
       </div>
     `;
+    user_selection.push({ id: info.id, color: info.color[0].value, size: info.size[0] });
     let init_flatlay_img = (value) => {
       let media = params.master.extensions.media;
       let colors_arr = params.master.color;
       let color_value = colors_arr.map(color => {
         return {
-          id: color.values,
-          photo: media[`color_${color.values}_thumbnail`]
+          id: color.value,
+          photo: media[`color_${color.value}_thumbnail`]
         }
       });
-      color_value.map(item => {
+      color_value.map((item, index) => {
         let flat_color = document.createElement('li');
         flat_color.className = 'color__variation';
+        index == 0 ? flat_color.classList.add('active') : false;
         flat_color.dataset.value = item.id;
+        flat_color.dataset.variation = JSON.stringify(info);
         flat_color.style.backgroundImage = `url(https://leanservices.work/pd/static/${item.photo == null ? 'no_image.png' : item.photo.o})`
         let color_variation = div.querySelector('.color > ul');
         color_variation.appendChild(flat_color);
@@ -266,11 +287,34 @@ export const __templates_product = {
       color_variation.forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
-          console.log(btn.dataset.value);
+          color_variation.forEach(btn => btn.classList.remove('active'));
+          btn.classList.add('active')
+          this.product_gallery(JSON.parse(btn.dataset.variation), btn.dataset.value)
+          user_selection[0].color = btn.dataset.value;
+
+        })
+      })
+      let size_variation = div.querySelectorAll('.size__variation');
+      size_variation.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          size_variation.forEach(btn => btn.classList.remove('active'));
+          btn.classList.add('active')
+          user_selection[0].size = btn.dataset.value;
         })
       })
     };
     on_change_variation();
+    let init_add_to_cart = (params) => {
+      let to_cart_btn = div.querySelector('.add');
+      to_cart_btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(user_selection);
+        let cart_menu = document.querySelector('[data-menu="cart"]');
+        cart_menu.classList.add('active');
+      })
+    }
+    init_add_to_cart();
     return div
   }
 }

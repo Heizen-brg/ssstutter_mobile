@@ -142,7 +142,7 @@ export const __render = {
         __templates_header.cart(),
         __templates_product.product_gallery(product.master),
         __templates_product.model_info(),
-        __templates_product.flatlay_view(),
+        __templates_product.flatlay_view(product.master),
         __templates_product.attributes(),
         __templates_product.variation(product),
         __templates.related_product(product.master),

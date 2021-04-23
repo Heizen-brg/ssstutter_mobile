@@ -1,5 +1,10 @@
 import { __requests } from "../main.js";
 import { __templates } from "./_components.js";
+
+
+export const __currency_format = n => `${new Intl.NumberFormat('vi-VN', {}).format(parseInt(n))} <span class="currency-symbol">&#x20AB;</span>`;
+
+
 export const __remove_item_in_array = (el, array) => {
   let index = array.indexOf(el);
   if (index > -1) array.splice(index, 1);
