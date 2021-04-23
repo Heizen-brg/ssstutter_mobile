@@ -90,7 +90,7 @@ export const __templates = {
     `;
     __requests({
       method: 'GET',
-      url: `https://sss.leanservices.work/services/sssearch/?color=${params.color[0].values}&limit=4`,
+      url: `https://sss.leanservices.work/services/sssearch/?color=${params}&limit=4`,
       header: {
         authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
       },

@@ -145,7 +145,7 @@ export const __render = {
         __templates_product.flatlay_view(product.master),
         __templates_product.attributes(),
         __templates_product.variation(product),
-        __templates.related_product(product.master),
+        __templates.related_product(product.master.color[0].value),
         __templates_footer.footer(),
       ];
       this.build('product__page', blocks);
@@ -242,7 +242,7 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.product_page();
+__render.categories_page();
 
 
 

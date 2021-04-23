@@ -55,4 +55,51 @@
     border-radius: 0 0 0 4px;
     text-align: center;
   }
+  .color {
+    @include grid(repeat(auto-fit, minmax(auto, 20px)), null, 10px);
+    place-content: center;
+    margin-top: 10px;
+    min-height: 25px;
+    &:hover {
+      > p {
+        display: none;
+      }
+      > span {
+        display: block;
+      }
+    }
+    p {
+      grid-column: none;
+      color: $silver;
+      display: block;
+    }
+    span {
+      @include ratio(1, 1);
+      box-shadow: 0 0 5px 1px $light;
+      border: thin solid $silver;
+      box-sizing: content-box;
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 426px) {
+  .product {
+    .color {
+      &:hover {
+        p {
+          grid-column: none;
+          color: $silver;
+          display: none;
+        }
+        span {
+          @include ratio(1, 1);
+          box-shadow: 0 0 5px 1px $light;
+          border: thin solid $silver;
+          box-sizing: content-box;
+          display: block;
+        }
+      }
+    }
+  }
 }

@@ -541,7 +541,49 @@
     color: #ffffff;
     border-radius: 0 0 0 4px;
     text-align: center; }
+  .product .color {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(auto, 20px));
+    grid-gap: 10px;
+    place-content: center;
+    margin-top: 10px;
+    min-height: 25px; }
+    .product .color:hover > p {
+      display: none; }
+    .product .color:hover > span {
+      display: block; }
+    .product .color p {
+      grid-column: none;
+      color: #aeaeae;
+      display: block; }
+    .product .color span {
+      display: block;
+      width: 100%;
+      padding-top: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      box-shadow: 0 0 5px 1px #f1f1f1;
+      border: thin solid #aeaeae;
+      box-sizing: content-box;
+      display: none; }
 
+@media (max-width: 426px) {
+  .product .color:hover p {
+    grid-column: none;
+    color: #aeaeae;
+    display: none; }
+  .product .color:hover span {
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 5px 1px #f1f1f1;
+    border: thin solid #aeaeae;
+    box-sizing: content-box;
+    display: block; } }
 /* main menu */
 html,
 body,
@@ -1564,7 +1606,7 @@ h4 {
             border-radius: 4px;
             box-sizing: content-box;
             border: 0.5px solid #f1f1f1; }
-            .product__page .variation > div .color ul li.active, .product__page .variation > div .color ul li:hover {
+            .product__page .variation > div .color ul li:hover {
               border: 0.5px solid #000000; }
       .product__page .variation > div .size {
         margin: 5% 0; }
@@ -1591,7 +1633,7 @@ h4 {
             border-radius: 4px;
             border: 0.5px solid #f1f1f1;
             box-sizing: content-box; }
-            .product__page .variation > div .size ul li.active, .product__page .variation > div .size ul li:hover {
+            .product__page .variation > div .size ul li:hover {
               border: 0.5px solid #000000; }
             .product__page .variation > div .size ul li span {
               position: absolute;

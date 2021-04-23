@@ -46,8 +46,20 @@ export const __init_product_list = (container, query, product_ids) => {
           <p>${item.price}<sup>đ</sup></p>
         </div>
         ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+        <div class="color">
+            <p>+${item.color.length} màu</p>
+        </div>
       </div>
       `;
+      let color_bar = product_template.querySelector('.color');
+      item.color.map(color => {
+        let color_box = document.createElement('span');
+        color_box.className = '';
+        color_box.dataset.color_id = color.id;
+        color_box.style.background = color.color;
+        color_bar.appendChild(color_box);
+        return color_box;
+      })
       container.appendChild(product_template);
       return product_template
     })
