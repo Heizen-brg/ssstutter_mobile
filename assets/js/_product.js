@@ -12,6 +12,7 @@ export const __templates_product = {
       ${(gallery[`color_${color}_gallery`]).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
     </ul>
     `;
+    console.log(gallery[`color_${color}_gallery`]);
     return div;
   },
   model_info(params = {}) {

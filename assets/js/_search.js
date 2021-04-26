@@ -1,4 +1,4 @@
-export const __template_search = {
+export const __templates_search = {
   input(params = {}) {
     let div = document.createElement('div');
     div.className = 'input';

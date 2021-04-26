@@ -5,11 +5,12 @@ import { __templates_categories } from './_categories.js';
 import { __templates_product } from './_product.js';
 import { __templates_checkout } from './_checkout.js';
 import { __templates_blog } from './_blog.js';
-import { __template_article } from './_article.js';
+import { __templates_article } from './_article.js';
 import { __templates_footer } from './_footer.js';
 import { __templates } from './share/_components.js';
-import { __template_search } from "./_search.js";
-
+import { __templates_search } from "./_search.js";
+import { __templates_order } from './_order.js';
+import { __templates_address } from './_address.js';
 
 const __requests = (params, callback, by_pass_error = false) => {
   let header = Object.assign({
@@ -169,6 +170,23 @@ export const __render = {
     ];
     this.build('checkout__page', blocks);
   },
+  order_page() {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product()
+      }),
+      __templates_header.cart(),
+      __templates_order.order_overview(),
+      __templates_order.order_items(),
+      __templates_footer.footer(),
+    ];
+    this.build('order__confirmation', blocks);
+  },
   blog_page() {
     let blocks = [
       __templates_header.header({
@@ -198,8 +216,8 @@ export const __render = {
         option: __templates.related_product()
       }),
       __templates_header.cart(),
-      __template_article.related(),
-      __template_article.content(),
+      __templates_article.related(),
+      __templates_article.content(),
       __templates_footer.footer(),
     ];
     this.build('article__page', blocks);
@@ -231,13 +249,27 @@ export const __render = {
       }),
       __templates_header.megamenu(),
       __templates_header.cart(),
-      __template_search.input(),
+      __templates_search.input(),
       __templates.gender_filter(),
       __templates_categories.filter(),
       __templates_categories.products(),
       __templates_footer.footer(),
     ];
     this.build('search__page', blocks);
+  },
+  address_page() {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
+      __templates_address.map_banner(),
+      __templates_address.address_info(),
+      __templates_footer.footer(),
+    ];
+    this.build('address__page', blocks);
   },
 };
 

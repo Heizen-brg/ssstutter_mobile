@@ -1,4 +1,4 @@
-export const __template_article = {
+export const __templates_article = {
   related() {
     let div = document.createElement('div');
     div.className = 'article__related';
