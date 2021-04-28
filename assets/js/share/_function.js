@@ -1,7 +1,6 @@
 import { __requests } from "../main.js";
 import { __templates } from "./_components.js";
 
-
 export const __currency_format = n => `${new Intl.NumberFormat('vi-VN', {}).format(parseInt(n))} <span class="currency-symbol">&#x20AB;</span>`;
 
 
@@ -12,38 +11,40 @@ export const __remove_item_in_array = (el, array) => {
 }
 
 export const __init_filter = (data, container) => {
-  // let cat_id = container.dataset.cate;
   let query = '';
-  query = '?cat=' + '35';
-  console.log(query += data.q.map(i => i.data.length ? `&${i.tax}=${[...new Set(i.data)].join(',')}` : '').join(''));
+  query = '?catId=' + container.dataset.cate;
   return query += data.q.map(i => i.data.length ? `&${i.tax}=${[...new Set(i.data)].join(',')}` : '').join('');
 }
+// container, query, product_ids
+export const __init_product_list = (params = { ids: product_ids }) => {
+  params.infinity ? false : (params.container.innerHTML = '', __templates.api_loading('show'));
 
-export const __init_product_list = (container, query, product_ids) => {
-  window.product_ids = product_ids || (window.product_ids ? window.product_ids : []);
-  let url = query ? query : `?cat=35&exclude=${window.product_ids.join(',')}`;
+  window.product_ids = params.ids || (window.product_ids ? window.product_ids : []);
+  let url = !params.query ? `?catId=3vvRIM&skip=${10}` : params.query;
+  console.log(url);
   __requests({
     method: 'GET',
-    url: `https://sss.leanservices.work/services/sssearch${url}&exclude=${window.product_ids.join(',')}`,
+    url: `https://leanservices.work/pd/filter/web${url}`,
     header: {
-      authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
     },
   }, (res) => {
-    let products = (res || []).map(item => {
+    console.log(res);
+    __templates.api_loading('hide');
+    let products = (res.data).map(item => {
       window.product_ids.push(item.id);
       let product_template = document.createElement('li');
       product_template.dataset.gender = item.gender;
       product_template.dataset.price = item.price;
       product_template.dataset.sale = item.discount;
       product_template.innerHTML = `
-      <div class="product">
+      <div class="product fade__in">
         <div class="thumbnail">
-          <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+          <a href="/"><span style="background-image:url(https://leanservices.work/pd/static/${item.extensions.media.featured})"></span></a>
         </div>
         <h6 class="name">${item.name}</h6>
         <div class="price">
-          ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-          <p>${item.price}<sup>đ</sup></p>
+          ${item.sale_price ? `<p class="discount">${__currency_format(item.sale_price)}</p>` : ''}
+          <p>${__currency_format(item.price)}</p>
         </div>
         ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
         <div class="color">
@@ -55,15 +56,15 @@ export const __init_product_list = (container, query, product_ids) => {
       item.color.map(color => {
         let color_box = document.createElement('span');
         color_box.className = '';
-        color_box.dataset.color_id = color.id;
-        color_box.style.background = color.color;
+        color_box.dataset.color_id = color.value;
+        color_box.style.background = color.id;
         color_bar.appendChild(color_box);
         return color_box;
       })
-      container.appendChild(product_template);
+      params.container.appendChild(product_template);
       return product_template
     })
-    __infinity_scroll(products[products.length - 3], container);
+    __infinity_scroll(products[products.length - 3], params.container);
     __templates.busy_loading('hide');
   })
 }
@@ -73,8 +74,13 @@ export const __infinity_scroll = (anchor, container) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         let block = entry.target;
+        console.log('block: ', block);
         container.innerHTML += __templates.busy_loading('show');
-        __init_product_list(container, __init_filter(window.data_filter, container));
+        __init_product_list({
+          infinity: true,
+          container: container,
+          query: __init_filter(window.data_filter, container),
+        });
         block_loader.unobserve(block);
       }
     })

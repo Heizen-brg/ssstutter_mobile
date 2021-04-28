@@ -123,7 +123,7 @@ export const __render = {
     __templates.api_loading('show');
     __requests({
       method: 'GET',
-      url: 'https://leanservices.work/pd/master/WH0JpLd8SHXH257V8m31HGXY1ZuWvG37 ',
+      url: 'https://leanservices.work/pd/master/yaqhV178A4iquy9113WdCV9SgO2pU4ee',
       header: {
         authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
       }
@@ -274,7 +274,7 @@ export const __render = {
 };
 
 // __render.homepage();
-__render.categories_page();
+__render.product_page();
 
 
 

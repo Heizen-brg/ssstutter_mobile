@@ -1,5 +1,6 @@
 import { __currency_format } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
+import { __templates_modal } from "./share/_modal.js";
 let user_selection = [];
 export const __templates_product = {
   product_gallery(params = {}, color_id) {
@@ -12,7 +13,6 @@ export const __templates_product = {
       ${(gallery[`color_${color}_gallery`]).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
     </ul>
     `;
-    console.log(gallery[`color_${color}_gallery`]);
     return div;
   },
   model_info(params = {}) {
@@ -250,13 +250,14 @@ export const __templates_product = {
             ${__icons.wishlist}
             <p>Yêu thích</p>
           </div>
-          <div>
+          <div class="store__check" data-action="store_check">
             ${__icons.store}
             <p>Cửa hàng còn hàng</p>
           </div>
         </div>
         <ul class="guide">
-          <li>Hướng dẫn chọn size ${__icons.right}</li>
+          <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
+          <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
         </ul>
       </div>
     `;
@@ -282,7 +283,6 @@ export const __templates_product = {
         return flat_color;
       });
     };
-    init_flatlay_img();
     let on_change_variation = () => {
       let color_variation = div.querySelectorAll('.color__variation');
       color_variation.forEach(btn => {
@@ -290,6 +290,7 @@ export const __templates_product = {
           e.preventDefault();
           color_variation.forEach(btn => btn.classList.remove('active'));
           btn.classList.add('active')
+          document.querySelector('.product__page .gallery').innerHTML = '';
           this.product_gallery(JSON.parse(btn.dataset.variation), btn.dataset.value)
           user_selection[0].color = btn.dataset.value;
 
@@ -305,7 +306,6 @@ export const __templates_product = {
         })
       })
     };
-    on_change_variation();
     let init_add_to_cart = (params) => {
       let to_cart_btn = div.querySelector('.add');
       to_cart_btn.addEventListener('click', (e) => {
@@ -315,6 +315,14 @@ export const __templates_product = {
         cart_menu.classList.add('active');
       })
     }
+    let triggers = div.querySelectorAll('[data-action]')
+    triggers.forEach(btn => {
+      btn.addEventListener('click', () => {
+        __templates_modal.overlay({ content: __templates_modal[btn.dataset.action]() })
+      })
+    })
+    init_flatlay_img();
+    on_change_variation();
     init_add_to_cart();
     return div
   }

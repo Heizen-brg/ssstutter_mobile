@@ -2681,3 +2681,18 @@ export const __product_detail = {
     'https://ssstutter.com/wp-content/uploads/2021/04/ItalyShirt2021_Xanh_FL_1.jpg'
   ]
 }
+export const __size_arr = [
+  {
+    name: 'shirt',
+    size: [0, 1, 2, 3, 4]
+  },
+  {
+    name: 'jeans',
+    size: [29, 30, 31, 32, 33, 34]
+  },
+  {
+    name: 'shoes',
+    size: [39, 40, 41, 42, 43]
+  },
+
+]

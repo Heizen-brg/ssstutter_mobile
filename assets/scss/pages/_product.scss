@@ -209,7 +209,13 @@
       .interact {
         @include grid(repeat(2, 1fr));
         div {
+          &:hover {
+            p {
+              text-decoration: underline;
+            }
+          }
           @include flex(row, center, center);
+          cursor: pointer;
           svg {
             margin-right: 10px;
           }

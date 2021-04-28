@@ -5,18 +5,36 @@
   width: 100vw;
   height: 100vh;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-content: center;
   padding: 20px;
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background-color: transparent;
+  }
+  .close__btn {
+    @include border($light, 50px);
+    position: absolute;
+    top: 90px;
+    right: 90px;
+    padding: 10px;
+    background: $white;
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
 }
 .modal__content {
+  @include hidden_scroll();
   min-width: 200px;
   max-height: 70vh;
-  overflow: scroll;
-  background-color: var(--white);
-  border-radius: 5px;
-  box-shadow: 2px 2px 3px var(--light);
+  overflow: auto;
+  background-color: $white;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px 2px $light;
   -webkit-animation: slide-in-fwd-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-fwd-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
@@ -42,5 +60,92 @@
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     opacity: 1;
+  }
+}
+.store__check--modal {
+  ul {
+    @include grid(repeat(2, 1fr), null, 20px);
+    padding: 20px;
+    li {
+      h5 {
+        @include font(medium, start, 600);
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+.size__guide--modal {
+  width: 80vw;
+  padding: 40px;
+  background-color: $light;
+  h1 {
+    @include font(large, center, bold);
+  }
+  .size__guide--container {
+    @include flex(row, space-around, start);
+    @include border($light, 4px);
+    background-color: $grey;
+    padding: 20px;
+    margin-top: 40px;
+    .info {
+      width: 70%;
+      img {
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        @include border($light, 0px);
+        td {
+          @include font(medium, center, 600);
+          @include border($light, 0px);
+          background-color: $light;
+          padding: 10px;
+        }
+        tbody {
+          tr {
+            td:first-child {
+              background-color: $light;
+            }
+            td {
+              background-color: $white;
+            }
+          }
+        }
+      }
+    }
+    form {
+      padding: 25px 20px;
+      margin-left: 20px;
+      border-left: thin solid $light;
+      > div {
+        @include flex(row, space-between, center);
+        margin: 15px 0;
+        p {
+          margin-bottom: 10px;
+        }
+        input {
+          @include border($light, 4px);
+          padding: 15px 10px;
+          width: 90%;
+        }
+      }
+      button {
+        @include font(medium, center, 600);
+        width: 100%;
+        padding: 15px;
+        border: none;
+        background-color: $light;
+      }
+    }
+  }
+}
+.refund__policy {
+  padding: 40px;
+  line-height: 2;
+  h2 {
+    @include font(large, center, bold);
+  }
+  h4 {
+    @include font(medium, center, 600);
   }
 }
