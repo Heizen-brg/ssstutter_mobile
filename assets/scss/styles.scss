@@ -1,0 +1,56 @@
+@import "abstracts/abstracts.scss";
+@import "layout/layout.scss";
+@import "base/base.scss";
+@import "pages/pages.scss";
+@import "components/components.scss";
+@import "editor/plugin.scss";
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
+  font-weight: 400;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+main {
+  padding-top: 70px;
+}
+button,
+li,
+label,
+svg {
+  cursor: pointer;
+}
+
+.fade-out {
+  -webkit-animation: fade-out 0.3s ease-out both;
+  animation: fade-out 0.3s ease-out both;
+
+  @-webkit-keyframes fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+@media (max-width: 426px) {
+  main {
+    padding-top: 30px;
+    padding-bottom: 60px;
+  }
+}

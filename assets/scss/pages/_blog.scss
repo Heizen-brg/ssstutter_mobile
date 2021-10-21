@@ -1,0 +1,136 @@
+.blog__page {
+  .highlight {
+    @include grid(repeat(3, 30%), null, 20px 50px);
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 5% 10%;
+    &__item {
+      @include flex(column, center, center);
+      a {
+        width: 100%;
+        span {
+          @include ratio(4, 5);
+          @include transition;
+          &:hover {
+            filter: grayscale(1);
+          }
+        }
+      }
+      p {
+        @include font(medium, center, 600);
+        line-height: 1.3;
+        margin-top: 15px;
+        padding: 20px 30px;
+      }
+    }
+  }
+  .category {
+    padding: 5% 10%;
+    background-color: $light;
+    h1 {
+      @include font(x-large, center, 600);
+    }
+    ul {
+      @include grid(repeat(4, 1fr), null, 10px);
+      margin-top: 40px;
+      li {
+        width: 100%;
+        a {
+          width: 100%;
+          span {
+            @include ratio(16, 9);
+            @include transition;
+            &:hover {
+              filter: grayscale(1);
+              background-position: top left;
+            }
+          }
+        }
+        p {
+          @include font(medium, center, 500);
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  .latest {
+    @include flex(column, start, center);
+    margin: 50px 10%;
+    ul {
+      @include grid(1fr, null, 30px 0);
+      padding: 20px 10%;
+      li {
+        @include grid(40% 1fr, null, 20px);
+        a {
+          width: 100%;
+          span {
+            @include ratio(16, 9);
+          }
+        }
+        p {
+          width: 100%;
+          font-size: 1.3rem;
+          padding: 25px;
+          a {
+            @include flex(column, start, start);
+            line-height: 1.5;
+            i {
+              @include font(small);
+              margin-bottom: 15px;
+              color: $silver;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 426px) {
+  .blog__page {
+    .highlight {
+      padding: 5%;
+      grid-gap: 10px;
+      &__item {
+        p {
+          padding: 10px;
+          a {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            font-weight: bold;
+            font-size: small;
+          }
+        }
+      }
+    }
+    .category {
+      padding: 5%;
+      ul {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+      }
+    }
+    .latest {
+      padding: 5%;
+      margin: 0;
+      ul {
+        padding: 0;
+        li {
+          p {
+            font-size: small;
+            padding: 0;
+            a {
+              i {
+                margin-bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

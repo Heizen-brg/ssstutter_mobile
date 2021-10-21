@@ -1,0 +1,50 @@
+.address__page {
+  .map__banner {
+    padding: 0 10%;
+    margin-top: 60px;
+    h1 {
+      @include font(x-large, center, bold);
+      margin-bottom: 20px;
+    }
+    div {
+      @include ratio(16, 9);
+      background-size: contain;
+    }
+  }
+  .address__info {
+    margin: 5% 10%;
+    table {
+      width: 100%;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      border-bottom: 1px solid #e5e5e5;
+      border-top: 2px solid $black;
+      thead {
+        th {
+          @include font(medium, center, 600);
+          padding: 20px 0;
+          border-left: 0;
+          vertical-align: middle;
+          background: #fff;
+        }
+      }
+      tr {
+        @include transition;
+        &:hover {
+          background-color: $light;
+        }
+      }
+      td {
+        padding: 25px 20px;
+        font-size: 14px;
+        color: $gray;
+        border-top: 1px solid #e5e5e5;
+        vertical-align: middle;
+        text-align: center;
+      }
+    }
+  }
+}
