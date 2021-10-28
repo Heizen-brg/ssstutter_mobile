@@ -177,12 +177,14 @@ export const __templates_home = {
                 item.extensions.media.featured
               })"></span></a>
               </div>
-              <h6 class="name">${item.name}</h6>
-              <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                <p>${__currency_format(item.salePrice || item.price)}</p>
+              <div class="detail">
+                <h6 class="name">${item.name.toLowerCase()}</h6>
+                <div class="price">
+                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                  <p>${__currency_format(item.salePrice || item.price)}</p>
+                </div>
+                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
               </div>
-              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
             </div>
           </li>
         `
@@ -234,7 +236,7 @@ export const __templates_home = {
                 item.extensions.media.featured
               })"></span></a>
               </div>
-              <h6 class="name">${item.name}</h6>
+              <h6 class="name">${item.name.toLowerCase()}</h6>
               <div class="price">
               ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
                 <p>${__currency_format(item.salePrice || item.price)}</p>
@@ -348,12 +350,14 @@ export const __templates_home = {
                 next_item.extensions.media.featured
               })"></span></a>
             </div>
-            <h6 class="name">${next_item.name}</h6>
-            <div class="price">
-            ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
-              <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+            <div class="detail">
+              <h6 class="name">${next_item.name.toLowerCase()}</h6>
+              <div class="price">
+              ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
+                <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+              </div>
+              ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
             </div>
-            ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
           </div>
           `;
             } else next_item = "";
@@ -366,12 +370,14 @@ export const __templates_home = {
               item.extensions.media.featured
             })"></span></a>
           </div>
-          <h6 class="name">${item.name}</h6>
-          <div class="price">
-            ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-            <p>${__currency_format(item.salePrice || item.price)}</p>
+          <div class="detail">
+            <h6 class="name">${item.name.toLowerCase()}</h6>
+            <div class="price">
+              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+              <p>${__currency_format(item.salePrice || item.price)}</p>
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
         </div>
           ${next_item}
       </li>
@@ -535,7 +541,7 @@ export const __templates_home = {
                 item.extensions.media.featured
               })"></span></a>
                       </div>
-                      <h6 class="name">${item.name}</h6>
+                      <h6 class="name">${item.name.toLowerCase()}</h6>
                       <div class="price">
                         ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
                         <p>${__currency_format(item.salePrice || item.price)}</p>
@@ -606,13 +612,15 @@ export const __templates_home = {
           <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
-        </div>
-        <h6 class="name">${item.name}</h6>
-        <div class="price">
-          ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-          <p>${__currency_format(item.salePrice || item.price)}</p>
-        </div>
-        ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+        <div>
+          <div class="detail">
+          <h6 class="name">${item.name.toLowerCase()}</h6>
+          <div class="price">
+            ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+            <p>${__currency_format(item.salePrice || item.price)}</p>
+          </div>
+          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+          </div>
         </div>
       </li>`
           )
@@ -635,17 +643,19 @@ export const __templates_home = {
             (item) => ` 
       <li>
         <div class="product">
-        <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+          <div class="thumbnail">
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
-        </div>
-        <h6 class="name">${item.name}</h6>
-        <div class="price">
-          ${!item.salePrice ? "" : `<p class="discount">${__currency_format(item.price)}</p>`}
-          <p>${__currency_format(item.salePrice || item.price)}</p>
-        </div>
-        ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+          </div>
+          <div class="detail">
+            <h6 class="name">${item.name}</h6>
+            <div class="price">
+              ${!item.salePrice ? "" : `<p class="discount">${__currency_format(item.price)}</p>`}
+              <p>${__currency_format(item.salePrice || item.price)}</p>
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+          </div>
         </div>
       </li>`
           )

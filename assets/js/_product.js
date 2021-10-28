@@ -67,8 +67,9 @@ export const __templates_product = {
       });
       color_value.map((item, index) => {
         let flat_img = document.createElement("li");
-        flat_img.style.backgroundImage = `url(https://api.leanservices.work/product/static/${item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".webp")
-          })`;
+        flat_img.style.backgroundImage = `url(https://api.leanservices.work/product/static/${
+          item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".webp")
+        })`;
         let color_variation = div.querySelector(".flatlay > ul");
         color_variation.appendChild(flat_img);
         return flat_img;
@@ -236,6 +237,7 @@ export const __templates_product = {
   },
   variation(params = {}) {
     let info = params;
+    // console.log(info);
     let div = document.createElement("div");
     div.className = "variation";
     div.innerHTML = `
@@ -244,10 +246,11 @@ export const __templates_product = {
           <h1 class="name">${info.name}</h1>
           <div class="price">
           ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
-          ${info.salePrice
-        ? `<p class="discount">${__currency_format(info.price)}</p>`
-        : ` <p>${__currency_format(info.price)}</p>`
-      }
+          ${
+            info.salePrice
+              ? `<p class="discount">${__currency_format(info.price)}</p>`
+              : ` <p>${__currency_format(info.price)}</p>`
+          }
           </div>
         </div>
         <div class="color">
@@ -267,6 +270,14 @@ export const __templates_product = {
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
           <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
         </ul>
+        ${
+          info.catId.join(",").includes("0x7u3p") || info.catId.join(",").includes("S2HJYi")
+            ? `<div class="promotion__sale">
+        <p>Tặng thêm Great Life Tee Premium khi mua sản phẩm này </p>
+        <button data-action="sale_promotion">Thông tin ưu đãi</button>
+      </div>`
+            : ""
+        }
       </div>
     `;
     user_selection = {
@@ -307,7 +318,8 @@ export const __templates_product = {
           data-product='${JSON.stringify(info).replace("'", "")}'
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
-          style="background-image:url(https://api.leanservices.work/product/static/${item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
+          style="background-image:url(https://api.leanservices.work/product/static/${
+            item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
           })"
         >
         </button>
@@ -332,8 +344,9 @@ export const __templates_product = {
         .sort((a, b) => a.size - b.size)
         .map((i, index) => {
           return `
-        <li><button data-index="${index}" class=" size__variation ${index == 0 && info.variation[index].isStock ? "active" : ""
-            }" ${i.isStock ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+        <li><button data-index="${index}" class=" size__variation ${
+            index == 0 && info.variation[index].isStock ? "active" : ""
+          }" ${i.isStock ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;
@@ -353,7 +366,7 @@ export const __templates_product = {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           let product_gallery = document.querySelector(".gallery");
-          let color_name_select = div.querySelector('.color__name');
+          let color_name_select = div.querySelector(".color__name");
           let product = JSON.parse(btn.dataset.product);
           let gallery = product.extensions.media;
           let variation = product.variation;
@@ -401,8 +414,9 @@ export const __templates_product = {
           __requests(
             {
               method: "GET",
-              url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${product_in_cart.quantity + 1
-                }`,
+              url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
+                product_in_cart.quantity + 1
+              }`,
             },
             ({ data }) => {
               if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");

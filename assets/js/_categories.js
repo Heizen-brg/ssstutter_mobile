@@ -2,11 +2,7 @@ import { __icons } from "./share/_icons.js";
 import { __size_arr } from "./share/_data.js";
 import { __templates } from "./share/_components.js";
 import { __render, __requests } from "./main.js";
-import {
-  __remove_item_in_array,
-  __init_filter,
-  __init_product_list,
-} from "./share/_function.js";
+import { __remove_item_in_array, __init_filter, __init_product_list, __to_slug } from "./share/_function.js";
 let mobile = window.innerWidth <= 425;
 
 window.data_filter = {
@@ -26,12 +22,10 @@ window.data_filter = {
 
 export const __templates_categories = {
   infomation(params = {}) {
-    let cat_title = params.category == "3vvRIM" ? "FOR HIM" : "FOR HER";
-
     let section = document.createElement("section");
     section.className = "categories__info";
     section.innerHTML = `
-      <h1 class="info__title">${cat_title}</h1>
+      <h1 class="info__title">${params.category.name.replace("-", "")}</h1>
       <p>Tất cả những sản phẩm Mới nhất nằm trong BST được mở bán Hàng Tuần sẽ được cập nhật liên tục tại đây. Chắc chắn bạn sẽ tìm thấy những sản phẩm Đẹp Nhất - Vừa Vặn Nhất - Phù Hợp nhất với phong cách của mình.
       </p>
     `;
@@ -46,77 +40,78 @@ export const __templates_categories = {
         url: `product/attribute/category/get`,
       },
       ({ data, error }) => {
-        let parent_cat_arr = data.filter(
-          (item) => item.parentId == params.category
-        );
+        let top_cat = data.filter((i) => !i.parentId).map((i) => i.id);
+        let parent_cat_arr;
+        if (top_cat.includes(params.category.id)) {
+          parent_cat_arr = data.filter((item) => item.parentId === params.category.id);
+        } else {
+          parent_cat_arr = data.filter((item) => item.parentId === params.category.parentId);
+        }
+        console.log(parent_cat_arr);
         section.innerHTML = `
         <ul>
           ${(parent_cat_arr || [])
-            .map(
-              (cate) =>
-                `<li data-cate="${cate.id}"><p>${cate.name.replace(
-                  "-",
-                  ""
-                )}</p></li>`
-            )
+            .map((cate) => `<li><a href="/c/${cate.slug}">${cate.name.replace("-", "")}</a></li>`)
             .join("")}
         </ul>
     `;
-        let init_event_cate = (cat_list, cat_dom) => {
-          cat_list.forEach((item) => item.classList.remove("active"));
-          let product_container = document.querySelector(
-            ".categories__products > ul"
-          );
-          product_container.dataset.cate = cat_dom.dataset.cate;
-          cat_dom.classList.add("active");
-          section.removeChild(section.childNodes[2]);
-          let child_cat = data.filter(
-            (item) => item.parentId == cat_dom.dataset.cate
-          );
-          let child_cat_list = document.createElement("ul");
-          child_cat_list.className = "categories__list--child";
-          child_cat_list.innerHTML = `
-      ${(child_cat || [])
-              .map(
-                (cate) =>
-                  `<li data-subcat data-cate="${cate.id}"><p>${cate.name.replace(
-                    "- -",
-                    ""
-                  )}</p></li>`
-              )
-              .join("")}
-      `;
-          section.appendChild(child_cat_list);
-          this.products({
-            catId: cat_dom.dataset.cate,
-            container: product_container,
-          });
-        };
-        let parent_cate = section.querySelectorAll("[data-cate]");
-        parent_cate.forEach((cat) => {
-          cat.addEventListener("click", (e) => {
-            e.preventDefault();
-            init_event_cate(parent_cate, cat);
-            let sub_cate = section.querySelectorAll("[data-subcat]");
-            sub_cate.forEach((subcat) => {
-              subcat.addEventListener("click", (e) => {
-                let product_container = document.querySelector(
-                  ".categories__products > ul"
-                );
-                e.preventDefault();
-                sub_cate.forEach((item) => item.classList.remove("active"));
-                product_container.dataset.cate = subcat.dataset.cate;
-                subcat.classList.add("active");
-                this.products({
-                  catId: subcat.dataset.cate,
-                  container: product_container,
-                });
-              });
-            });
-          });
-        });
+        //   let init_event_cate = (cat_list, cat_dom) => {
+        //     cat_list.forEach((item) => item.classList.remove("active"));
+        //     let product_container = document.querySelector(
+        //       ".categories__products > ul"
+        //     );
+        //     product_container.dataset.cate = cat_dom.dataset.cate;
+        //     cat_dom.classList.add("active");
+        //     section.removeChild(section.childNodes[2]);
+        //     let child_cat = data.filter(
+        //       (item) => item.parentId == cat_dom.dataset.cate
+        //     );
+        //     let child_cat_list = document.createElement("ul");
+        //     child_cat_list.className = "categories__list--child";
+        //     child_cat_list.innerHTML = `
+        // ${(child_cat || [])
+        //         .map(
+        //           (cate) =>
+        //             `<li data-subcat data-cate="${cate.id}"><p>${cate.name.replace(
+        //               "- -",
+        //               ""
+        //             )}</p></li>`
+        //         )
+        //         .join("")}
+        // `;
+        //     section.appendChild(child_cat_list);
+        //     this.products({
+        //       catId: cat_dom.dataset.cate,
+        //       container: product_container,
+        //     });
+        //   };
+        //   let parent_cate = section.querySelectorAll("[data-cate]");
+        //   parent_cate.forEach((cat) => {
+        //     cat.addEventListener("click", (e) => {
+        //       e.preventDefault();
+        //       init_event_cate(parent_cate, cat);
+        //       let sub_cate = section.querySelectorAll("[data-subcat]");
+        //       sub_cate.forEach((subcat) => {
+        //         subcat.addEventListener("click", (e) => {
+        //           let product_container = document.querySelector(
+        //             ".categories__products > ul"
+        //           );
+        //           e.preventDefault();
+        //           sub_cate.forEach((item) => item.classList.remove("active"));
+        //           product_container.dataset.cate = subcat.dataset.cate;
+        //           subcat.classList.add("active");
+        //           this.products({
+        //             catId: subcat.dataset.cate,
+        //             container: product_container,
+        //           });
+        //         });
+        //       });
+        //       section.classList.remove('show');
+        //     });
+        //   });
       }
     );
+
     return section;
   },
 
@@ -124,13 +119,11 @@ export const __templates_categories = {
     let div = document.createElement("div");
     div.className = "categories__products";
     div.innerHTML = ` 
-    <ul data-cate="${params.category}">
+    <ul data-cate="${params.category.id}">
       ${__templates.busy_loading("show")}
     </ul>
     `;
-    let product_container = params.container
-      ? params.container
-      : div.querySelector("ul");
+    let product_container = params.container ? params.container : div.querySelector("ul");
     __init_product_list({
       container: product_container,
       query: __init_filter(window.data_filter, product_container, 0),
@@ -141,8 +134,12 @@ export const __templates_categories = {
     let div = document.createElement("div");
     div.className = "categories__filter";
     div.innerHTML = `
-    <div data-toggle="filter" class="filter__toggle">${__icons.filter
-      } FILTER</div>
+    <div class="filter__toggle">
+      <span class="mobile-cate-trigger" style="text-transform: capitalize">${params.category.name
+        .replace("-", "")
+        .toLowerCase()} ${__icons.carret_down}</span>
+      <span data-toggle="filter">${__icons.plus} Lọc </span>
+    </div>
     <div class="filter__list">
       <ul class="filter__list--wrapper">
         <li class="color">
@@ -159,16 +156,16 @@ export const __templates_categories = {
           </h4>
           <ul>
           ${__size_arr[0].size
-        .map(
-          (item) => `
+            .map(
+              (item) => `
               <li data-name="pa_size" data-size="${item}">
                 <label>
                   <input type="checkbox"><span>${item}</span>
                 </label>
               </li>
           `
-        )
-        .join("")}
+            )
+            .join("")}
           </ul>
         </li>
         <li class="size">
@@ -177,16 +174,16 @@ export const __templates_categories = {
           </h4>
           <ul>
           ${__size_arr[1].size
-        .map(
-          (item) => `
+            .map(
+              (item) => `
           <li data-name="pa_size" data-size="${item}">
             <label>
               <input type="checkbox"><span>${item}</span>
             </label>
           </li>
        `
-        )
-        .join("")}
+            )
+            .join("")}
           </ul>
         </li>
         <li class="size">
@@ -195,16 +192,16 @@ export const __templates_categories = {
           </h4>
           <ul>
           ${__size_arr[2].size
-        .map(
-          (item) => `
+            .map(
+              (item) => `
           <li data-name="pa_size" data-size="${item}">
             <label>
               <input type="checkbox"><span>${item}</span>
             </label>
           </li>
        `
-        )
-        .join("")}
+            )
+            .join("")}
           </ul>
         </li>
         <li class="sort">
@@ -253,9 +250,7 @@ export const __templates_categories = {
           let color_list = div.querySelector(".color__list");
           color_list.appendChild(li);
           li.addEventListener("click", (e) => {
-            let product_container = document.querySelector(
-              ".categories__products > ul"
-            );
+            let product_container = document.querySelector(".categories__products > ul");
             e.preventDefault();
             if (!li.dataset.name) return false;
             let color_attr = li.dataset.color;
@@ -264,10 +259,7 @@ export const __templates_categories = {
             if (li.classList.contains("active")) {
               if (window.data_filter.q[0].data) {
                 let d = window.data_filter.q[0].data;
-                window.data_filter.q[0].data = __remove_item_in_array(
-                  color_attr,
-                  d
-                );
+                window.data_filter.q[0].data = __remove_item_in_array(color_attr, d);
                 btn_input.checked = false;
               }
               li.classList.remove("active");
@@ -286,11 +278,7 @@ export const __templates_categories = {
                 __init_product_list({
                   infinity: false,
                   container: product_container,
-                  query: __init_filter(
-                    window.data_filter,
-                    product_container,
-                    0
-                  ),
+                  query: __init_filter(window.data_filter, product_container, 0),
                 });
               });
             } else {
@@ -332,9 +320,7 @@ export const __templates_categories = {
     let size_filter_list = div.querySelectorAll('[data-name="pa_size"]');
     size_filter_list.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        let product_container = document.querySelector(
-          ".categories__products > ul"
-        );
+        let product_container = document.querySelector(".categories__products > ul");
         e.preventDefault();
         if (!btn.dataset.name) return false;
         let size_attr = btn.dataset.size;
@@ -374,6 +360,22 @@ export const __templates_categories = {
         }
       });
     });
+
+    //
+    // Show / hide cate mobile
+    //
+    div.querySelector(".mobile-cate-trigger").addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector(".categories__list").classList.toggle("show");
+    });
+
     return div;
   },
 };
+
+document.addEventListener("mouseup", (e) => {
+  if (!e.target.classList.contains("mobile-cate-trigger")) {
+    if (document.querySelector(".categories__list"))
+      document.querySelector(".categories__list").classList.remove("show");
+  }
+});

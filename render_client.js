@@ -14,11 +14,23 @@ module.exports = {
 				<link rel="manifest" crossorigin="use-credentials" href="/assets/favicon/site.webmanifest">
 				<link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
 				<meta name="msapplication-TileColor" content="#da532c">
+				<!-- Global site tag (gtag.js) - Google Analytics -->
+				<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126233540-1"></script>
+				<script>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+
+					gtag('config', 'UA-126233540-1');
+				</script>
 				<meta name="theme-color" content="#ffffff">
 				<title>${params.title || title}</title>
 				<meta name="description" content="${params.description || description}" />
-				<link rel="preconnect" href="https://fonts.gstatic.com">
-				<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
+				<link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+
 				<link rel="stylesheet" href="/assets/css/styles.css">
 				<script>
 					${params.command || ""}

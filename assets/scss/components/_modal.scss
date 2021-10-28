@@ -161,6 +161,20 @@
     }
   }
 }
+.sale__promotion {
+  padding: 40px;
+  line-height: 2;
+  span {
+    background-image: url("https://i.imgur.com/YAhhDRd.png");
+    @include ratio(18, 7);
+  }
+  h2 {
+    @include font(large, center, bold);
+  }
+  p {
+    @include font(medium, center, 600);
+  }
+}
 .refund__policy {
   padding: 40px;
   line-height: 2;

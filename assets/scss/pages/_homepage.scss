@@ -1,4 +1,9 @@
 .home {
+  .product {
+    .price {
+      margin-bottom: 10px;
+    }
+  }
   .slide__banner {
     width: 100%;
     .glide__slide {
@@ -10,7 +15,7 @@
           position: relative;
           button {
             position: absolute;
-            width: 100px;
+            min-width: 100px;
             left: 50%;
             bottom: 20px;
             transform: translate(-50%, 0);
@@ -27,8 +32,11 @@
   }
 
   .categories__banner {
-    @include grid(repeat(2, 1fr), 1fr, 20px);
+    @include grid(repeat(2, 1fr), 1fr, 10px);
     padding: 20px 0;
+    @media (min-width: 768px) {
+      @include grid(repeat(2, 1fr), 1fr, 20px);
+    }
     div {
       a {
         @include ratio(7, 4);
@@ -43,7 +51,11 @@
   }
 
   .new-arrivals__slide {
-    padding: 5%;
+    // padding: 5%;
+    padding: 25px 0;
+    @media (min-width: 1024px) {
+      padding: 5%;
+    }
     h2 {
       @include font(3rem, center, bold);
       cursor: pointer;
@@ -113,7 +125,10 @@
   }
 
   .weekly__best {
-    padding: 5%;
+    padding: 25px 0;
+    @media (min-width: 1024px) {
+      padding: 5%;
+    }
     h2 {
       @include font(3rem, center, bold);
       cursor: pointer;
@@ -273,13 +288,13 @@
         @include font(x-large, center, bold);
       }
       ul {
-        @include grid(repeat(auto-fit, minmax(45%, 1fr)), null, 20px);
+        @include grid(repeat(auto-fit, minmax(45%, 1fr)), null, 10px);
       }
     }
     .blog {
       h2 {
         @include font(x-large, center, bold);
-        margin: 5% 0;
+        margin: 0 0 5%;
       }
       .blog__list {
         @include grid(repeat(auto-fit, 100%), null, 10px);

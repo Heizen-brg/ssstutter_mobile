@@ -3,32 +3,33 @@ import { __size_guide_data } from "./_data.js";
 import { __icons } from "./_icons.js";
 export const __templates_modal = {
   overlay(params = {}) {
-    let main_body = document.querySelector('#root');
-    let div = document.createElement('div');
-    div.className = 'modal__overlay';
+    let main_body = document.querySelector("#root");
+    let div = document.createElement("div");
+    div.className = "modal__overlay";
     div.innerHTML = `<div class="close__btn">${__icons.close}<div>`;
-    let content = document.createElement('div');
-    content.className = 'modal__content';
-    if (params.content) __render.build_in_block({
-      block: content,
-      target: params.content
-    });
+    let content = document.createElement("div");
+    content.className = "modal__content";
+    if (params.content)
+      __render.build_in_block({
+        block: content,
+        target: params.content,
+      });
     div.appendChild(content);
-    div.addEventListener('click', (e) => {
-      if (!e.target.classList.contains('modal__overlay')) return false;
+    div.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("modal__overlay")) return false;
       main_body.removeChild(div);
-    })
-    let close_btn = div.querySelector('.close__btn');
+    });
+    let close_btn = div.querySelector(".close__btn");
     if (close_btn)
-      close_btn.addEventListener('click', () => {
+      close_btn.addEventListener("click", () => {
         main_body.removeChild(div);
-      })
+      });
     main_body.appendChild(div);
     return div;
   },
   store_check() {
-    let div = document.createElement('div');
-    div.className = 'store__check--modal';
+    let div = document.createElement("div");
+    div.className = "store__check--modal";
     div.innerHTML = `
       <ul>
         <li>
@@ -44,8 +45,8 @@ export const __templates_modal = {
     return div;
   },
   size_check() {
-    let div = document.createElement('div');
-    div.className = 'size__guide--modal'
+    let div = document.createElement("div");
+    div.className = "size__guide--modal";
     div.innerHTML = `
       <h1>My fit size</h1>
       <div class="size__guide--container">
@@ -55,40 +56,41 @@ export const __templates_modal = {
             <thead>
               <tr>
                 <td>Kích thước</td>
-                <td>Chiều rộng vai</td>
-                <td>Phần ngực</td>
-                <td>Chiều dài tay</td>
-                <td>Tổng thể</td>
+                <td>Chiều cao (cm)</td>
+                <td>Cân nặng (kg)</td>
+                <td>Phần ngực (cm)</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>S(1)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>S(0)</td>
+                <td>160-170</td>
+                <td>49-54</td>
+                <td>85-89</td>
               </tr>
               <tr>
-                <td>M(2)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>M(1)</td>
+                <td>166-174</td>
+                <td>55-60</td>
+                <td>90-94</td>
               </tr>
               <tr>
-                <td>L(3)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>L(2)</td>
+                <td>170-177</td>
+                <td>61-66</td>
+                <td>95-99</td>
               </tr>
               <tr>
-                <td>XL(4)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>XL(3)</td>
+                <td>175-180</td>
+                <td>67-72</td>
+                <td>100-104</td>
+              </tr>
+              <tr>
+                <td>XXL(4)</td>
+                <td>178-185</td>
+                <td>73-78</td>
+                <td>105-109</td>
               </tr>
             </tbody>
           </table>
@@ -110,19 +112,19 @@ export const __templates_modal = {
         </form>
       </div>
     `;
-    let calc_btn = div.querySelector('button');
-    calc_btn.addEventListener('click', () => {
-      let height_input = div.querySelector('.height__input');
-      let weight_input = div.querySelector('.weight__input');
+    let calc_btn = div.querySelector("button");
+    calc_btn.addEventListener("click", () => {
+      let height_input = div.querySelector(".height__input");
+      let weight_input = div.querySelector(".weight__input");
       let user_info = {
         w: weight_input.value,
-        h: height_input.value
-      }
-      size_calc(user_info)
-    })
+        h: height_input.value,
+      };
+      size_calc(user_info);
+    });
     let size_calc = (params) => {
-      let response_size = div.querySelector('.response');
-      console.log(params);
+      let response_size = div.querySelector(".response");
+      // console.log(params);
       if ((params.w || params.h) == "") return false;
       let balance = __size_guide_data.balance;
       let size_found = null;
@@ -130,13 +132,13 @@ export const __templates_modal = {
         if (v.constructor != Object) continue;
         if (params.h >= v.height.min && params.h <= v.height.max) {
           size_found = k;
-          if (params.w >= (v.weight.max + balance)) {
+          if (params.w >= v.weight.max + balance) {
             continue;
           } else {
             break;
           }
         } else {
-          if (params.h < (v.height.max + balance)) {
+          if (params.h < v.height.max + balance) {
             size_found = k;
           } else {
             continue;
@@ -146,28 +148,38 @@ export const __templates_modal = {
           size_found = k;
           break;
         } else {
-          if (params.w < (v.weight.max + balance)) {
+          if (params.w < v.weight.max + balance) {
             size_found = k;
           } else {
             continue;
           }
         }
-
       }
       if (size_found) {
-        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`
-        return __size_guide_data[size_found]
+        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`;
+        return __size_guide_data[size_found];
       } else {
-        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`
+        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`;
         return false;
       }
-
-    }
+    };
+    return div;
+  },
+  sale_promotion() {
+    let div = document.querySelector("div");
+    div.className = "sale__promotion";
+    div.innerHTML = `
+    <span></span>
+    <h2>Thông tin ưu đãi</h2>
+    <p> Sản phẩm sweatshirt / long tee: Giảm 10%, khi mua được tặng 1 sổ tay</p>
+    <p> Sản phẩm áo khoác & coat: Giảm 10%, khi mua được tặng 1 Great Life Tee Premium và 1 sổ tay</p>
+    <h4> SSStutter sẽ gọi lại cho bạn để tư vấn chọn màu và size cho Great Life Tee Premium cho bạn ngay sau khi thanh toán sản phẩm này</h4>
+    `;
     return div;
   },
   refund_policy() {
-    let div = document.createElement('div');
-    div.className = 'refund__policy';
+    let div = document.createElement("div");
+    div.className = "refund__policy";
     div.innerHTML = `
       <h2>QUY ĐỊNH ĐỔI HÀNG</h2>
       <h4>BẠN VUI LÒNG KIỂM TRA HOÁ ĐƠN VÀ TƯ TRANG TRƯỚC KHI RỜI QUẦY NHÉ !</h4>
@@ -185,12 +197,12 @@ export const __templates_modal = {
     return div;
   },
   card_payment_progress() {
-    let div = document.createElement('div');
-    div.className = 'payment__progress';
+    let div = document.createElement("div");
+    div.className = "payment__progress";
     div.innerHTML = `
       <h1>Đã mở công thanh toán online !</h1>
       <a href="/"><button>Quay lại trang chủ</buton></a>
     `;
     return div;
-  }
-}
+  },
+};

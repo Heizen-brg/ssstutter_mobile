@@ -1,6 +1,6 @@
 .products__slider {
   width: 100%;
-  margin: 20px 0;
+  // margin: 20px 0;
   .glide {
     visibility: hidden;
     height: 0;
@@ -14,7 +14,7 @@
 .product {
   width: 100%;
   position: relative;
-  margin: 10px 0;
+  // margin: 10px 0;
   &.fade__in {
     -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
     animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -117,21 +117,33 @@
       }
     }
   }
+  .detail {
+    padding: 0 6px;
+    @media (min-width: 768px) {
+      padding: 0;
+    }
+  }
   .name {
-    @include font(medium, center, 600);
+    // @include font(medium, center, 600);
+    font-size: 12px;
+    // font-weight: 600;
+    // text-align: center;
     word-break: break-word;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin: 10px 0;
+    // letter-spacing: 1.5px;
+    text-transform: capitalize;
+    margin: 4px 0 2px;
     cursor: pointer;
+    margin-bottom: 4px;
   }
   .price {
     @include grid(repeat(auto-fit, minmax(10%, auto)), 1fr);
-    place-items: center;
+    font-size: 12px;
+    margin-bottom: 2px;
+    // place-items: center;
     .discount {
       color: $silver;
       text-decoration: line-through;
@@ -146,10 +158,13 @@
     text-align: center;
   }
   .color {
-    @include grid(repeat(auto-fit, minmax(auto, 20px)), null, 10px);
-    place-content: center;
-    margin-top: 10px;
-    min-height: 25px;
+    // @include grid(repeat(auto-fit, minmax(auto, 18px)), null, 6px);
+    // place-content: center;
+    // margin-top: 10px;
+    margin-bottom: 4px;
+    font-size: 12px;
+    // min-height: 25px;
+    /*
     &:hover {
       > p {
         display: none;
@@ -158,17 +173,18 @@
         display: block;
       }
     }
+    
     p {
       grid-column: none;
       color: $silver;
       display: block;
     }
+    */
     span {
       @include ratio(1, 1);
-      box-shadow: 0 0 5px 1px $light;
-      border: thin solid $silver;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+      // border: thin solid $silver;
       box-sizing: content-box;
-      display: none;
     }
   }
 }
@@ -188,9 +204,6 @@
       }
     }
     .color {
-      p {
-        display: none;
-      }
       span {
         display: block;
       }

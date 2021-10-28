@@ -104,7 +104,7 @@ section {
 }
 
 body {
-  line-height: 1;
+  line-height: 1.4;
 }
 
 ol,
@@ -142,11 +142,13 @@ object {
 input,
 button {
   outline: none;
-  font-family: "Roboto", sans-serif;
+  // font-family: "Roboto", sans-serif;
+  font-family: ATSurtVN;
 }
 textarea {
   overflow: auto;
-  font-family: "Roboto", sans-serif;
+  // font-family: "Roboto", sans-serif;
+  font-family: ATSurtVN;
 }
 
 /* fix IE */
@@ -159,7 +161,7 @@ a {
   color: #808080;
   display: inline-block;
   cursor: pointer;
-  font-family: "Roboto", sans-serif;
+  // font-family: "Roboto", sans-serif;
 }
 a:visited {
   color: $black;
@@ -173,7 +175,6 @@ h3,
 h4,
 h5 {
   text-transform: uppercase;
-  font-family: "Roboto", sans-serif;
 
   /* font-family: Noto Sans Semi; */
 }
@@ -197,7 +198,8 @@ input[type="text"] {
   appearance: none;
 }
 input::placeholder {
-  font-family: "Roboto", sans-serif;
+  // font-family: "Roboto", sans-serif;
+  font-family: ATSurtVN;
 }
 button {
   color: $black;

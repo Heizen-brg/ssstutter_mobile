@@ -1,5 +1,5 @@
 .campaign__page {
-  @include grid(repeat(6, 1fr), null, 2% 10px);
+  @include grid(repeat(6, 1fr), null, 25px);
   .hero__banner {
     grid-area: 1 / 1 / 2 / 7;
     div {

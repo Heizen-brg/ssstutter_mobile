@@ -1,10 +1,6 @@
 import { __icons } from "./share/_icons.js";
 import { __render, __requests } from "./main.js";
-import {
-  __currency_format,
-  __show_cart_item,
-  __show_cart_quantity,
-} from "./share/_function.js";
+import { __currency_format, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
 import { __templates } from "./share/_components.js";
 
 let mobile = window.innerWidth <= 426;
@@ -50,7 +46,7 @@ export const __templates_header = {
       <div class="nav">
         <div class="nav__logo">
           <a href="/">
-            ${mobile ? __icons.ssstutter : __icons.new_ssstutter}
+            ${__icons.new_ssstutter}
           </a>
         </div>
         <div class="nav__left"></div>
@@ -58,17 +54,25 @@ export const __templates_header = {
       </div>
       <div class="side__nav" data-menu="side_nav">
         <div class="side__nav--title">
-          <a href="/"><img src="https://sss.leanservices.work/wp-content/uploads/2021/03/LOGO-SSSTUTTER-NEW.png"/>
+          <a href="/">
+          ssstutter
           </a>
           <div class="close">${__icons.close}</div>
         </div>
         <ul>
-          <li data-cat="toggle" class=""><a href="/c/for-him" data-src="/c/for-him">Nam</a>
+          <li data-cat="toggle" class="">
+            <a data-cat="3vvRIM" data-src="/c/for-him">Nam</a>
+            <ul class="mega_menu_items mega_menu_items--show"> 
+
+            </ul>
           </li>
-          <li data-cat="toggle" class=""><a href="/c/for-her" data-src="/c/for-her">Nữ</a>
+          <li data-cat="toggle" class="">
+            <a data-cat="y8Q15I" data-src="/c/for-her">Nữ</a>
+            <ul class="mega_menu_items mega_menu_items--show">
+
+            </ul>
           </li>
           <li><a class="special" href="/daily-better/">daily better</a></li>
-          <li><a target"_blank" href="https://www.facebook.com/ssstuttershop/">community</a></li>
         </ul>
         <div class="side__nav--footer">
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
@@ -90,18 +94,38 @@ export const __templates_header = {
     header.querySelector(".close").addEventListener("click", () => {
       this.hide_menu();
     });
-    // let cat_toggle = header.querySelectorAll('[data-cat="toggle"]');
-    // cat_toggle.forEach(item => {
-    //   let cat_link = item.querySelector('a');
-    //   cat_link.addEventListener('click', () => {
-    //     if (item.querySelector('ul').classList.contains('active')) {
-    //       cat_link.setAttribute("href", cat_link.dataset.src);
-    //       item.querySelector('ul').classList.remove('active');
-    //     } else {
-    //       item.querySelector('ul').classList.add('active');
-    //     }
-    //   })
-    // })
+
+    let get_cat_list = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `product/attribute/category/get`,
+        },
+        ({ data, error }) => {
+          let parent_cat_arr = data.filter((item) => item.parentId == params.category);
+          let cat_item = (parent_cat_arr || [])
+            .map(
+              (cate) => `<li data-cate="${cate.id}"><a href="/c/${cate.slug}">${cate.name.replace("-", "")}</a></li>`
+            )
+            .join("");
+          params.container.innerHTML = cat_item;
+        }
+      );
+    };
+
+    let cat_toggle = header.querySelectorAll('[data-cat="toggle"]');
+    cat_toggle.forEach((item) => {
+      let cat_link = item.querySelector("a");
+      cat_link.addEventListener("click", () => {
+        if (item.querySelector("ul").classList.contains("active")) {
+          cat_link.setAttribute("href", cat_link.dataset.src);
+          item.querySelector("ul").classList.remove("active");
+        } else {
+          get_cat_list({ category: cat_link.dataset.cat, container: item.querySelector("ul") });
+          item.querySelector("ul").classList.add("active");
+        }
+      });
+    });
     window.onscroll = () => {
       let nav_bar = header.querySelector(".nav");
       let main = document.getElementById("root");
@@ -122,17 +146,25 @@ export const __templates_header = {
     let div = document.createElement("div");
     div.className = "nav__left--items";
     if (desktop || tablet) {
-      div.innerHTML = `
-      <div data-active="3vvRIM" data-action="megamenu" ><a href="/c/for-him">nam</a></div>
-      <div data-active="y8Q15I" data-action="megamenu" ><a href="/c/for-her">nữ</a></div>
-      <div><a class="special" href="/daily-better/">daily better</a></div>
-      <div><a target"_blank" href="https://www.facebook.com/ssstuttershop/">community</a></div>
-
-    `;
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w//menu/get`,
+        },
+        ({ data }) => {
+          let menu_item = (data || [])
+            .map((item) => {
+              return `
+         <div data-active="${item.attribute}" data-action="megamenu" ><a href="${item.url}">${item.title}</a></div>
+         `;
+            })
+            .join("");
+          div.innerHTML = menu_item;
+        }
+      );
     } else {
       div.innerHTML = `
       <div data-active="" data-action="side_nav">${__icons.nav}</div>
-      <div data-active="" data-action="search">${__icons.search}</div>
     `;
     }
     let menu = div.querySelectorAll("[data-action]");
@@ -140,19 +172,22 @@ export const __templates_header = {
       if (desktop || tablet) {
         item.addEventListener("mouseenter", (e) => {
           this.hide_menu();
-          // this.show_menu(item);
-          // let megamenu_categories = document.querySelector('.megamenu__categories');
-          // __requests({
-          //   method: 'GET',
-          //   url: `product/attribute/category/get`
-          // }, ({ data, error }) => {
-          //   let parent_cat_arr = data.filter(cate => cate.parentId == item.dataset.active);
-          //   megamenu_categories.innerHTML = `
-          //     <ul>
-          //       ${(parent_cat_arr || []).map(cate => `<li data-cate="${cate.id}"><p>${cate.name}</p></li>`).join('')}
-          //     </ul>
-          // `;
-          // })
+          this.show_menu(item);
+          let megamenu_categories = document.querySelector(".megamenu__categories");
+          __requests(
+            {
+              method: "GET",
+              url: `product/attribute/category/get`,
+            },
+            ({ data, error }) => {
+              let parent_cat_arr = data.filter((cate) => cate.parentId == item.dataset.active);
+              megamenu_categories.innerHTML = `
+               <ul>
+                 ${(parent_cat_arr || []).map((cate) => `<li data-cate="${cate.id}"><p>${cate.name}</p></li>`).join("")}
+               </ul>
+           `;
+            }
+          );
         });
       } else {
         item.addEventListener("click", (e) => {
@@ -169,7 +204,10 @@ export const __templates_header = {
     div.className = "nav__right--items";
     div.innerHTML = `
       <div data-active="" data-action="search">${__icons.search}</div>
-      <div data-active="" data-action="cart"><span data-toggle="cart_toggle"></span>${__icons.cart}</div>
+      <div data-active="" data-action="cart">
+        ${__icons.cart}
+        <span data-toggle="cart_toggle"></span>
+      </div>
     `;
     let triggers = div.querySelectorAll("[data-action]");
     let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
@@ -242,9 +280,7 @@ export const __templates_header = {
     <div>
       <h1 class="title">new arrivals</h1>
       <ul class="megamenu__newarrivals">
-        ${(params.new_arrivals || [])
-        .map((i) => `<li><a href="${i.link}">${i.text}</a></li>`)
-        .join("")}
+        ${(params.new_arrivals || []).map((i) => `<li><a href="${i.link}">${i.text}</a></li>`).join("")}
       </ul>
     </div>
     <ul class="megamenu__banner">
@@ -310,26 +346,18 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug
-                      }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-                        ? item.extensions.media.featured
-                        : "no_image.png"
-                      })"></span></a>
+                        <a href="/p/${
+                          item.slug
+                        }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                    })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
-                        ${item.salePrice
-                        ? `<p class="discount">${__currency_format(
-                          item.salePrice
-                        )}</p>`
-                        : ""
-                      }
+                        ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
                         <p>${__currency_format(item.price)}</p>
                       </div>
-                      ${item.discount > 0
-                        ? `<p class="tag">${item.discount}%</p>`
-                        : ""
-                      }
+                      ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                       <div class="color">
                           <p>+${item.color.length} màu</p>
                       </div>
