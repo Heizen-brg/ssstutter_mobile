@@ -1,1 +1,4 @@
 node_modules
+.vscode
+.sass-cache
+ecosystem.config.js
