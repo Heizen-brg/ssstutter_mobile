@@ -35,44 +35,55 @@
     }
   }
   .article__content {
-    padding: 2.5% 10%;
-    h1 {
-      @include font(x-large, center, bold);
-      padding: 20px;
-      line-height: 1.5;
-    }
-    .main__banner {
-      @include ratio(16, 9);
-    }
-    .main__description {
-      @include font(medium, justify, 600);
-      padding: 5%;
-      line-height: 2;
-      &:first-letter {
-        float: left;
-        font-size: 4rem;
-        line-height: 0.8;
-        margin-right: 3px;
+    padding: 2.5% 15%;
+    &--header {
+      h1 {
+        @include font(xxx-large, start, bold);
+        padding: 20px 0;
+        line-height: 1.5;
       }
-    }
-    ul {
-      padding: 0 5%;
-      li {
-        h2 {
-          @include font(large, start, 600);
-          margin-bottom: 20px;
+      em {
+        margin-top: 20px;
+        color: $silver;
+        @include font(large, start, 600);
+        &::before {
+          content: '"';
         }
-        figure {
-          img {
-            width: 100%;
+        &::after {
+          content: '"';
+        }
+      }
+      .author__info {
+        @include grid(50px 1fr, null, 10px);
+        margin-top: 20px;
+        align-items: center;
+        &--avt {
+          span {
+            @include ratio(1, 1);
+            @include border($light, 50px);
           }
         }
-        p {
-          @include font(medium);
-          line-height: 1.5;
-          margin: 5px 0;
+        &--overview {
+          p {
+            margin: 10px 0;
+            color: $silver;
+            &.name {
+              @include font(medium, start, 600);
+              color: $black;
+            }
+          }
         }
       }
+      .article__banner {
+        margin-top: 20px;
+        span {
+          @include ratio(16, 9);
+        }
+      }
+    }
+    &--body {
+      margin-top: 50px;
+      padding: 0 5%;
     }
   }
 }
@@ -105,8 +116,25 @@
         }
       }
     }
-  }
-  .article__content {
-    padding: 5%;
+    .article__content {
+      padding: 0;
+      &--header {
+        h1 {
+          font-size: large;
+          padding: 10px 20px;
+        }
+        em {
+          display: block;
+          font-size: small;
+          font-weight: normal;
+          padding: 10px 20px;
+          margin-top: 0;
+        }
+        .author__info {
+          margin-top: 0;
+          padding: 10px 20px;
+        }
+      }
+    }
   }
 }

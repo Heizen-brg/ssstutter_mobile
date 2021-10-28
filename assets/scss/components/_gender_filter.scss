@@ -1,7 +1,8 @@
 .gender__filter {
   width: 100%;
   ul {
-    @include grid(repeat(2, 1fr), null, 20px);
+    @include grid(1fr 1fr, null, 10px);
+    place-content: center;
     li {
       @include border($silver, 4px);
       @include font(large, center, 600);

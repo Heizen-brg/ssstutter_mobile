@@ -20,12 +20,13 @@
 @mixin border($color: null, $radius: null) {
   border: thin solid $color;
   border-radius: $radius;
+  border-collapse: collapse;
 }
 @mixin transition {
   transition: all ease-in-out 0.3s;
 }
-@mixin shadow($w, $h, $blur, $color: null) {
-  box-shadow: $w $h $blur $color;
+@mixin shadow($w, $h, $i, $blur, $color: null) {
+  box-shadow: $w $h $i $blur $color;
 }
 @mixin font($size: null, $align: null, $weight: null) {
   font-size: $size;
@@ -117,6 +118,34 @@
     0% {
       -webkit-transform: translateY(-100px);
       transform: translateY(-100px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+@mixin fade-up {
+  -webkit-animation: fade-in-bottom 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in-bottom 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  @-webkit-keyframes fade-in-bottom {
+    0% {
+      -webkit-transform: translateY(50px);
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in-bottom {
+    0% {
+      -webkit-transform: translateY(50px);
+      transform: translateY(50px);
       opacity: 0;
     }
     100% {

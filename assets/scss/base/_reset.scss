@@ -104,7 +104,7 @@ section {
 }
 
 body {
-  line-height: 1;
+  line-height: 1.4;
 }
 
 ol,
@@ -142,10 +142,13 @@ object {
 input,
 button {
   outline: none;
-  font-family: "Barlow", sans-serif;
+  // font-family: "Roboto", sans-serif;
+  font-family: ATSurtVN;
 }
 textarea {
   overflow: auto;
+  // font-family: "Roboto", sans-serif;
+  font-family: ATSurtVN;
 }
 
 /* fix IE */
@@ -158,13 +161,13 @@ a {
   color: #808080;
   display: inline-block;
   cursor: pointer;
-  font-family: "Barlow", sans-serif;
+  // font-family: "Roboto", sans-serif;
 }
 a:visited {
-  color: #808080;
+  color: $black;
 }
 a:hover {
-  color: var(--black);
+  color: #808080;
 }
 h1,
 h2,
@@ -172,9 +175,14 @@ h3,
 h4,
 h5 {
   text-transform: uppercase;
-  font-family: "Barlow", sans-serif;
 
   /* font-family: Noto Sans Semi; */
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: $silver;
+  background-color: $white;
 }
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -190,7 +198,11 @@ input[type="text"] {
   appearance: none;
 }
 input::placeholder {
-  font-family: "Barlow", sans-serif;
+  // font-family: "Roboto", sans-serif;
+  font-family: ATSurtVN;
+}
+button {
+  color: $black;
 }
 button:focus,
 button:blur {

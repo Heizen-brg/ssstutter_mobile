@@ -1,5 +1,5 @@
 .search__page {
-  @include grid(repeat(6, 1fr), null, 2% 10px);
+  @include grid(repeat(6, 1fr), null, 20px 10px);
   .input {
     grid-area: 1 / 1 / 2 / 7;
     width: 100%;
@@ -14,19 +14,21 @@
       padding: 10px;
     }
   }
-  .gender__filter {
-    grid-area: 2 / 2 / 3 / 7;
-    padding: 0 5%;
-  }
+
   .categories__filter {
     grid-area: 3 / 1 / 5 / 2;
     padding-left: 30%;
     position: relative;
+    .filter__toggle {
+      display: none;
+    }
     .filter__list {
       position: sticky;
       top: 100px;
       ul {
         width: 100%;
+        height: 80%;
+        overflow: auto;
         li {
           border-bottom: thin solid $light;
           transition: all ease-in-out 0.2s;
@@ -46,9 +48,25 @@
             }
           }
           ul {
-            display: none;
-            // @include grid(1fr, null, 5px);
+            @include grid(1fr, null, 5px);
+            height: 0;
+            padding: 0 5%;
+            &.active {
+              height: auto;
+              padding: 5%;
+            }
             li {
+              margin: 0;
+              // &.active {
+              //   span:before {
+              //     transform: scale(1.04);
+              //     background: $yellow;
+              //   }
+              //   span:after {
+              //     transform: scale(0.4);
+              //     transition: transform 0.3s ease;
+              //   }
+              // }
               label {
                 display: block;
                 cursor: pointer;
@@ -71,7 +89,7 @@
                   text-transform: capitalize;
                   line-height: 15px;
                   height: 15px;
-                  padding-left: 15px;
+                  padding-left: 25px;
                   &::before {
                     content: "";
                     width: 15px;
@@ -103,15 +121,18 @@
           }
         }
       }
+      .filter__action {
+        display: none;
+      }
     }
   }
 
   .categories__products {
-    grid-area: 3 / 2 / 5 / 7;
+    grid-area: 3 / 1 / 5 / 7;
     padding: 0 5%;
     width: 100%;
     ul {
-      @include grid(repeat(auto-fit, minmax(30%, 1fr)), null, 20px);
+      @include grid(repeat(5, minmax(auto, 18%)), null, 10px);
       li {
         width: 100%;
       }
@@ -121,14 +142,9 @@
     grid-area: 5 / 1 / 7 / 7;
   }
 }
-@media (max-width: 426px) {
+
+@media (max-width: 769) {
   .search__page {
-    .input {
-      padding: 5%;
-      input {
-        width: 100%;
-      }
-    }
     .categories__filter {
       grid-area: 3 / 1 / 4 / 7;
       padding-left: 5%;
@@ -143,7 +159,7 @@
       }
       .filter__list {
         position: fixed;
-        width: 100%;
+        width: 50%;
         height: 100%;
         top: 0;
         left: -9999px;
@@ -154,7 +170,7 @@
           left: 0%;
         }
         ul {
-          padding: 5%;
+          padding: 100px 5%;
         }
         .filter__action {
           @include flex(row, space-around, center);
@@ -167,11 +183,40 @@
         }
       }
     }
-    .gender__filter {
-      grid-area: 2 / 1 / 3 / 7;
-    }
+
     .categories__products {
       grid-area: 4 / 1 / 5 / 7;
+    }
+  }
+}
+@media (max-width: 426px) {
+  .search__page {
+    .input {
+      padding: 5%;
+      input {
+        width: 100%;
+      }
+    }
+    .categories__filter {
+      grid-area: 2 / 1 / 3 / 7;
+      .filter__list {
+        width: 100%;
+        ul {
+          padding: 5%;
+        }
+      }
+    }
+    .categories__products {
+      ul {
+        li {
+          &:first-child {
+            grid-column: 1/3;
+          }
+          &:nth-child(5n + 1) {
+            grid-column: 1/3;
+          }
+        }
+      }
     }
   }
 }

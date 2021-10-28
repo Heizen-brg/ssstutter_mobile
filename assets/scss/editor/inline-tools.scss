@@ -1,0 +1,51 @@
+.color__picker {
+  width: 100%;
+  border: transparent;
+}
+
+.cdx-quote {
+  font-style: italic;
+  letter-spacing: 1.1px;
+  color: $silver;
+  &::before {
+    content: "“";
+    margin-right: 5px;
+  }
+  &::after {
+    content: "”";
+    margin-left: 5px;
+  }
+}
+.cdx-marker {
+  background: rgba(245, 235, 111, 0.29);
+  padding: 3px 0;
+}
+.cdx-color {
+  color: $red;
+}
+.cdx-size {
+  font-size: medium;
+}
+
+.font__picker {
+  width: 100%;
+  border: thin solid $light;
+  padding: 5px;
+}
+
+.cdx-textAlign {
+  display: block;
+}
+.text__format {
+  li {
+    margin: 5px;
+    padding: 10px;
+    border: thin solid transparent;
+    svg {
+      margin-right: 10px;
+    }
+    &:hover {
+      border: thin solid $light;
+    }
+  }
+}

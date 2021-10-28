@@ -1,5 +1,5 @@
 .related__product {
-  padding: 5%;
+  padding: 20px;
   h1 {
     @include font(large, center, 600);
     margin-bottom: 20px;
@@ -9,11 +9,17 @@
     @include grid(repeat(4, 1fr), null, 20px);
   }
 }
+@media (max-width: 769px) {
+  .related__product {
+    ul {
+      @include grid(repeat(4, 23%), null, 20px);
+    }
+  }
+}
 @media (max-width: 426px) {
   .related__product {
-    padding: 5%;
     ul {
-      @include grid(repeat(2, 1fr), null, 20px);
+      @include grid(repeat(auto-fit, 47%), null, 20px);
     }
   }
 }

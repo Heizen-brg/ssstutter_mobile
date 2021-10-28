@@ -3,13 +3,18 @@
 @import "base/base.scss";
 @import "pages/pages.scss";
 @import "components/components.scss";
+@import "editor/plugin.scss";
 
+@font-face {
+  font-family: ATSurtVN;
+  src: url(ATSurtVN-Regular.otf);
+}
 html {
   font-size: 14px;
 }
 
 body {
-  font-family: "Barlow", sans-serif;
+  font-family: ATSurtVN;
   overflow-x: hidden;
   font-weight: 400;
   width: 100vw;
@@ -17,7 +22,7 @@ body {
   margin: 0;
 }
 main {
-  padding-top: 65px;
+  padding-top: 58px;
 }
 button,
 li,
@@ -48,9 +53,3 @@ svg {
   }
 }
 
-@media (max-width: 425px) {
-  main {
-    padding-top: 0;
-    padding-bottom: 60px;
-  }
-}
