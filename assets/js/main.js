@@ -14,8 +14,8 @@ import { __push_notification } from "./share/_function.js";
 import { __templates_thankyou } from "./_thankyou.js";
 import { __templates_canceled } from "./_canceled.js";
 import { __templates_campaign } from "./_campaign.js";
-import list_campaign_winter from './list_campaign/list_campaign_winter.js';
-import flash_sale_page from './list_campaign/flash_sale.js';
+import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
+import flash_sale_page from "./list_campaign/flash_sale.js";
 
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
@@ -29,14 +29,10 @@ export const __requests = (params, callback, callback_error = false) => {
     // credentials: 'include'
   };
   if (options.method !== "GET") options.body = params.body;
-  let url = !params.url.includes("https://")
-    ? `https://api.leanservices.work/${params.url}`
-    : params.url;
+  let url = !params.url.includes("https://") ? `https://api.leanservices.work/${params.url}` : params.url;
   return fetch(url, options)
     .then((response) => {
-      if (
-        response.headers.get("content-type").indexOf("application/json") !== -1
-      ) {
+      if (response.headers.get("content-type").indexOf("application/json") !== -1) {
         response = response.json();
         if (typeof response == " string") response = JSON.parse(response);
       } else response = response.text();
@@ -81,7 +77,7 @@ export const __render = {
       "/thankyou": () => __render.thankyou_page(),
       "/canceled": () => __render.canceled_page(),
       "/editorial": () => __render.list_campaign_winter(),
-      "/flash-sale": () => __render.flash_sale()
+      "/flash-sale": () => __render.flash_sale(),
     };
 
     if (pathname.includes(`/p/`)) {
@@ -94,29 +90,25 @@ export const __render = {
         return false;
       }
       url_data["/blog/article"]({ article });
-    }
-    else if (pathname.includes(`/c/`)) {
+    } else if (pathname.includes(`/c/`)) {
       let category = category_detail;
       if (typeof category === "undefined") {
         return false;
       }
       url_data["/c"](category);
-    }
-    else if (pathname.includes(`/campaign`)) {
+    } else if (pathname.includes(`/campaign`)) {
       let campaign = campaign_detail.data;
       if (typeof campaign === "undefined") {
         return false;
       }
       url_data["/campaign"](campaign);
-    }
-    else if (pathname.includes(`/search`)) {
+    } else if (pathname.includes(`/search`)) {
       let products_list = search_result;
       if (typeof products_list === "undefined") {
         return false;
       }
       url_data[`/search`]({ products_list });
-    }
-    else {
+    } else {
       url_data[pathname]();
     }
   },
@@ -139,12 +131,8 @@ export const __render = {
   },
 
   homepage() {
-    let banner = mobile
-      ? __templates_home.mobile_banner()
-      : __templates_home.banner();
-    let new_arrivals = mobile
-      ? __templates_home.mobile_new_arrivals()
-      : __templates_home.new_arrivals();
+    let banner = mobile ? __templates_home.mobile_banner() : __templates_home.banner();
+    let new_arrivals = mobile ? __templates_home.mobile_new_arrivals() : __templates_home.new_arrivals();
 
     let blocks = [
       __templates_header.header({
@@ -305,7 +293,6 @@ export const __render = {
     this.build("blog__page", blocks);
     __templates.api_loading("hide");
   },
-
   article_page(params) {
     let blocks = [
       __templates_header.header({
@@ -345,7 +332,6 @@ export const __render = {
     this.build("campaign__page", blocks);
     __templates.api_loading("hide");
   },
-
   search_page(params) {
     let blocks = [
       __templates_header.header({
@@ -402,9 +388,9 @@ export const __render = {
       flash_sale_page(),
       __templates_footer.footer(),
     ];
-    this.build('flash-sale-page', blocks);
+    this.build("flash-sale-page", blocks);
     __templates.api_loading("hide");
-  }
+  },
 };
 
 __render.website();

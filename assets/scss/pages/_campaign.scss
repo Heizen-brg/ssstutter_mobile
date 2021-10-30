@@ -69,7 +69,7 @@
           color: inherit;
         }
         &.inactive {
-          opacity: .25;
+          opacity: 0.25;
         }
       }
     }
@@ -297,7 +297,6 @@
         padding-top: calc(5 / 4 * 100%);
         @media (min-width: 768px) {
           padding-top: 100%;
-          
         }
       }
     }
@@ -341,4 +340,3 @@
     }
   }
 }
-

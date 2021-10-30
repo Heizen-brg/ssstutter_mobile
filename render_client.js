@@ -1,8 +1,8 @@
 module.exports = {
-	html(params = {}) {
-		let title = `SSSTUTTER`;
-		let description = `REFINED FROM INSIDE`;
-		return `
+  html(params = {}) {
+    let title = `SSSTUTTER`;
+    let description = `REFINED FROM INSIDE`;
+    return `
 			<!DOCTYPE html>
 			<html lang="vi">
 			<head>
@@ -44,12 +44,12 @@ module.exports = {
 			</body>
 			</html>
 		`;
-	},
+  },
 
-	error_404(params = {}) {
-		let title = `404 NOT FOUND`;
-		let description = `Trang web này không tồn tại`;
-		return `
+  error_404(params = {}) {
+    let title = `404 NOT FOUND`;
+    let description = `Trang web này không tồn tại`;
+    return `
 			<!DOCTYPE html>
 			<html lang="vi">
 			<head>
@@ -117,11 +117,11 @@ module.exports = {
 			</body>
 			</html>
 		`;
-	},
-	maintain(params = {}) {
-		let title = `TRANG WEB ĐANG BẢO TRÌ`;
-		let description = `Trang web của chúng tôi hiện đang bảo trì`;
-		return `
+  },
+  maintain(params = {}) {
+    let title = `TRANG WEB ĐANG BẢO TRÌ`;
+    let description = `Trang web của chúng tôi hiện đang bảo trì`;
+    return `
 			<!DOCTYPE html>
 			<html lang="vi">
 			<head>
@@ -188,5 +188,5 @@ module.exports = {
 			</body>
 			</html>
 		`;
-	},
+  },
 };

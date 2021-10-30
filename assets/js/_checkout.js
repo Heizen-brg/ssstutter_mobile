@@ -1,6 +1,13 @@
 import { __render, __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
-import { __calc_final_amount, __check_shipping, __currency_format, __get_voucher, __push_notification, __show_cart_item } from "./share/_function.js";
+import {
+  __calc_final_amount,
+  __check_shipping,
+  __currency_format,
+  __get_voucher,
+  __push_notification,
+  __show_cart_item,
+} from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
 let typing_timer = null;
@@ -98,7 +105,7 @@ export const __templates_checkout = {
       if (re.test(e.target.value)) {
         order_data.customerPhone = e.target.value;
         customer_phone.classList.remove("error");
-        clearTimeout(typing_timer)
+        clearTimeout(typing_timer);
         typing_timer = setTimeout(() => {
           __get_voucher(e.target.value);
         }, 500);
@@ -135,8 +142,8 @@ export const __templates_checkout = {
     });
     customer_address.addEventListener("change", (e) => {
       shippingFormat.address = e.target.value;
-      let total = document.querySelector('[data-amount="total"]')
-      __check_shipping(total.dataset.price, shippingFormat)
+      let total = document.querySelector('[data-amount="total"]');
+      __check_shipping(total.dataset.price, shippingFormat);
     });
     return div;
   },
@@ -218,11 +225,19 @@ export const __templates_checkout = {
       });
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
-      if (!order_data.customerName || !order_data.customerPhone || !order_data.shippingAddress || !shippingFormat.address || !shippingFormat.ward || !shippingFormat.district || !shippingFormat.city) {
-        __push_notification('fail', 'Vui lòng điển đủ thông tin');
+      if (
+        !order_data.customerName ||
+        !order_data.customerPhone ||
+        !order_data.shippingAddress ||
+        !shippingFormat.address ||
+        !shippingFormat.ward ||
+        !shippingFormat.district ||
+        !shippingFormat.city
+      ) {
+        __push_notification("fail", "Vui lòng điển đủ thông tin");
         return;
       }
-      __templates.api_loading('show');
+      __templates.api_loading("show");
       __requests(
         {
           method: "POST",
