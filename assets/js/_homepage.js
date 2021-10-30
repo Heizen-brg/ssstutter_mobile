@@ -3,7 +3,6 @@ import { __icons } from "./share/_icons.js";
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format } from "./share/_function.js";
-import { CONFIG } from "./config.js";
 
 export const __templates_home = {
   hide_menu() {
@@ -172,7 +171,9 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                <a href="/p/${
+                  item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 item.extensions.media.featured
               })"></span></a>
               </div>
@@ -229,7 +230,9 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                <a href="/p/${
+                  item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 item.extensions.media.featured
               })"></span></a>
               </div>
@@ -341,7 +344,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+              <a href="/p/${
+                next_item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 next_item.extensions.media.featured
               })"></span></a>
             </div>
@@ -361,7 +366,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
           </div>
@@ -429,7 +434,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+              <a href="/p/${
+                item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 next_item.extensions.media.featured
               })"></span></a>
             </div>
@@ -447,7 +454,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
           </div>
@@ -528,7 +535,9 @@ export const __templates_home = {
                   <li class="glide__slide">
                     <div class="product">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                        <a href="/p/${
+                          item.slug
+                        }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 item.extensions.media.featured
               })"></span></a>
                       </div>
@@ -600,7 +609,7 @@ export const __templates_home = {
       <li>
         <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
         <div>
@@ -635,9 +644,9 @@ export const __templates_home = {
       <li>
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-              item.extensions.media.featured
-            })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                item.extensions.media.featured
+              })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name}</h6>

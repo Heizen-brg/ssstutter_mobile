@@ -1,7 +1,5 @@
 import { __requests } from "../main.js";
 import { __currency_format } from "./_function.js";
-import { CONFIG } from "../config.js";
-
 export const __templates = {
   notification(params) {
     return `
@@ -99,7 +97,7 @@ export const __templates = {
           product_template.innerHTML = `
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+            <a href="/p/${item.slug}"><span style="background-image:url(http://media.leanservices.work/product/${
             item.extensions.media.featured
           })"></span></a>
           </div>

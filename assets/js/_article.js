@@ -3,18 +3,15 @@ import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 export const __templates_article = {
   related() {
-    let div = document.createElement("div");
-    div.className = "article__related";
-    div.innerHTML = __templates.busy_loading("show");
-    __requests(
-      {
-        method: "GET",
-        url: `https://sss-dashboard.leanservices.work/w/post/get?limit=3&skip=0`,
-      },
-      (res) => {
-        let highlight_item = (res || [])
-          .map((item) => {
-            return `
+    let div = document.createElement('div');
+    div.className = 'article__related';
+    div.innerHTML = __templates.busy_loading('show');
+    __requests({
+      method: 'GET',
+      url: `https://sss-dashboard.leanservices.work/w/post/get?limit=3&skip=0`
+    }, (res) => {
+      let highlight_item = (res || []).map(item => {
+        return `
           <li>
             <a href=""><span style="background-image: url(https://sss-dashboard.leanservices.work${item.thumbnail}.jpeg)"></span></a>
             <p>
@@ -24,17 +21,15 @@ export const __templates_article = {
               </a>
             </p>
           </li>
-        `;
-          })
-          .join("");
-        div.innerHTML = `<ul>${highlight_item}</ul>`;
-      }
-    );
+        `
+      }).join('');
+      div.innerHTML = `<ul>${highlight_item}</ul>`;
+    })
     return div;
   },
   content(params) {
-    let div = document.createElement("div");
-    div.className = "article__content";
+    let div = document.createElement('div');
+    div.className = 'article__content';
     div.innerHTML = `
     <div class="article__content--header">
       <h1>${params.title}</h1>
@@ -56,16 +51,16 @@ export const __templates_article = {
     <div class="article__content--body" id="article"></div>
     `;
     let editor = new EditorJS({
-      holderId: "article",
+      holderId: 'article',
       readOnly: true,
       tools: {
         header: {
           class: Header,
-          inlineToolbar: true,
+          inlineToolbar: true
         },
         paragraph: {
           class: Paragraph,
-          inlineToolbar: true,
+          inlineToolbar: true
         },
         image: {
           class: SimpleImage,
@@ -73,13 +68,15 @@ export const __templates_article = {
         },
         list: {
           class: List,
-          inlineToolbar: true,
-        },
+          inlineToolbar: true
+        }
       },
       data: {
-        blocks: params.content.blocks,
-      },
+        blocks: params.content.blocks
+      }
     });
     return div;
   },
 };
+
+

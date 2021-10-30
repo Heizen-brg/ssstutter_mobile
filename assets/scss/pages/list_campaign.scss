@@ -14,7 +14,7 @@
       max-width: 1320px;
     }
   }
-
+  
   .section-video {
     padding: 20px 15px 40px;
     max-width: 667px;
@@ -47,7 +47,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "Italianno", cursive !important;
+        font-family: 'Italianno', cursive !important;
         text-transform: none;
         font-weight: 600;
         // text-shadow: 2px 0 0 $light, -2px 0 0 $light, 0 2px 0 $light, 0 -2px 0 $light, 1px 1px $light, -1px -1px 0 $light, 1px -1px 0 $light, -1px 1px 0 $light;
@@ -136,3 +136,4 @@
     }
   }
 }
+

@@ -1,9 +1,10 @@
 import { __icons } from "./share/_icons.js";
 
+
 export const __templates_footer = {
   footer() {
-    let footer = document.createElement("footer");
-    footer.className = "footer";
+    let footer = document.createElement('footer');
+    footer.className = 'footer';
     footer.innerHTML = `
     <div class="footer-row">
       <div>
@@ -38,5 +39,5 @@ export const __templates_footer = {
     <p class="copy">Copyright ⓒ by Leanow Joint Stock Company </p>
     `;
     return footer;
-  },
+  }
 };

@@ -69,7 +69,7 @@
           color: inherit;
         }
         &.inactive {
-          opacity: 0.25;
+          opacity: .25;
         }
       }
     }
@@ -244,19 +244,29 @@
 //
 .flash-sale-page {
   .campaign-detail {
-    padding: 40px;
+    padding: 40px 15px;
     text-align: center;
-    margin: 20vh 0;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     h2 {
       font-weight: 600;
       font-size: 24px;
       margin-bottom: 12px;
       font-family: serif;
       text-transform: capitalize;
+      @media (min-width: 768px) {
+        font-size: 28px;
+      }
     }
     p {
       margin-bottom: 12px;
     }
+    .clock {
+      margin-bottom: 14px;
+    }
+    /*
     .clock {
       display: flex;
       justify-content: center;
@@ -278,6 +288,7 @@
         }
       }
     }
+    */
   }
   .section-banner {
     padding: 15px;
@@ -293,10 +304,12 @@
       }
       div {
         background: #cecece;
+        cursor: pointer;
         background-size: cover;
         padding-top: calc(5 / 4 * 100%);
         @media (min-width: 768px) {
           padding-top: 100%;
+          
         }
       }
     }
@@ -324,15 +337,14 @@
         margin-bottom: 40px;
       }
       span {
-        min-width: 100px;
+        // min-width: 100px;
         text-decoration: underline;
         display: inline-block;
-        margin: 0 24px;
         font-size: 18px;
         cursor: pointer;
-        opacity: 0.25;
-        text-transform: uppercase;
-        padding: 16px;
+        opacity: .5;
+        font-family: serif;
+        padding: 16px 8px;
         &.active {
           opacity: 1;
         }
@@ -340,3 +352,4 @@
     }
   }
 }
+

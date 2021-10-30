@@ -3,19 +3,18 @@ import { __templates } from "./share/_components.js";
 import { __currency_format, __get_voucher, __push_notification, __show_cart_item } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
-import { CONFIG } from "./config.js";
 let typing_timer = null;
 export const __templates_search = {
   input(params = {}) {
-    let div = document.createElement("div");
-    div.className = "input";
+    let div = document.createElement('div');
+    div.className = 'input';
     div.innerHTML = `
         <input data-action="search_product" type="text" placeholder="Tìm kiếm..." />
     `;
     let search_input = div.querySelector('[data-action="search_product"]');
 
     search_input.addEventListener("keyup", (e) => {
-      let search_wrapper = document.querySelector(".search__products--list");
+      let search_wrapper = document.querySelector('.search__products--list');
       get_product_on_search(search_wrapper, e);
     });
 
@@ -39,16 +38,26 @@ export const __templates_search = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                    })"></span></a>
+                        <a href="/p/${item.slug
+                      }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+                        ? item.extensions.media.featured
+                        : "no_image.png"
+                      })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
-                        ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
+                        ${item.salePrice
+                        ? `<p class="discount">${__currency_format(
+                          item.salePrice
+                        )}</p>`
+                        : ""
+                      }
                         <p>${__currency_format(item.price)}</p>
                       </div>
-                      ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                      ${item.discount > 0
+                        ? `<p class="tag">${item.discount}%</p>`
+                        : ""
+                      }
                       <div class="color">
                           <p>+${item.color.length} màu</p>
                       </div>
@@ -70,30 +79,40 @@ export const __templates_search = {
     return div;
   },
   products_list(params) {
-    let div = document.createElement("div");
-    div.className = "categories__products";
+    let div = document.createElement('div');
+    div.className = 'categories__products';
     div.innerHTML = `
       <ul class="search__products--list" data-cate="">
 
       </ul>
     `;
-    let ul = div.querySelector("ul");
+    let ul = div.querySelector('ul')
     let products = (params.data || [])
       .map((item) => {
         return `
     <li>
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-        })"></span></a>
+          <a href="/p/${item.slug
+          }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+            ? item.extensions.media.featured
+            : "no_image.png"
+          })"></span></a>
         </div>
         <h6 class="name">${item.name}</h6>
         <div class="price">
-          ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
+          ${item.salePrice
+            ? `<p class="discount">${__currency_format(
+              item.salePrice
+            )}</p>`
+            : ""
+          }
           <p>${__currency_format(item.price)}</p>
         </div>
-        ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+        ${item.discount > 0
+            ? `<p class="tag">${item.discount}%</p>`
+            : ""
+          }
         <div class="color">
             <p>+${item.color.length} màu</p>
         </div>
@@ -104,5 +123,5 @@ export const __templates_search = {
       .join("");
     ul.innerHTML = products;
     return div;
-  },
-};
+  }
+}
