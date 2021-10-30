@@ -62,6 +62,24 @@
     opacity: 1;
   }
 }
+.payment__progress {
+  @include flex(column, center, center);
+  padding: 15px;
+  h1 {
+    padding: 10px;
+  }
+  button {
+    background-color: #eaeaea;
+    color: #333;
+    font-weight: 700;
+    border: none;
+    font-size: 14px;
+    padding: 10px;
+    width: auto;
+    margin: 0;
+    height: 100%;
+  }
+}
 .store__check--modal {
   ul {
     @include grid(repeat(2, 1fr), null, 20px);
@@ -136,7 +154,25 @@
         border: none;
         background-color: $light;
       }
+      .response {
+        margin-top: 10px;
+        font-size: medium;
+      }
     }
+  }
+}
+.sale__promotion {
+  padding: 40px;
+  line-height: 2;
+  span {
+    background-image: url("https://i.imgur.com/YAhhDRd.png");
+    @include ratio(18, 7);
+  }
+  h2 {
+    @include font(large, center, bold);
+  }
+  p {
+    @include font(medium, center, 600);
   }
 }
 .refund__policy {
@@ -147,5 +183,32 @@
   }
   h4 {
     @include font(medium, center, 600);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal__overlay {
+    .close__btn {
+      right: 10px;
+    }
+  }
+}
+@media (max-width: 426px) {
+  .modal__overlay {
+    .close__btn {
+      top: 10px;
+    }
+  }
+  .size__guide--modal {
+    width: auto;
+    padding: 20px;
+    .size__guide--container {
+      flex-direction: column;
+      padding: 0;
+      form {
+        margin-left: 0;
+        margin-top: 20px;
+      }
+    }
   }
 }

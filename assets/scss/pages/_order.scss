@@ -2,7 +2,7 @@
   @include grid(repeat(6, 1fr), null, 20px);
   padding: 100px 5% 0 5%;
   .order__overview {
-    grid-area: 1 / 1 / 3 / 5;
+    grid-area: 1 / 1 / 3 / 4;
     .customer__info {
       @include grid(1fr, null, 20px);
       @include border($silver, 4px);
@@ -38,7 +38,7 @@
     }
   }
   .order__items {
-    grid-area: 1/ 5 / 3 / 7;
+    grid-area: 1/ 4 / 3 / 7;
     background-color: $light;
     border-radius: 4px;
     padding: 20px;
@@ -47,22 +47,22 @@
       min-height: 35vh;
       overflow: auto;
       li {
-        @include grid((80px 1fr), 1fr, 20px);
+        @include grid((150px 1fr), 1fr, 50px);
+        margin: 10px 0;
         .product__thumbnail {
           @include ratio(1, 1);
         }
         div {
           h6 {
             font-size: medium;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
           }
-          span {
+          p {
             color: $silver;
-            margin-bottom: 5px;
-            display: block;
+            margin-bottom: 10px;
           }
           strong {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
           }
         }
       }
@@ -74,14 +74,56 @@
       div {
         margin-bottom: 10px;
         @include flex(row, space-between, center);
+        &.ship__fee {
+          strong {
+            color: $silver;
+          }
+        }
+        p {
+          @include font(medium, start, 500);
+          color: $silver;
+        }
+        strong {
+          @include font(large, start, 560);
+        }
       }
     }
     .total {
       margin-top: 20px;
       @include flex(row, space-between, center);
+      p {
+        @include font(medium, start, 500);
+        color: $silver;
+      }
+      strong {
+        @include font(large, start, 560);
+      }
     }
   }
   .footer {
     grid-area: 4 / 1 / 5 / 7;
+  }
+}
+
+@media (max-width: 426px) {
+  .order__confirmation {
+    padding: 0;
+    .order__overview {
+      grid-area: 1/1/2/7;
+      padding: 20px;
+      .customer__continue {
+        flex-direction: column;
+        button {
+          margin-top: 20px;
+          width: 100%;
+        }
+      }
+    }
+    .order__items {
+      grid-area: 2/1/3/7;
+    }
+    .footer {
+      grid-area: 3 / 1 / 4 / 7;
+    }
   }
 }

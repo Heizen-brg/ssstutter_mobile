@@ -1,6 +1,6 @@
 import { __render } from "../main.js";
+import { __size_guide_data } from "./_data.js";
 import { __icons } from "./_icons.js";
-
 export const __templates_modal = {
   overlay(params = {}) {
     let main_body = document.querySelector('#root');
@@ -55,40 +55,41 @@ export const __templates_modal = {
             <thead>
               <tr>
                 <td>Kích thước</td>
-                <td>Chiều rộng vai</td>
-                <td>Phần ngực</td>
-                <td>Chiều dài tay</td>
-                <td>Tổng thể</td>
+                <td>Chiều cao (cm)</td>
+                <td>Cân nặng (kg)</td>
+                <td>Phần ngực (cm)</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>S(1)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>S(0)</td>
+                <td>160-170</td>
+                <td>49-54</td>
+                <td>85-89</td>
               </tr>
               <tr>
-                <td>M(2)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>M(1)</td>
+                <td>166-174</td>
+                <td>55-60</td>
+                <td>90-94</td>
               </tr>
               <tr>
-                <td>L(3)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>L(2)</td>
+                <td>170-177</td>
+                <td>61-66</td>
+                <td>95-99</td>
               </tr>
               <tr>
-                <td>XL(4)</td>
-                <td>45.5</td>
-                <td>55</td>
-                <td>58</td>
-                <td>65</td>
+                <td>XL(3)</td>
+                <td>175-180</td>
+                <td>67-72</td>
+                <td>100-104</td>
+              </tr>
+              <tr>
+                <td>XXL(4)</td>
+                <td>178-185</td>
+                <td>73-78</td>
+                <td>105-109</td>
               </tr>
             </tbody>
           </table>
@@ -98,25 +99,89 @@ export const __templates_modal = {
           <div>
             <div class="size__input">
               <p>Chiều cao (cm)</p>
-              <input class="height__input" type="number" placeholder="...">
+              <input class="height__input" type="number" placeholder="..." required>
             </div>
             <div class="size__input">
               <p>Cân nặng (kg)</p>
-              <input class="weight__input" type="number" placeholder="...">
+              <input class="weight__input" type="number" placeholder="..." required>
             </div>
           </div>
-          <button>Tìm size</button>
+          <button type="button">Tìm size</button>
           <p class="response"></p>
         </form>
       </div>
     `;
-    return div
+    let calc_btn = div.querySelector('button');
+    calc_btn.addEventListener('click', () => {
+      let height_input = div.querySelector('.height__input');
+      let weight_input = div.querySelector('.weight__input');
+      let user_info = {
+        w: weight_input.value,
+        h: height_input.value
+      }
+      size_calc(user_info)
+    })
+    let size_calc = (params) => {
+      let response_size = div.querySelector('.response');
+      // console.log(params);
+      if ((params.w || params.h) == "") return false;
+      let balance = __size_guide_data.balance;
+      let size_found = null;
+      for (let [k, v] of Object.entries(__size_guide_data)) {
+        if (v.constructor != Object) continue;
+        if (params.h >= v.height.min && params.h <= v.height.max) {
+          size_found = k;
+          if (params.w >= (v.weight.max + balance)) {
+            continue;
+          } else {
+            break;
+          }
+        } else {
+          if (params.h < (v.height.max + balance)) {
+            size_found = k;
+          } else {
+            continue;
+          }
+        }
+        if (params.w >= v.weight.min && params.w <= v.weight.max) {
+          size_found = k;
+          break;
+        } else {
+          if (params.w < (v.weight.max + balance)) {
+            size_found = k;
+          } else {
+            continue;
+          }
+        }
+
+      }
+      if (size_found) {
+        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`
+        return __size_guide_data[size_found]
+      } else {
+        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`
+        return false;
+      }
+
+    }
+    return div;
+  },
+  sale_promotion() {
+    let div = document.querySelector('div');
+    div.className = "sale__promotion";
+    div.innerHTML = `
+    <span></span>
+    <h2>Thông tin ưu đãi</h2>
+    <p> Sản phẩm sweatshirt / long tee: Giảm 10%, khi mua được tặng 1 sổ tay</p>
+    <p> Sản phẩm áo khoác & coat: Giảm 10%, khi mua được tặng 1 Great Life Tee Premium và 1 sổ tay</p>
+    <h4> SSStutter sẽ gọi lại cho bạn để tư vấn chọn màu và size cho Great Life Tee Premium cho bạn ngay sau khi thanh toán sản phẩm này</h4>
+    `;
+    return div;
   },
   refund_policy() {
     let div = document.createElement('div');
     div.className = 'refund__policy';
     div.innerHTML = `
-    <div class="product_policy hidden_scroll">
       <h2>QUY ĐỊNH ĐỔI HÀNG</h2>
       <h4>BẠN VUI LÒNG KIỂM TRA HOÁ ĐƠN VÀ TƯ TRANG TRƯỚC KHI RỜI QUẦY NHÉ !</h4>
       <p>– Bạn có thể đổi hàng trong 14 ngày kể từ ngày mua hàng.</p>
@@ -129,7 +194,15 @@ export const __templates_modal = {
       <p>– Phụ kiện: Không được đổi hoặc trả lại các phụ kiện như Vòng đeo tay, Kính mát, Thắt lưng, Tất, Pin cài áo, Mũ len, Mũ, Khăn choàng, Ví và các phụ kiện nhỏ.</p>
       <p>– Bạn có thể đổi hàng tại tất cả các chi nhanh của SSSTUTTER.</p>
       <p>Mọi thắc mắc khác bạn vui lòng gọi số&nbsp; <strong>086.993.6266</strong>&nbsp; hoặc liên hệ fanpage SSSTUTTER để được hỗ trợ ngay nhé.</p>
-    </div>
+    `;
+    return div;
+  },
+  card_payment_progress() {
+    let div = document.createElement('div');
+    div.className = 'payment__progress';
+    div.innerHTML = `
+      <h1>Đã mở công thanh toán online !</h1>
+      <a href="/"><button>Quay lại trang chủ</buton></a>
     `;
     return div;
   }

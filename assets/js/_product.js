@@ -1,23 +1,34 @@
-import { __currency_format } from "./share/_function.js";
+import { __requests } from "./main.js";
+import { __currency_format, __push_notification, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
-let user_selection = [];
+import { __templates_header } from "./_header.js";
+let user_selection = {};
 export const __templates_product = {
-  product_gallery(params = {}, color_id) {
-    let gallery = params.extensions.media;
-    let color = color_id ? color_id : params.color[0].value;
-    let div = document.createElement('div');
-    div.className = 'gallery';
+  product_gallery(params = {}) {
+    let gallery = params.extensions ? params.extensions.media : {};
+    let color = params.color[0].id;
+    let div = document.createElement("div");
+    div.className = "gallery";
     div.innerHTML = `
     <ul>
-      ${(gallery[`color_${color}_gallery`]).map(img => `<li style="background-image:url(https://leanservices.work/pd/static/${img.o})"></li>`).join('')}
+      ${(gallery[`color_${color}_gallery`] || [])
+        .map(
+          (img) =>
+            `<li style="background-image:url(https://api.leanservices.work/product/static/${img.o.replace(
+              ".jpeg",
+              ".webp"
+            )}"></li>`
+        )
+        .join("")}
     </ul>
+    ${__icons.swipe}
     `;
     return div;
   },
   model_info(params = {}) {
-    let div = document.createElement('div');
-    div.className = 'model';
+    let div = document.createElement("div");
+    div.className = "model";
     div.innerHTML = `
       <h1>model info</h1>
       <div>
@@ -37,8 +48,8 @@ export const __templates_product = {
     return div;
   },
   flatlay_view(params = {}) {
-    let div = document.createElement('div');
-    div.className = 'flatlay';
+    let div = document.createElement("div");
+    div.className = "flatlay";
     div.innerHTML = `
       <h1>Chi tiết</h1>
         <ul>
@@ -48,16 +59,17 @@ export const __templates_product = {
     let init_flatlay_img = () => {
       let media = params.extensions.media;
       let colors_arr = params.color;
-      let color_value = colors_arr.map(color => {
+      let color_value = colors_arr.map((color) => {
         return {
-          id: color.value,
-          photo: media[`color_${color.value}_thumbnail`]
-        }
+          id: color.id,
+          photo: media[`color_${color.id}_thumbnail`],
+        };
       });
       color_value.map((item, index) => {
-        let flat_img = document.createElement('li');
-        flat_img.style.backgroundImage = `url(https://leanservices.work/pd/static/${item.photo == null ? 'no_image.png' : item.photo.o})`
-        let color_variation = div.querySelector('.flatlay > ul');
+        let flat_img = document.createElement("li");
+        flat_img.style.backgroundImage = `url(https://api.leanservices.work/product/static/${item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".webp")
+          })`;
+        let color_variation = div.querySelector(".flatlay > ul");
         color_variation.appendChild(flat_img);
         return flat_img;
       });
@@ -66,8 +78,8 @@ export const __templates_product = {
     return div;
   },
   attributes(params = {}) {
-    let div = document.createElement('div');
-    div.className = 'attributes';
+    let div = document.createElement("div");
+    div.className = "attributes";
     div.innerHTML = `
     <h1>Thông số sản phẩm</h1>
     <table>
@@ -223,107 +235,222 @@ export const __templates_product = {
     return div;
   },
   variation(params = {}) {
-    let info = params.master;
-    let div = document.createElement('div');
-    div.className = 'variation';
+    let info = params;
+    // console.log(info);
+    let div = document.createElement("div");
+    div.className = "variation";
     div.innerHTML = `
       <div>
-        <h1 class="name">${info.name}</h1>
-        <div class="price">
-          <p>${__currency_format(info.price)}</p>
+        <div class="info">
+          <h1 class="name">${info.name}</h1>
+          <div class="price">
+          ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
+          ${info.salePrice
+        ? `<p class="discount">${__currency_format(info.price)}</p>`
+        : ` <p>${__currency_format(info.price)}</p>`
+      }
+          </div>
         </div>
         <div class="color">
-          <p>chọn màu</p>
+          <p>chọn màu : <strong class="color__name">${info.color[0].name} </strong></p>
           <ul>
-           
+          
           </ul>
         </div>
         <div class="size">
           <p>chọn size</p>
           <ul>
-          ${info.size.sort((a, b) => a - b).map((i, index) => ` <li class=" size__variation ${index == 0 ? 'active' : ''} " data-value="${i}"><span>${i}</span></li>`).join('')}
+
           </ul>
         </div>
         <button class="add">Thêm vào giỏ hàng</button>
-        <div class="interact">
-          <div>
-            ${__icons.wishlist}
-            <p>Yêu thích</p>
-          </div>
-          <div class="store__check" data-action="store_check">
-            ${__icons.store}
-            <p>Cửa hàng còn hàng</p>
-          </div>
-        </div>
         <ul class="guide">
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
           <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
         </ul>
+        ${info.catId.join(",").includes("0x7u3p") || info.catId.join(",").includes("S2HJYi")
+        ? `<div class="promotion__sale">
+        <p>Tặng thêm Great Life Tee Premium khi mua sản phẩm này </p>
+        <button data-action="sale_promotion">Thông tin ưu đãi</button>
+      </div>`
+        : ""
+      }
       </div>
     `;
-    user_selection.push({ id: info.id, color: info.color[0].value, size: info.size[0] });
+    user_selection = {
+      name: info.name,
+      media: info.extensions.media,
+      id: info.id,
+      price: info.price,
+      salePrice: info.salePrice,
+      variation: info.variation[0],
+      color: info.color[0].value,
+      colorId: info.color[0].id,
+      colorName: info.color[0].name,
+      size: info.size[0],
+      slug: info.slug,
+      quantity: 1,
+    };
     let init_flatlay_img = (value) => {
-      let media = params.master.extensions.media;
-      let colors_arr = params.master.color;
-      let color_value = colors_arr.map(color => {
+      let media = info.extensions.media;
+      let colors_arr = info.color;
+      let color_value = colors_arr.map((color) => {
         return {
-          id: color.value,
-          photo: media[`color_${color.value}_thumbnail`]
-        }
+          id: color.id,
+          name: color.name,
+          value: color.value,
+          photo: media[`color_${color.id}_thumbnail`],
+        };
       });
       color_value.map((item, index) => {
-        let flat_color = document.createElement('li');
-        flat_color.className = 'color__variation';
-        index == 0 ? flat_color.classList.add('active') : false;
-        flat_color.dataset.value = item.id;
-        flat_color.dataset.variation = JSON.stringify(info);
-        flat_color.style.backgroundImage = `url(https://leanservices.work/pd/static/${item.photo == null ? 'no_image.png' : item.photo.o})`
-        let color_variation = div.querySelector('.color > ul');
+        let isStock = Object.values(info.variation)
+          .filter((i) => i.color === item.id)
+          .some((i) => i.isStock);
+        if (!isStock) return;
+        let flat_color = document.createElement("li");
+        flat_color.innerHTML = `
+        <button 
+          class="color__variation 
+          ${index == 0 && info.variation[index].isStock ? "active" : ""}" 
+          data-product='${JSON.stringify(info).replace("'", "")}'
+          data-color='${JSON.stringify(item)}'
+          data-index="${index}"
+          style="background-image:url(https://api.leanservices.work/product/static/${item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
+          })"
+        >
+        </button>
+        `;
+        let color_variation = div.querySelector(".color > ul");
         color_variation.appendChild(flat_color);
+        if (index == 0) init_size(item.id);
         return flat_color;
       });
     };
+    let init_size = (params) => {
+      let size_wrapper = div.querySelector(".size > ul");
+      let size_arr = Object.values(info.variation)
+        .filter((i) => i.color === params)
+        .map((j) => {
+          return {
+            size: j.size,
+            isStock: j.isStock,
+          };
+        });
+      let size_render = size_arr
+        .sort((a, b) => a.size - b.size)
+        .map((i, index) => {
+          return `
+        <li><button data-index="${index}" class=" size__variation ${index == 0 && info.variation[index].isStock ? "active" : ""
+            }" ${i.isStock ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+        })
+        .join("");
+      size_wrapper.innerHTML = size_render;
+      let size_variation = div.querySelectorAll(".size__variation");
+      size_variation.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          size_variation.forEach((btn) => btn.classList.remove("active"));
+          btn.classList.add("active");
+          user_selection.size = btn.dataset.value;
+        });
+      });
+    };
     let on_change_variation = () => {
-      let color_variation = div.querySelectorAll('.color__variation');
-      color_variation.forEach(btn => {
-        btn.addEventListener('click', (e) => {
+      let color_variation = div.querySelectorAll(".color__variation");
+      color_variation.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
           e.preventDefault();
-          color_variation.forEach(btn => btn.classList.remove('active'));
-          btn.classList.add('active')
-          document.querySelector('.product__page .gallery').innerHTML = '';
-          this.product_gallery(JSON.parse(btn.dataset.variation), btn.dataset.value)
-          user_selection[0].color = btn.dataset.value;
-
-        })
-      })
-      let size_variation = div.querySelectorAll('.size__variation');
-      size_variation.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          size_variation.forEach(btn => btn.classList.remove('active'));
-          btn.classList.add('active')
-          user_selection[0].size = btn.dataset.value;
-        })
-      })
+          let product_gallery = document.querySelector(".gallery");
+          let color_name_select = div.querySelector(".color__name");
+          let product = JSON.parse(btn.dataset.product);
+          let gallery = product.extensions.media;
+          let variation = product.variation;
+          let color = JSON.parse(btn.dataset.color);
+          // console.log(variation);
+          color_name_select.innerHTML = color.name;
+          color_variation.forEach((btn) => btn.classList.remove("active"));
+          btn.classList.add("active");
+          product_gallery.innerHTML = `
+          <ul>
+            ${(gallery[`color_${color.id}_gallery`] || [])
+              .map(
+                (img) =>
+                  `<li style="background-image:url(https://api.leanservices.work/product/static/${img.o.replace(
+                    "jpeg",
+                    "webp"
+                  )})"></li>`
+              )
+              .join("")}
+          </ul>
+          `;
+          user_selection.color = color.value;
+          user_selection.colorName = color.name;
+          user_selection.colorId = color.id;
+          init_size(color.id);
+        });
+      });
     };
     let init_add_to_cart = (params) => {
-      let to_cart_btn = div.querySelector('.add');
-      to_cart_btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log(user_selection);
+      let to_cart_btn = div.querySelector(".add");
+
+      to_cart_btn.addEventListener("click", (e) => {
+        let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
+          ? JSON.parse(localStorage.getItem("cartItem"))
+          : [];
         let cart_menu = document.querySelector('[data-menu="cart"]');
-        cart_menu.classList.add('active');
-      })
-    }
-    let triggers = div.querySelectorAll('[data-action]')
-    triggers.forEach(btn => {
-      btn.addEventListener('click', () => {
-        __templates_modal.overlay({ content: __templates_modal[btn.dataset.action]() })
-      })
-    })
+        let variation = params.variation;
+        e.preventDefault();
+        user_selection.variation = variation.find(
+          (item) => item.color == user_selection.colorId && item.size == user_selection.size
+        );
+        let new_selected_item = { ...user_selection };
+        let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
+        if (product_in_cart) {
+          __requests(
+            {
+              method: "GET",
+              url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${product_in_cart.quantity + 1
+                }`,
+            },
+            ({ data }) => {
+              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+              cart_selected = cart_selected.map((i) => {
+                if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+                return i;
+              });
+              localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+              cart_menu.classList.add("active");
+              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+            }
+          );
+        } else {
+          __requests(
+            {
+              method: "GET",
+              url: `product/variation/check-stock?id=${new_selected_item.variation.id}&stock=1`,
+            },
+            ({ data }) => {
+              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+              cart_selected.push(new_selected_item);
+              localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+              cart_menu.classList.add("active");
+              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+            }
+          );
+        }
+      });
+    };
+    let triggers = div.querySelectorAll("[data-action]");
+    triggers.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        __templates_modal.overlay({ content: __templates_modal[btn.dataset.action]() });
+      });
+    });
     init_flatlay_img();
     on_change_variation();
-    init_add_to_cart();
-    return div
-  }
-}
+    init_add_to_cart(info);
+    return div;
+  },
+};

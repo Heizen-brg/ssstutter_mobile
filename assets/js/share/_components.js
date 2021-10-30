@@ -1,15 +1,25 @@
 import { __requests } from "../main.js";
-import { __related } from "./_data.js";
-
+import { __currency_format } from "./_function.js";
 export const __templates = {
+  notification(params) {
+    return `
+		<div class="notify-wrapper">
+		<span class="server-${params.type}">
+			<span class="notify-msg">
+				<span>${params.msg}</span>
+			</span>
+		</span>
+		</div>
+		`;
+  },
   busy_loading(status) {
-    if (status == 'hide') {
-      document.querySelectorAll('.busy__loader').forEach(div => {
-        div.style.display = 'none';
-      })
+    if (status == "hide") {
+      document.querySelectorAll(".busy__loader").forEach((div) => {
+        div.parentNode.removeChild(div);
+      });
     }
-    let div = document.createElement('div');
-    div.className = 'busy__loader';
+    let div = document.createElement("div");
+    div.className = "busy__loader";
     div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; display: block;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 				<g transform="translate(20 50)">
 				<circle cx="0" cy="0" r="6" fill="#1d0e0b">
@@ -29,17 +39,17 @@ export const __templates = {
 				</circle>
 				</g>
 				</svg>`;
-    div.style.display = status == 'show' ? 'grid' : 'none';
+    div.style.display = status == "show" ? "grid" : "none";
     return div.outerHTML;
   },
   api_loading(status) {
-    if (status == 'hide') {
-      document.querySelectorAll('.preview__loader').forEach(div => {
+    if (status == "hide") {
+      document.querySelectorAll(".preview__loader").forEach((div) => {
         document.body.removeChild(div);
-      })
+      });
     }
-    let div = document.createElement('div');
-    div.className = 'preview__loader';
+    let div = document.createElement("div");
+    div.className = "preview__loader";
     div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; display: block;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 				<g transform="translate(20 50)">
 				<circle cx="0" cy="0" r="6" fill="#1d0e0b">
@@ -59,65 +69,52 @@ export const __templates = {
 				</circle>
 				</g>
 				</svg>`;
-    div.style.display = status == 'show' ? 'grid' : 'none';
+    div.style.display = status == "show" ? "grid" : "none";
     document.body.appendChild(div);
   },
-  banner() {
-    let div = document.createElement('div');
-    div.className = 'hero__banner';
-    div.innerHTML = `
-      <div style="background-image:url('https://ssstutter.com/wp-content/uploads/2021/04/banner-final.jpg')"></div>
-    `;
-    return div;
-  },
-  gender_filter() {
-    let div = document.createElement('div');
-    div.className = 'gender__filter';
-    div.innerHTML = `
-     <ul>
-      <li>FOR HIM</li>
-      <li>FOR HER</li>
-     </ul>
-    `;
-    return div;
-  },
+
   related_product(params = {}) {
-    let div = document.createElement('div');
-    div.className = 'related__product';
+    let div = document.createElement("div");
+    div.className = "related__product";
     div.innerHTML = `
       <h1>Gợi ý cho bạn</h1>
      <ul class="related__product--list"></ul>
     `;
-    __requests({
-      method: 'GET',
-      url: `https://sss.leanservices.work/services/sssearch/?color=${params}&limit=4`,
-      header: {
-        authorization: 'ca246fba-c995-4d53-a22e-40c7416e9be4'
+    __requests(
+      {
+        method: "GET",
+        url: `product/filter/web?limit=4&sort=down&media=true`,
+        header: {
+          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+        },
       },
-    }, (res) => {
-      (res || []).map(item => {
-        let product_template = document.createElement('li');
-        product_template.dataset.gender = item.gender;
-        product_template.dataset.price = item.price;
-        product_template.dataset.sale = item.discount;
-        product_template.innerHTML = `
+      ({ data }) => {
+        (data || []).map((item) => {
+          let product_template = document.createElement("li");
+          product_template.dataset.gender = item.gender;
+          product_template.dataset.price = item.price;
+          product_template.dataset.sale = item.discount;
+          product_template.innerHTML = `
         <div class="product">
           <div class="thumbnail">
-            <a href="/"><span style="background-image:url(https://ssstutter.com${item.photo})"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(http://media.leanservices.work/product/${
+            item.extensions.media.featured
+          })"></span></a>
           </div>
           <h6 class="name">${item.name}</h6>
           <div class="price">
-            ${item.sale_price == item.price ? '' : `<p class="discount">${item.sale_price}<sup>đ</sup></p>`}
-            <p>${item.price}<sup>đ</sup></p>
+          ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+          <p>${__currency_format(item.salePrice || item.price)}</p>
           </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ''}
+          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
         </div>
         `;
-        let container = div.querySelector('.related__product--list');
-        container.appendChild(product_template);
-        return product_template
-      })
-    })
+          let container = div.querySelector(".related__product--list");
+          container.appendChild(product_template);
+          return product_template;
+        });
+      }
+    );
     return div;
-  }
-}
+  },
+};

@@ -1,16 +1,42 @@
 .home {
+  .product {
+    .price {
+      margin-bottom: 10px;
+    }
+  }
   .slide__banner {
     width: 100%;
     .glide__slide {
-      div {
-        @include ratio(18, 7);
+      a {
+        width: 100%;
+        display: block;
+        div {
+          @include ratio(18, 8);
+          position: relative;
+          button {
+            position: absolute;
+            min-width: 100px;
+            left: 50%;
+            bottom: 20px;
+            transform: translate(-50%, 0);
+            padding: 10px 15px;
+            background-color: $red;
+            border: none;
+            color: $white;
+            text-transform: uppercase;
+            @include font(small, center, 500);
+          }
+        }
       }
     }
   }
 
   .categories__banner {
-    @include grid(repeat(2, 1fr), 1fr, 20px);
+    @include grid(repeat(2, 1fr), 1fr, 10px);
     padding: 20px 0;
+    @media (min-width: 768px) {
+      @include grid(repeat(2, 1fr), 1fr, 20px);
+    }
     div {
       a {
         @include ratio(7, 4);
@@ -25,7 +51,11 @@
   }
 
   .new-arrivals__slide {
-    padding: 5%;
+    // padding: 5%;
+    padding: 25px 0;
+    @media (min-width: 1024px) {
+      padding: 5%;
+    }
     h2 {
       @include font(3rem, center, bold);
       cursor: pointer;
@@ -87,12 +117,18 @@
       }
       .price {
         color: $white;
+        .discount {
+          color: $white;
+        }
       }
     }
   }
 
   .weekly__best {
-    padding: 5%;
+    padding: 25px 0;
+    @media (min-width: 1024px) {
+      padding: 5%;
+    }
     h2 {
       @include font(3rem, center, bold);
       cursor: pointer;
@@ -199,6 +235,24 @@
           width: 100%;
           a {
             @include ratio(7, 4);
+            position: relative;
+            span {
+              display: none;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              @include font(xx-large, center, 600);
+              color: $white;
+              background-color: rgba($color: $black, $alpha: 0.4);
+            }
+            &:hover {
+              span {
+                display: grid;
+                place-content: center;
+              }
+            }
           }
         }
       }
@@ -206,12 +260,14 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
   .home {
     .slide__banner {
       .glide__slide {
-        div {
-          @include ratio(4, 5);
+        a {
+          div {
+            @include ratio(4, 5);
+          }
         }
       }
     }
@@ -232,16 +288,16 @@
         @include font(x-large, center, bold);
       }
       ul {
-        @include grid(repeat(auto-fit, minmax(45%, 1fr)), null, 20px);
+        @include grid(repeat(auto-fit, minmax(45%, 1fr)), null, 10px);
       }
     }
     .blog {
       h2 {
         @include font(x-large, center, bold);
-        margin: 5% 0;
+        margin: 0 0 5%;
       }
       .blog__list {
-        @include grid(repeat(auto-fit, 100%), null, 3%);
+        @include grid(repeat(auto-fit, 100%), null, 10px);
         margin: 20px 0;
         li {
           width: 100%;
