@@ -253,6 +253,7 @@ export const __templates_checkout = {
           }
         }
       );
+      if (fbq) fbq("track", "Contact");
     });
     return div;
   },
