@@ -1,6 +1,7 @@
 import { __templates } from "./share/_components.js";
 import { __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
+import { CONFIG } from "./config.js";
 export const __templates_campaign = {
   banner(params) {
     let div = document.createElement("div");
@@ -63,7 +64,7 @@ export const __templates_campaign = {
         return `
       <li data-cat="${item.catId[0][0]}" class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
           item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
         })"></span></a>
         </div>

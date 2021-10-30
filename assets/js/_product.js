@@ -3,6 +3,7 @@ import { __currency_format, __push_notification, __show_cart_item, __show_cart_q
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
 import { __templates_header } from "./_header.js";
+import { CONFIG } from "./config.js";
 let user_selection = {};
 export const __templates_product = {
   product_gallery(params = {}) {
@@ -14,11 +15,7 @@ export const __templates_product = {
     <ul>
       ${(gallery[`color_${color}_gallery`] || [])
         .map(
-          (img) =>
-            `<li style="background-image:url(https://api.leanservices.work/product/static/${img.o.replace(
-              ".jpeg",
-              ".webp"
-            )}"></li>`
+          (img) => `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace(".jpeg", ".webp")}"></li>`
         )
         .join("")}
     </ul>
@@ -67,7 +64,7 @@ export const __templates_product = {
       });
       color_value.map((item, index) => {
         let flat_img = document.createElement("li");
-        flat_img.style.backgroundImage = `url(https://api.leanservices.work/product/static/${
+        flat_img.style.backgroundImage = `url(${CONFIG.DOMAIN_IMG_CDN}/${
           item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".webp")
         })`;
         let color_variation = div.querySelector(".flatlay > ul");
@@ -318,9 +315,9 @@ export const __templates_product = {
           data-product='${JSON.stringify(info).replace("'", "")}'
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
-          style="background-image:url(https://api.leanservices.work/product/static/${
-            item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
-          })"
+          style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
+        })"
         >
         </button>
         `;
@@ -380,10 +377,7 @@ export const __templates_product = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(https://api.leanservices.work/product/static/${img.o.replace(
-                    "jpeg",
-                    "webp"
-                  )})"></li>`
+                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "webp")})"></li>`
               )
               .join("")}
           </ul>

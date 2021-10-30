@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 
 app.set("etag", false);
 
-app.get("/", (req, res, next) => {
+app.get("/", async (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
@@ -37,7 +37,7 @@ app.get("/c/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let cat_data;
   try {
-    cat_data = await axios.get(`https://api.leanservices.work/product/attribute/category/search?slug=${slug}`, {
+    cat_data = await axios.get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
@@ -67,7 +67,7 @@ app.get("/p/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let product_data;
   try {
-    product_data = await axios.get(`https://api.leanservices.work/product/filter/web?webStock=true&slug=${slug}`, {
+    product_data = await axios.get(`http://103.124.94.179:5000/pd/filter/web?webStock=true&slug=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
@@ -108,7 +108,6 @@ app.get("/campaign/:slug", async (req, res, next) => {
     return console.log(err.response.data);
   }
   let campaign_detail = campaign_data.data;
-  console.log("campaign_detail: ", campaign_detail);
   res.setHeader("Content-Type", "text/html");
   if (campaign_detail.status == "inActive") {
     res.status(404).send(client_view.error_404({}));
@@ -206,7 +205,7 @@ app.get("/search", async (req, res, next) => {
   let search_data;
   try {
     search_data = await axios.get(
-      `https://api.leanservices.work/product/filter/web?name=${query.name}&media=true&webStock=true`,
+      `http://103.124.94.179:5000/pd/filter/web?name=${query.name}&media=true&webStock=true`,
       {
         headers: {
           Authorization: `by_passs`,

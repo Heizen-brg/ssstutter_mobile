@@ -1,6 +1,7 @@
 import { __requests } from "../main.js";
 import { __templates } from "./_components.js";
 import { __icons } from "./_icons.js";
+import { CONFIG } from "../config.js";
 
 export const __currency_format = (n) =>
   `${new Intl.NumberFormat("vi-VN", {}).format(parseInt(n))} <span class="currency-symbol">&#x20AB;</span>`;
@@ -52,7 +53,7 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         product_template.innerHTML = `
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
           item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
         })"></span></a>
         </div>
@@ -122,9 +123,7 @@ export const __show_cart_item = (wrapper, total, div) => {
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${
-        prod.slug
-      }" class="product__thumbnail" style="background-image:url(https://api.leanservices.work/product/static/${
+      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
         prod.media[`color_${prod.colorId}_thumbnail`]
           ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
           : "no_image.png"

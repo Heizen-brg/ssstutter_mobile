@@ -2,6 +2,7 @@ import { __icons } from "./share/_icons.js";
 import { __render, __requests } from "./main.js";
 import { __currency_format, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
 import { __templates } from "./share/_components.js";
+import { CONFIG } from "./config.js";
 
 let mobile = window.innerWidth <= 426;
 let tablet = window.innerWidth <= 768 && window.innerWidth > 426;
@@ -346,9 +347,7 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${
-                          item.slug
-                        }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
                       item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
                     })"></span></a>
                       </div>

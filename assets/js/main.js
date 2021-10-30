@@ -15,6 +15,7 @@ import { __templates_thankyou } from "./_thankyou.js";
 import { __templates_canceled } from "./_canceled.js";
 import { __templates_campaign } from "./_campaign.js";
 import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
+
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
     Accept: "application/json",
