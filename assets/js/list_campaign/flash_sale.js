@@ -17,6 +17,7 @@ function flash_sale_page() {
     div.className = "campaign-detail";
     div.innerHTML = `
     <h2>Flash sale</h2>
+    <p>Ưu đãi chỉ trong vòng 3 tiếng</p>
     <p>Kết thúc trong</p>
     <div class="clock"></div>
     <p>Sản phẩm chỉ từ 89.000đ</p>
@@ -81,8 +82,8 @@ function flash_sale_page() {
     div.classList.add('section-product');
     div.innerHTML = `
     <div class="product-filter">
-      <span data-filter="nam">Nam</span>
-      <span data-filter="nu">Nữ</span>
+      <span data-filter="nam">Sản phẩm nam</span>
+      <span data-filter="nu">Sản phẩm nữ</span>
     </div>
     <ul></ul>
     `;

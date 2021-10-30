@@ -19,7 +19,7 @@ function list_campaign_winter() {
     div.classList.add('section-video', 'container');
     div.innerHTML = `
     <video width="100%" autoplay playsinline muted loop>
-      <source type="video/mp4" src="/assets/img/1.mp4">
+      <source type="video/mp4" src="/assets/img/editorial/1.mp4">
     </video>
     `;
     
@@ -30,7 +30,7 @@ function list_campaign_winter() {
     let div = create_element('section');
     div.classList.add('section-banner', 'container');
     div.innerHTML = `
-    <div class="image" style="background-image: url(/assets/img/16.9-01.jpg)"></div>
+    <div class="image" style="background-image: url(/assets/img/editorial/16.9-01.jpg)"></div>
     <div class="content">
       <h2><span>new</span>Heritage</h2>
       <p>
@@ -47,22 +47,22 @@ function list_campaign_winter() {
     div.classList.add('section-collection', 'container');
     div.innerHTML = `
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/1.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/1.jpg)"></a>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/2.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/2.jpg)"></a>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/3.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/3.jpg)"></a>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/4.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/4.jpg)"></a>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/5.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/5.jpg)"></a>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/6.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/6.jpg)"></a>
     </div>
     `;
     
@@ -73,8 +73,8 @@ function list_campaign_winter() {
     let div = create_element('section');
     div.classList.add('section-gallery');
     div.innerHTML = `
-    <div class="item" style="background-image: url(/assets/img/04.1.jpg)"></div>
-    <div class="item" style="background-image: url(/assets/img/06.3.jpg)"></div>
+    <div class="item" style="background-image: url(/assets/img/editorial/04.1.jpg)"></div>
+    <div class="item" style="background-image: url(/assets/img/editorial/06.3.jpg)"></div>
     `;
     
     return div;
@@ -84,7 +84,7 @@ function list_campaign_winter() {
     let div = create_element('section');
     div.classList.add('section-banner', 'container');
     div.innerHTML = `
-    <div class="image" style="background-image: url(/assets/img/feedback02.jpg)"></div>
+    <div class="image" style="background-image: url(/assets/img/editorial/feedback02.jpg)"></div>
     <div class="content">
       <h2 style="transform: translate(-50%, -50%)"><span>new</span>Heritage</h2>
     </div>

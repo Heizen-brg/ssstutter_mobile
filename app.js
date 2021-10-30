@@ -22,9 +22,9 @@ app.use((req, res, next) => {
   } else next();
 });
 
-app.set("etag", false);
+app.set('etag', false);
 
-app.get("/", async (req, res, next) => {
+app.get("/", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
@@ -33,20 +33,22 @@ app.get("/", async (req, res, next) => {
   );
 });
 
+
 app.get("/c/:slug", async (req, res, next) => {
   let { slug } = req.params;
-  let cat_data;
+  let cat_data
   try {
-    cat_data = await axios.get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
+    cat_data = await axios
+      .get(`https://api.leanservices.work/product/attribute/category/search?slug=${slug}`, {
+        headers: {
+          Authorization: `by_passs`,
+        },
+      })
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
-    console.log(err.message);
-    return;
+    console.log(err.message)
+    return
   }
   res.setHeader("Authorization", "by_passs");
   res.setHeader("Content-Type", "text/html");
@@ -65,18 +67,19 @@ app.get("/c/:slug", async (req, res, next) => {
 
 app.get("/p/:slug", async (req, res, next) => {
   let { slug } = req.params;
-  let product_data;
+  let product_data
   try {
-    product_data = await axios.get(`http://103.124.94.179:5000/pd/filter/web?webStock=true&slug=${slug}`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
+    product_data = await axios
+      .get(`https://api.leanservices.work/product/filter/web?webStock=true&slug=${slug}`, {
+        headers: {
+          Authorization: `by_passs`,
+        },
+      })
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
-    console.log(err.message);
-    return;
+    console.log(err.message)
+    return
   }
   res.setHeader("Authorization", "by_passs");
   res.setHeader("Content-Type", "text/html");
@@ -93,23 +96,26 @@ app.get("/p/:slug", async (req, res, next) => {
   }
 });
 
+
 app.get("/campaign/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let campaign_data;
   try {
-    campaign_data = await axios.get(`https://sss-dashboard.leanservices.work/w/campaign/detail?url=${slug}`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
+    campaign_data = await axios
+      .get(`https://sss-dashboard.leanservices.work/w/campaign/detail?url=${slug}`, {
+        headers: {
+          Authorization: `by_passs`,
+        },
+      })
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
-    return console.log(err.response.data);
-  }
+    return console.log(err.response.data)
+  };
   let campaign_detail = campaign_data.data;
+  console.log('campaign_detail: ', campaign_detail);
   res.setHeader("Content-Type", "text/html");
-  if (campaign_detail.status == "inActive") {
+  if (campaign_detail.status == 'inActive') {
     res.status(404).send(client_view.error_404({}));
   } else {
     res.send(
@@ -170,18 +176,19 @@ app.get("/blog", (req, res, next) => {
 });
 app.get("/blog/article/:slug", async (req, res, next) => {
   let { slug } = req.params;
-  let article_data;
+  let article_data
   try {
-    article_data = await axios.get(`https://sss-dashboard.leanservices.work/w/post/detail?slug=${slug}`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
+    article_data = await axios
+      .get(`https://sss-dashboard.leanservices.work/w/post/detail?slug=${slug}`, {
+        headers: {
+          Authorization: `by_passs`,
+        },
+      })
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
-    return console.log(err.message);
-  }
+    return console.log(err.message)
+  };
   let blog_detail = article_data.data;
   res.setHeader("Content-Type", "text/html");
   res.send(
@@ -202,22 +209,20 @@ app.get("/address", (req, res, next) => {
 });
 app.get("/search", async (req, res, next) => {
   let query = req.query;
-  let search_data;
+  let search_data
   try {
-    search_data = await axios.get(
-      `http://103.124.94.179:5000/pd/filter/web?name=${query.name}&media=true&webStock=true`,
-      {
+    search_data = await axios
+      .get(`https://api.leanservices.work/product/filter/web?name=${query.name}&media=true&webStock=true`, {
         headers: {
           Authorization: `by_passs`,
         },
-      }
-    );
+      })
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
     return;
-  }
-  let data = search_data.data;
+  };
+  let data = search_data.data
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
