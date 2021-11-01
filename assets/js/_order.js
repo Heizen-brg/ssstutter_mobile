@@ -1,11 +1,11 @@
 import { __currency_format } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
-
+import { CONFIG } from "./config.js";
 
 export const __templates_order = {
   order_overview(params) {
-    let div = document.createElement('div');
-    div.className = 'order__overview';
+    let div = document.createElement("div");
+    div.className = "order__overview";
     div.innerHTML = `
     <div class="customer__info">
       ${__icons.ssstutter}
@@ -20,7 +20,7 @@ export const __templates_order = {
       </ul>
       <ul>
         <label>Phương thức thanh toán</label>
-        <li>${params.paymentMethod == 'cod' ? 'Thanh toán khi nhận hàng' : 'Thanh toán qua thẻ'}</li>
+        <li>${params.paymentMethod == "cod" ? "Thanh toán khi nhận hàng" : "Thanh toán qua thẻ"}</li>
       </ul>
     </div>
     <div class="customer__continue">
@@ -28,23 +28,24 @@ export const __templates_order = {
       <button>Tiếp tục mua hàng</button>
     </div>
     `;
-    localStorage.removeItem('cartItem');
-    let continue_btn = div.querySelector('button');
-    continue_btn.addEventListener('click', (e) => {
-      window.location.href = '/'
-    })
+    localStorage.removeItem("cartItem");
+    let continue_btn = div.querySelector("button");
+    continue_btn.addEventListener("click", (e) => {
+      window.location.href = "/";
+    });
     return div;
   },
   order_items(params) {
-    let div = document.createElement('div');
-    div.className = 'order__items';
+    let div = document.createElement("div");
+    div.className = "order__items";
     div.innerHTML = `
         <ul class="product__list">
-        ${(params.items || []).map(item => {
-      return `
+        ${(params.items || [])
+          .map((item) => {
+            return `
             <li>
               <span class="product__thumbnail"
-                style="background-image:url(https://api.leanservices.work/product/static/${item.thumbnail.x100.replace('.jpeg', '.webp')})">
+                style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.thumbnail.x100.replace(".jpeg", ".webp")})">
               </span>
               <div>
                 <h6>${item.name}</h6>
@@ -52,9 +53,9 @@ export const __templates_order = {
                 <strong>${__currency_format(item.price)}</strong>
               </div>
             </li>
-            `
-    }).join('')
-      }
+            `;
+          })
+          .join("")}
         </ul>
         <div class="amount">
           <div>
@@ -72,5 +73,5 @@ export const __templates_order = {
         </div>
     `;
     return div;
-  }
-}
+  },
+};

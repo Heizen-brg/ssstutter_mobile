@@ -35,7 +35,7 @@ module.exports = {
 						el.addEventListener("error", () => {
 						reject({
 							status: false,
-							message: Failed to load the script ${src},
+							message: "Failed to load the script"+ src,
 						});
 						});
 
