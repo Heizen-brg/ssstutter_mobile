@@ -301,13 +301,14 @@ export const __get_voucher = (params, callback) => {
         discountCode: params.discountCode || []
       }),
     },
-    ({ data }) => {
+    ({ data, error }) => {
+
       let discount_amount = document.querySelector('[data-amount="discount"]');
       discount_amount.dataset.price = data.amount;
       discount_amount.innerHTML = `-${__currency_format(data.amount)}`;
       __calc_final_amount();
       if (callback) callback();
-    }
+    }, (res) => callback(res)
   );
 };
 
@@ -320,7 +321,6 @@ export const __calc_final_amount = () => {
   let discount = parseInt(discount_amount.dataset.price) || 0;
   let shipping = parseInt(shipping_amount.dataset.price) || 0;
   total_amount.dataset.price = purchase + shipping - discount;
-  console.log("sdasd");
   total_amount.innerHTML = `${__currency_format(purchase + shipping - discount)}`;
 };
 
