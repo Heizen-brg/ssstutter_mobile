@@ -253,7 +253,9 @@ export const __templates_checkout = {
           }
         }
       );
-      if (fbq) fbq("track", "Contact");
+      if (fbq) {
+        fbq("track", "Purchase", { currency: "VND", value: 0 });
+      }
     });
     return div;
   },

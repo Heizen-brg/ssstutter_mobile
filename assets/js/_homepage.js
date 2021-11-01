@@ -159,7 +159,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: `product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true`,
+        url: `product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true&webStock=true`,
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -216,7 +216,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -322,7 +322,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -410,7 +410,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -515,7 +515,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -588,7 +588,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true",
+        url: "product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -623,7 +623,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true",
+        url: "product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
