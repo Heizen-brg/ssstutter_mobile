@@ -140,13 +140,17 @@
     margin-bottom: 4px;
   }
   .price {
-    @include grid(repeat(auto-fit, minmax(10%, auto)), 1fr);
+    // @include grid(repeat(auto-fit, minmax(10%, auto)), 1fr);
     font-size: 12px;
     margin-bottom: 2px;
     // place-items: center;
+    p {
+      display: inline-block;
+    }
     .discount {
       color: $silver;
       text-decoration: line-through;
+      margin-left: 10px;
     }
   }
   .tag {
@@ -182,7 +186,7 @@
     */
     span {
       @include ratio(1, 1);
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .1);
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
       // border: thin solid $silver;
       box-sizing: content-box;
     }

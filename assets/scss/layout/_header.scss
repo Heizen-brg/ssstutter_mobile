@@ -10,7 +10,8 @@
     // @include shadow(1px, 1px, 4px, $light);
     height: 100%;
     align-items: center;
-    @media (min-width: 1024px) {
+    padding: 0 2%;
+    @media (min-width: 1200px) {
       padding: 0 5%;
     }
     background-color: $white;
@@ -193,6 +194,17 @@
     &--title {
       @include flex(row, space-between, center);
     }
+  }
+  .freeship {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    padding: 8px;
+    background: #ececec;
+    display: none;
   }
 }
 

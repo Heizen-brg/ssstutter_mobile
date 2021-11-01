@@ -1,6 +1,7 @@
 import { __requests } from "../main.js";
 import { __templates } from "./_components.js";
 import { __icons } from "./_icons.js";
+import { CONFIG } from "../config.js";
 
 export const __currency_format = (n) =>
   `${new Intl.NumberFormat("vi-VN", {}).format(parseInt(n))} <span class="currency-symbol">&#x20AB;</span>`;
@@ -41,7 +42,7 @@ export const __init_product_list = (params = { ids: product_ids }) => {
       url: `product/filter/web${url}&media=true&webStock=true`,
     },
     ({ data, error }) => {
-      if (!data.length) return params.container.innerHTML = `<p>Không có sản phẩm</p>`;
+      if (!data.length) return (params.container.innerHTML = `<p>Không có sản phẩm</p>`);
       __templates.api_loading("hide");
       let products = (data || []).map((item) => {
         window.product_ids.push(item.id);
@@ -52,17 +53,19 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         product_template.innerHTML = `
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-          })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+        })"></span></a>
         </div>
         <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
           <div class="price">
-            ${item.salePrice
-            ? `<p>${__currency_format(item.salePrice)}</p>
+            ${
+              item.salePrice
+                ? `<p>${__currency_format(item.salePrice)}</p>
               <p class="discount">${__currency_format(item.price)}</p> `
-            : `<p>${__currency_format(item.price)}</p>`
-          }
+                : `<p>${__currency_format(item.price)}</p>`
+            }
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           <div class="color">
@@ -91,8 +94,6 @@ export const __init_product_list = (params = { ids: product_ids }) => {
   );
 };
 
-
-
 export const __infinity_scroll = (anchor, container) => {
   if (!anchor) return false;
   let block_loader = new IntersectionObserver(function (entries, observer) {
@@ -112,8 +113,6 @@ export const __infinity_scroll = (anchor, container) => {
   block_loader.observe(anchor);
 };
 
-
-
 export const __show_cart_item = (wrapper, total, div) => {
   let purchase_items_list = JSON.parse(localStorage.getItem("cartItem"));
   if (!purchase_items_list) {
@@ -124,11 +123,11 @@ export const __show_cart_item = (wrapper, total, div) => {
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${prod.slug
-        }" class="product__thumbnail" style="background-image:url(https://api.leanservices.work/product/static/${prod.media[`color_${prod.colorId}_thumbnail`]
+      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+        prod.media[`color_${prod.colorId}_thumbnail`]
           ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
           : "no_image.png"
-        })">
+      })">
       </a>
       <div>
         <h6>${prod.name}</h6>
@@ -163,7 +162,6 @@ export const __show_cart_item = (wrapper, total, div) => {
   if (div) {
     discount_amount = div.querySelector('[data-amount="discount"]');
     final_amount = div.querySelector('[data-amount="total"]');
-
   }
   if (discount_amount && final_amount) {
     let discount_price = 0;
@@ -172,7 +170,6 @@ export const __show_cart_item = (wrapper, total, div) => {
     let final_price = total_amount - discount_price;
     final_amount.innerHTML = __currency_format(final_price);
     final_amount.dataset.price = final_price;
-
   }
   item_in_cart.forEach((item) => {
     let input_quantity = item.querySelector("input");
@@ -182,14 +179,14 @@ export const __show_cart_item = (wrapper, total, div) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         if (btn.dataset.quantity == "inscrease") {
-          __templates.api_loading('show');
+          __templates.api_loading("show");
           __requests(
             {
               method: "GET",
               url: `product/variation/check-stock?id=${btn.dataset.id}&stock=${parseInt(input_quantity.value) + 1}`,
             },
             ({ data }) => {
-              __templates.api_loading('hide');
+              __templates.api_loading("hide");
               if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
               input_quantity.value++;
               init_quantity_value(input_quantity.value, input_quantity.dataset.index);
@@ -221,7 +218,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       total.dataset.price = total_amount;
       let customer_phone = document.querySelector('[data-value="customer_phone"]');
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
-      __get_voucher(customer_phone.value, __check_shipping)
+      __get_voucher(customer_phone.value, __check_shipping);
       // __check_shipping();
       // let address = {
       //   city: div.querySelector('[data-value="customer_city"]').value,
@@ -264,26 +261,29 @@ export const __check_shipping = () => {
     ward: document.querySelector('[data-value="customer_ward"]').querySelector("option:checked").textContent,
     address: document.querySelector('[data-value="customer_address"]').value,
   };
-  let final_price = document.querySelector('[data-amount="total"]').dataset.price || 0
+  let final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
   let shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
   console.log(final_price);
-  __requests({
-    method: "POST",
-    url: `order/shipping/fee/web`,
-    body: JSON.stringify({
-      moneyTotal: final_price,
-      shippingAddress: shippingAddress
-    })
-  }, ({ data, error }) => {
-    if (error) return false;
-    let total = document.querySelector('[data-amount="total"]')
-    let shipping_fee = document.querySelector('[data-amount="shipping"]')
-    // total.innerHTML = __currency_format(parseInt(total.dataset.price) * + data);
-    shipping_fee.innerHTML = __currency_format(parseInt(data));
-    shipping_fee.dataset.price = data;
-    __calc_final_amount();
-  })
-}
+  __requests(
+    {
+      method: "POST",
+      url: `order/shipping/fee/web`,
+      body: JSON.stringify({
+        moneyTotal: final_price,
+        shippingAddress: shippingAddress,
+      }),
+    },
+    ({ data, error }) => {
+      if (error) return false;
+      let total = document.querySelector('[data-amount="total"]');
+      let shipping_fee = document.querySelector('[data-amount="shipping"]');
+      // total.innerHTML = __currency_format(parseInt(total.dataset.price) * + data);
+      shipping_fee.innerHTML = __currency_format(parseInt(data));
+      shipping_fee.dataset.price = data;
+      __calc_final_amount();
+    }
+  );
+};
 
 export const __get_voucher = (customerPhone, callback) => {
   let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
@@ -307,8 +307,8 @@ export const __get_voucher = (customerPhone, callback) => {
       let discount_amount = document.querySelector('[data-amount="discount"]');
       discount_amount.dataset.price = data.amount;
       discount_amount.innerHTML = `-${__currency_format(data.amount)}`;
-      __calc_final_amount()
-      if (callback) callback()
+      __calc_final_amount();
+      if (callback) callback();
     }
   );
 };
@@ -318,28 +318,27 @@ export const __calc_final_amount = () => {
   let discount_amount = document.querySelector('[data-amount="discount"]');
   let total_amount = document.querySelector('[data-amount="total"]');
   let shipping_amount = document.querySelector('[data-amount="shipping"]');
-  let purchase = parseInt(purchase_amount.dataset.price) || 0
-  let discount = parseInt(discount_amount.dataset.price) || 0
-  let shipping = parseInt(shipping_amount.dataset.price) || 0
-  total_amount.dataset.price = purchase + shipping - discount
-  console.log('sdasd');
+  let purchase = parseInt(purchase_amount.dataset.price) || 0;
+  let discount = parseInt(discount_amount.dataset.price) || 0;
+  let shipping = parseInt(shipping_amount.dataset.price) || 0;
+  total_amount.dataset.price = purchase + shipping - discount;
+  console.log("sdasd");
   total_amount.innerHTML = `${__currency_format(purchase + shipping - discount)}`;
+};
 
-}
-
-export const __to_slug = (str, mark_space = '-') => {
+export const __to_slug = (str, mark_space = "-") => {
   str = str.toLowerCase();
-  str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
-  str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
-  str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
-  str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
-  str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
-  str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
-  str = str.replace(/(đ)/g, 'd');
-  str = str.replace(/([^0-9a-z-\s])/g, '');
+  str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, "a");
+  str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, "e");
+  str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, "i");
+  str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, "o");
+  str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, "u");
+  str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, "y");
+  str = str.replace(/(đ)/g, "d");
+  str = str.replace(/([^0-9a-z-\s])/g, "");
   str = str.replace(/(\s+)/g, mark_space);
-  str = str.replace(/^-+/g, '');
-  str = str.replace(/-+$/g, '');
+  str = str.replace(/^-+/g, "");
+  str = str.replace(/-+$/g, "");
   return str;
 };
 export const __show_cart_quantity = (wrapper) => {
