@@ -1,13 +1,6 @@
 import { __render, __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
-import {
-  __calc_final_amount,
-  __check_shipping,
-  __currency_format,
-  __get_voucher,
-  __push_notification,
-  __show_cart_item,
-} from "./share/_function.js";
+import { __calc_final_amount, __check_shipping, __currency_format, __get_voucher, __push_notification, __show_cart_item } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
 let typing_timer = null;
@@ -105,9 +98,11 @@ export const __templates_checkout = {
       if (re.test(e.target.value)) {
         order_data.customerPhone = e.target.value;
         customer_phone.classList.remove("error");
-        clearTimeout(typing_timer);
+        clearTimeout(typing_timer)
         typing_timer = setTimeout(() => {
-          __get_voucher(e.target.value);
+          __get_voucher({
+            customerPhone: e.target.value,
+          });
         }, 500);
       } else {
         customer_phone.classList.add("error");
@@ -142,8 +137,8 @@ export const __templates_checkout = {
     });
     customer_address.addEventListener("change", (e) => {
       shippingFormat.address = e.target.value;
-      let total = document.querySelector('[data-amount="total"]');
-      __check_shipping(total.dataset.price, shippingFormat);
+      let total = document.querySelector('[data-amount="total"]')
+      __check_shipping(total.dataset.price, shippingFormat)
     });
     return div;
   },
@@ -213,6 +208,14 @@ export const __templates_checkout = {
     let confirm_btn = div.querySelector(".confirm__order");
     apply_coupon.addEventListener("click", (e) => {
       order_data.discountCode.push(coupon_input.value);
+      __templates.api_loading('show');
+      __get_voucher({
+        discountCode: order_data.discountCode
+      }, () => {
+        __templates.api_loading('hide');
+        __push_notification('success', 'Áp dụng code thành công');
+      });
+
     });
     confirm_btn.addEventListener("click", () => {
       let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
@@ -225,19 +228,11 @@ export const __templates_checkout = {
       });
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
-      if (
-        !order_data.customerName ||
-        !order_data.customerPhone ||
-        !order_data.shippingAddress ||
-        !shippingFormat.address ||
-        !shippingFormat.ward ||
-        !shippingFormat.district ||
-        !shippingFormat.city
-      ) {
-        __push_notification("fail", "Vui lòng điển đủ thông tin");
+      if (!order_data.customerName || !order_data.customerPhone || !order_data.shippingAddress || !shippingFormat.address || !shippingFormat.ward || !shippingFormat.district || !shippingFormat.city) {
+        __push_notification('fail', 'Vui lòng điển đủ thông tin');
         return;
       }
-      __templates.api_loading("show");
+      __templates.api_loading('show');
       __requests(
         {
           method: "POST",
@@ -253,7 +248,6 @@ export const __templates_checkout = {
           }
         }
       );
-      if (fbq) fbq("track", "Contact");
     });
     return div;
   },

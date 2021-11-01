@@ -3,7 +3,6 @@ import { __icons } from "./share/_icons.js";
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format } from "./share/_function.js";
-import { CONFIG } from "./config.js";
 
 export const __templates_home = {
   hide_menu() {
@@ -71,7 +70,7 @@ export const __templates_home = {
     };
     get_banner_list();
 
-    return section;
+    // return section;
   },
   mobile_banner() {
     let section = document.createElement("section");
@@ -119,7 +118,49 @@ export const __templates_home = {
       );
     };
     get_banner_list();
-    return section;
+    // return section;
+  },
+  
+  subcription() {
+    let div = document.createElement('section');
+    div.classList.add('subcription');
+    div.innerHTML = `
+    <div class="container">
+      <div class="image" style="background-image: url(assets/img/test.jpg);"></div>
+      <div class="content">
+        <h2>BỘ SƯU TẬP ĐẦU TIÊN<br>MÙA ĐÔNG 2021</h2>
+        <p>Mở bán Pre-Order tại Website vào</p>
+        <p class="clock"></p>
+        <a href="#">Nhận thông tin sớm qua Messenger tại đây</a>
+      </div>
+    </div>
+    `;
+    
+    let end_date = new Date('Nov 31, 2021 00:00:00').getTime();
+    
+    let countdown = setInterval(() => {
+      let distance = end_date - Date.now();
+      
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours =  Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      div.querySelector('.clock').innerHTML = `
+      <span>${hours}</span> giờ 
+      <span>${minutes}</span> phút 
+      <span>${seconds}</span> giây
+      `;
+      
+      if ((distance) < 0) {
+        clearInterval(countdown);
+        div.querySelector('.clock').innerHTML = `
+        Sự kiện đã kết thúc
+        `;
+      }
+    }, 1000);
+    
+    return div;
   },
   categories() {
     let section = document.createElement("section");
@@ -172,7 +213,9 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                <a href="/p/${
+                  item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 item.extensions.media.featured
               })"></span></a>
               </div>
@@ -229,7 +272,9 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                <a href="/p/${
+                  item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 item.extensions.media.featured
               })"></span></a>
               </div>
@@ -341,7 +386,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+              <a href="/p/${
+                next_item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 next_item.extensions.media.featured
               })"></span></a>
             </div>
@@ -361,7 +408,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
           </div>
@@ -429,7 +476,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+              <a href="/p/${
+                item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 next_item.extensions.media.featured
               })"></span></a>
             </div>
@@ -447,7 +496,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
           </div>
@@ -528,7 +577,9 @@ export const __templates_home = {
                   <li class="glide__slide">
                     <div class="product">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                        <a href="/p/${
+                          item.slug
+                        }"><span style="background-image:url(https://api.leanservices.work/product/static/${
                 item.extensions.media.featured
               })"></span></a>
                       </div>
@@ -600,7 +651,7 @@ export const __templates_home = {
       <li>
         <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
               item.extensions.media.featured
             })"></span></a>
         <div>
@@ -635,9 +686,9 @@ export const __templates_home = {
       <li>
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-              item.extensions.media.featured
-            })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                item.extensions.media.featured
+              })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name}</h6>
