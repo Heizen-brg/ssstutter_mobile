@@ -32,6 +32,12 @@ app.get("/", (req, res, next) => {
     })
   );
 });
+// app.get("/", (req, res, next) => {
+//   res.setHeader("Content-Type", "text/html");
+//   res.send(
+//     client_view.maintain({})
+//   );
+// });
 
 
 app.get("/c/:slug", async (req, res, next) => {
@@ -39,7 +45,7 @@ app.get("/c/:slug", async (req, res, next) => {
   let cat_data
   try {
     cat_data = await axios
-      .get(`https://api.leanservices.work/product/attribute/category/search?slug=${slug}`, {
+      .get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
         headers: {
           Authorization: `by_passs`,
         },
@@ -110,7 +116,7 @@ app.get("/campaign/:slug", async (req, res, next) => {
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
-    return console.log(err.response.data)
+    return console.log(err)
   };
   let campaign_detail = campaign_data.data;
   console.log('campaign_detail: ', campaign_detail);

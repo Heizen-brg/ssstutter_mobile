@@ -15,7 +15,7 @@ export const __templates_article = {
           <li>
             <a href=""><span style="background-image: url(https://sss-dashboard.leanservices.work${item.thumbnail}.jpeg)"></span></a>
             <p>
-              <a href="blog/article/${item.slug}">
+              <a href="/blog/article/${item.slug}">
                 <i>${item.category}</i>
                 <strong>${item.title}</strong>
               </a>
