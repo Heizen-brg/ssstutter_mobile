@@ -285,7 +285,7 @@ export const __check_shipping = () => {
   );
 };
 
-export const __get_voucher = (customerPhone, callback) => {
+export const __get_voucher = (params, callback) => {
   let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
   let products = items_purchased.map((item) => {
     return {
@@ -299,8 +299,9 @@ export const __get_voucher = (customerPhone, callback) => {
       method: "POST",
       url: `order/voucher/customer-voucher`,
       body: JSON.stringify({
-        customerPhone: customerPhone,
+        customerPhone: params.customerPhone || "",
         items: products,
+        discountCode: params.discountCode || [],
       }),
     },
     ({ data }) => {

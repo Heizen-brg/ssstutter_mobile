@@ -107,7 +107,9 @@ export const __templates_checkout = {
         customer_phone.classList.remove("error");
         clearTimeout(typing_timer);
         typing_timer = setTimeout(() => {
-          __get_voucher(e.target.value);
+          __get_voucher({
+            customerPhone: e.target.value,
+          });
         }, 500);
       } else {
         customer_phone.classList.add("error");
@@ -213,6 +215,16 @@ export const __templates_checkout = {
     let confirm_btn = div.querySelector(".confirm__order");
     apply_coupon.addEventListener("click", (e) => {
       order_data.discountCode.push(coupon_input.value);
+      __templates.api_loading("show");
+      __get_voucher(
+        {
+          discountCode: order_data.discountCode,
+        },
+        () => {
+          __templates.api_loading("hide");
+          __push_notification("success", "Áp dụng code thành công");
+        }
+      );
     });
     confirm_btn.addEventListener("click", () => {
       let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
