@@ -1883,10 +1883,11 @@ h4 {
 }
 .home .subcription {
   position: relative;
+  margin-top: -2px;
 }
 @media (min-width: 1024px) {
   .home .subcription {
-    padding: 60px 0;
+    padding: 20px 0;
   }
 }
 .home .subcription .container {
@@ -1897,7 +1898,7 @@ h4 {
 @media (min-width: 1024px) {
   .home .subcription .container {
     grid-gap: 28px;
-    grid-template: auto/1fr 1fr;
+    grid-template: auto/460px 1fr;
   }
 }
 .home .subcription .container .image {
@@ -1949,11 +1950,11 @@ h4 {
 }
 .home .subcription .container .content h2 {
   font-family: serif;
-  font-weight: 600;
-  font-size: 34px;
+  font-size: 40px;
   text-shadow: 0 0 1px black;
-  margin-bottom: 22px;
+  margin-bottom: 28px;
   text-transform: capitalize;
+  line-height: 1.2;
 }
 .home .subcription .container .content .clock {
   min-height: 24px;
@@ -1987,6 +1988,21 @@ h4 {
     border-color: #191919;
     color: #191919;
     text-shadow: none;
+  }
+}
+.home .home-video {
+  margin: 0 auto;
+  max-width: 360px;
+}
+@media (min-width: 1024px) {
+  .home .home-video {
+    padding: 20px 0;
+  }
+}
+@media (min-width: 1600px) {
+  .home .home-video {
+    padding: 40px 0;
+    max-width: 460px;
   }
 }
 
