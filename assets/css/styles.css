@@ -2005,6 +2005,9 @@ h4 {
     max-width: 460px;
   }
 }
+.home .home-video video {
+  transform: translate(-2%, 0);
+}
 
 @media (max-width: 426px) {
   .home .slide__banner .glide__slide a div {
