@@ -1996,7 +1996,8 @@ h4 {
 }
 @media (min-width: 1024px) {
   .home .home-video {
-    padding: 20px 0;
+    padding: 25px 0;
+    margin-bottom: 40px;
   }
 }
 @media (min-width: 1600px) {
@@ -2005,8 +2006,22 @@ h4 {
     max-width: 460px;
   }
 }
+.home .home-video .video {
+  position: relative;
+  background: #cecece;
+  padding-top: calc(16 / 9 * 100%);
+}
 .home .home-video video {
   transform: translate(-2%, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 104%;
+}
+@media (min-width: 768px) {
+  .home .home-video video {
+    width: 100%;
+  }
 }
 
 @media (max-width: 426px) {
