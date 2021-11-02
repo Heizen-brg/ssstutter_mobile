@@ -145,6 +145,7 @@ export const __render = {
       }),
       __templates_header.cart(),
       banner,
+      __templates_home.subcription(),
       __templates_home.categories(),
       new_arrivals,
       __templates_home.stylepick(),
