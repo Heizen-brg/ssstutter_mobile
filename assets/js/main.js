@@ -218,6 +218,7 @@ export const __render = {
     ];
     this.build("checkout__page", blocks);
     __templates.api_loading("hide");
+    if (fbq) fbq("track", "InitiateCheckout");
   },
 
   order_page(params) {
