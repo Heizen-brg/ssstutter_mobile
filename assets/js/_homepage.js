@@ -130,7 +130,7 @@ export const __templates_home = {
       <div class="content">
         <h2>First Collection<br>Winter 2021</h2>
         <p>Mở bán Pre-Order tại Website<br></p>
-        <!-- <p class="clock"></p> -->
+        <p class="clock"></p>
         <div class="btn-row">
           <a href="https://m.me/263972407066786?ref=3110" target="_blank">Nhận thông tin sớm qua Messenger tại đây</a>
         </div>
