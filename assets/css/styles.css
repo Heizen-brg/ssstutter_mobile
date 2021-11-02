@@ -157,6 +157,7 @@
   border-collapse: collapse;
   position: relative;
   padding: 10px;
+  white-space: nowrap;
 }
 .header .nav__right--items div span {
   display: inline-block;

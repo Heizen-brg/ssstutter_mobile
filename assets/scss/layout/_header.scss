@@ -156,6 +156,7 @@
           @include border(transparent, 4px);
           position: relative;
           padding: 10px;
+          white-space: nowrap;
           span {
             display: inline-block;
             transform: translate(0, -50%);
