@@ -1993,11 +1993,12 @@ h4 {
 .home .home-video {
   margin: 0 auto;
   max-width: 360px;
+  margin-bottom: 20px;
 }
 @media (min-width: 1024px) {
   .home .home-video {
     padding: 25px 0;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   }
 }
 @media (min-width: 1600px) {
@@ -2017,11 +2018,6 @@ h4 {
   top: 0;
   left: 0;
   width: 104%;
-}
-@media (min-width: 768px) {
-  .home .home-video video {
-    width: 100%;
-  }
 }
 
 @media (max-width: 426px) {

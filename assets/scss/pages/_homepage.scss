@@ -363,9 +363,10 @@
   .home-video {
     margin: 0 auto;
     max-width: 360px;
+    margin-bottom: 20px;
     @media (min-width: 1024px) {
       padding: 25px 0;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
     }
     @media (min-width: 1600px) {
       padding: 40px 0;
@@ -382,9 +383,6 @@
       top: 0;
       left: 0;
       width: 104%;
-      @media (min-width: 768px) {
-        width: 100%;
-      }
     }
   }
 }
