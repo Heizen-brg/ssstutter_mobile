@@ -128,37 +128,40 @@ export const __templates_home = {
     <div class="container">
       <div class="image" style="background-image: url(assets/img/test.jpg);"></div>
       <div class="content">
-        <h2>BỘ SƯU TẬP ĐẦU TIÊN<br>MÙA ĐÔNG 2021</h2>
+        <h2>First Collection<br>Winter 2021</h2>
         <p>Mở bán Pre-Order tại Website vào</p>
-        <p class="clock"></p>
-        <a href="#">Nhận thông tin sớm qua Messenger tại đây</a>
+        <!-- <p class="clock"></p> -->
+        <div class="btn-row">
+          <a href="https://m.me/263972407066786?ref=3110" target="_blank">Nhận thông tin sớm qua Messenger tại đây</a>
+        </div>
       </div>
     </div>
     `;
 
     let end_date = new Date("Nov 31, 2021 00:00:00").getTime();
 
-    let countdown = setInterval(() => {
-      let distance = end_date - Date.now();
+    // let countdown = setInterval(() => {
+    //   let distance = end_date - Date.now();
 
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //   let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+    //       hours =  Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    //       minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+    //       seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      div.querySelector(".clock").innerHTML = `
-      <span>${hours}</span> giờ 
-      <span>${minutes}</span> phút 
-      <span>${seconds}</span> giây
-      `;
+    //   div.querySelector('.clock').innerHTML = `
+    //   <span>${days}</span> ngày
+    //   <span>${hours}</span> giờ
+    //   <span>${minutes}</span> phút
+    //   <span>${seconds}</span> giây
+    //   `;
 
-      if (distance < 0) {
-        clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = `
-        Sự kiện đã kết thúc
-        `;
-      }
-    }, 1000);
+    //   if ((distance) < 0) {
+    //     clearInterval(countdown);
+    //     div.querySelector('.clock').innerHTML = `
+    //     Sự kiện đã kết thúc
+    //     `;
+    //   }
+    // }, 1000);
 
     return div;
   },
