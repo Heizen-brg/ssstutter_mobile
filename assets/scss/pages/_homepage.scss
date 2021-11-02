@@ -258,10 +258,14 @@
       }
     }
   }
+  //
+  // Thanh's code
+  //
   .subcription {
     position: relative;
+    margin-top: -2px;
     @media (min-width: 1024px) {
-      padding: 60px 0;
+      padding: 20px 0;
     }
     .container {
       display: grid;
@@ -269,7 +273,7 @@
       margin: auto;
       @media (min-width: 1024px) {
         grid-gap: 28px;
-        grid-template: auto / 1fr 1fr;
+        grid-template: auto / 460px 1fr;
       }
       .image {
         padding-top: (14 / 9 * 100%);
@@ -318,11 +322,11 @@
         }
         h2 {
           font-family: serif;
-          font-weight: 600;
-          font-size: 34px;
+          font-size: 40px;
           text-shadow: 0 0 1px rgba(0, 0, 0, 1);
-          margin-bottom: 22px;
+          margin-bottom: 28px;
           text-transform: capitalize;
+          line-height: 1.2;
         }
         .clock {
           min-height: 24px;
@@ -353,6 +357,18 @@
           }
         }
       }
+    }
+  }
+  
+  .home-video {
+    margin: 0 auto;
+    max-width: 360px;
+    @media (min-width: 1024px) {
+      padding: 20px 0;
+    }
+    @media (min-width: 1600px) {
+      padding: 40px 0;
+      max-width: 460px;
     }
   }
 }

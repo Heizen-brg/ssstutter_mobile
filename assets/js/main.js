@@ -138,6 +138,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        page_y_offset: 1550
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -145,6 +146,7 @@ export const __render = {
       }),
       __templates_header.cart(),
       banner,
+      __templates_home.home_video(),
       __templates_home.subcription(),
       __templates_home.categories(),
       new_arrivals,
@@ -163,6 +165,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        page_y_offset: 400
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -185,6 +188,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        page_y_offset: 500
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -319,6 +323,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        page_y_offset: 500
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -340,6 +345,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        page_y_offset: 500
       }),
       __templates_header.megamenu(),
       __templates_header.cart(),
@@ -366,6 +372,7 @@ export const __render = {
     this.build("address__page", blocks);
     __templates.api_loading("hide");
   },
+  
   list_campaign_winter() {
     let blocks = [
       __templates_header.header({
@@ -380,11 +387,13 @@ export const __render = {
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
+  
   flash_sale() {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        page_y_offset: 500
       }),
       __templates_header.search({
         option: __templates.related_product(),

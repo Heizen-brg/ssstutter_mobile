@@ -138,7 +138,7 @@ export const __templates_home = {
     </div>
     `;
     
-    let end_date = new Date('Nov 31, 2021 00:00:00').getTime();
+    let end_date = new Date('Nov 04, 2021 21:30:00').getTime();
     
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
@@ -165,6 +165,19 @@ export const __templates_home = {
     
     return div;
   },
+  
+  home_video() {
+    let div = document.createElement('section');
+    div.classList.add('home-video');
+    div.innerHTML = `
+    <video width="100%" autoplay playinside muted loop>
+      <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
+    </video>
+    `;
+    
+    return div;
+  },
+  
   categories() {
     let section = document.createElement("section");
     section.className = "categories__banner";
