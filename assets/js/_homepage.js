@@ -170,7 +170,7 @@ export const __templates_home = {
     let div = document.createElement('section');
     div.classList.add('home-video');
     div.innerHTML = `
-    <video width="100%" autoplay playinside muted loop>
+    <video width="104%" autoplay playinside muted loop>
       <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
     </video>
     `;
