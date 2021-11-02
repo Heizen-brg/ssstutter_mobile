@@ -138,33 +138,48 @@ export const __templates_home = {
     </div>
     `;
 
-    let end_date = new Date("Nov 31, 2021 00:00:00").getTime();
+    let end_date = new Date("Nov 04, 2021 21:30:00").getTime();
 
-    // let countdown = setInterval(() => {
-    //   let distance = end_date - Date.now();
+    let countdown = setInterval(() => {
+      let distance = end_date - Date.now();
 
-    //   let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-    //       hours =  Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-    //       minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-    //       seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    //   div.querySelector('.clock').innerHTML = `
-    //   <span>${days}</span> ngày
-    //   <span>${hours}</span> giờ
-    //   <span>${minutes}</span> phút
-    //   <span>${seconds}</span> giây
-    //   `;
+      div.querySelector(".clock").innerHTML = `
+      <span>${days}</span> ngày 
+      <span>${hours}</span> giờ 
+      <span>${minutes}</span> phút 
+      <span>${seconds}</span> giây
+      `;
 
-    //   if ((distance) < 0) {
-    //     clearInterval(countdown);
-    //     div.querySelector('.clock').innerHTML = `
-    //     Sự kiện đã kết thúc
-    //     `;
-    //   }
-    // }, 1000);
+      if (distance < 0) {
+        clearInterval(countdown);
+        div.querySelector(".clock").innerHTML = `
+        Sự kiện đã kết thúc
+        `;
+      }
+    }, 1000);
 
     return div;
   },
+
+  home_video() {
+    let div = document.createElement("section");
+    div.classList.add("home-video");
+    div.innerHTML = `
+    <div class="video">
+      <video autoplay playinside muted loop>
+        <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
+      </video>
+    </div>
+    `;
+
+    return div;
+  },
+
   categories() {
     let section = document.createElement("section");
     section.className = "categories__banner";

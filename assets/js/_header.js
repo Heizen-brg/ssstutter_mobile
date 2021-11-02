@@ -143,7 +143,7 @@ export const __templates_header = {
     };
 
     window.onscroll = function () {
-      if (window.pageYOffset > 550) {
+      if (window.pageYOffset > params.page_y_offset) {
         if (document.querySelector(".header .freeship")) {
           document.querySelector(".header .freeship").style.display = "block";
         }
