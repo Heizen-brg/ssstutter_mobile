@@ -267,14 +267,6 @@ export const __templates_product = {
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
           <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
         </ul>
-        ${
-          info.catId.join(",").includes("0x7u3p") || info.catId.join(",").includes("S2HJYi")
-            ? `<div class="promotion__sale">
-        <p>Tặng thêm Great Life Tee Premium khi mua sản phẩm này </p>
-        <button data-action="sale_promotion">Thông tin ưu đãi</button>
-      </div>`
-            : ""
-        }
       </div>
     `;
     user_selection = {
