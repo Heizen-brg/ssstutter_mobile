@@ -214,6 +214,7 @@ export const __templates_checkout = {
     let coupon_input = div.querySelector('[data-value="coupon"]');
     let apply_coupon = div.querySelector('[ data-action="coupon"]');
     let confirm_btn = div.querySelector(".confirm__order");
+    __get_voucher({ discountDiv: div });
     apply_coupon.addEventListener("click", (e) => {
       order_data.discountCode = [coupon_input.value];
       __templates.api_loading("show");

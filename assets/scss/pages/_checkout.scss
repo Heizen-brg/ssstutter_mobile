@@ -100,7 +100,7 @@
     padding: 20px;
     .product__list {
       width: 100%;
-      min-height: 45vh;
+      height: 45vh;
       overflow: auto;
       li {
         @include grid((20% 1fr 15%), 1fr, 20px);
@@ -116,25 +116,25 @@
       }
       div {
         h6 {
-          font-size: medium;
           margin-bottom: 5px;
         }
         .product__variation {
           color: $silver;
           margin-bottom: 5px;
           display: block;
+          font-size: small;
         }
         strong {
           margin-bottom: 5px;
         }
         .add__product {
           @include flex(row, flex-start, center);
-          margin-top: 15px;
+          margin-top: 5px;
           button {
             background-color: transparent;
             margin: 0 5px;
             border: transparent;
-            padding: 10px;
+            padding: 5px;
             font-size: large;
           }
           input {
@@ -192,11 +192,11 @@
     padding: 5px;
     margin: 10px 0;
     p {
-      @include font(large, center, 600);
+      @include font(medium, center, 600);
       margin-right: 15px;
     }
     strong {
-      @include font(x-large, center, bold);
+      @include font(large, center, bold);
     }
     small {
       @include font(small, center, bold);

@@ -1,9 +1,8 @@
 import { __icons } from "./share/_icons.js";
 import { __render, __requests } from "./main.js";
-import { __currency_format, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
+import { __currency_format, __get_voucher, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
 import { __templates } from "./share/_components.js";
 import { CONFIG } from "./config.js";
-
 let mobile = window.innerWidth <= 426;
 let tablet = window.innerWidth <= 768 && window.innerWidth > 426;
 let desktop = window.innerWidth > 780;
@@ -359,9 +358,8 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                    })"></span></a>
+                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                      })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
@@ -408,9 +406,21 @@ export const __templates_header = {
         <ul>
 
         </ul>
-        <div class="cart__total">
-          <span>Tổng tiền: </span>
-          <strong data-amount>0</strong>
+        <div class="total__cart">
+          <p>Tổng:</p>
+          <strong data-amount="purchase"></strong>
+        </div>
+        <div class="total__cart">
+          <small>Ưu đãi:</small>
+          <small data-amount="discount">0</small>
+        </div>
+        <div class="total__cart">
+          <small>Phí ship:</small>
+          <small data-amount="shipping">0</small>
+        </div>
+        <div class="total__cart">
+          <p>Thành tiền:</p>
+          <strong data-amount="total">0</strong>
         </div>
         <div class="cart__btn">
           <button class="checkout__btn">thanh toán</button>
@@ -429,6 +439,8 @@ export const __templates_header = {
     to_checkout_btn.addEventListener("click", () => {
       window.location.href = "/checkout";
     });
+
+    __get_voucher({ discountDiv: div });
     return div;
   },
 };

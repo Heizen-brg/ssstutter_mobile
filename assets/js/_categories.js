@@ -57,7 +57,7 @@ export const __templates_categories = {
             (item) => item.parentId === params.category.parentId
           );
         }
-        console.log(parent_cat_arr);
+        // console.log(parent_cat_arr);
         section.innerHTML = `
         <ul>
           ${(parent_cat_arr || [])
@@ -68,60 +68,6 @@ export const __templates_categories = {
             .join("")}
         </ul>
     `;
-        //   let init_event_cate = (cat_list, cat_dom) => {
-        //     cat_list.forEach((item) => item.classList.remove("active"));
-        //     let product_container = document.querySelector(
-        //       ".categories__products > ul"
-        //     );
-        //     product_container.dataset.cate = cat_dom.dataset.cate;
-        //     cat_dom.classList.add("active");
-        //     section.removeChild(section.childNodes[2]);
-        //     let child_cat = data.filter(
-        //       (item) => item.parentId == cat_dom.dataset.cate
-        //     );
-        //     let child_cat_list = document.createElement("ul");
-        //     child_cat_list.className = "categories__list--child";
-        //     child_cat_list.innerHTML = `
-        // ${(child_cat || [])
-        //         .map(
-        //           (cate) =>
-        //             `<li data-subcat data-cate="${cate.id}"><p>${cate.name.replace(
-        //               "- -",
-        //               ""
-        //             )}</p></li>`
-        //         )
-        //         .join("")}
-        // `;
-        //     section.appendChild(child_cat_list);
-        //     this.products({
-        //       catId: cat_dom.dataset.cate,
-        //       container: product_container,
-        //     });
-        //   };
-        //   let parent_cate = section.querySelectorAll("[data-cate]");
-        //   parent_cate.forEach((cat) => {
-        //     cat.addEventListener("click", (e) => {
-        //       e.preventDefault();
-        //       init_event_cate(parent_cate, cat);
-        //       let sub_cate = section.querySelectorAll("[data-subcat]");
-        //       sub_cate.forEach((subcat) => {
-        //         subcat.addEventListener("click", (e) => {
-        //           let product_container = document.querySelector(
-        //             ".categories__products > ul"
-        //           );
-        //           e.preventDefault();
-        //           sub_cate.forEach((item) => item.classList.remove("active"));
-        //           product_container.dataset.cate = subcat.dataset.cate;
-        //           subcat.classList.add("active");
-        //           this.products({
-        //             catId: subcat.dataset.cate,
-        //             container: product_container,
-        //           });
-        //         });
-        //       });
-        //       section.classList.remove('show');
-        //     });
-        //   });
       }
     );
 
