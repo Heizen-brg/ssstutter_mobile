@@ -1,6 +1,5 @@
 import { __currency_format } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
-import { CONFIG } from "./config.js";
 
 export const __templates_order = {
   order_overview(params) {
@@ -45,7 +44,10 @@ export const __templates_order = {
             return `
             <li>
               <span class="product__thumbnail"
-                style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.thumbnail.x100.replace(".jpeg", ".webp")})">
+                style="background-image:url(https://api.leanservices.work/product/static/${item.thumbnail.x100.replace(
+                  ".jpeg",
+                  ".webp"
+                )})">
               </span>
               <div>
                 <h6>${item.name}</h6>

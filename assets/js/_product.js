@@ -1,5 +1,11 @@
 import { __requests } from "./main.js";
-import { __currency_format, __push_notification, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
+import {
+  __currency_format,
+  __get_voucher,
+  __push_notification,
+  __show_cart_item,
+  __show_cart_quantity,
+} from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
 import { __templates_header } from "./_header.js";
@@ -251,7 +257,7 @@ export const __templates_product = {
           </div>
         </div>
         <div class="color">
-          <p>chọn màu : <strong class="color__name">${info.color[0].name} </strong></p>
+          <p>chọn màu : <strong class="color__name"> </strong></p>
           <ul>
           
           </ul>
@@ -267,14 +273,6 @@ export const __templates_product = {
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
           <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
         </ul>
-        ${
-          info.catId.join(",").includes("0x7u3p") || info.catId.join(",").includes("S2HJYi")
-            ? `<div class="promotion__sale">
-        <p>Tặng thêm Great Life Tee Premium khi mua sản phẩm này </p>
-        <button data-action="sale_promotion">Thông tin ưu đãi</button>
-      </div>`
-            : ""
-        }
       </div>
     `;
     user_selection = {
@@ -422,6 +420,7 @@ export const __templates_product = {
               cart_menu.classList.add("active");
               __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
               __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+              __get_voucher({ discountDiv: cart_menu });
             }
           );
         } else {
@@ -437,6 +436,7 @@ export const __templates_product = {
               cart_menu.classList.add("active");
               __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
               __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+              __get_voucher({ discountDiv: cart_menu });
             }
           );
         }

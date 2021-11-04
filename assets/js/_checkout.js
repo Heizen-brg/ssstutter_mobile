@@ -107,7 +107,10 @@ export const __templates_checkout = {
         customer_phone.classList.remove("error");
         clearTimeout(typing_timer);
         typing_timer = setTimeout(() => {
-          __get_voucher(e.target.value);
+          __get_voucher({
+            customerPhone: e.target.value,
+            discountCode: order_data.discountCode,
+          });
         }, 500);
       } else {
         customer_phone.classList.add("error");
@@ -211,8 +214,25 @@ export const __templates_checkout = {
     let coupon_input = div.querySelector('[data-value="coupon"]');
     let apply_coupon = div.querySelector('[ data-action="coupon"]');
     let confirm_btn = div.querySelector(".confirm__order");
+    __get_voucher({ discountDiv: div });
     apply_coupon.addEventListener("click", (e) => {
-      order_data.discountCode.push(coupon_input.value);
+      order_data.discountCode = [coupon_input.value];
+      __templates.api_loading("show");
+      __get_voucher(
+        {
+          discountCode: order_data.discountCode,
+        },
+        (data) => {
+          __templates.api_loading("hide");
+          if (data) {
+            __push_notification("fail", data.error);
+            order_data.discountCode = [];
+            coupon_input.value = "";
+            return;
+          }
+          __push_notification("success", "Áp dụng code thành công");
+        }
+      );
     });
     confirm_btn.addEventListener("click", () => {
       let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
@@ -253,7 +273,9 @@ export const __templates_checkout = {
           }
         }
       );
-      if (fbq) fbq("track", "Contact");
+      if (fbq) {
+        fbq("track", "Purchase", { currency: "VND", value: 0 });
+      }
     });
     return div;
   },

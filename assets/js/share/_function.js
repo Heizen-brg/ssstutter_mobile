@@ -206,10 +206,7 @@ export const __show_cart_item = (wrapper, total, div) => {
     });
     let init_quantity_value = (value, index) => {
       purchase_items_list[index].quantity = value;
-      // let total_amount_arr = purchase_items_list.map(
-      //   (item) => item.quantity * item.price
-      // );
-      // let total_amount = total_amount_arr.reduce((a, b) => a + b, 0);
+
       let total_amount = purchase_items_list.reduce((total, current) => {
         if (current.salePrice) return total + current.quantity * current.salePrice;
         return total + current.quantity * current.price;
@@ -218,18 +215,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       total.dataset.price = total_amount;
       let customer_phone = document.querySelector('[data-value="customer_phone"]');
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
-      __get_voucher(customer_phone.value, __check_shipping);
-      // __check_shipping();
-      // let address = {
-      //   city: div.querySelector('[data-value="customer_city"]').value,
-      //   district: div.querySelector('[data-value="customer_district"]').value,
-      //   ward: div.querySelector('[data-value="customer_ward"]').value,
-      //   address: div.querySelector('[data-value="customer_address"]').value,
-      // };
-      // let final_price = document.querySelector('[data-amount="total"]').dataset.price || 0
-      // let customer_district = div.querySelector('[data-value="customer_district"]');
-      // let customer_ward = div.querySelector('[data-value="customer_ward"]');
-      // let customer_address = div.querySelector('[data-value="customer_address"]');
+      __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
     };
 
     del_btn.addEventListener("click", (e) => {
@@ -246,7 +232,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       let customer_phone = document.querySelector('[data-value="customer_phone"]');
       total.innerHTML = __currency_format(total_amount);
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
-      __get_voucher(customer_phone);
+      __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
       __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
       del_btn.parentNode.remove();
     });
@@ -254,14 +240,20 @@ export const __show_cart_item = (wrapper, total, div) => {
 };
 
 export const __check_shipping = () => {
-  // console.log(document.querySelector('[data-value="customer_city"]').selected)
+  if (!document.querySelector('[data-value="customer_city"]')) return;
   let shippingFormat = {
     city: document.querySelector('[data-value="customer_city"]').querySelector("option:checked").textContent,
     district: document.querySelector('[data-value="customer_district"]').querySelector("option:checked").textContent,
     ward: document.querySelector('[data-value="customer_ward"]').querySelector("option:checked").textContent,
     address: document.querySelector('[data-value="customer_address"]').value,
   };
-  let final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
+  let checkout_cart = document.querySelector(".checkout__cart");
+  let final_price;
+  if (checkout_cart) {
+    final_price = checkout_cart.querySelector('[data-amount="total"]').dataset.price || 0;
+  } else {
+    final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
+  }
   let shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
   console.log(final_price);
   __requests(
@@ -280,13 +272,20 @@ export const __check_shipping = () => {
       // total.innerHTML = __currency_format(parseInt(total.dataset.price) * + data);
       shipping_fee.innerHTML = __currency_format(parseInt(data));
       shipping_fee.dataset.price = data;
+      let checkout_cart = document.querySelector(".checkout__cart");
+      if (checkout_cart) {
+        let checkout_shipping = checkout_cart.querySelector('[data-amount="shipping"]');
+        checkout_shipping.innerHTML = __currency_format(parseInt(data));
+        checkout_shipping.dataset.price = data;
+        __calc_final_amount(checkout_cart);
+      }
       __calc_final_amount();
     }
   );
 };
 
-export const __get_voucher = (customerPhone, callback) => {
-  let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
+export const __get_voucher = (params, callback) => {
+  let items_purchased = JSON.parse(localStorage.getItem("cartItem")) || [];
   let products = items_purchased.map((item) => {
     return {
       id: item.variation.id,
@@ -299,30 +298,46 @@ export const __get_voucher = (customerPhone, callback) => {
       method: "POST",
       url: `order/voucher/customer-voucher`,
       body: JSON.stringify({
-        customerPhone: customerPhone,
+        customerPhone: params.customerPhone || "",
         items: products,
+        discountCode: params.discountCode || [],
       }),
     },
-    ({ data }) => {
-      let discount_amount = document.querySelector('[data-amount="discount"]');
+    ({ data, error }) => {
+      let discount_amount = params.discountDiv
+        ? params.discountDiv.querySelector('[data-amount="discount"]')
+        : document.querySelector('[data-amount="discount"]');
       discount_amount.dataset.price = data.amount;
       discount_amount.innerHTML = `-${__currency_format(data.amount)}`;
-      __calc_final_amount();
+      __calc_final_amount(params.discountDiv);
+      let checkout_cart = document.querySelector(".checkout__cart");
+      if (checkout_cart) {
+        let checkout_discount = checkout_cart.querySelector('[data-amount="discount"]');
+        checkout_discount.dataset.price = data.amount;
+        checkout_discount.innerHTML = `-${__currency_format(data.amount)}`;
+        __calc_final_amount(checkout_cart);
+      }
       if (callback) callback();
-    }
+    },
+    (res) => callback(res)
   );
 };
 
-export const __calc_final_amount = () => {
+export const __calc_final_amount = (div) => {
   let purchase_amount = document.querySelector('[data-amount="purchase"]');
   let discount_amount = document.querySelector('[data-amount="discount"]');
   let total_amount = document.querySelector('[data-amount="total"]');
   let shipping_amount = document.querySelector('[data-amount="shipping"]');
+  if (div) {
+    purchase_amount = div.querySelector('[data-amount="purchase"]');
+    discount_amount = div.querySelector('[data-amount="discount"]');
+    total_amount = div.querySelector('[data-amount="total"]');
+    shipping_amount = div.querySelector('[data-amount="shipping"]');
+  }
   let purchase = parseInt(purchase_amount.dataset.price) || 0;
   let discount = parseInt(discount_amount.dataset.price) || 0;
   let shipping = parseInt(shipping_amount.dataset.price) || 0;
   total_amount.dataset.price = purchase + shipping - discount;
-  console.log("sdasd");
   total_amount.innerHTML = `${__currency_format(purchase + shipping - discount)}`;
 };
 

@@ -120,16 +120,16 @@ export const __templates_home = {
     get_banner_list();
     // return section;
   },
-  
+
   subcription() {
-    let div = document.createElement('section');
-    div.classList.add('subcription');
+    let div = document.createElement("section");
+    div.classList.add("subcription");
     div.innerHTML = `
     <div class="container">
       <div class="image" style="background-image: url(assets/img/test.jpg);"></div>
       <div class="content">
         <h2>First Collection<br>Winter 2021</h2>
-        <p>Mở bán Pre-Order tại Website vào</p>
+        <p>Mở bán Pre-Order tại Website<br></p>
         <p class="clock"></p>
         <div class="btn-row">
           <a href="https://m.me/263972407066786?ref=3110" target="_blank">Nhận thông tin sớm qua Messenger tại đây</a>
@@ -137,38 +137,38 @@ export const __templates_home = {
       </div>
     </div>
     `;
-    
-    let end_date = new Date('Nov 04, 2021 21:30:00').getTime();
-    
+
+    let end_date = new Date("Nov 04, 2021 21:30:00").getTime();
+
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
-      
+
       let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours =  Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      div.querySelector('.clock').innerHTML = `
+        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      div.querySelector(".clock").innerHTML = `
       <span>${days}</span> ngày 
       <span>${hours}</span> giờ 
       <span>${minutes}</span> phút 
       <span>${seconds}</span> giây
       `;
-      
-      if ((distance) < 0) {
+
+      if (distance < 0) {
         clearInterval(countdown);
-        div.querySelector('.clock').innerHTML = `
+        div.querySelector(".clock").innerHTML = `
         Sự kiện đã kết thúc
         `;
       }
     }, 1000);
-    
+
     return div;
   },
-  
+
   home_video() {
-    let div = document.createElement('section');
-    div.classList.add('home-video');
+    let div = document.createElement("section");
+    div.classList.add("home-video");
     div.innerHTML = `
     <div class="video">
       <video autoplay playinside muted loop>
@@ -176,10 +176,10 @@ export const __templates_home = {
       </video>
     </div>
     `;
-    
+
     return div;
   },
-  
+
   categories() {
     let section = document.createElement("section");
     section.className = "categories__banner";
@@ -218,7 +218,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: `product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true`,
+        url: `product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true&webStock=true`,
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -277,7 +277,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -385,7 +385,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -475,7 +475,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -582,7 +582,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true",
+        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -657,7 +657,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true",
+        url: "product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -692,7 +692,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true",
+        url: "product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -705,8 +705,8 @@ export const __templates_home = {
         <div class="product">
           <div class="thumbnail">
             <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                item.extensions.media.featured
-              })"></span></a>
+              item.extensions.media.featured
+            })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name}</h6>

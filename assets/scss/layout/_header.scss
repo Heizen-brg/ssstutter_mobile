@@ -140,7 +140,7 @@
       }
       a {
         &::after {
-          content: 'ssstutter';
+          content: "ssstutter";
           font-size: 18px;
           display: none;
         }
@@ -332,28 +332,29 @@
     ul {
       width: 100%;
       padding: 20px 0;
-      max-height: 60vh;
+      max-height: 40vh;
       overflow: auto;
       .empty__cart {
         padding: 10px;
         text-align: center;
       }
       li {
-        @include grid((25% 1fr 15%), 1fr, 20px);
+        @include grid((20% 1fr 15%), 1fr, 20px);
         padding: 5px;
         border-bottom: thin solid $silver;
-        margin: 15px;
+        margin: 10px;
         .product__thumbnail {
           @include ratio(1, 1);
         }
         div {
           h6 {
-            font-size: medium;
             margin-bottom: 5px;
+            font-size: small;
           }
           .product__variation {
             color: $silver;
             margin-bottom: 5px;
+            font-size: x-small;
             display: block;
           }
           strong {
@@ -361,7 +362,6 @@
           }
           .add__product {
             @include flex(row, flex-start, center);
-            margin-top: 15px;
             button {
               background-color: transparent;
               margin: 0 5px;
@@ -387,17 +387,22 @@
         }
       }
     }
-    .cart__total {
-      @include flex(row, flex-end, center);
-      padding: 20px;
-      border-top: thin solid $light;
-      span {
-        font-size: medium;
+    .total__cart {
+      @include flex(row, space-between, center);
+      padding: 10px;
+      p {
+        @include font(medium, center, 600);
+        margin-right: 15px;
       }
       strong {
-        font-size: large;
+        @include font(large, center, bold);
+      }
+      small {
+        @include font(small, center, bold);
+        color: $gray;
       }
     }
+
     .cart__btn {
       @include grid(1fr, 1fr);
       button {
