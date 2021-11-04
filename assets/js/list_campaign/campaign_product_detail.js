@@ -4,20 +4,19 @@ import { __icons } from "../share/_icons.js";
 import { __templates_modal } from "../share/_modal.js";
 import { __templates_header } from "../_header.js";
 import { CONFIG } from "../config.js";
-import pre_order_cart from './pre_order_cart.js';
+import pre_order_cart from "./pre_order_cart.js";
 let user_selection = {};
 let cart_quantity = 0;
 export const campaign_product_detail_page = {
   page_header() {
-    
-    if (localStorage.getItem('pre-order-item')) {
-      JSON.parse(localStorage.getItem('pre-order-item')).map(item => {
-        cart_quantity += parseInt(item.quantity)
+    if (localStorage.getItem("pre-order-item")) {
+      JSON.parse(localStorage.getItem("pre-order-item")).map((item) => {
+        cart_quantity += parseInt(item.quantity);
       });
     }
-    
+
     let div = document.createElement("div");
-    div.classList.add('header', 'style-1');
+    div.classList.add("header", "style-1");
     div.innerHTML = `
     <div class="nav">
       <div class="nav__logo">
@@ -28,11 +27,11 @@ export const campaign_product_detail_page = {
       <div class="pre-order-cart">${__icons.cart} pre-order <span>( ${cart_quantity} )</span></div>
     </div>
     `;
-    
-    div.querySelector('.pre-order-cart').addEventListener('click', () => {
+
+    div.querySelector(".pre-order-cart").addEventListener("click", () => {
       document.body.appendChild(pre_order_cart());
     });
-    
+
     return div;
   },
   product_gallery(params = {}) {
@@ -314,8 +313,8 @@ export const campaign_product_detail_page = {
         }
       </div>
     `;
-    
-    let end_date = new Date("Nov 10, 2021 00:00:00").getTime();
+
+    let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
 
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
@@ -338,7 +337,7 @@ export const campaign_product_detail_page = {
         div.querySelector(".clock").innerHTML = ``;
       }
     }, 1000);
-    
+
     user_selection = {
       name: info.name,
       media: info.extensions.media,
@@ -365,7 +364,6 @@ export const campaign_product_detail_page = {
         };
       });
       color_value.map((item, index) => {
-        
         let flat_color = document.createElement("li");
         flat_color.innerHTML = `
         <button 
@@ -461,22 +459,21 @@ export const campaign_product_detail_page = {
         let new_selected_item = { ...user_selection };
         let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
         if (product_in_cart) {
-
-              cart_selected = cart_selected.map((i) => {
-                if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
-                return i;
-              });
-              localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
-  
+          cart_selected = cart_selected.map((i) => {
+            if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+            return i;
+          });
+          localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
         } else {
-              cart_selected.push(new_selected_item);
-              localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
+          cart_selected.push(new_selected_item);
+          localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
         }
         cart_quantity = 0;
-        JSON.parse(localStorage.getItem('pre-order-item')).map(item => {
-          cart_quantity += parseInt(item.quantity)
+        JSON.parse(localStorage.getItem("pre-order-item")).map((item) => {
+          cart_quantity += parseInt(item.quantity);
         });
-        document.querySelector('.pre-order-cart span').innerHTML = `( ${cart_quantity} )`;
+        document.querySelector(".pre-order-cart span").innerHTML = `( ${cart_quantity} )`;
+        document.body.appendChild(pre_order_cart());
       });
     };
     let triggers = div.querySelectorAll("[data-action]");
