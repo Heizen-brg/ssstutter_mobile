@@ -4516,6 +4516,9 @@ h4 {
   width: auto;
   transform: none;
 }
+.header.style-1 .pre-order-cart {
+  cursor: pointer;
+}
 .header.style-1 .pre-order-cart span {
   margin-left: 4px;
 }
@@ -4697,122 +4700,151 @@ h4 {
   margin-bottom: 0;
 }
 
-.campaign-product-detail-page .wrapper {
-  display: grid;
+.pre-order-cart .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(155, 155, 155, 0.25);
+  z-index: 1111;
 }
-@media (min-width: 1024px) {
-  .campaign-product-detail-page .wrapper {
-    grid-template: auto/2fr 1fr;
-  }
+.pre-order-cart svg {
+  width: auto;
+  height: auto;
 }
-.campaign-product-detail-page .gallery {
-  display: grid;
-}
-@media (min-width: 1024px) {
-  .campaign-product-detail-page .gallery {
-    grid-template: auto/1fr 1fr;
-  }
-}
-.campaign-product-detail-page .gallery .item {
-  padding-top: calc(5 / 4 * 100%);
-  background: #f4f4f4 no-repeat center;
-  background-size: cover;
-}
-.campaign-product-detail-page .variation {
-  padding: 20px 15px;
-}
-@media (min-width: 768px) {
-  .campaign-product-detail-page .variation {
-    padding: 25px;
-  }
-}
-.campaign-product-detail-page h1 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-.campaign-product-detail-page p {
-  margin-bottom: 8px;
-}
-.campaign-product-detail-page .price {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-.campaign-product-detail-page .price .unit {
-  font-size: 14px;
-  display: inline-block;
-  margin-left: 4px;
-  transform: translateY(-4px);
-}
-.campaign-product-detail-page .color-name {
-  display: inline-block;
-  margin-left: 4px;
-}
-.campaign-product-detail-page .thumbnail-list {
-  margin-bottom: 20px;
-  display: grid;
-  grid-gap: 12px;
-  grid-template: auto/repeat(auto-fit, minmax(auto, 30%));
-}
-@media (min-width: 1024px) {
-  .campaign-product-detail-page .thumbnail-list {
-    grid-gap: 18px;
-    grid-template: auto/repeat(auto-fit, minmax(auto, 50px));
-  }
-}
-.campaign-product-detail-page .thumbnail-list .item {
-  padding-top: 100%;
-  border: 1px solid #f4f4f4;
-  padding-top: 100%;
-  background: #f4f4f4 no-repeat center;
-  background-size: cover;
-}
-.campaign-product-detail-page .thumbnail-list .item.active {
-  border-color: #191919;
-}
-.campaign-product-detail-page .size-list {
-  margin-bottom: 20px;
-  display: flex;
-  grid-gap: 12px;
-}
-@media (min-width: 1024px) {
-  .campaign-product-detail-page .size-list {
-    display: grid;
-    grid-gap: 18px;
-    grid-template: auto/repeat(auto-fit, minmax(auto, 50px));
-  }
-}
-.campaign-product-detail-page .size-list .item {
-  padding-top: 100%;
-  border: 1px solid #f4f4f4;
-  flex-grow: 1;
-  padding: 15px 0 15px;
-  position: relative;
-}
-.campaign-product-detail-page .size-list .item.active {
-  border-color: #191919;
-}
-@media (min-width: 1024px) {
-  .campaign-product-detail-page .size-list .item {
-    padding: 100% 0 0;
-  }
-}
-.campaign-product-detail-page .size-list .item span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.campaign-product-detail-page .add-to-pre-order {
-  margin: 50px 0 15px;
-  text-transform: uppercase;
-  font-size: 14px;
+.pre-order-cart .cart-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  box-shadow: -2px 0 9px 1px rgba(21, 23, 24, 0.1);
+  z-index: 1111;
   width: 100%;
-  display: block;
-  color: #fff;
-  background: #191919;
+}
+@media (min-width: 1024px) {
+  .pre-order-cart .cart-modal {
+    max-width: 80%;
+  }
+}
+@media (min-width: 1200px) {
+  .pre-order-cart .cart-modal {
+    max-width: 1024px;
+  }
+}
+.pre-order-cart .cart-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+}
+.pre-order-cart .cart-header span {
+  margin-right: auto;
+}
+.pre-order-cart .cart-header button {
+  background: transparent;
   border: 0;
-  padding: 16px 12px;
+}
+.pre-order-cart .cart-body {
+  display: grid;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .pre-order-cart .cart-body {
+    grid-template: auto/1fr 35%;
+  }
+}
+.pre-order-cart .content.left {
+  padding: 65px 18px 18px;
+}
+@media (min-width: 1024px) {
+  .pre-order-cart .content.left {
+    padding: 100px 18px 18px;
+  }
+}
+.pre-order-cart .content.left .cart-list {
+  overflow: auto;
+  height: calc(80vh - 85px);
+}
+@media (min-width: 1024px) {
+  .pre-order-cart .content.left .cart-list {
+    height: calc(80vh - 125px);
+  }
+}
+.pre-order-cart .content.left .cart-item {
+  display: grid;
+  align-items: center;
+  grid-gap: 12px;
+  margin-bottom: 12px;
+  grid-template: auto/65px 1fr 100px 25px;
+  font-size: 12px;
+}
+@media (min-width: 1024px) {
+  .pre-order-cart .content.left .cart-item {
+    grid-template: auto/80px 1fr 100px 25px;
+  }
+}
+.pre-order-cart .content.left .cart-item .image {
+  background: #e4e3e5 no-repeat center;
+  background-size: cover;
+  padding-top: 100%;
+}
+.pre-order-cart .content.left .cart-item .detail p {
+  margin-bottom: 4px;
+}
+.pre-order-cart .content.left .cart-item .detail p:last-child {
+  margin-bottom: 0;
+}
+.pre-order-cart .content.left .cart-item button {
+  background: 0;
+  border: 0;
+  padding: 5px;
+}
+.pre-order-cart .content.left .cart-item .quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pre-order-cart .content.left .cart-item .quantity .number {
+  margin: 0 4px;
+  font-size: 14px;
+  width: 40px;
+  text-align: center;
+}
+.pre-order-cart .content.right {
+  padding: 18px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .pre-order-cart .content.right {
+    padding: 100px 18px 18px;
+  }
+}
+.pre-order-cart .content.right p {
+  width: 100%;
+  display: grid;
+  grid-template: auto/1fr 1fr;
+  grid-gap: 12px;
+  margin: auto 0 40px;
+  color: #484848;
+}
+.pre-order-cart .content.right button {
+  background: #191919;
+  color: #fff;
+  width: 100%;
+  text-transform: uppercase;
+  padding: 14px;
+  border-color: #191919;
+}
+.pre-order-cart .content.right .total {
+  text-align: right;
 }
 
 .hero__banner {
