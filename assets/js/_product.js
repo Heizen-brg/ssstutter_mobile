@@ -233,7 +233,7 @@ export const __templates_product = {
   },
   variation(params = {}) {
     let info = params;
-    // console.log(info);
+    console.log(info);
     let div = document.createElement("div");
     div.className = "variation";
     div.innerHTML = `
@@ -249,7 +249,7 @@ export const __templates_product = {
           </div>
         </div>
         <div class="color">
-          <p>chọn màu : <strong class="color__name">${info.color[0].name} </strong></p>
+          <p>chọn màu : <strong class="color__name"> </strong></p>
           <ul>
           
           </ul>
