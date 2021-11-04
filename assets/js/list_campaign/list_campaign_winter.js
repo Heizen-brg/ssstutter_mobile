@@ -1,4 +1,5 @@
 import { __icons } from "../share/_icons.js";
+import pre_order_cart from './pre_order_cart.js';
 
 function list_campaign_winter() {
   function create_element(e) {
@@ -14,12 +15,42 @@ function list_campaign_winter() {
   let template = create_element('div');
   template.classList.add('list-campaign-page-wrapper');
   
+  function page_header() {
+    let cart_quantity = 0;
+    if (localStorage.getItem('pre-order-item')) {
+      JSON.parse(localStorage.getItem('pre-order-item')).map(item => {
+        cart_quantity += parseInt(item.quantity)
+      });
+    }
+    
+    let div = create_element('header');
+    div.classList.add('header', 'style-1');
+    div.innerHTML = `
+    <div class="nav">
+      <div class="nav__logo">
+        <a href="/editorial">
+          ${__icons.new_ssstutter}
+        </a>
+      </div>
+      <div class="pre-order-cart">${__icons.cart} pre-order <span>( ${cart_quantity} )</span></div>
+    </div>
+    `;
+    
+    div.querySelector('.pre-order-cart').addEventListener('click', () => {
+      document.body.appendChild(pre_order_cart());
+    });
+    
+    return div;
+  }
+  
   function section_video() {
     let div = create_element('section');
-    div.classList.add('section-video', 'container');
+    div.classList.add('section-video');
     div.innerHTML = `
-    <video width="100%" autoplay playsinline muted loop>
-      <source type="video/mp4" src="/assets/img/editorial/1.mp4">
+    <div class="video">
+      <video width="100%" autoplay playsinline muted loop>
+        <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
+      </video>
     </video>
     `;
     
@@ -47,22 +78,28 @@ function list_campaign_winter() {
     div.classList.add('section-collection', 'container');
     div.innerHTML = `
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/editorial/1.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/look1.jpg)"></a>
+      <p>Look 1</p>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/editorial/2.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/look2.jpg)"></a>
+      <p>Look 2</p>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/editorial/3.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/look3.jpg)"></a>
+      <p>Look 3</p>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/editorial/4.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/look4.jpg)"></a>
+      <p>Look 4</p>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/editorial/5.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/look5.jpg)"></a>
+      <p>Look 5</p>
     </div>
     <div class="item">
-      <a class="image" href="#" style="background-image: url(/assets/img/editorial/6.jpg)"></a>
+      <a class="image" href="#" style="background-image: url(/assets/img/editorial/look6.jpg)"></a>
+      <p>Look 6</p>
     </div>
     `;
     
@@ -93,11 +130,12 @@ function list_campaign_winter() {
     return div;
   }
   
+  template.appendChild(page_header());
   template.appendChild(section_video());
-  template.appendChild(section_banner());
+  // template.appendChild(section_banner());
   template.appendChild(section_collections());
-  template.appendChild(section_gallery());
-  template.appendChild(section_end());
+  // template.appendChild(section_gallery());
+  // template.appendChild(section_end());
   
   return template;
 }

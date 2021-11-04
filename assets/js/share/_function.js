@@ -53,17 +53,19 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         product_template.innerHTML = `
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-          })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+        })"></span></a>
         </div>
         <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
           <div class="price">
-            ${item.salePrice
-            ? `<p>${__currency_format(item.salePrice)}</p>
+            ${
+              item.salePrice
+                ? `<p>${__currency_format(item.salePrice)}</p>
               <p class="discount">${__currency_format(item.price)}</p> `
-            : `<p>${__currency_format(item.price)}</p>`
-          }
+                : `<p>${__currency_format(item.price)}</p>`
+            }
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           <div class="color">
@@ -121,10 +123,11 @@ export const __show_cart_item = (wrapper, total, div) => {
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${prod.media[`color_${prod.colorId}_thumbnail`]
+      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+        prod.media[`color_${prod.colorId}_thumbnail`]
           ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
           : "no_image.png"
-        })">
+      })">
       </a>
       <div>
         <h6>${prod.name}</h6>
@@ -237,14 +240,20 @@ export const __show_cart_item = (wrapper, total, div) => {
 };
 
 export const __check_shipping = () => {
-  if (!document.querySelector('[data-value="customer_city"]')) return
+  if (!document.querySelector('[data-value="customer_city"]')) return;
   let shippingFormat = {
     city: document.querySelector('[data-value="customer_city"]').querySelector("option:checked").textContent,
     district: document.querySelector('[data-value="customer_district"]').querySelector("option:checked").textContent,
     ward: document.querySelector('[data-value="customer_ward"]').querySelector("option:checked").textContent,
     address: document.querySelector('[data-value="customer_address"]').value,
   };
-  let final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
+  let checkout_cart = document.querySelector(".checkout__cart");
+  let final_price;
+  if (checkout_cart) {
+    final_price = checkout_cart.querySelector('[data-amount="total"]').dataset.price || 0;
+  } else {
+    final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
+  }
   let shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
   console.log(final_price);
   __requests(
@@ -263,6 +272,13 @@ export const __check_shipping = () => {
       // total.innerHTML = __currency_format(parseInt(total.dataset.price) * + data);
       shipping_fee.innerHTML = __currency_format(parseInt(data));
       shipping_fee.dataset.price = data;
+      let checkout_cart = document.querySelector(".checkout__cart");
+      if (checkout_cart) {
+        let checkout_shipping = checkout_cart.querySelector('[data-amount="shipping"]');
+        checkout_shipping.innerHTML = __currency_format(parseInt(data));
+        checkout_shipping.dataset.price = data;
+        __calc_final_amount(checkout_cart);
+      }
       __calc_final_amount();
     }
   );
@@ -288,20 +304,22 @@ export const __get_voucher = (params, callback) => {
       }),
     },
     ({ data, error }) => {
-
-      let discount_amount = params.discountDiv ? params.discountDiv.querySelector('[data-amount="discount"]') : document.querySelector('[data-amount="discount"]');
+      let discount_amount = params.discountDiv
+        ? params.discountDiv.querySelector('[data-amount="discount"]')
+        : document.querySelector('[data-amount="discount"]');
       discount_amount.dataset.price = data.amount;
       discount_amount.innerHTML = `-${__currency_format(data.amount)}`;
       __calc_final_amount(params.discountDiv);
-      let checkout_cart = document.querySelector('.checkout__cart')
+      let checkout_cart = document.querySelector(".checkout__cart");
       if (checkout_cart) {
-        let checkout_discount = checkout_cart.querySelector('[data-amount="discount"]')
+        let checkout_discount = checkout_cart.querySelector('[data-amount="discount"]');
         checkout_discount.dataset.price = data.amount;
         checkout_discount.innerHTML = `-${__currency_format(data.amount)}`;
         __calc_final_amount(checkout_cart);
       }
       if (callback) callback();
-    }, (res) => callback(res)
+    },
+    (res) => callback(res)
   );
 };
 

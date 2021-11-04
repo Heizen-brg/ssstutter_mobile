@@ -171,7 +171,7 @@ export const __templates_home = {
     div.classList.add("home-video");
     div.innerHTML = `
     <div class="video">
-      <video autoplay playinside muted loop>
+      <video autoplay playsinline muted loop>
         <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
       </video>
     </div>
