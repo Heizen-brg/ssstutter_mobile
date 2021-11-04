@@ -1,5 +1,32 @@
+.header {
+  &.style-1 {
+    .nav {
+      display: flex;
+      .pre-order-cart {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        svg {
+          margin-right: 6px;
+        }
+      }
+    }
+    .nav__logo {
+      position: static;
+      width: auto;
+      transform: none;
+    }
+    .pre-order-cart {
+      cursor: pointer;
+      span {
+        margin-left: 4px;
+      }
+    }
+  }    
+}
+
 .list-campaign-page-wrapper {
-  padding: 60px 0;
+  padding: 0 0 60px;
   .container {
     padding: 40px 10px;
     width: 100%;
@@ -16,11 +43,28 @@
   }
   
   .section-video {
-    padding: 20px 15px 40px;
-    max-width: 667px;
-    @media (min-width: 991px) {
-      padding: 20px 15px 120px;
-      max-width: 920px;
+    margin: 0 auto;
+    max-width: 360px;
+    margin-bottom: 20px;
+    @media (min-width: 1024px) {
+      padding: 25px 0;
+      margin-bottom: 60px;
+    }
+    @media (min-width: 1600px) {
+      padding: 40px 0;
+      max-width: 460px;
+    }
+    .video {
+      position: relative;
+      background: #cecece;
+      padding-top: calc(16 / 9 * 100%);
+    }
+    video {
+      transform: translate(-2%, 0);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 104%;
     }
   }
   .section-banner {
@@ -132,6 +176,145 @@
       }
       &:last-child {
         margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.pre-order-cart {
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(155, 155, 155, .25);
+    z-index: 1111;
+  }
+  svg {
+    width: auto;
+    height: auto;
+  }
+  .cart-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    box-shadow: -2px 0 9px 1px rgb(21 23 24 / 10%);
+    z-index: 1111;
+    width: 100%;
+    @media (min-width: 1024px) {
+      max-width: 80%;
+    }
+    @media (min-width: 1200px) {
+      max-width: 1024px;
+    }
+  }
+  .cart-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    span {
+      margin-right: auto;
+    }
+    button {
+      background: transparent;
+      border: 0;
+    }
+  }
+  .cart-body {
+    display: grid;
+    height: 100%;
+    @media (min-width: 1024px) {
+      grid-template: auto / 1fr 35%;
+    }
+  }
+  .content {
+    &.left {
+      padding: 65px 18px 18px;
+      @media (min-width: 1024px) {
+        padding: 100px 18px 18px
+      }
+      .cart-list {
+        overflow: auto;
+        height: calc(80vh - 85px);
+        @media (min-width: 1024px) {
+          height: calc(80vh - 125px);
+        }
+      }
+      .cart-item {
+        display: grid;
+        align-items: center;
+        grid-gap: 12px;
+        margin-bottom: 12px;
+        grid-template: auto / 65px 1fr 100px 25px;
+        font-size: 12px;
+        @media (min-width: 1024px) {
+          grid-template: auto / 80px 1fr 100px 25px;
+        }
+        .image {
+          background: #e4e3e5 no-repeat center;
+          background-size: cover;
+          padding-top: 100%;
+        }
+        .detail {
+          p {
+            margin-bottom: 4px;
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+        button {
+          background: 0;
+          border: 0;
+          padding: 5px;
+        }
+        .quantity {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .number {
+            margin: 0 4px;
+            font-size: 14px;
+            width: 40px;
+            text-align: center;
+          }
+        }
+      }
+    }
+    &.right {
+      padding: 18px;
+      background: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      @media (min-width: 1024px) {
+        padding: 100px 18px 18px;
+      }
+      p {
+        width: 100%;
+        display: grid;
+        grid-template: auto / 1fr 1fr;
+        grid-gap: 12px;
+        margin: auto 0 40px;
+        color: #484848;
+      }
+      button {
+        background: #191919;
+        color: #fff;
+        width: 100%;
+        text-transform: uppercase;
+        padding: 14px;
+        border-color: #191919;
+      }
+      .total {
+        text-align: right;
       }
     }
   }
