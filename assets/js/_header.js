@@ -75,6 +75,7 @@ export const __templates_header = {
             </ul>
           </li>
           <li><a class="special" href="/daily-better/">daily better</a></li>
+          <li><a class="special" href="/editorial">pre-order</a></li>
         </ul>
         <div class="side__nav--footer">
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
