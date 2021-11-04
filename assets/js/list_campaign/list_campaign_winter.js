@@ -196,7 +196,12 @@ function list_campaign_winter() {
           product.extensions.media.featured
         })"></a>
         <p class="name">${product.name.toLowerCase()}</p>
-        <p>${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span></p> 
+        <p>
+          ${(product.price * 0.9).toLocaleString("en-US")} <span class="currency-symbol">₫</span>
+          <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
+            ${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span>
+          </span>
+        </p> 
         <p>+${product.color.length} màu</p>
         `;
 

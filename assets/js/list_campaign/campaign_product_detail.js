@@ -270,16 +270,18 @@ export const campaign_product_detail_page = {
     div.className = "variation";
     div.innerHTML = `
       <div>
-        <div class="info">
+        <div class="info" style="margin-bottom: 10px">
           <h1 class="name">${info.name}</h1>
           <div class="price">
           ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
-          ${
-            info.salePrice
-              ? `<p class="discount">${__currency_format(info.price)}</p>`
-              : ` <p>${__currency_format(info.price)}</p>`
-          }
+          
           </div>
+        </div>
+        <div style="margin-bottom: 10px">
+          ${__currency_format(info.price * 0.9)}
+          <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
+            ${__currency_format(info.price)} 
+          </span>
         </div>
         <div class="color">
           <p>chọn màu : <strong class="color__name">${info.color[0].name} </strong></p>
@@ -447,6 +449,7 @@ export const campaign_product_detail_page = {
       let to_cart_btn = div.querySelector(".add");
 
       to_cart_btn.addEventListener("click", (e) => {
+        document.body.appendChild(pre_order_cart());
         let cart_selected = JSON.parse(localStorage.getItem("pre-order-item"))
           ? JSON.parse(localStorage.getItem("pre-order-item"))
           : [];
