@@ -192,7 +192,12 @@ function list_campaign_winter() {
         item.innerHTML = `
         <a href="editorial/product/${product.slug}" class="image" style="background-image:url(https://cdn.ssstutter.com/products/${product.extensions.media.featured})"></a>
         <p class="name">${product.name.toLowerCase()}</p>
-        <p>${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span></p> 
+        <p>
+          ${(product.price * 0.9).toLocaleString("en-US")} <span class="currency-symbol">₫</span>
+          <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
+            ${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span>
+          </span>
+        </p> 
         <p>+${product.color.length} màu</p>
         `;
         
