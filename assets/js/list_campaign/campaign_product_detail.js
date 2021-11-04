@@ -78,6 +78,9 @@ export const campaign_product_detail_page = {
     div.className = "flatlay";
     div.innerHTML = `
       <h1>Chi tiết</h1>
+      <p style="padding: 20px 15px;">
+        ${params.shortDescription}
+      </p>
         <ul>
         </ul>
       </div>
@@ -291,6 +294,11 @@ export const campaign_product_detail_page = {
 
           </ul>
         </div>
+        <div>
+          <br>
+          <p style="margin-bottom: 4px;">Ưu đãi giảm 10% khi đặt hàng trước (Pre-Order)</p>
+          <p class="clock" style="min-height: 20px;"></p><br>
+        </div>
         <button class="add">Thêm vào giỏ hàng</button>
         <ul class="guide">
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
@@ -306,6 +314,31 @@ export const campaign_product_detail_page = {
         }
       </div>
     `;
+    
+    let end_date = new Date("Nov 10, 2021 00:00:00").getTime();
+
+    let countdown = setInterval(() => {
+      let distance = end_date - Date.now();
+
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      div.querySelector(".clock").innerHTML = `
+      Thời gian
+      <span>${days}</span> ngày 
+      <span>${hours}</span> giờ 
+      <span>${minutes}</span> phút 
+      <span>${seconds}</span> giây
+      `;
+
+      if (distance < 0) {
+        clearInterval(countdown);
+        div.querySelector(".clock").innerHTML = ``;
+      }
+    }, 1000);
+    
     user_selection = {
       name: info.name,
       media: info.extensions.media,
@@ -332,15 +365,11 @@ export const campaign_product_detail_page = {
         };
       });
       color_value.map((item, index) => {
-        let isStock = Object.values(info.variation)
-          .filter((i) => i.color === item.id)
-          .some((i) => i.isStock);
-        if (!isStock) return;
+        
         let flat_color = document.createElement("li");
         flat_color.innerHTML = `
         <button 
-          class="color__variation 
-          ${index == 0 && info.variation[index].isStock ? "active" : ""}" 
+          class="color__variation" 
           data-product='${JSON.stringify(info).replace("'", "")}'
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
@@ -370,9 +399,7 @@ export const campaign_product_detail_page = {
         .sort((a, b) => a.size - b.size)
         .map((i, index) => {
           return `
-        <li><button data-index="${index}" class=" size__variation ${
-            index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+        <li><button data-index="${index}" class=" size__variation" data-value="${i.size}">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;

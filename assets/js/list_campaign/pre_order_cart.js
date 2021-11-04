@@ -87,12 +87,16 @@ function pre_order_cart() {
     if (data_cart.length > 0) {
       data_cart.map(item => {
         let color = item.colorId,
-            image = `color_${color}_thumbnail`;
+            image = '';
+        if (Object.keys(item.media).length) {
+          image = `color_${color}_thumbnail`;
+        }
+        // console.log(image);
         let cart_item = create_element('div');
         cart_item.classList.add('cart-item');
         cart_item.setAttribute('data-id', item.variation.id);
         cart_item.innerHTML = `
-        <div class="image" style="background-image: url(https://cdn.ssstutter.com/products/${item.media[image]['o']})"></div>
+        <div class="image" style="background-image: url(https://cdn.ssstutter.com/products/${item.media[image] ?item.media[image]['o']: 'no_image.png' })"></div>
         <div class="detail">
           <p>${item.name} - ${item.price.toLocaleString('en-US')}</p>
           <p>Size ${item.size} - ${item.colorName}</p>
@@ -209,10 +213,33 @@ function pre_order_cart() {
           */
         });
         
+        cart_item.querySelector('.delete').addEventListener('click', () => {
+          let item_id = cart_item.getAttribute('data-id');
+          
+          cart_item.remove();
+          let update_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+          update_cart = update_cart
+            .map((product) => {
+              if (product.variation.id == item_id) {
+                return false;
+              }
+              return product;
+            })
+            .filter((i) => !!i);
+          
+          localStorage.setItem('pre-order-item', JSON.stringify(update_cart));
+          let total_bill = parseInt(div.querySelector('.total').textContent.replace(/,/g, ''));
+          div.querySelector('.total').innerHTML = (total_bill - (item.price * item.quantity)).toLocaleString('en-US');
+        });
+        
         div.querySelector('.content.left').appendChild(cart_item);
         return cart_item;
       });
     }
+    
+    div.querySelector('.content.right button').addEventListener('click', () => {
+      location.href = '/editorial/checkout';
+    });
     
     return div;
   }
