@@ -4597,7 +4597,7 @@ h4 {
 .list-campaign-page-wrapper .section-banner .content h2 {
   color: #054c7b;
   font-weight: 600;
-  font-size: 40px;
+  font-size: 45px;
   font-family: serif;
   margin-bottom: 18px;
   line-height: 1.2;
@@ -4770,6 +4770,7 @@ h4 {
 }
 .list-campaign-page-wrapper .section-slide .grid-row .content {
   padding: 20px 0;
+  text-align: justify;
 }
 @media (min-width: 768px) {
   .list-campaign-page-wrapper .section-slide .grid-row .content {
@@ -4829,6 +4830,7 @@ h4 {
 .list-campaign-page-wrapper .prince-coat .grid-row .content {
   padding: 0 0 20px;
   order: 1;
+  text-align: justify;
 }
 @media (min-width: 768px) {
   .list-campaign-page-wrapper .prince-coat .grid-row .content {
@@ -4865,6 +4867,7 @@ h4 {
 }
 .list-campaign-page-wrapper .ex-four .grid-row .content {
   padding: 0 0 20px;
+  text-align: justify;
 }
 @media (min-width: 768px) {
   .list-campaign-page-wrapper .ex-four .grid-row .content {

@@ -92,7 +92,7 @@
         // color: #ff0050;
         color: #054c7b;
         font-weight: 600;
-        font-size: 40px;
+        font-size: 45px;
         font-family: serif;
         margin-bottom: 18px;
         line-height: 1.2;
@@ -246,6 +246,7 @@
       }
       .content {
         padding: 20px 0;
+        text-align: justify;
         @media (min-width: 768px) {
           padding: 20px;
         }
@@ -303,6 +304,7 @@
       .content {
         padding: 0 0 20px;
         order: 1;
+        text-align: justify;
         @media (min-width: 768px) {
           order: 0;
           padding: 20px;
@@ -333,6 +335,7 @@
       }
       .content {
         padding: 0 0 20px;
+        text-align: justify;
         @media (min-width: 768px) {
           padding: 20px;
         }
