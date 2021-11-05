@@ -35,7 +35,7 @@ function campaign_category_page(data) {
     div.innerHTML = `
     <div class="nav">
       <div class="nav__logo">
-        <a href="/editorial">
+        <a href="/">
           ${__icons.new_ssstutter}
         </a>
       </div>

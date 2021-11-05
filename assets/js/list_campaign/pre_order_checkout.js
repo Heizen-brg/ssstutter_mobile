@@ -36,7 +36,7 @@ export const __templates_checkout_pre_order = {
     div.innerHTML = `
     <div class="nav">
       <div class="nav__logo">
-        <a href="/editorial">
+        <a href="/">
           ${__icons.new_ssstutter}
         </a>
       </div>

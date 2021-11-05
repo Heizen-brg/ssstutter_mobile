@@ -28,7 +28,7 @@ function list_campaign_winter() {
     div.innerHTML = `
     <div class="nav">
       <div class="nav__logo">
-        <a href="/editorial">
+        <a href="/">
           ${__icons.new_ssstutter}
         </a>
       </div>
