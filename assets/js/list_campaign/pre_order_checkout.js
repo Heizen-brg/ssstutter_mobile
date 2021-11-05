@@ -32,7 +32,7 @@ let shippingFormat = {
 export const __templates_checkout_pre_order = {
   page_header() {
     let div = document.createElement("div");
-    div.classList.add('header', 'style-1');
+    div.classList.add("header", "style-1");
     div.innerHTML = `
     <div class="nav">
       <div class="nav__logo">
@@ -42,7 +42,7 @@ export const __templates_checkout_pre_order = {
       </div>
     </div>
     `;
-    
+
     return div;
   },
   checkout_form() {
@@ -89,13 +89,12 @@ export const __templates_checkout_pre_order = {
         </select>
       </div>
     `;
-    
-    div.querySelector('select[name="pickup_method"]').addEventListener('change', (e) => {
-      if (e.target.value == 'store') {
-        div.querySelector('select[name="pickup_store').parentElement.style.display = 'block';
-      }
-      else {
-        div.querySelector('select[name="pickup_store').parentElement.style.display = 'none';
+
+    div.querySelector('select[name="pickup_method"]').addEventListener("change", (e) => {
+      if (e.target.value == "store") {
+        div.querySelector('select[name="pickup_store').parentElement.style.display = "block";
+      } else {
+        div.querySelector('select[name="pickup_store').parentElement.style.display = "none";
       }
     });
 
@@ -186,14 +185,14 @@ export const __templates_checkout_pre_order = {
     customer_address.addEventListener("change", (e) => {
       shippingFormat.address = e.target.value;
       let total = document.querySelector('[data-amount="total"]');
-//      __check_shipping(total.dataset.price, shippingFormat);
+      //      __check_shipping(total.dataset.price, shippingFormat);
     });
-    
-    pickup_store.addEventListener('change', (e) => {
+
+    pickup_store.addEventListener("change", (e) => {
       order_data.shippingAddress = e.target.value;
     });
-    
-    pickup_method.addEventListener('change', (e) => {
+
+    pickup_method.addEventListener("change", (e) => {
       order_data.shippingMethod = e.target.value;
     });
     return div;
@@ -224,14 +223,14 @@ export const __templates_checkout_pre_order = {
     return div;
   },
   checkout__cart() {
-    let data_cart = JSON.parse(localStorage.getItem('pre-order-item'));
-    
+    let data_cart = JSON.parse(localStorage.getItem("pre-order-item"));
+
     let total_bill = 0;
-    data_cart.map(item => {
+    data_cart.map((item) => {
       total_bill += item.price * item.quantity;
     });
-    let discount_total = total_bill *0.1
-    let shipping_total = total_bill<600000 && order_data.shippingMethod == "home" ? 30000: 0
+    let discount_total = total_bill * 0.1;
+    let shipping_total = total_bill < 600000 && order_data.shippingMethod == "home" ? 30000 : 0;
     let div = document.createElement("div");
     div.className = "checkout__cart";
     div.innerHTML = `
@@ -252,26 +251,25 @@ export const __templates_checkout_pre_order = {
         </div>
         <div class="total__cart">
           <p>Thành tiền:</p>
-          <strong data-price="${total_bill+shipping_total-discount_total}" data-amount="total">${__currency_format(total_bill+shipping_total-discount_total)}</strong>
+          <strong data-price="${total_bill + shipping_total - discount_total}" data-amount="total">${__currency_format(
+      total_bill + shipping_total - discount_total
+    )}</strong>
         </div>
         
         <button class="confirm__order">Hoàn tất đơn hàng</button>
     `;
-    
-    
-    data_cart.map(item => {
+
+    data_cart.map((item) => {
       let color = item.colorId,
-        image = '';
+        image = "";
       if (Object.keys(item.media).length) {
         image = `color_${color}_thumbnail`;
       }
-      
-      let li = document.createElement('li');
+
+      let li = document.createElement("li");
       li.innerHTML = `
       <a class="product__thumbnail" style="background-image:url(https://cdn.ssstutter.com/products/${
-        item.media[image]
-          ? item.media[image].x100
-          : "no_image.png"
+        item.media[image] ? item.media[image].x100 : "no_image.png"
       })">
       </a>
       <div>
@@ -285,13 +283,13 @@ export const __templates_checkout_pre_order = {
         </div>
       </div>
       `;
-      
-      div.querySelector('.product__list').appendChild(li);
+
+      div.querySelector(".product__list").appendChild(li);
       return li;
     });
-    
+
     let confirm_btn = div.querySelector(".confirm__order");
-    
+
     confirm_btn.addEventListener("click", () => {
       let items_purchased = JSON.parse(localStorage.getItem("pre-order-item"));
       let order_item_format = items_purchased.map((item) => {
@@ -301,8 +299,8 @@ export const __templates_checkout_pre_order = {
           barcode: item.variation.barcode,
         };
       });
-      
-      if (order_data.shippingMethod == 'home') {
+
+      if (order_data.shippingMethod == "home") {
         order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       }
       order_data.items = order_item_format;
@@ -322,7 +320,7 @@ export const __templates_checkout_pre_order = {
       }
       */
       __templates.api_loading("show");
-      
+      let windowReference = window.open();
       __requests(
         {
           method: "POST",
@@ -330,12 +328,12 @@ export const __templates_checkout_pre_order = {
           body: JSON.stringify(order_data),
         },
         ({ data, error }) => {
-          console.log(data)
+          console.log(data);
           if (data.paymentUrl) {
             __templates_modal.overlay({ content: __templates_modal.card_payment_progress() });
-            window.open(data.paymentUrl, "_blank");
+            // window.open(data.paymentUrl, "_blank");
+            windowReference.location = data.paymentUrl;
           } else {
-            
             __render.order_page(data);
           }
         }
