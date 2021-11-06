@@ -91,7 +91,7 @@ function list_campaign_winter() {
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       div.querySelector(".clock").innerHTML = `
-      Thời gian kêt thúc: 
+      Thời gian kết thúc: 
       <span>${days}</span> ngày 
       <span>${hours}</span> giờ 
       <span>${minutes}</span> phút 
@@ -293,7 +293,7 @@ function list_campaign_winter() {
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       div.querySelector(".clock").innerHTML = `
-      Thời gian kêt thúc: 
+      Thời gian kết thúc: 
       <span>${days}</span> ngày 
       <span>${hours}</span> giờ 
       <span>${minutes}</span> phút 
