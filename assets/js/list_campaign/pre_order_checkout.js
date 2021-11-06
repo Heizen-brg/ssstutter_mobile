@@ -324,7 +324,9 @@ export const __templates_checkout_pre_order = {
       }
       */
       __templates.api_loading("show");
-      let windowReference = window.open();
+      let windowReference;
+      if (order_data.paymentMethod === "card") windowReference = window.open();
+
       __requests(
         {
           method: "POST",
@@ -338,7 +340,8 @@ export const __templates_checkout_pre_order = {
             // window.open(data.paymentUrl, "_blank");
             windowReference.location = data.paymentUrl;
           } else {
-            __render.order_page(data);
+            localStorage.removeItem("pre-order-item");
+            window.location.href = "/thankyou";
           }
         }
       );
