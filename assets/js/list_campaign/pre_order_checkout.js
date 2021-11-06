@@ -208,6 +208,10 @@ export const __templates_checkout_pre_order = {
         ${__icons.visa}
         <p>Thanh toán thẻ (ATM, Visa , MasterCard)</p>
       </label>
+      <input id="transfer_payment" type="radio" value="transfer" name="method" hidden />
+      <label for="transfer_payment">
+        <p>Thanh toán chuyển khoản</p>
+      </label>
     </form>
     <!--
     <p>Bonus 5% cho khách hàng cũ</p>

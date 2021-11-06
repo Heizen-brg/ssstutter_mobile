@@ -9,6 +9,7 @@ function campaign_category_page(data) {
   if (data.slug == 'lookbook-4') look_image = 4;
   if (data.slug == 'lookbook-5') look_image = 5;
   if (data.slug == 'lookbook-6') look_image = 6;
+  if (data.slug == 'lookbook-7') look_image = 7;
   
   function create_element(e) {
     let dom_create = document.createElement(e);
