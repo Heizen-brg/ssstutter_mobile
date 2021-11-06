@@ -114,7 +114,6 @@ app.get("/editorial/product/:slug", async (req, res, next) => {
     console.log(err.message);
     return;
   }
-  console.log(slug)
   res.setHeader("Authorization", "by_passs");
   res.setHeader("Content-Type", "text/html");
   let info = product_data.data.data;
@@ -175,9 +174,10 @@ app.get("/campaign/:slug", async (req, res, next) => {
     return console.log(err);
   }
   let campaign_detail = campaign_data.data;
+  console.log("campaign_detail: ", campaign_detail);
   res.setHeader("Content-Type", "text/html");
-  if (campaign_detail.data.status == "inActive") {
-    res.status(404).send(client_view.outdate({}));
+  if (campaign_detail.status == "inActive") {
+    res.status(404).send(client_view.error_404({}));
   } else {
     res.send(
       client_view.html({
@@ -313,35 +313,15 @@ app.get("/editorial", (req, res, next) => {
   );
 });
 
-
-
-app.get("/landingpage/:slug", async (req, res, next) => {
-  let { slug } = req.params;
-  let page_data;
-  try {
-    page_data = await axios.get(`https://sss-dashboard.leanservices.work/w/pages/detail?url=${slug}`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
-  } catch (err) {
-    res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
-    return console.log(err);
-  }
-  let landingpage_detail = page_data.data;
+app.get("/flash-sale", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
-  if (landingpage_detail.status == "inActive") {
-    res.status(404).send(client_view.error_404({}));
-  } else {
-    res.send(
-      client_view.html({
-        title: landingpage_detail.title,
-        command: `const landingpage_detail = ${JSON.stringify(landingpage_detail)}`,
-      })
-    );
-  }
-})
+  res.send(
+    client_view.html({
+      title: "Flash sale",
+      command: "",
+    })
+  );
+});
 
 app.use((req, res, next) => {
   res.setHeader("Content-Type", "text/html");
