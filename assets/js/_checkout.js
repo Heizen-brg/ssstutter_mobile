@@ -258,7 +258,7 @@ export const __templates_checkout = {
         return;
       }
       __templates.api_loading("show");
-      var windowReference = window.open();
+      let windowReference = window.open();
       __requests(
         {
           method: "POST",
@@ -269,7 +269,7 @@ export const __templates_checkout = {
           if (data.paymentUrl) {
             __templates_modal.overlay({ content: __templates_modal.card_payment_progress() });
             // window.open(data.paymentUrl, "_blank");
-            windowReference.location = data.paymentUrl
+            windowReference.location = data.paymentUrl;
           } else {
             __render.order_page(data);
           }

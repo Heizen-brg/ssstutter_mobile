@@ -197,6 +197,15 @@ app.get("/checkout", (req, res, next) => {
     })
   );
 });
+app.get("/editorial/checkout", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "Thanh toán",
+      command: "",
+    })
+  );
+});
 app.get("/order", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
@@ -298,7 +307,7 @@ app.get("/editorial", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
-      title: "Chớm đông",
+      title: "WARM YOUR DAY UP SSSTUTTER",
       command: "",
     })
   );

@@ -66,12 +66,12 @@ export const __templates_order = {
           </div>
           <div class="ship__fee">
             <p>Phí ship:</p>
-            <strong>+${__currency_format(params.shipping[0].fee)}</strong>
+            <strong>+${__currency_format(params.shipping ? params.shipping[0].fee : 0)}</strong>
           </div>
         </div>
         <div class="total">
           <p>Tổng:</p>
-          <strong>${__currency_format(params.moneyTotal + params.shipping[0].fee)}</strong>
+          <strong>${__currency_format(params.shipping ? params.moneyTotal + params.shipping[0].fee : params.moneyTotal)}</strong>
         </div>
     `;
     return div;

@@ -4,35 +4,34 @@ import { __icons } from "../share/_icons.js";
 import { __templates_modal } from "../share/_modal.js";
 import { __templates_header } from "../_header.js";
 import { CONFIG } from "../config.js";
-import pre_order_cart from './pre_order_cart.js';
+import pre_order_cart from "./pre_order_cart.js";
 let user_selection = {};
 let cart_quantity = 0;
 export const campaign_product_detail_page = {
   page_header() {
-    
-    if (localStorage.getItem('pre-order-item')) {
-      JSON.parse(localStorage.getItem('pre-order-item')).map(item => {
-        cart_quantity += parseInt(item.quantity)
+    if (localStorage.getItem("pre-order-item")) {
+      JSON.parse(localStorage.getItem("pre-order-item")).map((item) => {
+        cart_quantity += parseInt(item.quantity);
       });
     }
-    
+
     let div = document.createElement("div");
-    div.classList.add('header', 'style-1');
+    div.classList.add("header", "style-1");
     div.innerHTML = `
     <div class="nav">
       <div class="nav__logo">
-        <a href="/editorial">
+        <a href="/">
           ${__icons.new_ssstutter}
         </a>
       </div>
       <div class="pre-order-cart">${__icons.cart} pre-order <span>( ${cart_quantity} )</span></div>
     </div>
     `;
-    
-    div.querySelector('.pre-order-cart').addEventListener('click', () => {
+
+    div.querySelector(".pre-order-cart").addEventListener("click", () => {
       document.body.appendChild(pre_order_cart());
     });
-    
+
     return div;
   },
   product_gallery(params = {}) {
@@ -78,6 +77,9 @@ export const campaign_product_detail_page = {
     div.className = "flatlay";
     div.innerHTML = `
       <h1>Chi tiết</h1>
+      <p style="padding: 20px 15px;">
+        ${params.shortDescription}
+      </p>
         <ul>
         </ul>
       </div>
@@ -268,16 +270,18 @@ export const campaign_product_detail_page = {
     div.className = "variation";
     div.innerHTML = `
       <div>
-        <div class="info">
+        <div class="info" style="margin-bottom: 10px">
           <h1 class="name">${info.name}</h1>
           <div class="price">
           ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
-          ${
-            info.salePrice
-              ? `<p class="discount">${__currency_format(info.price)}</p>`
-              : ` <p>${__currency_format(info.price)}</p>`
-          }
+          
           </div>
+        </div>
+        <div style="margin-bottom: 10px">
+          ${__currency_format(info.price * 0.9)}
+          <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
+            ${__currency_format(info.price)} 
+          </span>
         </div>
         <div class="color">
           <p>chọn màu : <strong class="color__name">${info.color[0].name} </strong></p>
@@ -290,6 +294,11 @@ export const campaign_product_detail_page = {
           <ul>
 
           </ul>
+        </div>
+        <div>
+          <br>
+          <p style="margin-bottom: 4px;">Ưu đãi giảm 10% khi đặt hàng trước (Pre-Order)</p>
+          <p class="clock" style="min-height: 20px;"></p><br>
         </div>
         <button class="add">Thêm vào giỏ hàng</button>
         <ul class="guide">
@@ -306,6 +315,31 @@ export const campaign_product_detail_page = {
         }
       </div>
     `;
+
+    let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
+
+    let countdown = setInterval(() => {
+      let distance = end_date - Date.now();
+
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      div.querySelector(".clock").innerHTML = `
+      Thời gian
+      <span>${days}</span> ngày 
+      <span>${hours}</span> giờ 
+      <span>${minutes}</span> phút 
+      <span>${seconds}</span> giây
+      `;
+
+      if (distance < 0) {
+        clearInterval(countdown);
+        div.querySelector(".clock").innerHTML = ``;
+      }
+    }, 1000);
+
     user_selection = {
       name: info.name,
       media: info.extensions.media,
@@ -332,15 +366,10 @@ export const campaign_product_detail_page = {
         };
       });
       color_value.map((item, index) => {
-        let isStock = Object.values(info.variation)
-          .filter((i) => i.color === item.id)
-          .some((i) => i.isStock);
-        if (!isStock) return;
         let flat_color = document.createElement("li");
         flat_color.innerHTML = `
         <button 
-          class="color__variation 
-          ${index == 0 && info.variation[index].isStock ? "active" : ""}" 
+          class="color__variation" 
           data-product='${JSON.stringify(info).replace("'", "")}'
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
@@ -370,9 +399,7 @@ export const campaign_product_detail_page = {
         .sort((a, b) => a.size - b.size)
         .map((i, index) => {
           return `
-        <li><button data-index="${index}" class=" size__variation ${
-            index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+        <li><button data-index="${index}" class=" size__variation" data-value="${i.size}">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;
@@ -422,6 +449,7 @@ export const campaign_product_detail_page = {
       let to_cart_btn = div.querySelector(".add");
 
       to_cart_btn.addEventListener("click", (e) => {
+        document.body.appendChild(pre_order_cart());
         let cart_selected = JSON.parse(localStorage.getItem("pre-order-item"))
           ? JSON.parse(localStorage.getItem("pre-order-item"))
           : [];
@@ -434,22 +462,21 @@ export const campaign_product_detail_page = {
         let new_selected_item = { ...user_selection };
         let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
         if (product_in_cart) {
-
-              cart_selected = cart_selected.map((i) => {
-                if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
-                return i;
-              });
-              localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
-  
+          cart_selected = cart_selected.map((i) => {
+            if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+            return i;
+          });
+          localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
         } else {
-              cart_selected.push(new_selected_item);
-              localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
+          cart_selected.push(new_selected_item);
+          localStorage.setItem("pre-order-item", JSON.stringify(cart_selected));
         }
         cart_quantity = 0;
-        JSON.parse(localStorage.getItem('pre-order-item')).map(item => {
-          cart_quantity += parseInt(item.quantity)
+        JSON.parse(localStorage.getItem("pre-order-item")).map((item) => {
+          cart_quantity += parseInt(item.quantity);
         });
-        document.querySelector('.pre-order-cart span').innerHTML = `( ${cart_quantity} )`;
+        document.querySelector(".pre-order-cart span").innerHTML = `( ${cart_quantity} )`;
+        document.body.appendChild(pre_order_cart());
       });
     };
     let triggers = div.querySelectorAll("[data-action]");

@@ -19,7 +19,7 @@ import { __templates_campaign } from "./_campaign.js";
 import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
 import campaign_category_page from "./list_campaign/campaign_category.js";
 import { campaign_product_detail_page } from "./list_campaign/campaign_product_detail.js";
-import { __templates_landing } from "./_landing.js";
+import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checkout.js";
 
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
@@ -85,6 +85,7 @@ export const __render = {
       "/editorial/product": (params) => __render.campaign_product_detail_page(params),
       "/editorial/look": (params) => __render.campaign_category_page(params),
       "/flash-sale": () => __render.flash_sale(),
+      "/editorial/checkout": () => __render.check_out_pre_order()
     };
 
     if (pathname.includes(`/p/`)) {
@@ -433,7 +434,6 @@ export const __render = {
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
-
   campaign_product_detail_page(params) {
     let blocks = [
       campaign_product_detail_page.page_header(),
@@ -454,7 +454,16 @@ export const __render = {
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
-
+  /*
+flash_sale() {
+  let blocks = [
+    campaign_category_page(params),
+    __templates_footer.footer(),
+  ];
+  this.build("winter-campaign", blocks);
+  __templates.api_loading("hide");
+},
+*/
 };
 
 __render.website();

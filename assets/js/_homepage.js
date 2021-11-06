@@ -32,10 +32,12 @@ export const __templates_home = {
           
           </ul>
         </div>
+        <!--
         <div class="glide__arrows" data-glide-el="controls">
           <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
           <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
         </div>
+        -->
       </div>  
       `;
     let get_banner_list = () => {
@@ -70,7 +72,7 @@ export const __templates_home = {
     };
     get_banner_list();
 
-    // return section;
+    return section;
   },
   mobile_banner() {
     let section = document.createElement("section");
@@ -81,10 +83,12 @@ export const __templates_home = {
           <ul class="glide__slides banner__container">
           </ul>
         </div>
+        <!--
         <div class="glide__arrows" data-glide-el="controls">
           <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
           <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
         </div>
+        -->
       </div>  
       `;
     let get_banner_list = () => {
@@ -118,7 +122,7 @@ export const __templates_home = {
       );
     };
     get_banner_list();
-    // return section;
+    return section;
   },
 
   subcription() {
@@ -163,7 +167,7 @@ export const __templates_home = {
       }
     }, 1000);
 
-    return div;
+    // return div;
   },
 
   home_video() {
@@ -177,7 +181,7 @@ export const __templates_home = {
     </div>
     `;
 
-    return div;
+    // return div;
   },
 
   categories() {
