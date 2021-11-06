@@ -1,6 +1,9 @@
 import { __templates } from "./share/_components.js";
-import { __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
-import { CONFIG } from "./config.js";
+import {
+  __currency_format,
+  __init_filter,
+  __init_product_list,
+} from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 export const __templates_campaign = {
   campaign_detail(params) {
@@ -12,18 +15,18 @@ export const __templates_campaign = {
     <div class="clock"></div>
     <p>${params.description}</p>
     `;
-
+    
     let end_date = new Date(params.end_time).getTime();
-
+    
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
-
+      
       let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      div.querySelector(".clock").innerHTML = `
+          hours =  Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      div.querySelector('.clock').innerHTML = `
       <!--
       <div class="text-center"><span>${days}</span>Ngày</div>
       -->
@@ -31,10 +34,10 @@ export const __templates_campaign = {
       <div class="text-center"><span>${minutes}</span>Phút</div>
       <div class="text-center"><span>${seconds}</span>Giây</div>
       `;
-
-      if (distance < 0) {
+      
+      if ((distance) < 0) {
         clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = `
+        div.querySelector('.clock').innerHTML = `
         <!--
         <div class="text-center"><span>00</span>Ngày</div>
         -->
@@ -44,7 +47,8 @@ export const __templates_campaign = {
         `;
       }
     }, 1000);
-
+    
+    
     return div;
   },
   banner(params) {
@@ -69,25 +73,25 @@ export const __templates_campaign = {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         let product_container = document.querySelector("#sale_products");
-        let product_sale = product_container.querySelectorAll("li");
-        product_sale.forEach((item) => {
+        let product_sale = product_container.querySelectorAll('li');
+        product_sale.forEach(item => {
           if (e.target.dataset.cate != item.dataset.cat) {
-            item.style.display = "none";
+            item.style.display = 'none';
           } else {
-            item.style.display = "block";
+            item.style.display = 'block';
           }
-        });
+        })
       });
     });
-
-    div.querySelectorAll("li").forEach((li) => {
-      li.classList.add("inactive");
-      li.addEventListener("click", (e) => {
-        if (div.querySelector(".active")) {
-          div.querySelector(".active").classList.remove("active");
+    
+    div.querySelectorAll('li').forEach(li => {
+      li.classList.add('inactive');
+      li.addEventListener('click', (e) => {
+        if (div.querySelector('.active')) {
+          div.querySelector('.active').classList.remove('active');
         }
-
-        e.target.classList.add("active");
+        
+        e.target.classList.add('active');
       });
     });
 
@@ -114,24 +118,21 @@ export const __templates_campaign = {
       ${__templates.busy_loading("show")}
     </ul>
     `;
-    let product_items = (params.products || [])
-      .map((item) => {
-        return `
+    let product_items = (params.products || []).map(item => {
+      return `
       <li data-cat="${item.catId[0][0]}" class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
         })"></span></a>
         </div>
         <div class="detail">
           <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
           <div class="price">
-            ${
-              item.salePrice
-                ? `<p>${__currency_format(item.salePrice)}</p>
+            ${item.salePrice
+            ? `<p>${__currency_format(item.salePrice)}</p>
               <p class="discount">${__currency_format(item.price)}</p> `
-                : `<p>${__currency_format(item.price)}</p>`
-            }
+            : `<p>${__currency_format(item.price)}</p>`
+          }
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           <div class="color">
@@ -139,10 +140,9 @@ export const __templates_campaign = {
           </div>
         </div>
     </li>
-      `;
-      })
-      .join("");
-    let product_sale_container = div.querySelector("ul");
+      `
+    }).join('');
+    let product_sale_container = div.querySelector('ul');
     product_sale_container.innerHTML = product_items;
     return div;
   },

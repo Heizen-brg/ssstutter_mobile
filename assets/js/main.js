@@ -17,7 +17,9 @@ import { __templates_campaign } from "./_campaign.js";
 
 // import flash_sale_page from "./list_campaign/flash_sale.js";
 import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
-import {campaign_product_detail_page} from "./list_campaign/campaign_product_detail.js";
+import campaign_category_page from "./list_campaign/campaign_category.js";
+import { campaign_product_detail_page } from "./list_campaign/campaign_product_detail.js";
+import { __templates_landing } from "./_landing.js";
 
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
@@ -71,6 +73,7 @@ export const __render = {
       "/c": (params) => __render.categories_page(params),
       "/p": (params) => __render.product_page(params),
       "/campaign": (params) => __render.campaign(params),
+      "/landingpage": (params) => __render.landing_page(params),
       "/checkout": () => __render.checkout_page(),
       "/blog": () => __render.blog_page(),
       "/blog/article": (params) => __render.article_page(params),
@@ -80,6 +83,7 @@ export const __render = {
       "/canceled": () => __render.canceled_page(),
       "/editorial": () => __render.list_campaign_winter(),
       "/editorial/product": (params) => __render.campaign_product_detail_page(params),
+      "/editorial/look": (params) => __render.campaign_category_page(params),
       "/flash-sale": () => __render.flash_sale(),
     };
 
@@ -87,11 +91,18 @@ export const __render = {
       if (typeof product_master_detail === "undefined") return false;
       let product = product_master_detail;
       url_data[`/p`]({ product });
-    } 
+    }
     else if (pathname.includes(`/editorial/product`)) {
       if (typeof product_editorial_detail === "undefined") return false;
       let product = product_editorial_detail;
       url_data[`/editorial/product`]({ product });
+    }
+    else if (pathname.includes(`/editorial/look`)) {
+      let category = category_editorial_detail;
+      if (typeof category === "undefined") {
+        return false;
+      }
+      url_data['/editorial/look'](category);
     }
     else if (pathname.includes(`/blog/article`)) {
       let article = blog_detail;
@@ -99,28 +110,36 @@ export const __render = {
         return false;
       }
       url_data["/blog/article"]({ article });
-    } 
+    }
     else if (pathname.includes(`/c/`)) {
       let category = category_detail;
       if (typeof category === "undefined") {
         return false;
       }
       url_data["/c"](category);
-    } 
+    }
     else if (pathname.includes(`/campaign`)) {
       let campaign = campaign_detail.data;
       if (typeof campaign === "undefined") {
         return false;
       }
       url_data["/campaign"](campaign);
-    } 
+    }
+    else if (pathname.includes(`/landingpage`)) {
+      let landing_page = landingpage_detail.data;
+      console.log('landing_page: ', landing_page);
+      if (typeof landing_page === "undefined") {
+        return false;
+      }
+      url_data["/landingpage"](landing_page);
+    }
     else if (pathname.includes(`/search`)) {
       let products_list = search_result;
       if (typeof products_list === "undefined") {
         return false;
       }
       url_data[`/search`]({ products_list });
-    } 
+    }
     else {
       url_data[pathname]();
     }
@@ -355,6 +374,24 @@ export const __render = {
     __templates.api_loading("hide");
   },
 
+  landing_page(params) {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+        page_y_offset: 500
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
+      __templates_header.cart(),
+      __templates_landing.body(),
+      __templates_footer.footer(),
+    ];
+    this.build("landing__page", blocks);
+    __templates.api_loading("hide");
+  },
   search_page(params) {
     let blocks = [
       __templates_header.header({
@@ -387,7 +424,7 @@ export const __render = {
     this.build("address__page", blocks);
     __templates.api_loading("hide");
   },
-  
+
   list_campaign_winter() {
     let blocks = [
       list_campaign_winter(),
@@ -396,7 +433,7 @@ export const __render = {
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
-  
+
   campaign_product_detail_page(params) {
     let blocks = [
       campaign_product_detail_page.page_header(),
@@ -408,26 +445,16 @@ export const __render = {
     this.build("product__page", blocks);
     __templates.api_loading("hide");
   },
-  /*
-  flash_sale() {
+
+  campaign_category_page(params) {
     let blocks = [
-      __templates_header.header({
-        left: __templates_header.left(),
-        right: __templates_header.right(),
-        page_y_offset: 500
-      }),
-      __templates_header.search({
-        option: __templates.related_product(),
-      }),
-      __templates_header.megamenu(),
-      __templates_header.cart(),
-      flash_sale_page(),
+      campaign_category_page(params),
       __templates_footer.footer(),
     ];
-    this.build("flash-sale-page", blocks);
+    this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
-  */
+
 };
 
 __render.website();

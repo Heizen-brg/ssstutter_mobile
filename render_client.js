@@ -1,8 +1,8 @@
 module.exports = {
-  html(params = {}) {
-    let title = `SSSTUTTER`;
-    let description = `REFINED FROM INSIDE`;
-    return `
+	html(params = {}) {
+		let title = `SSSTUTTER`;
+		let description = `REFINED FROM INSIDE`;
+		return `
 			<!DOCTYPE html>
 			<html lang="vi">
 			<head>
@@ -91,12 +91,12 @@ module.exports = {
 			</body>
 			</html>
 		`;
-  },
+	},
 
-  error_404(params = {}) {
-    let title = `404 NOT FOUND`;
-    let description = `Trang web này không tồn tại`;
-    return `
+	error_404(params = {}) {
+		let title = `404 NOT FOUND`;
+		let description = `Trang web này không tồn tại`;
+		return `
 			<!DOCTYPE html>
 			<html lang="vi">
 			<head>
@@ -164,11 +164,11 @@ module.exports = {
 			</body>
 			</html>
 		`;
-  },
-  maintain(params = {}) {
-    let title = `TRANG WEB ĐANG BẢO TRÌ`;
-    let description = `Trang web của chúng tôi hiện đang bảo trì`;
-    return `
+	},
+	maintain(params = {}) {
+		let title = `TRANG WEB ĐANG BẢO TRÌ`;
+		let description = `Trang web của chúng tôi hiện đang bảo trì`;
+		return `
 			<!DOCTYPE html>
 			<html lang="vi">
 			<head>
@@ -230,10 +230,83 @@ module.exports = {
 				<div id="main">
 		    	<div class="fof">
 					<h1>${params.message || "Trang web của chúng tôi hiện đang bảo trì, xin lỗi vì sự bất tiện này !"}</h1>
+					<button><a href="/">Trở về trang chủ</a></button>
 		    	</div>
 				</div>
 			</body>
 			</html>
 		`;
-  },
+	},
+	outdate(params = {}) {
+		let title = `404 NOT FOUND`;
+		let description = `Sự kiện này đã kết thúc`;
+		return `
+			<!DOCTYPE html>
+			<html lang="vi">
+			<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+				<title>${params.title || title}</title>
+				<meta name="description" content="${description}" />
+				<style>
+					* {
+				    transition: all 0.6s;
+					}
+
+					html {
+				    height: 100%;
+					}
+
+					body{
+				    font-family: 'Lato', sans-serif;
+				    color: #888;
+				    margin: 0;
+					}
+
+					#main {
+				    display: table;
+				    width: 100%;
+				    height: 100vh;
+				    text-align: center;
+					}
+
+					.fof {
+					  display: grid;
+					  place-content:center;
+					  width: 100%;
+					  height: 100%;
+					}
+
+					.fof h1 {
+					  display: inline-block;
+					  padding-right: 12px;
+					  animation: type .5s alternate infinite;
+					}
+					.fof button {
+						border: thin solid black;
+					}
+					.fof button > a {
+						text-decoration: none;
+						color: gray;
+						display:block;
+						padding : 15px;
+						background: white
+					}
+					@keyframes type{
+					  from{box-shadow: inset -3px 0px 0px #888;}
+					  to{box-shadow: inset -3px 0px 0px transparent;}
+					}
+				</style>
+			</head>
+			<body>
+				<div id="main">
+		    	<div class="fof">
+					<h1>${params.message || "Sự kiện này đã kết thúc, theo dõi fanpage để biết thêm nhiều ưu đãi nhé !"}</h1>
+					<button><a href="/">Trở về trang chủ</a></button>
+		    	</div>
+				</div>
+			</body>
+			</html>
+		`;
+	},
 };

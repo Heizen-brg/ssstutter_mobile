@@ -37,7 +37,7 @@ export const __templates_blog = {
     cate_list.innerHTML = __templates.busy_loading('show');
     __requests({
       method: 'GET',
-      url: `https://sss-dashboard.leanservices.work/w/cat/get`
+      url: `https://sss-dashboard.leanservices.work/w/blog/get`
     }, (res) => {
       let cate_blog_item = (res || []).map(cat => {
         return `
