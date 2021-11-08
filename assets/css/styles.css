@@ -846,9 +846,9 @@
   .cart__container .mini__cart {
     height: 100vh;
   }
-  /* .cart__container .mini__cart ul {
+  .cart__container .mini__cart ul {
     min-height: 60vh;
-  } */
+  }
 }
 .footer {
   width: 100%;
@@ -5373,6 +5373,42 @@ h4 {
   font-size: medium;
   text-align: center;
   font-weight: 600;
+}
+
+.banking__progress {
+  background-color: #ffffff;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  border: thin solid #aeaeae;
+  border-radius: 4px;
+  border-collapse: collapse;
+  padding: 20px 30px;
+  place-items: center;
+}
+.banking__progress svg {
+  width: 5%;
+  height: auto;
+}
+.banking__progress ul {
+  width: 100%;
+  display: grid;
+  grid-gap: 10px;
+  place-content: center;
+}
+.banking__progress ul li {
+  text-align: center;
+}
+.banking__progress a {
+  display: inline-block;
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: medium;
+  border: none;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {

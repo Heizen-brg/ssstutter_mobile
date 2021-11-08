@@ -272,8 +272,9 @@ export const __templates_checkout_pre_order = {
 
       let li = document.createElement("li");
       li.innerHTML = `
-      <a class="product__thumbnail" style="background-image:url(https://cdn.ssstutter.com/products/${item.media[image] ? item.media[image].x100 : "no_image.png"
-        })">
+      <a class="product__thumbnail" style="background-image:url(https://cdn.ssstutter.com/products/${
+        item.media[image] ? item.media[image].x100 : "no_image.png"
+      })">
       </a>
       <div>
         <h6>${item.name}</h6>
@@ -337,7 +338,11 @@ export const __templates_checkout_pre_order = {
             window.location.href = data.paymentUrl;
           } else {
             localStorage.removeItem("pre-order-item");
-            __templates_modal.overlay({ content: __templates_modal.banking_payment_progress({ moneyTotal: total_bill + shipping_total - discount_total }) });
+            __templates_modal.overlay({
+              content: __templates_modal.banking_payment_progress({
+                moneyTotal: total_bill + shipping_total - discount_total,
+              }),
+            });
           }
         }
       );
