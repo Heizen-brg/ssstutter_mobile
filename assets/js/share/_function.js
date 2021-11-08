@@ -125,7 +125,7 @@ export const __show_cart_item = (wrapper, total, div) => {
     <li>
       <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
         prod.media[`color_${prod.colorId}_thumbnail`]
-          ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
+          ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".jpeg")
           : "no_image.png"
       })">
       </a>

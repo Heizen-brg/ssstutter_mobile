@@ -21,7 +21,7 @@ export const __templates_product = {
     <ul>
       ${(gallery[`color_${color}_gallery`] || [])
         .map(
-          (img) => `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace(".jpeg", ".webp")}"></li>`
+          (img) => `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace(".jpeg", ".jpeg")}"></li>`
         )
         .join("")}
     </ul>
@@ -71,7 +71,7 @@ export const __templates_product = {
       color_value.map((item, index) => {
         let flat_img = document.createElement("li");
         flat_img.style.backgroundImage = `url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".webp")
+          item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".jpeg")
         })`;
         let color_variation = div.querySelector(".flatlay > ul");
         color_variation.appendChild(flat_img);
@@ -314,7 +314,7 @@ export const __templates_product = {
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
           style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
+          item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".jpeg")
         })"
         >
         </button>

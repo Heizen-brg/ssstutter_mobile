@@ -45,7 +45,7 @@ module.exports = {
 					}
 					});
 				};
-
+				
 				loadScript("https://connect.facebook.net/en_US/fbevents.js", () => {
 					if (window.fbq) return;
 					n = window.fbq = function () {

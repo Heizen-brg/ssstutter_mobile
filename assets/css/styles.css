@@ -846,9 +846,9 @@
   .cart__container .mini__cart {
     height: 100vh;
   }
-  .cart__container .mini__cart ul {
+  /* .cart__container .mini__cart ul {
     min-height: 60vh;
-  }
+  } */
 }
 .footer {
   width: 100%;

@@ -323,7 +323,6 @@ export const __templates_checkout_pre_order = {
       }
       */
       __templates.api_loading("show");
-      let windowReference = window.open();
       __requests(
         {
           method: "POST",
@@ -335,9 +334,10 @@ export const __templates_checkout_pre_order = {
           if (data.paymentUrl) {
             __templates_modal.overlay({ content: __templates_modal.card_payment_progress() });
             // window.open(data.paymentUrl, "_blank");
-            windowReference.location = data.paymentUrl;
+            window.location.href = data.paymentUrl;
           } else {
-            __render.order_page(data);
+            localStorage.removeItem("pre-order-item");
+            window.location.href = "/thankyou";
           }
         }
       );
