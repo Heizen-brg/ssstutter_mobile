@@ -1,5 +1,6 @@
 import { __render } from "../main.js";
 import { __size_guide_data } from "./_data.js";
+import { __currency_format } from "./_function.js";
 import { __icons } from "./_icons.js";
 export const __templates_modal = {
   overlay(params = {}) {
@@ -203,6 +204,25 @@ export const __templates_modal = {
     div.innerHTML = `
       <h1>Đã mở công thanh toán online !</h1>
       <a href="/"><button>Quay lại trang chủ</buton></a>
+    `;
+    return div;
+  },
+  banking_payment_progress(params) {
+    let div = document.createElement('div');
+    div.className = 'banking__progress';
+    div.innerHTML = `
+      ${__icons.ssstutter}
+        <h5>Vui lòng chuyển khoản theo hướng dẫn!</h5>
+        <ul>
+          <li>Số tiền: ${__currency_format(params.moneyTotal)} </li>
+          <li>Ngân hàng : Vietcombank chi nhánh Hà Nội</li>
+          <li>Chủ tài khoản: ĐẶNG TRUNG ĐỨC</li>
+          <li>Số tài khoản: 0851 0000 13560</li>
+          <li>Nội dung : TÊN VÀ SỐ ĐIỆN THOẠI</li>
+          <li>Sau khi chuyển khoản thành công quý khách vui lòng lưu lại hóa đơn giao dịch SSStutter sẽ liên hệ xác nhận đơn trong vòng 24h </li>
+        </ul>
+        <p>Cảm ơn bạn đã ủng hộ SSStutter !</p>
+      <a href="/">Tiếp tục mua sắm</a>
     `;
     return div;
   }

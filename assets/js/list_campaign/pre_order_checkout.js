@@ -337,7 +337,7 @@ export const __templates_checkout_pre_order = {
             window.location.href = data.paymentUrl;
           } else {
             localStorage.removeItem("pre-order-item");
-            window.location.href = "/thankyou";
+            __templates_modal.overlay({ content: __templates_modal.banking_payment_progress({ moneyTotal: total_bill + shipping_total - discount_total }) });
           }
         }
       );
