@@ -258,7 +258,8 @@ export const __templates_checkout = {
         return;
       }
       __templates.api_loading("show");
-      let windowReference = window.open();
+      let windowReference;
+      if (order_data.paymentMethod === "card") windowReference = window.open();
       __requests(
         {
           method: "POST",
