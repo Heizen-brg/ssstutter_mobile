@@ -63,7 +63,7 @@ app.get("/c/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: `${info.name.replace("-", "")}`,
-        command: `var category_detail = ${JSON.stringify(info)}`,
+        command: `const category_detail = ${JSON.stringify(info)}`,
       })
     );
   }
@@ -93,7 +93,7 @@ app.get("/p/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: info[0].name,
-        command: `var product_master_detail = ${JSON.stringify(info[0])}`,
+        command: `const product_master_detail = ${JSON.stringify(info[0])}`,
       })
     );
   }
@@ -123,7 +123,7 @@ app.get("/editorial/product/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: info[0].name,
-        command: `var product_editorial_detail = ${JSON.stringify(info[0])}`,
+        command: `const product_editorial_detail = ${JSON.stringify(info[0])}`,
       })
     );
   }
@@ -153,7 +153,7 @@ app.get("/editorial/look/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: `${info.name.replace("-", "")}`,
-        command: `var category_editorial_detail = ${JSON.stringify(info)}`,
+        command: `const category_editorial_detail = ${JSON.stringify(info)}`,
       })
     );
   }
@@ -182,7 +182,7 @@ app.get("/campaign/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: campaign_detail.title,
-        command: `var campaign_detail = ${JSON.stringify(campaign_detail)}`,
+        command: `const campaign_detail = ${JSON.stringify(campaign_detail)}`,
       })
     );
   }
@@ -263,7 +263,7 @@ app.get("/blog/article/:slug", async (req, res, next) => {
   res.send(
     client_view.html({
       title: blog_detail.title,
-      command: `var blog_detail = ${JSON.stringify(blog_detail)}`,
+      command: `const blog_detail = ${JSON.stringify(blog_detail)}`,
     })
   );
 });
@@ -298,7 +298,7 @@ app.get("/search", async (req, res, next) => {
   res.send(
     client_view.html({
       title: "TÌM KIẾM",
-      command: `var search_result = ${JSON.stringify(data)} `,
+      command: `const search_result = ${JSON.stringify(data)} `,
     })
   );
 });

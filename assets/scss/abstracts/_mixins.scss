@@ -45,7 +45,7 @@
 @mixin ratio($w, $h) {
   display: block;
   width: 100%;
-  padding-top: math.div($h, $w) * 100%;
+  padding-top: ($h/$w) * 100%;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
