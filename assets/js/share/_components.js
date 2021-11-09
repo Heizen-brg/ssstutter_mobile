@@ -83,7 +83,7 @@ export const __templates = {
     __requests(
       {
         method: "GET",
-        url: `product/filter/web?limit=4&sort=down&media=true`,
+        url: `product/filter/web?limit=4&sort=down&media=true&webStock=true`,
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
