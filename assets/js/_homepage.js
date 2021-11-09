@@ -754,10 +754,10 @@ export const __templates_home = {
         method: "GET",
         url: `https://sss-dashboard.leanservices.work/w/post/get?limit=4&skip=0`,
       },
-      (res) => {
+      ({data}) => {
         // console.log(res);
         let blog_list = section.querySelector(".blog__list");
-        let blog_item = (res || [])
+        let blog_item = (data || [])
           .map((item) => {
             return `
           <li>

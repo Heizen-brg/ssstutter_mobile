@@ -5,6 +5,7 @@ import { __templates_modal } from "../share/_modal.js";
 import { __templates_header } from "../_header.js";
 import { CONFIG } from "../config.js";
 import pre_order_cart from "./pre_order_cart.js";
+import { __size_guide_data } from "../share/_data.js";
 let user_selection = {};
 let cart_quantity = 0;
 export const campaign_product_detail_page = {
@@ -277,7 +278,7 @@ export const campaign_product_detail_page = {
           
           </div>
         </div>
-        <div style="margin-bottom: 10px">
+        <div style="margin-top: -8px">
           ${__currency_format(info.price * 0.9)}
           <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
             ${__currency_format(info.price)} 
@@ -303,18 +304,152 @@ export const campaign_product_detail_page = {
         <button class="add">Thêm vào giỏ hàng</button>
         <ul class="guide">
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
-          <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
+          <li style="margin: 0; border: 0; cursor: default; padding: 0;">
+            <div id="size_check" class="mobile-variation">
+              <div class="info">
+                <img src="assets/img/size.png" alt="" />
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Kích thước</th>
+                      <th>Chiều cao (cm)</th>
+                      <th>Cân nặng (kg)</th>
+                      <th>Phần ngực (cm)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>S(0)</td>
+                      <td>160-170</td>
+                      <td>49-54</td>
+                      <td>85-89</td>
+                    </tr>
+                    <tr>
+                      <td>M(1)</td>
+                      <td>166-174</td>
+                      <td>55-60</td>
+                      <td>90-94</td>
+                    </tr>
+                    <tr>
+                      <td>L(2)</td>
+                      <td>170-177</td>
+                      <td>61-66</td>
+                      <td>95-99</td>
+                    </tr>
+                    <tr>
+                      <td>XL(3)</td>
+                      <td>175-180</td>
+                      <td>67-72</td>
+                      <td>100-104</td>
+                    </tr>
+                    <tr>
+                      <td>XXL(4)</td>
+                      <td>178-185</td>
+                      <td>73-78</td>
+                      <td>105-109</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <form class="form">
+                <p>Giúp bạn tìm size phù hợp</p><br>
+                <div class="grid-row">
+                  <div class="size__input">
+                    <p>Chiều cao (cm)</p>
+                    <input class="height__input" type="number" placeholder="..." required>
+                  </div>
+                  <div class="size__input">
+                    <p>Cân nặng (kg)</p>
+                    <input class="weight__input" type="number" placeholder="..." required>
+                  </div>
+                </div>
+                <button type="button" class="find-size">Tìm size</button>
+                <p class="response"></p>
+              </form>
+            </div>
+          </li>
+          <li data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
+          <li style="margin: 0; border: 0; cursor: default; padding: 0;">
+            <div id="refund_policy" class="mobile-variation">
+              <p>
+                – Bạn có thể đổi hàng trong 14 ngày kể từ ngày mua hàng.
+                <br>
+                – Mặt hàng phải ở trong tình trạng ban đầu, còn nguyên tem mác, chưa qua sử dụng, chưa giặt giũ và có hoá đơn tương ứng.
+                <br>
+                – Bạn vui lòng giữ lại hoá đơn để được đổi hàng. Bạn có thể xuất trình hóa đơn mua hàng dưới dạng giấy in hoặc định dạng điện tử trên điện thoại di động của bạn.
+                <br>
+                – Mỗi hoá đơn chỉ được đổi một lần.
+                <br>
+                – Nếu hoá đơn đã mua có giá trị cao hơn hoá đơn được đổi, SSSTUTTER sẽ không hoàn tiền lại. Ngược lại, hoá đơn được đổi có giá cao hơn thì bạn vui lòng bù thêm phần chênh lệch.
+                <br>
+                – Không áp dụng đổi hàng với hoá đơn khuyến mãi, giảm giá trên 30%.
+                <br>
+                – Không có chính sách trả hàng với bất kì sản phẩm nào của SSSTUTTER.
+                <br>
+                – Phụ kiện: Không được đổi hoặc trả lại các phụ kiện như Vòng đeo tay, Kính mát, Thắt lưng, Tất, Pin cài áo, Mũ len, Mũ, Khăn choàng, Ví và các phụ kiện nhỏ.
+                <br>
+                – Bạn có thể đổi hàng tại tất cả các chi nhanh của SSSTUTTER.
+                <br>
+                Mọi thắc mắc khác bạn vui lòng gọi số  086.993.6266  hoặc liên hệ fanpage SSSTUTTER để được hỗ trợ ngay nhé.
+              </p>
+            </div>
+          </li>
         </ul>
-        ${
-          info.catId.join(",").includes("0x7u3p") || info.catId.join(",").includes("S2HJYi")
-            ? `<div class="promotion__sale">
-        <p>Tặng thêm Great Life Tee Premium khi mua sản phẩm này </p>
-        <button data-action="sale_promotion">Thông tin ưu đãi</button>
-      </div>`
-            : ""
-        }
       </div>
     `;
+    
+    div.querySelector('.find-size').addEventListener('click', () => {
+      let height_input = div.querySelector('.height__input');
+      let weight_input = div.querySelector('.weight__input');
+      let user_info = {
+        w: weight_input.value,
+        h: height_input.value
+      }
+      size_calc(user_info)
+    })
+    let size_calc = (params) => {
+      let response_size = div.querySelector('.response');
+      // console.log(params);
+      if ((params.w || params.h) == "") return false;
+      let balance = __size_guide_data.balance;
+      let size_found = null;
+      for (let [k, v] of Object.entries(__size_guide_data)) {
+        if (v.constructor != Object) continue;
+        if (params.h >= v.height.min && params.h <= v.height.max) {
+          size_found = k;
+          if (params.w >= (v.weight.max + balance)) {
+            continue;
+          } else {
+            break;
+          }
+        } else {
+          if (params.h < (v.height.max + balance)) {
+            size_found = k;
+          } else {
+            continue;
+          }
+        }
+        if (params.w >= v.weight.min && params.w <= v.weight.max) {
+          size_found = k;
+          break;
+        } else {
+          if (params.w < (v.weight.max + balance)) {
+            size_found = k;
+          } else {
+            continue;
+          }
+        }
+
+      }
+      if (size_found) {
+        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`
+        return __size_guide_data[size_found]
+      } else {
+        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`
+        return false;
+      }
+
+    }
 
     let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
 
@@ -374,7 +509,7 @@ export const campaign_product_detail_page = {
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
           style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.x100.replace(".jpeg", ".webp")
+          item.photo == null ? "no_image.png" : item.photo.x400.replace(".jpeg", ".webp")
         })"
         >
         </button>
@@ -481,9 +616,19 @@ export const campaign_product_detail_page = {
     };
     let triggers = div.querySelectorAll("[data-action]");
     triggers.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        __templates_modal.overlay({ content: __templates_modal[btn.dataset.action]() });
-      });
+      if (window.innerWidth > 767) {
+        btn.addEventListener("click", () => {
+          __templates_modal.overlay({ content: __templates_modal[btn.dataset.action]() });
+        });
+      } 
+      else {
+        if (btn.parentElement.querySelector('.mobile-variation')) {
+          btn.addEventListener('click', () => {
+            btn.parentElement.querySelector('#' + btn.getAttribute('data-action')).classList.toggle('show');
+          });
+        }
+      }
+      
     });
     init_flatlay_img();
     on_change_variation();
