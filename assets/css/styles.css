@@ -357,7 +357,15 @@
   position: fixed;
   z-index: 101;
   right: 0;
+  top: 0;
+  bottom: 0;
   place-items: start end;
+}
+@media (min-width: 1024px) {
+  .cart__container {
+    top: 58px;
+    bottom: auto;
+  }
 }
 .cart__container.active {
   -webkit-animation: fade-in-right 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -844,7 +852,7 @@
     }
   }
   .cart__container .mini__cart {
-    height: calc(100vh - 58px);
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
