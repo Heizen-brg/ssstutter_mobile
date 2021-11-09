@@ -703,7 +703,19 @@
     }
     width: 100%;
     .mini__cart {
-      height: 100vh;
+      height: calc(100vh - 58px);
+      display: flex;
+      flex-direction: column;
+      ul {
+        max-height: 55vh;
+        margin-bottom: auto;
+      }
+      .cart__btn {
+        padding: 12px;
+        button {
+          padding: 14px;
+        }
+      }
     }
   }
 }

@@ -25,22 +25,11 @@ function pre_order_cart() {
     div.classList.add('cart-header')
     div.innerHTML = `
     <span class="title">Giỏ hàng</span>
-    <button type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 377.126 377.125">
-        <g id="Group_35" data-name="Group 35" transform="translate(-4890.35 -7314.312) rotate(-45)">
-          <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
-            <g id="Group_27" data-name="Group 27">
-              <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
-            </g>
-          </g>
-          <g id="Group_34" data-name="Group 34" transform="translate(-1724.667 9152.668) rotate(-90)">
-            <g id="Group_27-2" data-name="Group 27" transform="translate(0 0)">
-              <path id="Path_20-2" data-name="Path 20" d="M10.668,117.334H501.334a10.667,10.667,0,1,0,0-21.334H10.667a10.667,10.667,0,1,0,0,21.334Z" transform="translate(0 -96)"></path>
-            </g>
-          </g>
-        </g>
-      </svg>
-    </button>
+    <div class="close">
+      <button type="button">
+        <svg data-action="close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"> <path d="M492,236H68.442l70.164-69.824c7.829-7.792,7.859-20.455,0.067-28.284c-7.792-7.83-20.456-7.859-28.285-0.068    l-104.504,104c-0.007,0.006-0.012,0.013-0.018,0.019c-7.809,7.792-7.834,20.496-0.002,28.314c0.007,0.006,0.012,0.013,0.018,0.019    l104.504,104c7.828,7.79,20.492,7.763,28.285-0.068c7.792-7.829,7.762-20.492-0.067-28.284L68.442,276H492    c11.046,0,20-8.954,20-20C512,244.954,503.046,236,492,236z"></path> </svg>
+      </button>
+    </div>
     `;
     
     div.querySelector('button').addEventListener('click', () => {
@@ -98,44 +87,60 @@ function pre_order_cart() {
         cart_item.innerHTML = `
         <div class="image" style="background-image: url(https://cdn.ssstutter.com/products/${item.media[image] ?item.media[image]['o']: 'no_image.png' })"></div>
         <div class="detail">
-          <p>${item.name} - ${item.price.toLocaleString('en-US')}</p>
-          <p>Size ${item.size} - ${item.colorName}</p>
-        </div>
-        <div class="quantity">
-          <button type="button" class="decrease">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 512.001 512.001">
-              <g id="Group_35" data-name="Group 35" transform="translate(1970 -8640.667)">
-                <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
-                  <g id="Group_27" data-name="Group 27">
-                    <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </button>
+          <div>
+            <p>${item.name} - ${item.price.toLocaleString('en-US')}</p>
+            <p>Size ${item.size} - ${item.colorName}</p>
+          </div>
 
-          <span class="number">${item.quantity}</span>
+          <div class="quantity">
+            <button type="button" class="decrease">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 512.001 512.001">
+                <g id="Group_35" data-name="Group 35" transform="translate(1970 -8640.667)">
+                  <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
+                    <g id="Group_27" data-name="Group 27">
+                      <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </button>
 
-          <button type="button" class="increase">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 512.001 512.001">
-              <g id="Group_35" data-name="Group 35" transform="translate(1970 -8640.667)">
-                <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
-                  <g id="Group_27" data-name="Group 27">
-                    <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
+            <span class="number">${item.quantity}</span>
+
+            <button type="button" class="increase">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 512.001 512.001">
+                <g id="Group_35" data-name="Group 35" transform="translate(1970 -8640.667)">
+                  <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
+                    <g id="Group_27" data-name="Group 27">
+                      <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
+                    </g>
+                  </g>
+                  <g id="Group_34" data-name="Group 34" transform="translate(-1724.667 9152.668) rotate(-90)">
+                    <g id="Group_27-2" data-name="Group 27" transform="translate(0 0)">
+                      <path id="Path_20-2" data-name="Path 20" d="M10.668,117.334H501.334a10.667,10.667,0,1,0,0-21.334H10.667a10.667,10.667,0,1,0,0,21.334Z" transform="translate(0 -96)"></path>
+                    </g>
                   </g>
                 </g>
-                <g id="Group_34" data-name="Group 34" transform="translate(-1724.667 9152.668) rotate(-90)">
-                  <g id="Group_27-2" data-name="Group 27" transform="translate(0 0)">
-                    <path id="Path_20-2" data-name="Path 20" d="M10.668,117.334H501.334a10.667,10.667,0,1,0,0-21.334H10.667a10.667,10.667,0,1,0,0,21.334Z" transform="translate(0 -96)"></path>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </button>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <button type="button" class="delete">
-          <svg id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" width="18" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"></path><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"></path><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"></path><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"></path></g></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 377.126 377.125">
+          <g id="Group_35" data-name="Group 35" transform="translate(-4890.35 -7314.312) rotate(-45)">
+            <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
+              <g id="Group_27" data-name="Group 27">
+                <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
+              </g>
+            </g>
+            <g id="Group_34" data-name="Group 34" transform="translate(-1724.667 9152.668) rotate(-90)">
+              <g id="Group_27-2" data-name="Group 27" transform="translate(0 0)">
+                <path id="Path_20-2" data-name="Path 20" d="M10.668,117.334H501.334a10.667,10.667,0,1,0,0-21.334H10.667a10.667,10.667,0,1,0,0,21.334Z" transform="translate(0 -96)"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
         </button>
         `;
         //

@@ -40,9 +40,10 @@
   }
   .flatlay {
     grid-area: 3 / 1 / 4 / 5;
+    text-align: justify;
     h1 {
       font-size: 2rem;
-      margin: 30px 0;
+      margin: 20px 0 0;
       text-align: center;
       letter-spacing: 2px;
     }
@@ -146,13 +147,13 @@
         }
       }
       .color {
-        margin: 0 0 16px;
+        margin: 26px 0 34px;
         p {
           @include font(14px, start, 500);
           text-transform: capitalize;
         }
         ul {
-          @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 20px);
+          @include grid(repeat(auto-fit, minmax(auto, 80px)), null, 16px);
           margin-top: 10px;
           li {
             @include ratio(1, 1);
@@ -188,7 +189,7 @@
           text-transform: capitalize;
         }
         ul {
-          @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 20px);
+          @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 18px);
           margin-top: 10px;
           li {
             @include ratio(1, 1);
