@@ -5113,8 +5113,10 @@ h4 {
   margin-bottom: 2px;
 }
 .mobile-variation .form .grid-row input {
-  padding: 4px 2px;
+  padding: 4px;
   border: 1px solid #cecece;
+  width: 100%;
+  display: block;
 }
 .mobile-variation .form button {
   background-color: #888;

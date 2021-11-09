@@ -275,7 +275,6 @@ export const __templates_product = {
           <li style="margin: 0; border: 0; cursor: default; padding: 0;">
             <div id="size_check" class="mobile-variation">
               <div class="info">
-                <img src="assets/img/size.png" alt="" />
                 <table>
                   <thead>
                     <tr>

@@ -304,10 +304,10 @@ export const campaign_product_detail_page = {
         <button class="add">Thêm vào giỏ hàng</button>
         <ul class="guide">
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
-          <li style="margin: 0; border: 0; cursor: default; padding: 0;">
+          
+          <li style="margin: 0; border: 0; cursor: default; padding: 0; display: block;">
             <div id="size_check" class="mobile-variation">
               <div class="info">
-                <img src="assets/img/size.png" alt="" />
                 <table>
                   <thead>
                     <tr>
@@ -368,8 +368,10 @@ export const campaign_product_detail_page = {
               </form>
             </div>
           </li>
+          
           <li data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
-          <li style="margin: 0; border: 0; cursor: default; padding: 0;">
+          
+          <li style="margin: 0; border: 0; cursor: default; padding: 0; display: block;">
             <div id="refund_policy" class="mobile-variation">
               <p>
                 – Bạn có thể đổi hàng trong 14 ngày kể từ ngày mua hàng.
