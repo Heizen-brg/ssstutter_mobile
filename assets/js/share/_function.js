@@ -141,7 +141,22 @@ export const __show_cart_item = (wrapper, total, div) => {
           <button data-id="${prod.variation.id}" data-quantity="inscrease">+</button>
         </div>
       </div>
-      <div class="clear__product" value="${prod.quantity}" data-index=${index}>${__icons.bin}</div>
+      <div class="clear__product" value="${prod.quantity}" data-index=${index}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 377.126 377.125">
+          <g id="Group_35" data-name="Group 35" transform="translate(-4890.35 -7314.312) rotate(-45)">
+            <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
+              <g id="Group_27" data-name="Group 27">
+                <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
+              </g>
+            </g>
+            <g id="Group_34" data-name="Group 34" transform="translate(-1724.667 9152.668) rotate(-90)">
+              <g id="Group_27-2" data-name="Group 27" transform="translate(0 0)">
+                <path id="Path_20-2" data-name="Path 20" d="M10.668,117.334H501.334a10.667,10.667,0,1,0,0-21.334H10.667a10.667,10.667,0,1,0,0,21.334Z" transform="translate(0 -96)"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
     </li>
     `;
     })
