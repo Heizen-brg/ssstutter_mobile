@@ -331,10 +331,10 @@ export const __templates_checkout_pre_order = {
           body: JSON.stringify(order_data),
         },
         ({ data, error }) => {
-          console.log(data);
           if (data.paymentUrl) {
             __templates_modal.overlay({ content: __templates_modal.card_payment_progress() });
             // window.open(data.paymentUrl, "_blank");
+            localStorage.removeItem("pre-order-item");
             window.location.href = data.paymentUrl;
           } else {
             localStorage.removeItem("pre-order-item");
