@@ -403,7 +403,7 @@
 }
 .cart__container .mini__cart--header {
   display: grid;
-  grid-template-columns: 30px 1fr 30px;
+  grid-template-columns: 30px 1fr;
   grid-gap: 10px;
   font-size: medium;
   text-align: center;
@@ -412,6 +412,10 @@
   padding: 10px 15px;
   text-transform: uppercase;
   border-bottom: thin solid #f1f1f1;
+}
+.cart__container .mini__cart--header h1 {
+  text-align: right;
+  text-transform: capitalize;
 }
 .cart__container .mini__cart ul {
   width: 100%;

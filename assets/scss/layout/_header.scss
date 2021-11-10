@@ -329,12 +329,16 @@
     width: 100%;
     background-color: $white;
     &--header {
-      @include grid(30px 1fr 30px, null, 10px);
+      @include grid(30px 1fr, null, 10px);
       @include font(medium, center, bold);
       align-items: center;
       padding: 10px 15px;
       text-transform: uppercase;
       border-bottom: thin solid $light;
+      h1 {
+        text-align: right;
+        text-transform: capitalize;
+      }
     }
     ul {
       width: 100%;
