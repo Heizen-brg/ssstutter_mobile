@@ -71,8 +71,9 @@
         &::before {
           content: "";
           width: 15px;
+          flex: 0 0 15px;
           height: 15px;
-          margin-right: 20px;
+          margin-right: 15px;
           background-color: transparent;
           @include border($yellow, 100px);
         }
@@ -81,6 +82,10 @@
         }
         svg {
           margin-right: 10px;
+        }
+        p {
+          text-align: left;
+          font-size: 12px;
         }
       }
     }
@@ -104,14 +109,24 @@
       overflow: auto;
       li {
         @include grid((20% 1fr 15%), 1fr, 20px);
-        border-bottom: thin solid $silver;
-        margin: 10px 0;
+        position: relative;
+        align-items: self-start;
+        // border-bottom: thin solid $silver;
+        margin: 0 0 14px;
         .product__thumbnail {
           @include ratio(1, 1);
         }
         .clear__product {
+          position: absolute;
+          top: 0;
+          right: 0;
           place-self: center;
           opacity: 0.3;
+          padding: 10px;
+          svg {
+            width: 14px;
+            height: 14px;
+          }
         }
       }
       div {
@@ -149,7 +164,7 @@
     .confirm__order {
       @include border($silver, 4px);
       width: 100%;
-      padding: 20px;
+      padding: 15px;
       background-color: $black;
       color: $white;
       &:hover {
@@ -159,8 +174,9 @@
   }
   .discount__code {
     @include grid(1fr auto);
-    border-bottom: thin solid $silver;
-    padding-bottom: 10px;
+    // border-bottom: thin solid $silver;
+    // padding-bottom: 10px;
+    margin-bottom: 10px;
     input {
       margin: 0;
       border: 1px solid$silver;
@@ -190,7 +206,7 @@
   .total__cart {
     @include flex(row, space-between, center);
     padding: 5px;
-    margin: 10px 0;
+    margin: 4px 0;
     p {
       @include font(medium, center, 600);
       margin-right: 15px;
@@ -241,7 +257,7 @@
       }
       .total__cart {
         strong {
-          font-size: x-large;
+          font-size: large;
         }
       }
       .discount__code {
@@ -271,7 +287,7 @@
       margin: 0;
       .total__cart {
         strong {
-          font-size: x-large;
+          font-size: large;
         }
       }
     }
