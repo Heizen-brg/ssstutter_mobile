@@ -28,7 +28,7 @@ app.get("/", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
-      title: "SSSTUTTER - REFINED FROM INSIDE",
+      title: "SSSTUTTER - REFINED LIFE",
     })
   );
 });
