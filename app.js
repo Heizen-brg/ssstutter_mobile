@@ -28,7 +28,7 @@ app.get("/", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
-      title: "SSSTUTTER - REFINED FROM INSIDE",
+      title: "SSSTUTTER - REFINED LIFE",
     })
   );
 });
@@ -99,65 +99,65 @@ app.get("/p/:slug", async (req, res, next) => {
   }
 });
 
-app.get("/editorial/product/:slug", async (req, res, next) => {
-  let { slug } = req.params;
-  let product_data;
-  try {
-    product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
-  } catch (err) {
-    res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
-    console.log(err.message);
-    return;
-  }
-  res.setHeader("Authorization", "by_passs");
-  res.setHeader("Content-Type", "text/html");
-  let info = product_data.data.data;
-  if (!info || !info.length) {
-    res.status(404).send(client_view.error_404({}));
-  } else {
-    res.send(
-      client_view.html({
-        title: info[0].name,
-        command: `const product_editorial_detail = ${JSON.stringify(info[0])}`,
-      })
-    );
-  }
-});
+// app.get("/editorial/product/:slug", async (req, res, next) => {
+//   let { slug } = req.params;
+//   let product_data;
+//   try {
+//     product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
+//       headers: {
+//         Authorization: `by_passs`,
+//       },
+//     });
+//   } catch (err) {
+//     res.setHeader("Content-Type", "text/html");
+//     res.status(404).send(client_view.error_404({}));
+//     console.log(err.message);
+//     return;
+//   }
+//   res.setHeader("Authorization", "by_passs");
+//   res.setHeader("Content-Type", "text/html");
+//   let info = product_data.data.data;
+//   if (!info || !info.length) {
+//     res.status(404).send(client_view.error_404({}));
+//   } else {
+//     res.send(
+//       client_view.html({
+//         title: info[0].name,
+//         command: `var product_editorial_detail = ${JSON.stringify(info[0])}`,
+//       })
+//     );
+//   }
+// });
 
-app.get("/editorial/look/:slug", async (req, res, next) => {
-  let { slug } = req.params;
-  let cat_data;
-  try {
-    cat_data = await axios.get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
-      headers: {
-        Authorization: `by_pass`,
-      },
-    });
-  } catch (err) {
-    res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
-    console.log(err.message);
-    return;
-  }
-  res.setHeader("Authorization", "by_passs");
-  res.setHeader("Content-Type", "text/html");
-  let info = cat_data.data.data;
-  if (!info) {
-    res.status(404).send(client_view.error_404({}));
-  } else {
-    res.send(
-      client_view.html({
-        title: `${info.name.replace("-", "")}`,
-        command: `const category_editorial_detail = ${JSON.stringify(info)}`,
-      })
-    );
-  }
-});
+// app.get("/editorial/look/:slug", async (req, res, next) => {
+//   let { slug } = req.params;
+//   let cat_data;
+//   try {
+//     cat_data = await axios.get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
+//       headers: {
+//         Authorization: `by_pass`,
+//       },
+//     });
+//   } catch (err) {
+//     res.setHeader("Content-Type", "text/html");
+//     res.status(404).send(client_view.error_404({}));
+//     console.log(err.message);
+//     return;
+//   }
+//   res.setHeader("Authorization", "by_passs");
+//   res.setHeader("Content-Type", "text/html");
+//   let info = cat_data.data.data;
+//   if (!info) {
+//     res.status(404).send(client_view.error_404({}));
+//   } else {
+//     res.send(
+//       client_view.html({
+//         title: `${info.name.replace("-", "")}`,
+//         command: `var category_editorial_detail = ${JSON.stringify(info)}`,
+//       })
+//     );
+//   }
+// });
 
 app.get("/campaign/:slug", async (req, res, next) => {
   let { slug } = req.params;
@@ -197,15 +197,15 @@ app.get("/checkout", (req, res, next) => {
     })
   );
 });
-app.get("/editorial/checkout", (req, res, next) => {
-  res.setHeader("Content-Type", "text/html");
-  res.send(
-    client_view.html({
-      title: "Thanh toán",
-      command: "",
-    })
-  );
-});
+// app.get("/editorial/checkout", (req, res, next) => {
+//   res.setHeader("Content-Type", "text/html");
+//   res.send(
+//     client_view.html({
+//       title: "Thanh toán",
+//       command: "",
+//     })
+//   );
+// });
 app.get("/order", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
@@ -303,15 +303,15 @@ app.get("/search", async (req, res, next) => {
   );
 });
 
-app.get("/editorial", (req, res, next) => {
-  res.setHeader("Content-Type", "text/html");
-  res.send(
-    client_view.html({
-      title: "WARM YOUR DAY UP SSSTUTTER",
-      command: "",
-    })
-  );
-});
+// app.get("/editorial", (req, res, next) => {
+//   res.setHeader("Content-Type", "text/html");
+//   res.send(
+//     client_view.html({
+//       title: "WARM YOUR DAY UP SSSTUTTER",
+//       command: "",
+//     })
+//   );
+// });
 
 app.get("/flash-sale", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");

@@ -85,63 +85,55 @@ export const __render = {
       "/editorial/product": (params) => __render.campaign_product_detail_page(params),
       "/editorial/look": (params) => __render.campaign_category_page(params),
       "/flash-sale": () => __render.flash_sale(),
-      "/editorial/checkout": () => __render.check_out_pre_order()
+      "/editorial/checkout": () => __render.check_out_pre_order(),
     };
 
     if (pathname.includes(`/p/`)) {
       if (typeof product_master_detail === "undefined") return false;
       let product = product_master_detail;
       url_data[`/p`]({ product });
-    }
-    else if (pathname.includes(`/editorial/product`)) {
+    } else if (pathname.includes(`/editorial/product`)) {
       if (typeof product_editorial_detail === "undefined") return false;
       let product = product_editorial_detail;
       url_data[`/editorial/product`]({ product });
-    }
-    else if (pathname.includes(`/editorial/look`)) {
+    } else if (pathname.includes(`/editorial/look`)) {
       let category = category_editorial_detail;
       if (typeof category === "undefined") {
         return false;
       }
-      url_data['/editorial/look'](category);
-    }
-    else if (pathname.includes(`/blog/article`)) {
+      url_data["/editorial/look"](category);
+    } else if (pathname.includes(`/blog/article`)) {
       let article = blog_detail;
       if (typeof article === "undefined") {
         return false;
       }
       url_data["/blog/article"]({ article });
-    }
-    else if (pathname.includes(`/c/`)) {
+    } else if (pathname.includes(`/c/`)) {
       let category = category_detail;
       if (typeof category === "undefined") {
         return false;
       }
       url_data["/c"](category);
-    }
-    else if (pathname.includes(`/campaign`)) {
+    } else if (pathname.includes(`/campaign`)) {
       let campaign = campaign_detail.data;
       if (typeof campaign === "undefined") {
         return false;
       }
       url_data["/campaign"](campaign);
-    }
-    else if (pathname.includes(`/landingpage`)) {
+    } else if (pathname.includes(`/landingpage`)) {
       let landing_page = landingpage_detail.data;
-      console.log('landing_page: ', landing_page);
+      console.log("landing_page: ", landing_page);
       if (typeof landing_page === "undefined") {
         return false;
       }
       url_data["/landingpage"](landing_page);
-    }
-    else if (pathname.includes(`/search`)) {
+    } else if (pathname.includes(`/search`)) {
       let products_list = search_result;
       if (typeof products_list === "undefined") {
         return false;
       }
       url_data[`/search`]({ products_list });
-    }
-    else {
+    } else {
       url_data[pathname]();
     }
   },
@@ -171,7 +163,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-        page_y_offset: 1550
+        page_y_offset: 1550,
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -198,7 +190,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-        page_y_offset: 400
+        page_y_offset: 400,
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -221,7 +213,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-        page_y_offset: 500
+        page_y_offset: 500,
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -358,7 +350,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-        page_y_offset: 500
+        page_y_offset: 500,
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -380,7 +372,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-        page_y_offset: 500
+        page_y_offset: 500,
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -398,7 +390,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
-        page_y_offset: 500
+        page_y_offset: 500,
       }),
       __templates_header.megamenu(),
       __templates_header.cart(),
@@ -427,10 +419,7 @@ export const __render = {
   },
 
   list_campaign_winter() {
-    let blocks = [
-      list_campaign_winter(),
-      __templates_footer.footer(),
-    ];
+    let blocks = [list_campaign_winter(), __templates_footer.footer()];
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
@@ -444,13 +433,23 @@ export const __render = {
     ];
     this.build("product__page", blocks);
     __templates.api_loading("hide");
+    if (fbq) fbq("track", "ViewContent");
+  },
+
+  check_out_pre_order() {
+    let blocks = [
+      __templates_checkout_pre_order.page_header(),
+      __templates_checkout_pre_order.checkout_form(),
+      __templates_checkout_pre_order.checkout__method(),
+      __templates_checkout_pre_order.checkout__cart(),
+      __templates_footer.footer(),
+    ];
+    this.build("checkout__page", blocks);
+    __templates.api_loading("hide");
   },
 
   campaign_category_page(params) {
-    let blocks = [
-      campaign_category_page(params),
-      __templates_footer.footer(),
-    ];
+    let blocks = [campaign_category_page(params), __templates_footer.footer()];
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
