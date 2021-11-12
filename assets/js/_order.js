@@ -71,7 +71,9 @@ export const __templates_order = {
         </div>
         <div class="total">
           <p>Tổng:</p>
-          <strong>${__currency_format(params.shipping ? params.moneyTotal + params.shipping[0].fee : params.moneyTotal)}</strong>
+          <strong>${__currency_format(
+            params.shipping ? params.moneyTotal + params.shipping[0].fee : params.moneyTotal
+          )}</strong>
         </div>
     `;
     return div;

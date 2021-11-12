@@ -281,10 +281,10 @@ export const campaign_product_detail_page = {
           </div>
         </div>
         <div style="margin-top: -8px">
-          ${__currency_format(info.price * 0.9)}
-          <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
+          ${__currency_format(info.price)}
+          <!--<span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
             ${__currency_format(info.price)} 
-          </span>
+          </span>-->
         </div>
         <div class="color">
           <p>chọn màu : <strong class="color__name">${info.color[0].name} </strong></p>
