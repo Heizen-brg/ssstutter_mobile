@@ -75,7 +75,6 @@ export const __templates_header = {
             </ul>
           </li>
           <li><a class="special" href="/daily-better/">daily better</a></li>
-          <li><a class="special" href="/editorial">pre-order</a></li>
         </ul>
         <div class="side__nav--footer">
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
@@ -359,8 +358,9 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                      })"></span></a>
+                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                    })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
