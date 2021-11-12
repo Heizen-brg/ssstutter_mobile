@@ -61,28 +61,14 @@ export const __templates_header = {
           </a>
           <div class="close">${__icons.close}</div>
         </div>
-        <ul>
-          <li data-cat="toggle" class="">
-            <a data-cat="3vvRIM" data-src="/c/for-him">Nam</a>
-            <ul class="mega_menu_items mega_menu_items--show"> 
-
-            </ul>
-          </li>
-          <li data-cat="toggle" class="">
-            <a data-cat="y8Q15I" data-src="/c/for-her">Nữ</a>
-            <ul class="mega_menu_items mega_menu_items--show">
-
-            </ul>
-          </li>
-          <li><a class="special" href="/daily-better/">daily better</a></li>
-        </ul>
+        <div class="nav__mobile"></div>
         <div class="side__nav--footer">
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
       <div class="freeship fade-in">Miễn phí vận chuyển với đơn hàng từ 599.000đ</div>
     `;
-    ["popup", "left", "right"].forEach((pos) => {
+    ["popup", "left", "right", "mobile"].forEach((pos) => {
       let block = header.querySelector(`.nav__${pos}`);
       if (params[pos]) {
         __render.build_in_block({
@@ -97,37 +83,7 @@ export const __templates_header = {
       this.hide_menu();
     });
 
-    let get_cat_list = (params) => {
-      __requests(
-        {
-          method: "GET",
-          url: `product/attribute/category/get`,
-        },
-        ({ data, error }) => {
-          let parent_cat_arr = data.filter((item) => item.parentId == params.category);
-          let cat_item = (parent_cat_arr || [])
-            .map(
-              (cate) => `<li data-cate="${cate.id}"><a href="/c/${cate.slug}">${cate.name.replace("-", "")}</a></li>`
-            )
-            .join("");
-          params.container.innerHTML = cat_item;
-        }
-      );
-    };
 
-    let cat_toggle = header.querySelectorAll('[data-cat="toggle"]');
-    cat_toggle.forEach((item) => {
-      let cat_link = item.querySelector("a");
-      cat_link.addEventListener("click", () => {
-        if (item.querySelector("ul").classList.contains("active")) {
-          cat_link.setAttribute("href", cat_link.dataset.src);
-          item.querySelector("ul").classList.remove("active");
-        } else {
-          get_cat_list({ category: cat_link.dataset.cat, container: item.querySelector("ul") });
-          item.querySelector("ul").classList.add("active");
-        }
-      });
-    });
     window.onscroll = () => {
       let nav_bar = header.querySelector(".nav");
       let main = document.getElementById("root");
@@ -161,7 +117,7 @@ export const __templates_header = {
       __requests(
         {
           method: "GET",
-          url: `https://sss-dashboard.leanservices.work/w//menu/get`,
+          url: `https://sss-dashboard.leanservices.work/w/menu/get`,
         },
         ({ data }) => {
           let menu_item = (data || [])
@@ -279,6 +235,62 @@ export const __templates_header = {
     return div;
   },
 
+  mobile() {
+    let ul = document.createElement("ul");
+    ul.className = "nav__mobile--items";
+    __requests(
+      {
+        method: "GET",
+        url: `https://sss-dashboard.leanservices.work/w/menu/get`,
+      },
+      ({ data }) => {
+        let menu_item = (data || []).map((item) => {
+          return `
+              <li data-cat="toggle" >
+                <a data-cat="${item.attribute}" class="${item.style}" ${item.attribute ? `data-src="${item.url}"` : `href="${item.url}"`} >${item.title}</a>
+                <ul class="mega_menu_items mega_menu_items--show">
+
+                </ul>
+              </li>
+        `;
+        })
+          .join("");
+        ul.innerHTML = menu_item;
+        let cat_toggle = ul.querySelectorAll('[data-cat="toggle"]');
+        cat_toggle.forEach((item) => {
+          let cat_link = item.querySelector("a");
+          cat_link.addEventListener("click", () => {
+            if (item.querySelector("ul").classList.contains("active")) {
+              cat_link.setAttribute("href", cat_link.dataset.src);
+              item.querySelector("ul").classList.remove("active");
+            } else {
+              get_cat_list({ category: cat_link.dataset.cat, container: item.querySelector("ul") });
+              item.querySelector("ul").classList.add("active");
+            }
+          });
+        });
+      }
+    );
+    let get_cat_list = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `product/attribute/category/get`,
+        },
+        ({ data, error }) => {
+          let parent_cat_arr = data.filter((item) => item.parentId == params.category);
+          let cat_item = (parent_cat_arr || [])
+            .map(
+              (cate) => `<li data-cate="${cate.id}"><a href="/c/${cate.slug}">${cate.name.replace("-", "")}</a></li>`
+            )
+            .join("");
+          params.container.innerHTML = cat_item;
+        }
+      );
+    };
+    return ul;
+  },
+
   megamenu(params = {}) {
     let div = document.createElement("div");
     div.className = "megamenu__container";
@@ -358,9 +370,8 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                    })"></span></a>
+                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                      })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">

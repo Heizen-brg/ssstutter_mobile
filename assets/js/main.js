@@ -163,6 +163,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 1550,
       }),
       __templates_header.megamenu(),
@@ -190,6 +191,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 400,
       }),
       __templates_header.megamenu(),
@@ -213,6 +215,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -235,6 +238,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -256,6 +260,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -275,6 +280,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -293,6 +299,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -311,6 +318,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -331,6 +339,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -350,6 +359,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -372,6 +382,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -390,6 +401,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -406,6 +418,7 @@ export const __render = {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
+        mobile: __templates_header.mobile(),
         right: __templates_header.right(),
       }),
       __templates_header.megamenu(),

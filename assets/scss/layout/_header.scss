@@ -618,35 +618,37 @@
           }
         }
       }
-      ul {
-        max-height: 65vh;
-        overflow: auto;
-        li {
-          border-bottom: 1px solid #ececec;
-          a {
-            padding: 20px;
-            width: 100%;
-            height: 100%;
-            font-size: 14px;
-            // font-weight: 600;
-            color: #191919;
-            text-transform: uppercase;
-            letter-spacing: 1.3px;
-          }
-          ul {
-            display: none;
-            margin-left: 30px;
-            &.active {
-              display: block;
+      .nav__mobile {
+        ul {
+          max-height: 65vh;
+          overflow: auto;
+          li {
+            border-bottom: 1px solid #ececec;
+            a {
+              padding: 20px;
+              width: 100%;
+              height: 100%;
+              font-size: 14px;
+              // font-weight: 600;
+              color: #191919;
+              text-transform: uppercase;
+              letter-spacing: 1.3px;
             }
-            li {
-              border: 0;
-              a {
-                padding: 0px;
-                font-size: small;
-                font-weight: normal;
-                text-transform: capitalize;
-                margin: 10px 0;
+            ul {
+              display: none;
+              margin-left: 30px;
+              &.active {
+                display: block;
+              }
+              li {
+                border: 0;
+                a {
+                  padding: 0px;
+                  font-size: small;
+                  font-weight: normal;
+                  text-transform: capitalize;
+                  margin: 10px 0;
+                }
               }
             }
           }
