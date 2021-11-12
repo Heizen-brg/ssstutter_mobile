@@ -46,7 +46,7 @@ export const __templates_order = {
               <span class="product__thumbnail"
                 style="background-image:url(https://api.leanservices.work/product/static/${item.thumbnail.x100.replace(
                   ".jpeg",
-                  ".webp"
+                  ".jpeg"
                 )})">
               </span>
               <div>

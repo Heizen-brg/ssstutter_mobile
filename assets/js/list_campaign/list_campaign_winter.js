@@ -292,27 +292,27 @@ function list_campaign_winter() {
 
     let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
 
-    let countdown = setInterval(() => {
-      let distance = end_date - Date.now();
+    // let countdown = setInterval(() => {
+    //   let distance = end_date - Date.now();
 
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //   let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+    //     hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    //     minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+    //     seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      div.querySelector(".clock").innerHTML = `
-      Thời gian kết thúc: 
-      <span>${days}</span> ngày 
-      <span>${hours}</span> giờ 
-      <span>${minutes}</span> phút 
-      <span>${seconds}</span> giây
-      `;
+    //   div.querySelector(".clock").innerHTML = `
+    //   Thời gian kết thúc:
+    //   <span>${days}</span> ngày
+    //   <span>${hours}</span> giờ
+    //   <span>${minutes}</span> phút
+    //   <span>${seconds}</span> giây
+    //   `;
 
-      if (distance < 0) {
-        clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = ``;
-      }
-    }, 1000);
+    //   if (distance < 0) {
+    //     clearInterval(countdown);
+    //     div.querySelector(".clock").innerHTML = ``;
+    //   }
+    // }, 1000);
 
     return div;
   }

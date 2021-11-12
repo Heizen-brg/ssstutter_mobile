@@ -572,7 +572,7 @@ export const campaign_product_detail_page = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "webp")})"></li>`
+                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
               )
               .join("")}
           </ul>

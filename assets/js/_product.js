@@ -270,8 +270,8 @@ export const __templates_product = {
           </ul>
         </div>
         ${
-        params.preOrder == true
-        ? `
+          params.preOrder == true
+            ? `
         <div class="subscribe-new-product">
           <p>
             Sản phẩm đã cháy hàng trong đợt Pre-Order và đang được restock trong thời gian tới. Bạn có thể đăng ký nhận thông tin khi sản phẩm restock ở dưới đây.
@@ -282,7 +282,7 @@ export const __templates_product = {
           <button type="button">Đăng ký</button>
         </div>
         `
-        : '<button class="add">Thêm vào giỏ hàng</button>'
+            : '<button class="add">Thêm vào giỏ hàng</button>'
         }
         
         <ul class="guide">
@@ -380,10 +380,10 @@ export const __templates_product = {
         </ul>
       </div>
     `;
-    
-    if (div.querySelector('.subscribe-new-product')) {
-      div.querySelector('.subscribe-new-product button').addEventListener('click', () => {
-        __templates.api_loading('show')
+
+    if (div.querySelector(".subscribe-new-product")) {
+      div.querySelector(".subscribe-new-product button").addEventListener("click", () => {
+        __templates.api_loading("show");
         __requests(
           {
             method: "POST",
@@ -392,18 +392,18 @@ export const __templates_product = {
               id: params.id,
               name: div.querySelector('.subscribe-new-product input[name="subscribe_name"]').value,
               phone: div.querySelector('.subscribe-new-product input[name="subscribe_phone"]').value,
-              email: div.querySelector('.subscribe-new-product input[name="subscribe_mail"]').value
-            })
+              email: div.querySelector('.subscribe-new-product input[name="subscribe_mail"]').value,
+            }),
           },
           () => {
-            __templates.api_loading('hide')
-            div.querySelector('.subscribe-new-product').innerHTML = `
+            __templates.api_loading("hide");
+            div.querySelector(".subscribe-new-product").innerHTML = `
             <p class="text-center"><b>Đăng ký nhận thông tin thành công!</b></p>
             <p style="margin-bottom: 6px;">SSStutter sẽ liên hệ lại ngay khi có thông tin về hàng của sản phẩm</p>
             <p style="margin-bottom: 0;">Khi cần trợ giúp, vui lòng gọi 086 993 6266</p>
             `;
           }
-        )
+        );
       });
     }
 
@@ -558,7 +558,7 @@ export const __templates_product = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "webp")})"></li>`
+                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
               )
               .join("")}
           </ul>
