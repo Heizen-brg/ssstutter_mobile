@@ -25,14 +25,16 @@ export const campaign_product_detail_page = {
           ${__icons.new_ssstutter}
         </a>
       </div>
+      <!--
       <div class="pre-order-cart">${__icons.cart} pre-order <span>( ${cart_quantity} )</span></div>
+      -->
     </div>
     `;
-
+    /*
     div.querySelector(".pre-order-cart").addEventListener("click", () => {
       document.body.appendChild(pre_order_cart());
     });
-
+    */
     return div;
   },
   product_gallery(params = {}) {
@@ -298,10 +300,10 @@ export const campaign_product_detail_page = {
         </div>
         <div>
           <br>
-          <p style="margin-bottom: 4px;">Ưu đãi giảm 10% khi đặt hàng trước (Pre-Order)</p>
+          <p style="margin-bottom: 4px;">Sản phẩm mở bán lại trên website trong</p>
           <p class="clock" style="min-height: 20px;"></p><br>
         </div>
-        <button class="add">Thêm vào giỏ hàng</button>
+        <button class="add" disabled style="opacity: .45">Thêm vào giỏ hàng</button>
         <ul class="guide">
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
           
@@ -451,7 +453,7 @@ export const campaign_product_detail_page = {
       }
     };
 
-    let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
+    let end_date = new Date("Nov 12, 2021 21:30:00").getTime();
 
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
@@ -462,8 +464,6 @@ export const campaign_product_detail_page = {
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       div.querySelector(".clock").innerHTML = `
-      Thời gian
-      <span>${days}</span> ngày 
       <span>${hours}</span> giờ 
       <span>${minutes}</span> phút 
       <span>${seconds}</span> giây
@@ -471,7 +471,11 @@ export const campaign_product_detail_page = {
 
       if (distance < 0) {
         clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = ``;
+        div.querySelector(".clock").innerHTML = `
+        <span>00</span> giờ 
+        <span>00</span> phút 
+        <span>00</span> giây
+        `;
       }
     }, 1000);
 

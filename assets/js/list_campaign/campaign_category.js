@@ -40,14 +40,16 @@ function campaign_category_page(data) {
           ${__icons.new_ssstutter}
         </a>
       </div>
+      <!--
       <div class="pre-order-cart">${__icons.cart} pre-order <span>( ${cart_quantity} )</span></div>
+      -->
     </div>
     `;
-
+    /*
     div.querySelector(".pre-order-cart").addEventListener("click", () => {
       document.body.appendChild(pre_order_cart());
     });
-
+    */
     return div;
   }
 
