@@ -569,4 +569,25 @@
     }
   }
 }
+.subscribe-new-product {
+  border: 1px solid #cecece;
+  padding: 14px;
+  p {
+    margin-bottom: 14px;
+  }
+  input,
+  button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cecece;
+  }
+  input {
+    margin-bottom: 8px;
+  }
+  button {
+    margin-top: 22px;
+    background: #cecece;
+  }
+}
 

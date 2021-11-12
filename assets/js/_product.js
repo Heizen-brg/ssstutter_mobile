@@ -1,4 +1,5 @@
 import { __requests } from "./main.js";
+import { __templates } from "./share/_components.js";
 import {
   __currency_format,
   __get_voucher,
@@ -241,7 +242,6 @@ export const __templates_product = {
   },
   variation(params = {}) {
     let info = params;
-    console.log(info);
     let div = document.createElement("div");
     div.className = "variation";
     div.innerHTML = `
@@ -269,7 +269,22 @@ export const __templates_product = {
 
           </ul>
         </div>
-        <button class="add">Thêm vào giỏ hàng</button>
+        ${
+        params.preOrder == true
+        ? `
+        <div class="subscribe-new-product">
+          <p>
+            Sản phẩm đã cháy hàng trong đợt Pre-Order và đang được restock trong thời gian tới. Bạn có thể đăng ký nhận thông tin khi sản phẩm restock ở dưới đây.
+          </p>
+          <input placeholder="Họ & tên" name="subscribe_name">
+          <input placeholder="Số điện thoại" name="subscribe_phone">
+          <input placeholder="Email" name="subscribe_mail">
+          <button type="button">Đăng ký</button>
+        </div>
+        `
+        : '<button class="add">Thêm vào giỏ hàng</button>'
+        }
+        
         <ul class="guide">
           <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
           <li style="margin: 0; border: 0; cursor: default; padding: 0;">
@@ -365,6 +380,32 @@ export const __templates_product = {
         </ul>
       </div>
     `;
+    
+    if (div.querySelector('.subscribe-new-product')) {
+      div.querySelector('.subscribe-new-product button').addEventListener('click', () => {
+        __templates.api_loading('show')
+        __requests(
+          {
+            method: "POST",
+            url: "order/order/subscribe-order",
+            body: JSON.stringify({
+              id: params.id,
+              name: div.querySelector('.subscribe-new-product input[name="subscribe_name"]').value,
+              phone: div.querySelector('.subscribe-new-product input[name="subscribe_phone"]').value,
+              email: div.querySelector('.subscribe-new-product input[name="subscribe_mail"]').value
+            })
+          },
+          () => {
+            __templates.api_loading('hide')
+            div.querySelector('.subscribe-new-product').innerHTML = `
+            <p class="text-center"><b>Đăng ký nhận thông tin thành công!</b></p>
+            <p style="margin-bottom: 6px;">SSStutter sẽ liên hệ lại ngay khi có thông tin về hàng của sản phẩm</p>
+            <p style="margin-bottom: 0;">Khi cần trợ giúp, vui lòng gọi 086 993 6266</p>
+            `;
+          }
+        )
+      });
+    }
 
     div.querySelector(".find-size").addEventListener("click", () => {
       let height_input = div.querySelector(".height__input");
@@ -446,7 +487,7 @@ export const __templates_product = {
         let isStock = Object.values(info.variation)
           .filter((i) => i.color === item.id)
           .some((i) => i.isStock);
-        if (!isStock) return;
+        if (!info.preOrder && !isStock) return;
         let flat_color = document.createElement("li");
         flat_color.innerHTML = `
         <button 
@@ -483,7 +524,7 @@ export const __templates_product = {
           return `
         <li><button data-index="${index}" class=" size__variation ${
             index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;
@@ -530,59 +571,61 @@ export const __templates_product = {
       });
     };
     let init_add_to_cart = (params) => {
-      let to_cart_btn = div.querySelector(".add");
-
-      to_cart_btn.addEventListener("click", (e) => {
-        let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
-          ? JSON.parse(localStorage.getItem("cartItem"))
-          : [];
-        let cart_menu = document.querySelector('[data-menu="cart"]');
-        let variation = params.variation;
-        e.preventDefault();
-        user_selection.variation = variation.find(
-          (item) => item.color == user_selection.colorId && item.size == user_selection.size
-        );
-        let new_selected_item = { ...user_selection };
-        let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
-        if (product_in_cart) {
-          __requests(
-            {
-              method: "GET",
-              url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
-                product_in_cart.quantity + 1
-              }`,
-            },
-            ({ data }) => {
-              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
-              cart_selected = cart_selected.map((i) => {
-                if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
-                return i;
-              });
-              localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-              cart_menu.classList.add("active");
-              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
-              __get_voucher({ discountDiv: cart_menu });
-            }
+      let to_cart_btn = null;
+      if (div.querySelector(".add")) {
+        to_cart_btn = div.querySelector(".add");
+        to_cart_btn.addEventListener("click", (e) => {
+          let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
+            ? JSON.parse(localStorage.getItem("cartItem"))
+            : [];
+          let cart_menu = document.querySelector('[data-menu="cart"]');
+          let variation = params.variation;
+          e.preventDefault();
+          user_selection.variation = variation.find(
+            (item) => item.color == user_selection.colorId && item.size == user_selection.size
           );
-        } else {
-          __requests(
-            {
-              method: "GET",
-              url: `product/variation/check-stock?id=${new_selected_item.variation.id}&stock=1`,
-            },
-            ({ data }) => {
-              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
-              cart_selected.push(new_selected_item);
-              localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-              cart_menu.classList.add("active");
-              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
-              __get_voucher({ discountDiv: cart_menu });
-            }
-          );
-        }
-      });
+          let new_selected_item = { ...user_selection };
+          let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
+          if (product_in_cart) {
+            __requests(
+              {
+                method: "GET",
+                url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
+                  product_in_cart.quantity + 1
+                }`,
+              },
+              ({ data }) => {
+                if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+                cart_selected = cart_selected.map((i) => {
+                  if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+                  return i;
+                });
+                localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+                cart_menu.classList.add("active");
+                __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+                __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+                __get_voucher({ discountDiv: cart_menu });
+              }
+            );
+          } else {
+            __requests(
+              {
+                method: "GET",
+                url: `product/variation/check-stock?id=${new_selected_item.variation.id}&stock=1`,
+              },
+              ({ data }) => {
+                if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+                cart_selected.push(new_selected_item);
+                localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+                cart_menu.classList.add("active");
+                __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+                __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+                __get_voucher({ discountDiv: cart_menu });
+              }
+            );
+          }
+        });
+      }
     };
     let triggers = div.querySelectorAll("[data-action]");
     triggers.forEach((btn) => {
