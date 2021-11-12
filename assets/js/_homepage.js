@@ -3,6 +3,7 @@ import { __icons } from "./share/_icons.js";
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format } from "./share/_function.js";
+import { CONFIG } from "./config.js";
 
 export const __templates_home = {
   hide_menu() {
@@ -185,19 +186,22 @@ export const __templates_home = {
     section.className = "categories__banner";
 
     __requests({
-      method: `GET`,
-      url: `https://sss-dashboard.leanservices.work/w/categories/get`
+      method: "GET",
+      url: 'https://sss-dashboard.leanservices.work/w/categories/get'
     }, ({ data }) => {
-      let cate_item = (data || []).map(item => {
-        return `<div><a href="${item.slug}" class="categories__banner" style="background-image:url('https://sss-dashboard.leanservices.work${item.thumbnail}.jpeg')"></a></div>`
+      let cat_item = (data || []).map(item => {
+        return `
+          <div><a href="${item.slug}" class="categories__banner" style="background-image:url(https://sss-dashboard.leanservices.work/${item.thumbnail}.jpeg)"></a></div>
+          `
       }).join('');
-      section.innerHTML = cate_item;
+      section.innerHTML = cat_item;
     })
     return section;
   },
   new_arrivals(product = {}) {
     let section = document.createElement("section");
     section.className = "new-arrivals__slide";
+    section.dataset.block = "new_arrivals"
     section.innerHTML = `
       <h2><a href="/">what's new</a></h2>
       <div class="gender__toggle">
@@ -205,134 +209,87 @@ export const __templates_home = {
         <button data-active="female_arrivals">For Her</button>
       </div>
       <div class="products__slider">
-        <div class="glide active" data-gender="male_arrivals" id="male_arrivals">
+        <div class="glide active"  data-catId="3vvRIM" data-gender="male_arrivals" id="male_arrivals">
           <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
+            <ul data-catId="3vvRIM" class="glide__slides">
                 ${__templates.busy_loading("show")}
             </ul>
           </div>
         </div>
-        <div class="glide" data-gender="female_arrivals" id="female_arrivals">
-        <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
+        <div class="glide" data-catId="y8Q15I" data-gender="female_arrivals" id="female_arrivals">
+          <div class="glide__track" data-glide-el="track">
+            <ul data-catId="y8Q15I" class="glide__slides">
                 ${__templates.busy_loading("show")}
             </ul>
           </div>
         </div>
       </div>
     `;
-    __requests(
-      {
-        method: "GET",
-        url: `product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true&webStock=true`,
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+
+    let get_item_list = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w/section/detail?type=${section.dataset.block}`,
         },
-      },
-      (res) => {
-        let products = res.data
-          .map(
-            (item) =>
-              `
-          <li class="glide__slide">
-            <div class="product">
-              <div class="thumbnail">
-                <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-              })"></span></a>
-              </div>
-              <div class="detail">
-                <h6 class="name">${item.name.toLowerCase()}</h6>
-                <div class="price">
-                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                  <p>${__currency_format(item.salePrice || item.price)}</p>
+        ({ data }) => {
+          let gender_block = section.querySelectorAll('[data-gender]')
+          gender_block.forEach(block => {
+            let product_gender = data.products.filter(product => product.catId.join(',').split(",").includes(block.dataset.catid))
+            let products = (product_gender || []).map(
+              (item) =>
+                `
+              <li class="glide__slide">
+                <div class="product">
+                  <div class="thumbnail">
+                  <a href="/p/${item.slug}">
+                    <span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                })">
+                    </span>
+                  </a>
+                  </div>
+                  <div class="detail">
+                    <h6 class="name">${item.name.toLowerCase()}</h6>
+                    <div class="price">
+                    ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                      <p>${__currency_format(item.salePrice || item.price)}</p>
+                    </div>
+                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                  </div>
                 </div>
-                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-              </div>
-            </div>
-          </li>
-        `
-          )
-          .join("");
-        let glide__track = section.querySelector("#male_arrivals .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#male_arrivals", {
-          type: "slider",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 20,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-            },
-          },
-        }).mount();
-      }
-    );
-    __requests(
-      {
-        method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
-      },
-      (res) => {
-        let products = res.data
-          .map(
-            (item) =>
-              `
-          <li class="glide__slide">
-            <div class="product">
-              <div class="thumbnail">
-                <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-              })"></span></a>
-              </div>
-              <h6 class="name">${item.name.toLowerCase()}</h6>
-              <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                <p>${__currency_format(item.salePrice || item.price)}</p>
-              </div>
-              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-            </div>
-          </li>
-        `
-          )
-          .join("");
-        let glide__track = section.querySelector("#female_arrivals .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#female_arrivals", {
-          type: "slider",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 20,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-            },
-          },
-        }).mount();
-      }
-    );
+              </li>
+            `
+            ).join("");
+            let glide_slides = block.querySelector(".glide__slides");
+            glide_slides.innerHTML = products || `
+            <li class="glide__slide">
+            </li>
+          `;
+            new Glide(`#${block.id}`, {
+              type: "carousel",
+              bound: true,
+              perView: 4,
+              autoplay: 5000,
+              gap: 20,
+              hoverpause: true,
+              peek: {
+                before: 0,
+                after: 100,
+              },
+              breakpoints: {
+                1024: {
+                  perView: 3,
+                },
+                480: {
+                  perView: 2,
+                },
+              },
+            }).mount();
+          })
+        }
+      );
+    }
+    get_item_list();
     let toggle_gender = section.querySelectorAll("[data-active]");
     toggle_gender.forEach((btn) => {
       btn.addEventListener("click", () => {
