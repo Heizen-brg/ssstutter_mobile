@@ -32,14 +32,16 @@ function list_campaign_winter() {
           ${__icons.new_ssstutter}
         </a>
       </div>
+      <!--
       <div class="pre-order-cart">${__icons.cart} pre-order <span>( ${cart_quantity} )</span></div>
+      -->
     </div>
     `;
-
+    /*
     div.querySelector(".pre-order-cart").addEventListener("click", () => {
       document.body.appendChild(pre_order_cart());
     });
-
+    */
     return div;
   }
 
@@ -65,11 +67,13 @@ function list_campaign_winter() {
     <div class="content">
       <h2>Warm Your Day Up</h2>
       <p>
-        BST Mùa đông đầu tiên của SSStutter trong tháng 11/2021, lấy cảm hứng từ các hoạt động thường ngày của một chàng trai SSStutter. Sau 2-4 tháng giãn cách, tháng 11 đánh dấu tháng đầu tiên mà 2 miền Nam - Bắc quay trở lại cuộc sống thường ngày. “Warm Up” - Khởi động lại, chính là từ khoá đã truyền cảm hứng cho chúng tôi trong BST mới này.
+        Sản phẩm đã kết thúc Preorder và chuẩn bị mở bán chính thức trong
       </p>
       <div>
         <br><br>
+        <!--
         <p style="margin-bottom: 4px; color: #444">Ưu đãi giảm 10% khi đặt hàng trước (Pre-Order)</p>
+        -->
         <p class="clock" style="min-height: 20px; color: #444"></p><br>
       </div>
       <u style="cursor: pointer; opacity: 0.65;">Xem danh sách sản phẩm</u>
@@ -80,7 +84,7 @@ function list_campaign_winter() {
       document.querySelector("#warm-up").scrollIntoView();
     });
 
-    let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
+    let end_date = new Date("Nov 12, 2021 21:30:00").getTime();
 
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
@@ -91,8 +95,6 @@ function list_campaign_winter() {
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       div.querySelector(".clock").innerHTML = `
-      Thời gian kết thúc: 
-      <span>${days}</span> ngày 
       <span>${hours}</span> giờ 
       <span>${minutes}</span> phút 
       <span>${seconds}</span> giây
@@ -100,7 +102,11 @@ function list_campaign_winter() {
 
       if (distance < 0) {
         clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = ``;
+        div.querySelector(".clock").innerHTML = `
+        <span>00</span> giờ 
+        <span>00</span> phút 
+        <span>00</span> giây
+        `;
       }
     }, 1000);
 
@@ -197,10 +203,10 @@ function list_campaign_winter() {
         })"></a>
         <p class="name">${product.name.toLowerCase()}</p>
         <p>
-          ${(product.price * 0.9).toLocaleString("en-US")} <span class="currency-symbol">₫</span>
-          <span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
+          ${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span>
+          <!--<span style="text-decoration: line-through; display: inline-block; margin-left: 6px; opacity: 0.6">
             ${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span>
-          </span>
+          </span>-->
         </p> 
         <p>+${product.color.length} màu</p>
         `;
@@ -278,33 +284,35 @@ function list_campaign_winter() {
     let div = create_element("div");
     div.classList.add("end");
     div.innerHTML = `
+    <!--
     <p style="margin-bottom: 4px; color: #444">Ưu đãi giảm 10% khi đặt hàng trước (Pre-Order)</p>
     <p class="clock" style="min-height: 20px; color: #444"></p><br>
+    -->
     `;
 
     let end_date = new Date("Nov 12, 2021 00:00:00").getTime();
 
-    let countdown = setInterval(() => {
-      let distance = end_date - Date.now();
+    // let countdown = setInterval(() => {
+    //   let distance = end_date - Date.now();
 
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //   let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+    //     hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    //     minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+    //     seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      div.querySelector(".clock").innerHTML = `
-      Thời gian kết thúc: 
-      <span>${days}</span> ngày 
-      <span>${hours}</span> giờ 
-      <span>${minutes}</span> phút 
-      <span>${seconds}</span> giây
-      `;
+    //   div.querySelector(".clock").innerHTML = `
+    //   Thời gian kết thúc:
+    //   <span>${days}</span> ngày
+    //   <span>${hours}</span> giờ
+    //   <span>${minutes}</span> phút
+    //   <span>${seconds}</span> giây
+    //   `;
 
-      if (distance < 0) {
-        clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = ``;
-      }
-    }, 1000);
+    //   if (distance < 0) {
+    //     clearInterval(countdown);
+    //     div.querySelector(".clock").innerHTML = ``;
+    //   }
+    // }, 1000);
 
     return div;
   }
