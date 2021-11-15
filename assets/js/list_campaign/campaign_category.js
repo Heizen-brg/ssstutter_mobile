@@ -116,7 +116,7 @@ function campaign_category_page(data) {
     return div;
   }
 
-  template.appendChild(page_header());
+  // template.appendChild(page_header());
   template.appendChild(page_banner());
   template.appendChild(section_product());
   return template;
