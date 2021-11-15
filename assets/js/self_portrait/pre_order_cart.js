@@ -35,8 +35,8 @@ function pre_order_cart() {
     div.querySelector('button').addEventListener('click', () => {
       template.remove();
       let cart_quantity = 0;
-      if (localStorage.getItem('pre-order-item')) {
-        JSON.parse(localStorage.getItem('pre-order-item')).map(item => {
+      if (localStorage.getItem('self-portrait-item')) {
+        JSON.parse(localStorage.getItem('self-portrait-item')).map(item => {
           cart_quantity += parseInt(item.quantity)
         });
       }
@@ -50,8 +50,8 @@ function pre_order_cart() {
   function cart_body() {
     let data_cart = [],
         total_bill = 0;
-    if (localStorage.getItem('pre-order-item')) {
-      data_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+    if (localStorage.getItem('self-portrait-item')) {
+      data_cart = JSON.parse(localStorage.getItem('self-portrait-item'));
       
       data_cart.map(item => {
         total_bill += (item.price * item.quantity);
@@ -154,7 +154,7 @@ function pre_order_cart() {
           quantity -= 1;
           cart_item.querySelector('.number').innerHTML = quantity;
           
-          let update_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+          let update_cart = JSON.parse(localStorage.getItem('self-portrait-item'));
           update_cart = update_cart.map(product => {
             if (product.variation.id == item_id) {
               product.quantity -= 1
@@ -162,7 +162,7 @@ function pre_order_cart() {
             return product;
           });
           
-          localStorage.setItem('pre-order-item', JSON.stringify(update_cart));
+          localStorage.setItem('self-portrait-item', JSON.stringify(update_cart));
           
           let total_bill = parseInt(div.querySelector('.total').textContent.replace(/,/g, ''));
           div.querySelector('.total').innerHTML = (total_bill - item.price).toLocaleString('en-US');
@@ -171,7 +171,7 @@ function pre_order_cart() {
           quantity -= 1;
           cart_item.querySelector('.number').innerHTML = quantity;
           
-          // let update_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+          // let update_cart = JSON.parse(localStorage.getItem('self-portrait-item'));
           update_cart.find(product => {
             if (product.variation.id == item_id) {
               product.quantity -= 1;
@@ -191,7 +191,7 @@ function pre_order_cart() {
           quantity += 1;
           cart_item.querySelector('.number').innerHTML = quantity;
           
-          let update_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+          let update_cart = JSON.parse(localStorage.getItem('self-portrait-item'));
           update_cart = update_cart.map(product => {
             if (product.variation.id == item_id) {
               product.quantity += 1
@@ -199,7 +199,7 @@ function pre_order_cart() {
             return product;
           });
           
-          localStorage.setItem('pre-order-item', JSON.stringify(update_cart));
+          localStorage.setItem('self-portrait-item', JSON.stringify(update_cart));
           
           let total_bill = parseInt(div.querySelector('.total').textContent.replace(/,/g, ''));
           div.querySelector('.total').innerHTML = (total_bill + item.price).toLocaleString('en-US');
@@ -207,7 +207,7 @@ function pre_order_cart() {
           quantity += 1;
           cart_item.querySelector('.number').innerHTML = quantity;
           
-          // let update_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+          // let update_cart = JSON.parse(localStorage.getItem('self-portrait-item'));
           update_cart.find(product => {
             if (product.variation.id == item_id) {
               product.quantity += 1;
@@ -222,7 +222,7 @@ function pre_order_cart() {
           let item_id = cart_item.getAttribute('data-id');
           
           cart_item.remove();
-          let update_cart = JSON.parse(localStorage.getItem('pre-order-item'));
+          let update_cart = JSON.parse(localStorage.getItem('self-portrait-item'));
           update_cart = update_cart
             .map((product) => {
               if (product.variation.id == item_id) {
@@ -232,7 +232,7 @@ function pre_order_cart() {
             })
             .filter((i) => !!i);
           
-          localStorage.setItem('pre-order-item', JSON.stringify(update_cart));
+          localStorage.setItem('self-portrait-item', JSON.stringify(update_cart));
           let total_bill = parseInt(div.querySelector('.total').textContent.replace(/,/g, ''));
           div.querySelector('.total').innerHTML = (total_bill - (item.price * item.quantity)).toLocaleString('en-US');
         });
@@ -241,15 +241,15 @@ function pre_order_cart() {
         return cart_item;
       });
     }
-    
+    /*
     div.querySelector('.content.right button').addEventListener('click', () => {
       location.href = '/editorial/checkout';
     });
-    
+    */
     return div;
   }
   
-  // template_inner.appendChild(cart_header());
+  template_inner.appendChild(cart_header());
   template_inner.appendChild(cart_body());
   template.appendChild(template_inner);
   

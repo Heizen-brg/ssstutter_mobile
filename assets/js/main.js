@@ -20,6 +20,10 @@ import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
 import campaign_category_page from "./list_campaign/campaign_category.js";
 import { campaign_product_detail_page } from "./list_campaign/campaign_product_detail.js";
 import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checkout.js";
+//
+// women campaign
+//
+import self_portrait_campaign from './self_portrait/self_portrait.js';
 
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
@@ -86,6 +90,7 @@ export const __render = {
       "/editorial/look": (params) => __render.campaign_category_page(params),
       "/flash-sale": () => __render.flash_sale(),
       "/editorial/checkout": () => __render.check_out_pre_order(),
+      "/self-portrait": () => __render.self_portrait_campaign()
     };
 
     if (pathname.includes(`/p/`)) {
@@ -419,13 +424,27 @@ export const __render = {
   },
 
   list_campaign_winter() {
-    let blocks = [list_campaign_winter(), __templates_footer.footer()];
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right()
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
+      list_campaign_winter(), 
+      __templates_footer.footer()
+    ];
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
   },
   campaign_product_detail_page(params) {
     let blocks = [
-      campaign_product_detail_page.page_header(),
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right()
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
       campaign_product_detail_page.product_gallery(params.product),
       campaign_product_detail_page.flatlay_view(params.product),
       campaign_product_detail_page.variation(params.product),
@@ -438,7 +457,12 @@ export const __render = {
 
   check_out_pre_order() {
     let blocks = [
-      __templates_checkout_pre_order.page_header(),
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right()
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
       __templates_checkout_pre_order.checkout_form(),
       __templates_checkout_pre_order.checkout__method(),
       __templates_checkout_pre_order.checkout__cart(),
@@ -449,9 +473,52 @@ export const __render = {
   },
 
   campaign_category_page(params) {
-    let blocks = [campaign_category_page(params), __templates_footer.footer()];
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right()
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
+      campaign_category_page(params), 
+      __templates_footer.footer()
+    ];
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
+  },
+  //
+  // campaign đồ nữ
+  //
+  self_portrait_campaign() {
+    let blocks = [self_portrait_campaign(), __templates_footer.footer()];
+    this.build("self-portrait-campaign", blocks);
+    __templates.api_loading("hide");
+    new Glide("#winter-1", {
+      type: "slider",
+      bound: true,
+      perView: 4,
+      gap: 20,
+      breakpoints: {
+        1024: {
+          perView: 4,
+        },
+        768: {
+          perView: 3,
+          peek: {
+            before: 0,
+            after: 0,
+          },
+        },
+        480: {
+          gap: 5,
+          perView: 2,
+          peek: {
+            before: 0,
+            after: 80,
+          },
+        },
+      },
+    }).mount();
   },
   /*
 flash_sale() {

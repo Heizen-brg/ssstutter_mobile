@@ -317,7 +317,7 @@ function list_campaign_winter() {
     return div;
   }
 
-  template.appendChild(page_header());
+  // template.appendChild(page_header());
   template.appendChild(section_video());
   template.appendChild(section_banner());
   template.appendChild(section_collections());
