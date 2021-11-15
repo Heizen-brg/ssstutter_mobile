@@ -172,7 +172,6 @@ export const __render = {
       }),
       __templates_header.cart(),
       banner,
-      __templates_home.home_video(),
       __templates_home.subcription(),
       __templates_home.categories(),
       new_arrivals,
