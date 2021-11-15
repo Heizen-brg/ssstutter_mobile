@@ -167,41 +167,32 @@ export const __templates_home = {
     // return div;
   },
 
-  home_video() {
-    let div = document.createElement("section");
-    div.classList.add("home-video");
-    div.innerHTML = `
-    <div class="video">
-      <video autoplay playsinline muted loop>
-        <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
-      </video>
-    </div>
-    `;
-
-    // return div;
-  },
-
   categories() {
     let section = document.createElement("section");
     section.className = "categories__banner";
 
-    __requests({
-      method: "GET",
-      url: 'https://sss-dashboard.leanservices.work/w/categories/get'
-    }, ({ data }) => {
-      let cat_item = (data || []).map(item => {
-        return `
+    __requests(
+      {
+        method: "GET",
+        url: "https://sss-dashboard.leanservices.work/w/categories/get",
+      },
+      ({ data }) => {
+        let cat_item = (data || [])
+          .map((item) => {
+            return `
           <div><a href="${item.slug}" class="categories__banner" style="background-image:url(https://sss-dashboard.leanservices.work/${item.thumbnail}.jpeg)"></a></div>
-          `
-      }).join('');
-      section.innerHTML = cat_item;
-    })
+          `;
+          })
+          .join("");
+        section.innerHTML = cat_item;
+      }
+    );
     return section;
   },
   new_arrivals(product = {}) {
     let section = document.createElement("section");
     section.className = "new-arrivals__slide";
-    section.dataset.block = "new_arrivals"
+    section.dataset.block = "new_arrivals";
     section.innerHTML = `
       <h2><a href="/">what's new</a></h2>
       <div class="gender__toggle">
@@ -233,18 +224,21 @@ export const __templates_home = {
           url: `https://sss-dashboard.leanservices.work/w/section/detail?type=${section.dataset.block}`,
         },
         ({ data }) => {
-          let gender_block = section.querySelectorAll('[data-gender]')
-          gender_block.forEach(block => {
-            let product_gender = data.products.filter(product => product.catId.join(',').split(",").includes(block.dataset.catid))
-            let products = (product_gender || []).map(
-              (item) =>
-                `
+          let gender_block = section.querySelectorAll("[data-gender]");
+          gender_block.forEach((block) => {
+            let product_gender = data.products.filter((product) =>
+              product.catId.join(",").split(",").includes(block.dataset.catid)
+            );
+            let products = (product_gender || [])
+              .map(
+                (item) =>
+                  `
               <li class="glide__slide">
                 <div class="product">
                   <div class="thumbnail">
                   <a href="/p/${item.slug}">
                     <span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                })">
+                  })">
                     </span>
                   </a>
                   </div>
@@ -259,9 +253,12 @@ export const __templates_home = {
                 </div>
               </li>
             `
-            ).join("");
+              )
+              .join("");
             let glide_slides = block.querySelector(".glide__slides");
-            glide_slides.innerHTML = products || `
+            glide_slides.innerHTML =
+              products ||
+              `
             <li class="glide__slide">
             </li>
           `;
@@ -285,10 +282,10 @@ export const __templates_home = {
                 },
               },
             }).mount();
-          })
+          });
         }
       );
-    }
+    };
     get_item_list();
     let toggle_gender = section.querySelectorAll("[data-active]");
     toggle_gender.forEach((btn) => {
