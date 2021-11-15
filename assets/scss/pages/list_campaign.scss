@@ -590,7 +590,9 @@
     background: #cecece;
   }
 }
-
+.overflow-hidden {
+  overflow: hidden !important;
+}
 .self-portrait-campaign {
   .section-slide {
     padding: 40px 5px;

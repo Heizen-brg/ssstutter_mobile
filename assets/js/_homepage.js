@@ -52,9 +52,11 @@ export const __templates_home = {
           let banner_item = (data || [])
             .map((item) => {
               return `
-            <li class="glide__slide"><a target="_blank" href="${item.link
-                }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${item.cta ? `<button style="background-color=${item.color}">${item.cta}</button>` : ""
-                }</div></a></li>
+            <li class="glide__slide"><a target="_blank" href="${
+              item.link
+            }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${
+                item.cta ? `<button style="background-color=${item.color}">${item.cta}</button>` : ""
+              }</div></a></li>
             `;
             })
             .join("");
@@ -101,9 +103,11 @@ export const __templates_home = {
           let banner_item = (data || [])
             .map((item) => {
               return `
-              <li class="glide__slide"><a target="_blank" href="${item.link
-                }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${item.cta ? `<button>${item.cta}</button>` : ""
-                }</div></a></li>
+              <li class="glide__slide"><a target="_blank" href="${
+                item.link
+              }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${
+                item.cta ? `<button>${item.cta}</button>` : ""
+              }</div></a></li>
               `;
             })
             .join("");
@@ -127,44 +131,206 @@ export const __templates_home = {
     div.classList.add("subcription");
     div.innerHTML = `
     <div class="container">
-      <div class="image" style="background-image: url(assets/img/test.jpg);"></div>
+      <div class="image" style="background-image: url(assets/img/test.jpg);"><a href="/editorial" target="_blank"></a></div>
       <div class="content">
-        <h2>First Collection<br>Winter 2021</h2>
-        <p>Mở bán Pre-Order tại Website<br></p>
-        <p class="clock"></p>
+        <h2>New collection</h2>
         <div class="btn-row">
-          <a href="https://m.me/263972407066786?ref=3110" target="_blank">Nhận thông tin sớm qua Messenger tại đây</a>
+          <a href="/editorial" target="_blank">Xem chi tiết</a>
         </div>
       </div>
     </div>
     `;
 
-    let end_date = new Date("Nov 04, 2021 21:30:00").getTime();
+    return div;
+  },
 
-    let countdown = setInterval(() => {
-      let distance = end_date - Date.now();
+  editorial_product() {
+    let div = document.createElement("section");
+    div.classList.add("editorial-slide-pc");
+    div.innerHTML = `
+    <p class="title">"Warm your day up"</p>
+    <p class="sub-title">Collection Fall / Winter 2021</p>
+    <div class="products__slider">
+      <div class="glide active" id="editorial_products">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides">
+             
+          </ul>
+        </div>
+      </div>
+    </div>
+    `;
 
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      div.querySelector(".clock").innerHTML = `
-      <span>${days}</span> ngày 
-      <span>${hours}</span> giờ 
-      <span>${minutes}</span> phút 
-      <span>${seconds}</span> giây
-      `;
-
-      if (distance < 0) {
-        clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = `
-        Sự kiện đã kết thúc
-        `;
+    __requests(
+      {
+        method: "GET",
+        url: `product/filter/web?sort=up&catId=newColl&media=true`,
+        header: {
+          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+        },
+      },
+      (res) => {
+        let products = res.data
+          .map(
+            (item) =>
+              `
+          <li class="glide__slide">
+            <div class="product">
+              <div class="thumbnail">
+                <a href="/p/${
+                  item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                item.extensions.media.featured
+              })"></span></a>
+              </div>
+              <div class="detail">
+                <h6 class="name">${item.name.toLowerCase()}</h6>
+                <div class="price">
+                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                  <p>${__currency_format(item.salePrice || item.price)}</p>
+                </div>
+                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+              </div>
+            </div>
+          </li>
+        `
+          )
+          .join("");
+        let glide__track = div.querySelector("#editorial_products .glide__slides");
+        glide__track.innerHTML = products;
+        new Glide("#editorial_products", {
+          type: "slider",
+          bound: true,
+          perView: 4,
+          autoplay: 5000,
+          gap: 20,
+          hoverpause: true,
+          peek: {
+            before: 0,
+            after: 100,
+          },
+          breakpoints: {
+            1024: {
+              perView: 3,
+            },
+            480: {
+              perView: 2,
+            },
+          },
+        }).mount();
       }
-    }, 1000);
+    );
 
-    // return div;
+    return div;
+  },
+  mobile_editorial_product() {
+    let section = document.createElement("section");
+    section.className = "editorial-slide-sp";
+    section.innerHTML = `
+    <p class="title">"Warm your day up"</p>
+    <p class="sub-title">Collection Fall / Winter 2021</p>
+      <div class="products__slider">
+        <div class="glide active" id="editorial_products1">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              ${__templates.busy_loading("show")}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+
+    __requests(
+      {
+        method: "GET",
+        url: "product/filter/web?sort=down&catId=newColl&media=true",
+        header: {
+          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+        },
+      },
+      (res) => {
+        let item_per_view = 4;
+        let stop_loop = Math.ceil(res.length / item_per_view);
+        let products = res.data
+          .map((item, index) => {
+            let current_index = index * 2;
+            if (index - 1 > stop_loop) return "";
+            item = res.data[current_index];
+            if (!item) return "";
+            let next_item = res.data[current_index + 1];
+            if (next_item) {
+              next_item = `
+          <div class="product">
+            <div class="thumbnail">
+              <a href="/p/${
+                next_item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                next_item.extensions.media.featured
+              })"></span></a>
+            </div>
+            <div class="detail">
+              <h6 class="name">${next_item.name.toLowerCase()}</h6>
+              <div class="price">
+              ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
+                <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+              </div>
+              ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
+            </div>
+          </div>
+          `;
+            } else next_item = "";
+
+            return `
+      <li class="glide__slide">
+        <div class="product">
+          <div class="thumbnail">
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+              item.extensions.media.featured
+            })"></span></a>
+          </div>
+          <div class="detail">
+            <h6 class="name">${item.name.toLowerCase()}</h6>
+            <div class="price">
+              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+              <p>${__currency_format(item.salePrice || item.price)}</p>
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+          </div>
+        </div>
+          ${next_item}
+      </li>
+        `;
+          })
+          .join("");
+        let glide__track = section.querySelector("#editorial_products1 .glide__slides");
+        glide__track.innerHTML = products;
+        new Glide("#editorial_products1", {
+          type: "carousel",
+          bound: true,
+          perView: 4,
+          autoplay: 5000,
+          gap: 10,
+          hoverpause: true,
+          peek: {
+            before: 0,
+            after: 100,
+          },
+          breakpoints: {
+            1024: {
+              perView: 3,
+            },
+            480: {
+              perView: 2,
+              peek: {
+                before: 0,
+                after: 0,
+              },
+            },
+          },
+        }).mount();
+      }
+    );
+    return section;
   },
 
   categories() {
@@ -237,7 +403,8 @@ export const __templates_home = {
                 <div class="product">
                   <div class="thumbnail">
                   <a href="/p/${item.slug}">
-                    <span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                    <span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                    item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
                   })">
                     </span>
                   </a>
@@ -360,9 +527,11 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
-                })"></span></a>
+              <a href="/p/${
+                next_item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                next_item.extensions.media.featured
+              })"></span></a>
             </div>
             <div class="detail">
               <h6 class="name">${next_item.name.toLowerCase()}</h6>
@@ -380,8 +549,9 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-              })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+              item.extensions.media.featured
+            })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -447,9 +617,11 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
-                })"></span></a>
+              <a href="/p/${
+                item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                next_item.extensions.media.featured
+              })"></span></a>
             </div>
             <h6 class="name">${next_item.name}</h6>
             <div class="price">
@@ -465,8 +637,9 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-              })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+              item.extensions.media.featured
+            })"></span></a>
           </div>
           <h6 class="name">${item.name}</h6>
           <div class="price">
@@ -545,8 +718,10 @@ export const __templates_home = {
                   <li class="glide__slide">
                     <div class="product">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+                        <a href="/p/${
+                          item.slug
+                        }"><span style="background-image:url(https://api.leanservices.work/product/static/${
+                item.extensions.media.featured
               })"></span></a>
                       </div>
                       <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -617,8 +792,9 @@ export const __templates_home = {
       <li>
         <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-              })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+              item.extensions.media.featured
+            })"></span></a>
         <div>
           <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -651,8 +827,9 @@ export const __templates_home = {
       <li>
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
-              })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
+              item.extensions.media.featured
+            })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name}</h6>
@@ -746,9 +923,11 @@ export const __templates_home = {
           .map((item) => {
             return `
         <li class="glide__slide">
-          <a href="https://ssstutter.com/starter/product/${item.slug
-              }"  target="_blank" style="background-image:url(https://ipo.leanservices.work/w/static/${item.media.featured ? item.media.featured : ""
-              })">
+          <a href="https://ssstutter.com/starter/product/${
+            item.slug
+          }"  target="_blank" style="background-image:url(https://ipo.leanservices.work/w/static/${
+              item.media.featured ? item.media.featured : ""
+            })">
             <span>${item.name}</span>
           </a>
         </li>
