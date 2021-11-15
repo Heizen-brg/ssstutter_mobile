@@ -53,6 +53,9 @@
   .new-arrivals__slide {
     // padding: 5%;
     padding: 25px 0;
+    @media (min-width: 768px) {
+      padding: 25px 10px;
+    }
     @media (min-width: 1024px) {
       padding: 5%;
     }
@@ -126,6 +129,9 @@
 
   .weekly__best {
     padding: 25px 0;
+    @media (min-width: 768px) {
+      padding: 25px 10px;
+    }
     @media (min-width: 1024px) {
       padding: 5%;
     }
@@ -264,42 +270,59 @@
   .subcription {
     position: relative;
     margin-top: -2px;
-    @media (min-width: 1024px) {
-      padding: 20px 0;
+    @media (min-width: 768px) {
+      padding: 80px 0 40px;
     }
     .container {
       display: grid;
       max-width: 1140px;
       margin: auto;
-      @media (min-width: 1024px) {
+      @media (min-width: 768px) {
+        padding: 0 25px;
         grid-gap: 28px;
+        grid-template: auto / 280px 1fr;
+      }
+      @media (min-width: 1024px) {
         grid-template: auto / 460px 1fr;
       }
       .image {
-        padding-top: (14 / 9 * 100%);
+        order: 1;
+        padding-top: (5 / 4 * 100%);
         background: #cecece no-repeat bottom center;
         background-size: cover;
+        position: relative;
         @media (min-width: 768px) {
+          order: 0;
           padding-top: (5 / 4 * 100%);
+        }
+        a {
+          position: absolute;
+          display: block;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
         }
       }
       .content {
+        order: 0;
         display: flex;
         justify-content: center;
         flex-direction: column;
         // text-align: center;
-        padding: 40px 20px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        height: calc(100% - 50px);
-        transform: translate(-50%, -50%);
+        // padding: 40px 20px;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // height: calc(100% - 50px);
+        // transform: translate(-50%, -50%);
         // -webkit-backdrop-filter: blur(10px);
         // backdrop-filter: blur(10px);
         // background: rgba(155, 155, 155, .2);
-        width: calc(100% - 40px);
-        color: #fff;
-        @media (min-width: 1024px) {
+        // width: calc(100% - 40px);
+        // color: #fff;
+        @media (min-width: 768px) {
+          order: 1;
           height: auto;
           width: auto;
           padding: 40px;
@@ -322,11 +345,23 @@
         }
         h2 {
           font-family: serif;
-          font-size: 40px;
-          text-shadow: 0 0 1px rgba(0, 0, 0, 1);
-          margin-bottom: 28px;
-          text-transform: capitalize;
-          line-height: 1.2;
+          margin: 28px 0 18px;
+          font-size: 16px;
+          padding: 0 10px;
+          @media (min-width: 768px) {
+            padding: 0;
+            font-family: serif;
+            font-size: 42px;
+            margin: 0 0 28px;
+            text-transform: capitalize;
+            line-height: 1.2;
+          }
+          br {
+            display: none;
+            @media (min-width: 768px) {
+              display: inherit;
+            }
+          }
         }
         .clock {
           min-height: 24px;
@@ -334,12 +369,12 @@
         }
         .btn-row {
           margin-top: auto;
-          @media (min-width: 1024px) {
+          @media (min-width: 768px) {
             margin-top: 0;
           }
         }
         a {
-          display: inline-block;
+          display: none;
           padding: 14px 22px;
           border: 1px solid #fff;
           color: #fff;
@@ -348,8 +383,7 @@
           background: rgba(0, 0, 0, .15);
           @media (min-width: 768px) {
             font-size: 14px;
-          }
-          @media (min-width: 1024px) {
+            display: inline-block;
             background: transparent;
             border-color: #191919;
             color: #191919;
@@ -357,6 +391,41 @@
           }
         }
       }
+    }
+  }
+  
+  .editorial-slide-pc,
+  .editorial-slide-sp {
+    padding: 25px 0;
+    @media (min-width: 768px) {
+      padding: 25px 10px;
+    }
+    @media (min-width: 1024px) {
+      padding: 40px 5% 0;
+    }
+    .title {
+      padding: 0 10px 10px;
+      margin-bottom: 14px;
+      font-weight: 600;
+      @media (min-width: 768px) {
+        font-size: 16px;
+        margin-bottom: 28px;
+        text-align: center;
+      }
+    }
+  }
+  
+  .editorial-slide-pc {
+    display: none;
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+  
+  .editorial-slide-sp {
+    display: block;
+    @media (min-width: 768px) {
+      display: none;
     }
   }
   

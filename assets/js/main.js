@@ -176,9 +176,11 @@ export const __render = {
       }),
       __templates_header.cart(),
       banner,
-      __templates_home.home_video(),
-      __templates_home.subcription(),
+      // __templates_home.home_video(),
       __templates_home.categories(),
+      __templates_home.subcription(),
+      __templates_home.editorial_product(),
+      __templates_home.mobile_editorial_product(),
       new_arrivals,
       __templates_home.stylepick(),
       __templates_home.weekly(),
@@ -429,6 +431,9 @@ export const __render = {
         left: __templates_header.left(),
         right: __templates_header.right()
       }),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
       __templates_header.megamenu(),
       __templates_header.cart(),
       list_campaign_winter(), 
@@ -442,6 +447,9 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right()
+      }),
+      __templates_header.search({
+        option: __templates.related_product(),
       }),
       __templates_header.megamenu(),
       __templates_header.cart(),
@@ -461,6 +469,9 @@ export const __render = {
         left: __templates_header.left(),
         right: __templates_header.right()
       }),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
       __templates_header.megamenu(),
       __templates_header.cart(),
       __templates_checkout_pre_order.checkout_form(),
@@ -477,6 +488,9 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right()
+      }),
+      __templates_header.search({
+        option: __templates.related_product(),
       }),
       __templates_header.megamenu(),
       __templates_header.cart(),
