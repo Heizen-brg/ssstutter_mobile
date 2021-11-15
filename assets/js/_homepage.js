@@ -147,7 +147,8 @@ export const __templates_home = {
     let div = document.createElement("section");
     div.classList.add('editorial-slide-pc');
     div.innerHTML = `
-    <p class="title">Warm your day up</p>
+    <p class="title">"Warm your day up"</p>
+    <p class="sub-title">Collection Fall / Winter 2021</p>
     <div class="products__slider">
       <div class="glide active" id="editorial_products">
         <div class="glide__track" data-glide-el="track">
@@ -225,7 +226,8 @@ export const __templates_home = {
     let section = document.createElement("section");
     section.className = "editorial-slide-sp";
     section.innerHTML = `
-    <p class="title">Warm your day up</p>
+    <p class="title">"Warm your day up"</p>
+    <p class="sub-title">Collection Fall / Winter 2021</p>
       <div class="products__slider">
         <div class="glide active" id="editorial_products1">
           <div class="glide__track" data-glide-el="track">

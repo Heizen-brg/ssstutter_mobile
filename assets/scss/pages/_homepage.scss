@@ -348,12 +348,12 @@
           margin: 28px 0 18px;
           font-size: 16px;
           padding: 0 10px;
+          text-transform: capitalize;
           @media (min-width: 768px) {
             padding: 0;
             font-family: serif;
             font-size: 42px;
             margin: 0 0 28px;
-            text-transform: capitalize;
             line-height: 1.2;
           }
           br {
@@ -405,11 +405,18 @@
     }
     .title {
       padding: 0 10px 10px;
-      margin-bottom: 14px;
       font-weight: 600;
       @media (min-width: 768px) {
         font-size: 16px;
-        margin-bottom: 28px;
+        text-align: center;
+      }
+    }
+    .sub-title {
+      padding: 0 10px;
+      margin-bottom: 18px;
+      color: #acacac;
+      @media (min-width: 768px) {
+        margin-bottom: 32px;
         text-align: center;
       }
     }
