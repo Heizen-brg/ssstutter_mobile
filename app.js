@@ -63,7 +63,7 @@ app.get("/c/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: `${info.name.replace("-", "")}`,
-        command: `const category_detail = ${JSON.stringify(info)}`,
+        command: `var category_detail = ${JSON.stringify(info)}`,
       })
     );
   }
@@ -93,7 +93,7 @@ app.get("/p/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: info[0].name,
-        command: `const product_master_detail = ${JSON.stringify(info[0])}`,
+        command: `var product_master_detail = ${JSON.stringify(info[0])}`,
       })
     );
   }
@@ -183,7 +183,7 @@ app.get("/campaign/:slug", async (req, res, next) => {
     res.send(
       client_view.html({
         title: campaign_detail.title,
-        command: `const campaign_detail = ${JSON.stringify(campaign_detail)}`,
+        command: `var campaign_detail = ${JSON.stringify(campaign_detail)}`,
       })
     );
   }
@@ -264,7 +264,7 @@ app.get("/blog/article/:slug", async (req, res, next) => {
   res.send(
     client_view.html({
       title: blog_detail.title,
-      command: `const blog_detail = ${JSON.stringify(blog_detail)}`,
+      command: `var blog_detail = ${JSON.stringify(blog_detail)}`,
     })
   );
 });
@@ -299,7 +299,7 @@ app.get("/search", async (req, res, next) => {
   res.send(
     client_view.html({
       title: "TÌM KIẾM",
-      command: `const search_result = ${JSON.stringify(data)} `,
+      command: `var search_result = ${JSON.stringify(data)} `,
     })
   );
 });
@@ -317,10 +317,10 @@ app.get("/editorial", (req, res, next) => {
 app.get("/self-portrait", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
-   client_view.html({
-     title: "SELF PORTRAIT",
-     command: "",
-   })
+    client_view.html({
+      title: "SELF PORTRAIT",
+      command: "",
+    })
   );
 });
 
@@ -328,29 +328,29 @@ app.get("/self-portrait/product/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let product_data;
   try {
-   product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
-     headers: {
-       Authorization: `by_passs`,
-     },
-   });
+    product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
+      headers: {
+        Authorization: `by_passs`,
+      },
+    });
   } catch (err) {
-   res.setHeader("Content-Type", "text/html");
-   res.status(404).send(client_view.error_404({}));
-   console.log(err.message);
-   return;
+    res.setHeader("Content-Type", "text/html");
+    res.status(404).send(client_view.error_404({}));
+    console.log(err.message);
+    return;
   }
   res.setHeader("Authorization", "by_passs");
   res.setHeader("Content-Type", "text/html");
   let info = product_data.data.data;
   if (!info || !info.length) {
-   res.status(404).send(client_view.error_404({}));
+    res.status(404).send(client_view.error_404({}));
   } else {
-   res.send(
-     client_view.html({
-       title: info[0].name,
-       command: `var product_sefl_portrait_detail = ${JSON.stringify(info[0])}`,
-     })
-   );
+    res.send(
+      client_view.html({
+        title: info[0].name,
+        command: `var product_sefl_portrait_detail = ${JSON.stringify(info[0])}`,
+      })
+    );
   }
 });
 

@@ -1,6 +1,6 @@
-import { __render } from "../main.js";
+import { __render, __requests } from "../main.js";
 import { __size_guide_data } from "./_data.js";
-import { __currency_format } from "./_function.js";
+import { __get_voucher, __show_cart_item, __show_cart_quantity } from "./_function.js";
 import { __icons } from "./_icons.js";
 export const __templates_modal = {
   overlay(params = {}) {
@@ -207,23 +207,78 @@ export const __templates_modal = {
     `;
     return div;
   },
-  banking_payment_progress(params) {
+
+  bag_combo_modal() {
     let div = document.createElement('div');
-    div.className = 'banking__progress';
+    div.className = 'combo__modal';
     div.innerHTML = `
-      ${__icons.ssstutter}
-        <h5>Vui lòng chuyển khoản theo hướng dẫn!</h5>
-        <ul>
-          <li>Số tiền: ${__currency_format(params.moneyTotal)} </li>
-          <li>Ngân hàng : Vietcombank chi nhánh Hà Nội</li>
-          <li>Chủ tài khoản: ĐẶNG TRUNG ĐỨC</li>
-          <li>Số tài khoản: 0851 0000 13560</li>
-          <li>Nội dung : TÊN VÀ SỐ ĐIỆN THOẠI</li>
-          <li>Sau khi chuyển khoản thành công quý khách vui lòng lưu lại hóa đơn giao dịch SSStutter sẽ liên hệ xác nhận đơn trong vòng 24h </li>
-        </ul>
-        <p>Cảm ơn bạn đã ủng hộ SSStutter !</p>
-      <a href="/">Tiếp tục mua sắm</a>
+      <h1>Ưu đãi khi mua túi kèm sách</h1>
+      <h3>Combo 1 túi & 1 sách bất kỳ với giá 449.000k</h3>
+      <h3>Combo 1 túi & 2 sách với giá 549.000k</h3>
+      <ul>
+        <li data-value="WiUqsm7fw6uR2Chu2Ck16lp5x3LVwFuV">
+          <label>
+            <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637053625381.jpeg)"></span>
+            <p>SPIDERUM - SÁCH NGÀNH SÁNG TẠO CÓ GÌ?</p>
+            <div><button>Chọn</button></div>
+          </label>
+        </li>
+        <li data-value="CVTzXiE4RuXbX5Z7Bq6s37iXZW2B6P3D">
+          <label>
+            <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637053578403.jpeg)"></span>
+            <p>SPIDERUM - SÁCH NGƯỜI TRONG MUÔN NGHỀ</p>
+            <div><button>Chọn</button></div>
+          </label>
+        </li>
+        <li data-value="WiUqsm7fw6uR2Chu2Ck16lp5x3LVwFuV,CVTzXiE4RuXbX5Z7Bq6s37iXZW2B6P3D">
+          <label>
+            <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637053643783.jpeg)"></span>
+            <p>SÁCH NGƯỜI TRONG MUÔN NGHỀ & SÁCH NGÀNH SÁNG TẠO CÓ GÌ?</p>
+            <div><button>Chọn</button></div>
+          </label>
+        </li>
+      </ul>
     `;
+    let book_label = div.querySelectorAll('li');
+    book_label.forEach(book => {
+      book.addEventListener('click', (e) => {
+        e.preventDefault();
+        __requests({
+          method: "GET",
+          url: `product/filter/web?ids=${book.dataset.value}`
+        }, ({ data }) => {
+          if (!data) data = []
+          console.log(data)
+          data = data.map(i => {
+            return {
+              color: "transparent",
+              colorId: "000",
+              colorName: "Ngẫu nhiên",
+              id: i.id,
+              media: i.extensions.media,
+              name: i.name,
+              price: i.price,
+              quantity: 1,
+              salePrice: i.salePrice,
+              size: "F",
+              slug: i.slug,
+              variation: i.variation[0]
+            }
+          })
+          let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
+            ? JSON.parse(localStorage.getItem("cartItem"))
+            : [];
+          let cart_menu = document.querySelector('[data-menu="cart"]');
+          cart_selected = [...cart_selected, ...data]
+          localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+          cart_menu.classList.add("active");
+          __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+          __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+          __get_voucher({ discountDiv: cart_menu });
+        })
+      })
+    })
+
     return div;
   }
 }

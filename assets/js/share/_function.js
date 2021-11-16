@@ -53,19 +53,17 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         product_template.innerHTML = `
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-        })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+          })"></span></a>
         </div>
         <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
           <div class="price">
-            ${
-              item.salePrice
-                ? `<p>${__currency_format(item.salePrice)}</p>
+            ${item.salePrice
+            ? `<p>${__currency_format(item.salePrice)}</p>
               <p class="discount">${__currency_format(item.price)}</p> `
-                : `<p>${__currency_format(item.price)}</p>`
-            }
+            : `<p>${__currency_format(item.price)}</p>`
+          }
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           <div class="color">
@@ -123,11 +121,10 @@ export const __show_cart_item = (wrapper, total, div) => {
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-        prod.media[`color_${prod.colorId}_thumbnail`]
-          ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".jpeg")
+      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${prod.media[`color_${prod.colorId}_thumbnail`]
+          ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
           : "no_image.png"
-      })">
+        })">
       </a>
       <div>
         <h6>${prod.name}</h6>
@@ -208,7 +205,7 @@ export const __show_cart_item = (wrapper, total, div) => {
             }
           );
         } else {
-          if (input_quantity.value == 0) return false;
+          if (input_quantity.value == 1) return false;
           input_quantity.value--;
           init_quantity_value(input_quantity.value, input_quantity.dataset.index);
         }

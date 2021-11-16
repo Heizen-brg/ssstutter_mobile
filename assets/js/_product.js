@@ -611,7 +611,7 @@ export const __templates_product = {
                   return i;
                 });
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-                cart_menu.classList.add("active");
+                if (params.id !== "fpf6QW3v2OC0b1TX9WQb6QNAw13BeNHA") cart_menu.classList.add("active");
                 __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
                 __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
                 __get_voucher({ discountDiv: cart_menu });
@@ -633,6 +633,9 @@ export const __templates_product = {
                 __get_voucher({ discountDiv: cart_menu });
               }
             );
+          }
+          if (params.id == "fpf6QW3v2OC0b1TX9WQb6QNAw13BeNHA") {
+            __templates_modal.overlay({ content: __templates_modal.bag_combo_modal() })
           }
         });
       }
