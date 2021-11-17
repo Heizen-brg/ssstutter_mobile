@@ -23,7 +23,7 @@ import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checko
 //
 // women campaign
 //
-import self_portrait_campaign from './self_portrait/self_portrait.js';
+import self_portrait_campaign from "./self_portrait/self_portrait.js";
 
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
@@ -90,7 +90,7 @@ export const __render = {
       "/editorial/look": (params) => __render.campaign_category_page(params),
       "/flash-sale": () => __render.flash_sale(),
       "/editorial/checkout": () => __render.check_out_pre_order(),
-      "/self-portrait": () => __render.self_portrait_campaign()
+      "/self-portrait": () => __render.self_portrait_campaign(),
     };
 
     if (pathname.includes(`/p/`)) {
@@ -168,6 +168,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 1550,
       }),
       __templates_header.megamenu(),
@@ -197,6 +198,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 400,
       }),
       __templates_header.megamenu(),
@@ -220,6 +222,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -242,6 +245,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -263,6 +267,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -282,6 +287,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -300,6 +306,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -318,6 +325,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -338,6 +346,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -357,6 +366,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -379,6 +389,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -397,6 +408,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
@@ -414,6 +426,7 @@ export const __render = {
       __templates_header.header({
         left: __templates_header.left(),
         right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
       __templates_header.cart(),
@@ -429,7 +442,8 @@ export const __render = {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
-        right: __templates_header.right()
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.search({
         option: __templates.related_product(),
@@ -437,7 +451,7 @@ export const __render = {
       __templates_header.megamenu(),
       __templates_header.cart(),
       list_campaign_winter(),
-      __templates_footer.footer()
+      __templates_footer.footer(),
     ];
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
@@ -446,7 +460,8 @@ export const __render = {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
-        right: __templates_header.right()
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.search({
         option: __templates.related_product(),
@@ -467,7 +482,8 @@ export const __render = {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
-        right: __templates_header.right()
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.search({
         option: __templates.related_product(),
@@ -487,7 +503,8 @@ export const __render = {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
-        right: __templates_header.right()
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
       }),
       __templates_header.search({
         option: __templates.related_product(),
@@ -495,7 +512,7 @@ export const __render = {
       __templates_header.megamenu(),
       __templates_header.cart(),
       campaign_category_page(params),
-      __templates_footer.footer()
+      __templates_footer.footer(),
     ];
     this.build("winter-campaign", blocks);
     __templates.api_loading("hide");
