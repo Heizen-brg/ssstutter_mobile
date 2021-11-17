@@ -69,7 +69,7 @@
           color: inherit;
         }
         &.inactive {
-          opacity: .25;
+          opacity: 0.25;
         }
       }
     }
@@ -178,7 +178,7 @@
   }
 }
 
-@media (max-width: 426px) {
+@media (max-width: 435px) {
   .campaign__page {
     grid-gap: 20px;
     .hero__banner {
@@ -309,7 +309,6 @@
         padding-top: calc(5 / 4 * 100%);
         @media (min-width: 768px) {
           padding-top: 100%;
-          
         }
       }
     }
@@ -342,7 +341,7 @@
         display: inline-block;
         font-size: 18px;
         cursor: pointer;
-        opacity: .5;
+        opacity: 0.5;
         font-family: serif;
         padding: 16px 8px;
         &.active {
@@ -352,4 +351,3 @@
     }
   }
 }
-
