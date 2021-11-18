@@ -280,5 +280,25 @@ export const __templates_modal = {
     })
 
     return div;
+  },
+  promotion_book_combo() {
+    let div = document.createElement('div');
+    div.className = `book__promotion`;
+    div.innerHTML = `
+      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637225147506.jpeg)">
+      </div>
+    `
+    if (window.innerWidth < 436) {
+      div.innerHTML = `
+      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219407036.jpeg)">
+      </div>
+      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219553094.jpeg)">
+      </div>
+      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219558465.jpeg)">
+      </div>
+      ${__icons.swipe_up}
+      `
+    }
+    return div;
   }
 }

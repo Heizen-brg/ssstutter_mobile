@@ -240,6 +240,16 @@
     }
   }
 }
+.book__promotion {
+  width: 60vw;
+  div {
+    @include ratio(16, 9);
+    margin: 10px;
+  }
+  svg {
+    display: none;
+  }
+}
 @media (max-width: 768px) {
   .modal__overlay {
     .close__btn {
@@ -280,6 +290,52 @@
           p {
             font-size: smaller;
           }
+        }
+      }
+    }
+  }
+  .book__promotion {
+    width: 90vw;
+    @include flex(row, center, center);
+    flex-wrap: wrap;
+    position: relative;
+    grid-gap: 0;
+    div {
+      @include ratio(4, 5);
+      margin: 10px;
+    }
+    svg {
+      display: block;
+      width: 50px;
+      height: 50px;
+      position: fixed;
+      bottom: 10px;
+      fill: $silver;
+      -webkit-animation: slide-out-left 2s ease-in-out 2s 2 both;
+      animation: slide-out-left 2s ease-in-out 2s 2 both;
+
+      @-webkit-keyframes slide-out-left {
+        0% {
+          -webkit-transform: translateY(0);
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translateY(-370px);
+          transform: translateY(-370px);
+          opacity: 0;
+        }
+      }
+      @keyframes slide-out-left {
+        0% {
+          -webkit-transform: translateY(0);
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: translateY(-370px);
+          transform: translateY(-370px);
+          opacity: 0;
         }
       }
     }
