@@ -83,7 +83,6 @@ export const __templates_header = {
       this.hide_menu();
     });
 
-
     window.onscroll = () => {
       let nav_bar = header.querySelector(".nav");
       let main = document.getElementById("root");
@@ -244,16 +243,19 @@ export const __templates_header = {
         url: `https://sss-dashboard.leanservices.work/w/menu/get`,
       },
       ({ data }) => {
-        let menu_item = (data || []).map((item) => {
-          return `
+        let menu_item = (data || [])
+          .map((item) => {
+            return `
               <li data-cat="toggle" >
-                <a data-cat="${item.attribute}" class="${item.style}" ${item.attribute ? `data-src="${item.url}"` : `href="${item.url}"`} >${item.title}</a>
+                <a data-cat="${item.attribute}" class="${item.style}" ${
+              item.attribute ? `data-src="${item.url}"` : `href="${item.url}"`
+            } >${item.title}</a>
                 <ul class="mega_menu_items mega_menu_items--show">
 
                 </ul>
               </li>
         `;
-        })
+          })
           .join("");
         ul.innerHTML = menu_item;
         let cat_toggle = ul.querySelectorAll('[data-cat="toggle"]');
@@ -370,8 +372,9 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                      })"></span></a>
+                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                    })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
