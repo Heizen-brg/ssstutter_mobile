@@ -54,7 +54,7 @@ export const __templates_home = {
             <li class="glide__slide"><a target="_blank" href="${
               item.link
             }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${
-                item.cta ? `<button>${item.cta}</button>` : ""
+                item.cta ? `<button style="background-color=${item.color}">${item.cta}</button>` : ""
               }</div></a></li>
             `;
             })
@@ -142,10 +142,10 @@ export const __templates_home = {
 
     return div;
   },
-  
+
   editorial_product() {
     let div = document.createElement("section");
-    div.classList.add('editorial-slide-pc');
+    div.classList.add("editorial-slide-pc");
     div.innerHTML = `
     <p class="title">"Warm your day up"</p>
     <p class="sub-title">Collection Fall / Winter 2021</p>
@@ -159,7 +159,7 @@ export const __templates_home = {
       </div>
     </div>
     `;
-    
+
     __requests(
       {
         method: "GET",
@@ -219,7 +219,7 @@ export const __templates_home = {
         }).mount();
       }
     );
-    
+
     return div;
   },
   mobile_editorial_product() {
@@ -238,7 +238,7 @@ export const __templates_home = {
         </div>
       </div>
     `;
-    
+
     __requests(
       {
         method: "GET",
@@ -350,10 +350,23 @@ export const __templates_home = {
   categories() {
     let section = document.createElement("section");
     section.className = "categories__banner";
-    section.innerHTML = `
-      <div><a href="/c/for-him" class="categories__banner--left" style="background-image:url('https://i.imgur.com/dCwJedM.jpg')"></a></div>
-      <div><a href="/c/for-her" class="categories__banner--right" style="background-image:url('https://i.imgur.com/Bqa03SH.jpg')"></a></div>
-    `;
+
+    __requests(
+      {
+        method: "GET",
+        url: "https://sss-dashboard.leanservices.work/w/categories/get",
+      },
+      ({ data }) => {
+        let cat_item = (data || [])
+          .map((item) => {
+            return `
+          <div><a href="${item.slug}" class="categories__banner" style="background-image:url(https://sss-dashboard.leanservices.work/${item.thumbnail}.jpeg)"></a></div>
+          `;
+          })
+          .join("");
+        section.innerHTML = cat_item;
+      }
+    );
     return section;
   },
   new_arrivals(product = {}) {
