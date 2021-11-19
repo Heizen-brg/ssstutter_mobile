@@ -1,3 +1,4 @@
+import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import {
   __currency_format,
@@ -15,17 +16,17 @@ export const __templates_campaign = {
     <div class="clock"></div>
     <p>${params.description}</p>
     `;
-    
+
     let end_date = new Date(params.end_time).getTime();
-    
+
     let countdown = setInterval(() => {
       let distance = end_date - Date.now();
-      
+
       let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours =  Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
+        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
       div.querySelector('.clock').innerHTML = `
       <!--
       <div class="text-center"><span>${days}</span>Ngày</div>
@@ -34,7 +35,7 @@ export const __templates_campaign = {
       <div class="text-center"><span>${minutes}</span>Phút</div>
       <div class="text-center"><span>${seconds}</span>Giây</div>
       `;
-      
+
       if ((distance) < 0) {
         clearInterval(countdown);
         div.querySelector('.clock').innerHTML = `
@@ -47,8 +48,8 @@ export const __templates_campaign = {
         `;
       }
     }, 1000);
-    
-    
+
+
     return div;
   },
   banner(params) {
@@ -72,26 +73,67 @@ export const __templates_campaign = {
     filter_btn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
+
         let product_container = document.querySelector("#sale_products");
-        let product_sale = product_container.querySelectorAll('li');
-        product_sale.forEach(item => {
-          if (e.target.dataset.cate != item.dataset.cat) {
-            item.style.display = 'none';
-          } else {
-            item.style.display = 'block';
-          }
-        })
-      });
-    });
-    
-    div.querySelectorAll('li').forEach(li => {
-      li.classList.add('inactive');
-      li.addEventListener('click', (e) => {
-        if (div.querySelector('.active')) {
-          div.querySelector('.active').classList.remove('active');
+        product_container.innerHTML = __templates.busy_loading('show')
+
+        let init_sale_products = ({ skip = 0, limit = 10, catId } = {}) => {
+          let query = ""
+          if (skip) query += `skip=${skip}&`
+          if (limit) query += `limit=${limit}&`
+          if (catId) query += `catId=${catId}&`
+          __requests({
+            method: "GET",
+            url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`
+          }, ({ data }) => {
+            let product_items = (data.products || []).map(item => {
+              item.catId = item.catId.join(",").split(",")
+              let product_template = document.createElement("li");
+              product_template.dataset.cat = item.catId[0];
+              product_template.className = 'product';
+              product_template.innerHTML = `
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                })"></span></a>
+                </div>
+                <div class="detail">
+                  <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
+                  <div class="price">
+                    ${item.salePrice
+                  ? `<p>${__currency_format(item.salePrice)}</p>
+                      <p class="discount">${__currency_format(item.price)}</p> `
+                  : `<p>${__currency_format(item.price)}</p>`
+                }
+                  </div>
+                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                  <div class="color">
+                    <p>+${item.color.length} màu</p>
+                  </div>
+                </div>
+              `
+              product_container.appendChild(product_template);
+              return product_template;
+            })
+            if (data.products.length >= 10) infinity_scroll(product_items[product_items.length - 2], product_container, { skip, limit, catId })
+            __templates.busy_loading("hide");
+          })
         }
-        
-        e.target.classList.add('active');
+        let infinity_scroll = (anchor, container, query) => {
+          console.log(query)
+          if (!anchor) return false;
+          let block_loader = new IntersectionObserver(function (entries, observer) {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                let block = entry.target;
+                container.innerHTML += __templates.busy_loading("show");
+                init_sale_products({ ...query, skip: query.skip + 10 });
+                block_loader.unobserve(block);
+              }
+            });
+          });
+          block_loader.observe(anchor);
+        };
+        init_sale_products({ catId: btn.dataset.cate })
       });
     });
 
@@ -118,32 +160,61 @@ export const __templates_campaign = {
       ${__templates.busy_loading("show")}
     </ul>
     `;
-    let product_items = (params.products || []).map(item => {
-      return `
-      <li data-cat="${item.catId[0][0]}" class="product">
-        <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-        })"></span></a>
-        </div>
-        <div class="detail">
-          <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
-          <div class="price">
-            ${item.salePrice
-            ? `<p>${__currency_format(item.salePrice)}</p>
-              <p class="discount">${__currency_format(item.price)}</p> `
-            : `<p>${__currency_format(item.price)}</p>`
-          }
-          </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-          <div class="color">
-            <p>+${item.color.length} màu</p>
-          </div>
-        </div>
-    </li>
-      `
-    }).join('');
+
     let product_sale_container = div.querySelector('ul');
-    product_sale_container.innerHTML = product_items;
+    let init_sale_products = (query = '') => {
+      __requests({
+        method: "GET",
+        url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`
+      }, ({ data }) => {
+        let product_items = (data.products || []).map(item => {
+          item.catId = item.catId.join(",").split(",")
+          let product_template = document.createElement("li");
+          product_template.dataset.cat = item.catId[0];
+          product_template.className = 'product';
+          product_template.innerHTML = `
+            <div class="thumbnail">
+              <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+            })"></span></a>
+            </div>
+            <div class="detail">
+              <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
+              <div class="price">
+                ${item.salePrice
+              ? `<p>${__currency_format(item.salePrice)}</p>
+                  <p class="discount">${__currency_format(item.price)}</p> `
+              : `<p>${__currency_format(item.price)}</p>`
+            }
+              </div>
+              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+              <div class="color">
+                <p>+${item.color.length} màu</p>
+              </div>
+            </div>
+          `
+          product_sale_container.appendChild(product_template);
+          return product_template;
+        })
+        if (data.products.length >= 10) infinity_scroll(product_items[product_items.length - 2], product_sale_container)
+        __templates.busy_loading("hide");
+      })
+    }
+    let infinity_scroll = (anchor, container) => {
+      if (!anchor) return false;
+      let block_loader = new IntersectionObserver(function (entries, observer) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            let block = entry.target;
+            container.innerHTML += __templates.busy_loading("show");
+            let query = `skip=${container.childElementCount - 1}`
+            init_sale_products(query);
+            block_loader.unobserve(block);
+          }
+        });
+      });
+      block_loader.observe(anchor);
+    };
+    init_sale_products()
     return div;
   },
 };

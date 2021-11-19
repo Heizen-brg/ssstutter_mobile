@@ -164,7 +164,7 @@ app.get("/campaign/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let campaign_data;
   try {
-    campaign_data = await axios.get(`https://sss-dashboard.leanservices.work/w/campaign/detail?url=${slug}`, {
+    campaign_data = await axios.get(`https://sss-dashboard.leanservices.work/w/campaign/detail-web?url=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
