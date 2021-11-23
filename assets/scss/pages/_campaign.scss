@@ -64,6 +64,7 @@
         background-color: rgba($color: $black, $alpha: 0.3);
         color: $black;
         background-position: bottom;
+        filter: grayscale(1);
         &:hover {
           background-blend-mode: multiply;
           color: $white;
