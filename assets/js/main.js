@@ -377,7 +377,6 @@ export const __render = {
       __templates_campaign.campaign_detail(params),
       __templates_campaign.banner(params),
       __templates_campaign.gender_filter(params),
-      __templates_campaign.price_filter(params),
       __templates_campaign.sale_products(params),
       __templates_footer.footer(),
     ];

@@ -182,7 +182,7 @@ app.get("/campaign/:slug", async (req, res, next) => {
   } else {
     res.send(
       client_view.html({
-        title: campaign_detail.title,
+        title: campaign_detail.data.title,
         command: `var campaign_detail = ${JSON.stringify(campaign_detail)}`,
       })
     );

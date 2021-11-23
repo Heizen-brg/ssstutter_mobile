@@ -131,28 +131,21 @@ export const __show_cart_item = (wrapper, total, div) => {
         <span class="product__variation">
           <p>${prod.colorName}, ${prod.size}</p>
         </span>
-        <strong>${__currency_format(prod.salePrice || prod.price)}</strong>
+        <div class="price">
+            ${prod.salePrice
+          ? `<p>${__currency_format(prod.salePrice)}</p>
+              <p class="discount">${__currency_format(prod.price)}</p> `
+          : `<p>${__currency_format(prod.price)}</p>`
+        }
+        </div>
         <div class="add__product">
           <button data-id="${prod.variation.id}" data-quantity="descrease">-</button>
           <input data-index=${index} value="${prod.quantity}" type="number"/>
           <button data-id="${prod.variation.id}" data-quantity="inscrease">+</button>
         </div>
       </div>
-      <div class="clear__product" value="${prod.quantity}" data-index=${index}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 377.126 377.125">
-          <g id="Group_35" data-name="Group 35" transform="translate(-4890.35 -7314.312) rotate(-45)">
-            <g id="Group_33" data-name="Group 33" transform="translate(-1970 8790)">
-              <g id="Group_27" data-name="Group 27">
-                <path id="Path_20" data-name="Path 20" d="M501.333,96H10.667a10.667,10.667,0,1,0,0,21.334H501.334a10.667,10.667,0,1,0,0-21.334Z"></path>
-              </g>
-            </g>
-            <g id="Group_34" data-name="Group 34" transform="translate(-1724.667 9152.668) rotate(-90)">
-              <g id="Group_27-2" data-name="Group 27" transform="translate(0 0)">
-                <path id="Path_20-2" data-name="Path 20" d="M10.668,117.334H501.334a10.667,10.667,0,1,0,0-21.334H10.667a10.667,10.667,0,1,0,0,21.334Z" transform="translate(0 -96)"></path>
-              </g>
-            </g>
-          </g>
-        </svg>
+      <div class="clear__product" data-id="${prod.variation.id}" data-index=${index}>
+            ${__icons.close}
       </div>
     </li>
     `;
@@ -232,7 +225,9 @@ export const __show_cart_item = (wrapper, total, div) => {
 
     del_btn.addEventListener("click", (e) => {
       e.preventDefault();
-      purchase_items_list.splice(del_btn.dataset.index, 1);
+      purchase_items_list = purchase_items_list.filter(i => {
+        return i.variation.id != del_btn.dataset.id
+      })
       // let total_amount_arr = purchase_items_list.map(
       //   (item) => item.quantity * item.price
       // );
@@ -243,6 +238,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       }, 0);
       let customer_phone = document.querySelector('[data-value="customer_phone"]');
       total.innerHTML = __currency_format(total_amount);
+      total.dataset.price = total_amount;
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
       __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
       __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
@@ -267,7 +263,6 @@ export const __check_shipping = () => {
     final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
   }
   let shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
-  console.log(final_price);
   __requests(
     {
       method: "POST",
@@ -339,18 +334,41 @@ export const __calc_final_amount = (div) => {
   let purchase_amount = document.querySelector('[data-amount="purchase"]');
   let discount_amount = document.querySelector('[data-amount="discount"]');
   let total_amount = document.querySelector('[data-amount="total"]');
+  let cart_items = document.querySelector('.cart__item--list');
   let shipping_amount = document.querySelector('[data-amount="shipping"]');
   if (div) {
     purchase_amount = div.querySelector('[data-amount="purchase"]');
     discount_amount = div.querySelector('[data-amount="discount"]');
     total_amount = div.querySelector('[data-amount="total"]');
     shipping_amount = div.querySelector('[data-amount="shipping"]');
+    cart_items = div.querySelector('.cart__item--list');
   }
   let purchase = parseInt(purchase_amount.dataset.price) || 0;
   let discount = parseInt(discount_amount.dataset.price) || 0;
   let shipping = parseInt(shipping_amount.dataset.price) || 0;
-  total_amount.dataset.price = purchase + shipping - discount;
-  total_amount.innerHTML = `${__currency_format(purchase + shipping - discount)}`;
+  let final_amount = purchase + shipping - discount;
+  total_amount.dataset.price = final_amount
+  if (final_amount >= 999000 && !cart_items.querySelector('.blackfriday__gift')) {
+    let li_gift = document.createElement('li');
+    li_gift.className = 'blackfriday__gift'
+    li_gift.innerHTML = `
+    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
+    </a>
+    <div>
+      <h6>SET QUÀ BLACK FRIDAY</h6>
+      <span class="product__variation">
+        <p>1 Voucher 100.000đ, 1 Vital Socks, 1 Leather Cross Bag </p>
+      </span>
+      <div class="price">
+        <p>0</p> 
+        <p class="discount">555.000đ</p>
+      </div>
+      <small>SSStutter sẽ gọi điện xác nhận đơn hàng của bạn & màu tất, cỡ túi trong Set quà Black Friday 555.000đ.</small>
+    </div>
+    `
+    cart_items.appendChild(li_gift);
+  }
+  total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };
 
 export const __to_slug = (str, mark_space = "-") => {

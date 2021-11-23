@@ -184,7 +184,7 @@ export const __templates_checkout = {
     let div = document.createElement("div");
     div.className = "checkout__cart";
     div.innerHTML = `
-        <ul class="product__list">
+        <ul class="cart__item--list">
 
         </ul>
         <div class="discount__code">
@@ -210,7 +210,7 @@ export const __templates_checkout = {
         
         <button class="confirm__order">Hoàn tất đơn hàng</button>
     `;
-    __show_cart_item(div.querySelector(".product__list"), div.querySelector('[data-amount="purchase"]'), div);
+    __show_cart_item(div.querySelector(".cart__item--list"), div.querySelector('[data-amount="purchase"]'), div);
     let coupon_input = div.querySelector('[data-value="coupon"]');
     let apply_coupon = div.querySelector('[ data-action="coupon"]');
     let confirm_btn = div.querySelector(".confirm__order");

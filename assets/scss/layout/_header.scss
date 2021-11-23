@@ -370,8 +370,23 @@
             font-size: x-small;
             display: block;
           }
-          strong {
-            margin-bottom: 5px;
+          .price {
+            // @include grid(repeat(auto-fit, minmax(10%, auto)), 1fr);
+            font-size: 12px;
+            margin-bottom: 2px;
+            // place-items: center;
+            p {
+              display: inline-block;
+            }
+            .discount {
+              color: $silver;
+              text-decoration: line-through;
+              margin-left: 10px;
+            }
+          }
+          small {
+            @include font(x-small, start, 500);
+            color: $green;
           }
           .add__product {
             @include flex(row, flex-start, center);

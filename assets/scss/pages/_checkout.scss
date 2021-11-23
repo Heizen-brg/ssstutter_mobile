@@ -103,7 +103,7 @@
     margin-top: 20px;
     margin-right: 20px;
     padding: 20px;
-    .product__list {
+    .cart__item--list {
       width: 100%;
       height: 45vh;
       overflow: auto;
@@ -139,8 +139,23 @@
           display: block;
           font-size: small;
         }
-        strong {
-          margin-bottom: 5px;
+        .price {
+          // @include grid(repeat(auto-fit, minmax(10%, auto)), 1fr);
+          font-size: 12px;
+          margin-bottom: 2px;
+          // place-items: center;
+          p {
+            display: inline-block;
+          }
+          .discount {
+            color: $silver;
+            text-decoration: line-through;
+            margin-left: 10px;
+          }
+        }
+        small {
+          @include font(x-small, start, 500);
+          color: $green;
         }
         .add__product {
           @include flex(row, flex-start, center);

@@ -4,7 +4,7 @@
   .campaign-detail {
     padding: 40px;
     text-align: center;
-    margin: 20vh 0;
+    margin: 10vh 0;
     h2 {
       font-weight: 600;
       font-size: 24px;
@@ -36,6 +36,16 @@
         }
       }
     }
+    a {
+      @include font(large, center, 600);
+      @include border($silver, 2px);
+      @include transition;
+      padding: 15px 25px;
+      &:hover {
+        background-color: $black;
+        color: $white;
+      }
+    }
   }
   .hero__banner {
     grid-area: 1 / 1 / 2 / 7;
@@ -44,17 +54,16 @@
       @include ratio(18, 7);
     }
   }
-  .gender__filter {
-    margin-bottom: 50px;
-    ul {
+  .campaign__filter {
+    .gender__filter {
       @include grid(1fr 1fr, null, 0);
       li {
         @include transition;
-        @include ratio(7, 4);
-        @include font(large, center, 600);
+        @include ratio(7, 2);
         cursor: pointer;
         background-color: rgba($color: $black, $alpha: 0.3);
         color: $black;
+        background-position: bottom;
         &:hover {
           background-blend-mode: multiply;
           color: $white;
@@ -70,13 +79,9 @@
         }
       }
     }
-  }
-  .price__filter {
-    // grid-area: 2 / 1 / 3 / 7;
-    padding: 0 5%;
-    text-align: center;
-    ul {
-      display: block;
+    .price__filter {
+      @include flex(row, space-evenly, center);
+      margin: 40px 0;
       li {
         border: 0;
         cursor: pointer;
@@ -104,7 +109,7 @@
 
   .categories__products {
     grid-area: 3 / 1 / 5 / 7;
-    padding: 5%;
+    padding: 20px 5%;
     width: 100%;
     ul {
       @include grid(repeat(auto-fit, minmax(20%, 1fr)), null, 20px);
