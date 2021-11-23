@@ -3,11 +3,11 @@ const axios = require("axios");
 const app = express();
 const sass = require("sass");
 const client_view = require("./render_client.js");
-// sass.renderSync({
-//   file: "./assets/scss/styles.scss",
-//   sourceMap: "./assets/css/styles.css.map",
-//   outFile: "./assets/css/styles.css",
-// });
+sass.renderSync({
+  file: "./assets/scss/styles.scss",
+  sourceMap: "./assets/css/styles.css.map",
+  outFile: "./assets/css/styles.css",
+});
 
 app.enable("trust proxy");
 app.use(express.json());
