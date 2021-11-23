@@ -3,11 +3,11 @@ const axios = require("axios");
 const app = express();
 const sass = require("sass");
 const client_view = require("./render_client.js");
-sass.renderSync({
-  file: "./assets/scss/styles.scss",
-  sourceMap: "./assets/css/styles.css.map",
-  outFile: "./assets/css/styles.css",
-});
+// sass.renderSync({
+//   file: "./assets/scss/styles.scss",
+//   sourceMap: "./assets/css/styles.css.map",
+//   outFile: "./assets/css/styles.css",
+// });
 
 app.enable("trust proxy");
 app.use(express.json());
@@ -62,7 +62,7 @@ app.get("/c/:slug", async (req, res, next) => {
   } else {
     res.send(
       client_view.html({
-        title: `${info.name.replace("-", "")}`,
+        title: `${info.name ? info.name.replace("-", "") : "SSSTUTTER - REFINED LIFE"}`,
         command: `var category_detail = ${JSON.stringify(info)}`,
       })
     );
@@ -172,7 +172,7 @@ app.get("/campaign/:slug", async (req, res, next) => {
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
-    return console.log(err);
+    return;
   }
   let campaign_detail = campaign_data.data;
   console.log("campaign_detail: ", campaign_detail);
