@@ -53,17 +53,19 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         product_template.innerHTML = `
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-          })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+        })"></span></a>
         </div>
         <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
           <div class="price">
-            ${item.salePrice
-            ? `<p>${__currency_format(item.salePrice)}</p>
+            ${
+              item.salePrice
+                ? `<p>${__currency_format(item.salePrice)}</p>
               <p class="discount">${__currency_format(item.price)}</p> `
-            : `<p>${__currency_format(item.price)}</p>`
-          }
+                : `<p>${__currency_format(item.price)}</p>`
+            }
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           <div class="color">
@@ -121,10 +123,11 @@ export const __show_cart_item = (wrapper, total, div) => {
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${prod.media[`color_${prod.colorId}_thumbnail`]
+      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+        prod.media[`color_${prod.colorId}_thumbnail`]
           ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
           : "no_image.png"
-        })">
+      })">
       </a>
       <div>
         <h6>${prod.name}</h6>
@@ -132,11 +135,12 @@ export const __show_cart_item = (wrapper, total, div) => {
           <p>${prod.colorName}, ${prod.size}</p>
         </span>
         <div class="price">
-            ${prod.salePrice
-          ? `<p>${__currency_format(prod.salePrice)}</p>
+            ${
+              prod.salePrice
+                ? `<p>${__currency_format(prod.salePrice)}</p>
               <p class="discount">${__currency_format(prod.price)}</p> `
-          : `<p>${__currency_format(prod.price)}</p>`
-        }
+                : `<p>${__currency_format(prod.price)}</p>`
+            }
         </div>
         <div class="add__product">
           <button data-id="${prod.variation.id}" data-quantity="descrease">-</button>
@@ -225,9 +229,9 @@ export const __show_cart_item = (wrapper, total, div) => {
 
     del_btn.addEventListener("click", (e) => {
       e.preventDefault();
-      purchase_items_list = purchase_items_list.filter(i => {
-        return i.variation.id != del_btn.dataset.id
-      })
+      purchase_items_list = purchase_items_list.filter((i) => {
+        return i.variation.id != del_btn.dataset.id;
+      });
       // let total_amount_arr = purchase_items_list.map(
       //   (item) => item.quantity * item.price
       // );
@@ -334,20 +338,20 @@ export const __calc_final_amount = (div) => {
   let purchase_amount = document.querySelector('[data-amount="purchase"]');
   let discount_amount = document.querySelector('[data-amount="discount"]');
   let total_amount = document.querySelector('[data-amount="total"]');
-  let cart_items = document.querySelector('.cart__item--list');
+  let cart_items = document.querySelector(".cart__item--list");
   let shipping_amount = document.querySelector('[data-amount="shipping"]');
   if (div) {
     purchase_amount = div.querySelector('[data-amount="purchase"]');
     discount_amount = div.querySelector('[data-amount="discount"]');
     total_amount = div.querySelector('[data-amount="total"]');
     shipping_amount = div.querySelector('[data-amount="shipping"]');
-    cart_items = div.querySelector('.cart__item--list');
+    cart_items = div.querySelector(".cart__item--list");
   }
   let purchase = parseInt(purchase_amount.dataset.price) || 0;
   let discount = parseInt(discount_amount.dataset.price) || 0;
   let shipping = parseInt(shipping_amount.dataset.price) || 0;
   let final_amount = purchase + shipping - discount;
-  total_amount.dataset.price = final_amount
+  total_amount.dataset.price = final_amount;
   //add gift box for black friday
   // if (final_amount >= 999000 && !cart_items.querySelector('.blackfriday__gift')) {
   //   let li_gift = document.createElement('li');
@@ -361,7 +365,7 @@ export const __calc_final_amount = (div) => {
   //       <p>1 Voucher 100.000đ, 1 Vital Socks, 1 Leather Cross Bag </p>
   //     </span>
   //     <div class="price">
-  //       <p>0</p> 
+  //       <p>0</p>
   //       <p class="discount">555.000đ</p>
   //     </div>
   //     <small>SSStutter sẽ gọi điện xác nhận đơn hàng của bạn & màu tất, cỡ túi trong Set quà Black Friday 555.000đ.</small>
