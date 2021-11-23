@@ -66,7 +66,7 @@ export const __templates_header = {
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
-      <div class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</div>
+      <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a>
     `;
     ["popup", "left", "right", "mobile"].forEach((pos) => {
       let block = header.querySelector(`.nav__${pos}`);

@@ -83,14 +83,15 @@
       @include flex(row, space-evenly, center);
       margin: 40px 0;
       li {
-        border: 0;
+        @include border($silver, 2px);
+        @include transition;
+        @include font(medium, center, 600);
         cursor: pointer;
         width: auto;
-        min-width: 100px;
-        text-decoration: underline;
+        min-width: 200px;
         display: inline-block;
         margin: 0 24px;
-        font-size: 18px;
+        padding: 15px 20px;
         &:hover {
           background: transparent;
           color: inherit;
