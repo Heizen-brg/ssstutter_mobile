@@ -108,16 +108,10 @@
             &::after {
               width: 100%;
             }
-            a {
-              color: $black;
-            }
           }
           &.active {
             &::after {
               width: 100%;
-            }
-            a {
-              color: $black;
             }
           }
         }
@@ -135,7 +129,6 @@
         // width: 50%;
         width: 44px;
         height: auto;
-        fill: $white;
       }
       a {
         &::after {
