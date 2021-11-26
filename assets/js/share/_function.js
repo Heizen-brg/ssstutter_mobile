@@ -242,7 +242,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
       __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
       __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
-      del_btn.parentNode.removeChild();
+      del_btn.parentNode.remove();
     });
   });
 };
@@ -368,10 +368,11 @@ export const __calc_final_amount = (div) => {
     </div>
     `
     cart_items.appendChild(li_gift);
-  } else {
-    let bf_gift = document.querySelector('.blackfriday__gift');
+  }
+  if (final_amount < 999000 && cart_items.querySelector(".blackfriday__gift")) {
+    let bf_gift = cart_items.querySelector(".blackfriday__gift");
     if (!bf_gift) return false;
-    cart_items.removeChild(bf_gift)
+    bf_gift.remove();
   }
   total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };
