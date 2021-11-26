@@ -51,11 +51,11 @@ export const __templates_home = {
           let banner_item = (data || [])
             .map((item) => {
               return `
-            <li class="glide__slide"><a target="_blank" href="${
-              item.link
-            }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${
-                item.cta ? `<button style="background-color=${item.color}">${item.cta}</button>` : ""
-              }</div></a></li>
+            <li class="glide__slide">
+              <a target="_blank" href="${item.link}">
+                <div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""}</div>
+              </a>
+            </li>
             `;
             })
             .join("");
@@ -102,11 +102,9 @@ export const __templates_home = {
           let banner_item = (data || [])
             .map((item) => {
               return `
-              <li class="glide__slide"><a target="_blank" href="${
-                item.link
-              }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${
-                item.cta ? `<button>${item.cta}</button>` : ""
-              }</div></a></li>
+              <li class="glide__slide"><a target="_blank" href="${item.link
+                }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${item.cta ? `<button>${item.cta}</button>` : ""
+                }</div></a></li>
               `;
             })
             .join("");
@@ -176,10 +174,8 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${
-                  item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                item.extensions.media.featured
+                <a href="/p/${item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
               })"></span></a>
               </div>
               <div class="detail">
@@ -261,11 +257,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${
-                next_item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                next_item.extensions.media.featured
-              })"></span></a>
+              <a href="/p/${next_item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
+                })"></span></a>
             </div>
             <div class="detail">
               <h6 class="name">${next_item.name.toLowerCase()}</h6>
@@ -283,9 +277,8 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
-              item.extensions.media.featured
-            })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+              })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -411,10 +404,8 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${
-                  item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                item.extensions.media.featured
+                <a href="/p/${item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
               })"></span></a>
               </div>
               <div class="detail">
@@ -470,10 +461,8 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${
-                  item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                item.extensions.media.featured
+                <a href="/p/${item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
               })"></span></a>
               </div>
               <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -584,11 +573,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${
-                next_item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                next_item.extensions.media.featured
-              })"></span></a>
+              <a href="/p/${next_item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
+                })"></span></a>
             </div>
             <div class="detail">
               <h6 class="name">${next_item.name.toLowerCase()}</h6>
@@ -606,9 +593,8 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
-              item.extensions.media.featured
-            })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+              })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -674,11 +660,9 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${
-                item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                next_item.extensions.media.featured
-              })"></span></a>
+              <a href="/p/${item.slug
+                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
+                })"></span></a>
             </div>
             <h6 class="name">${next_item.name}</h6>
             <div class="price">
@@ -694,9 +678,8 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
-              item.extensions.media.featured
-            })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+              })"></span></a>
           </div>
           <h6 class="name">${item.name}</h6>
           <div class="price">
@@ -775,10 +758,8 @@ export const __templates_home = {
                   <li class="glide__slide">
                     <div class="product">
                       <div class="thumbnail">
-                        <a href="/p/${
-                          item.slug
-                        }"><span style="background-image:url(https://api.leanservices.work/product/static/${
-                item.extensions.media.featured
+                        <a href="/p/${item.slug
+              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
               })"></span></a>
                       </div>
                       <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -849,9 +830,8 @@ export const __templates_home = {
       <li>
         <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
-              item.extensions.media.featured
-            })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+              })"></span></a>
         <div>
           <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -884,9 +864,8 @@ export const __templates_home = {
       <li>
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${
-              item.extensions.media.featured
-            })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+              })"></span></a>
           </div>
           <div class="detail">
             <h6 class="name">${item.name}</h6>
@@ -980,11 +959,9 @@ export const __templates_home = {
           .map((item) => {
             return `
         <li class="glide__slide">
-          <a href="https://ssstutter.com/starter/product/${
-            item.slug
-          }"  target="_blank" style="background-image:url(https://ipo.leanservices.work/w/static/${
-              item.media.featured ? item.media.featured : ""
-            })">
+          <a href="https://ssstutter.com/starter/product/${item.slug
+              }"  target="_blank" style="background-image:url(https://ipo.leanservices.work/w/static/${item.media.featured ? item.media.featured : ""
+              })">
             <span>${item.name}</span>
           </a>
         </li>

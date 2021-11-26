@@ -3,11 +3,11 @@ const axios = require("axios");
 const app = express();
 const sass = require("sass");
 const client_view = require("./render_client.js");
-sass.renderSync({
-  file: "./assets/scss/styles.scss",
-  sourceMap: "./assets/css/styles.css.map",
-  outFile: "./assets/css/styles.css",
-});
+// sass.renderSync({
+//   file: "./assets/scss/styles.scss",
+//   sourceMap: "./assets/css/styles.css.map",
+//   outFile: "./assets/css/styles.css",
+// });
 
 app.enable("trust proxy");
 app.use(express.json());
@@ -38,12 +38,65 @@ app.get("/", (req, res, next) => {
 //     client_view.maintain({})
 //   );
 // });
+app.get("/services/sitemap.xml", async (reg, res, next) => {
+  let path_url = "https://ssstutter.com";
+  let xml = "";
+  let data_source;
+  try {
+    data_source = await axios.get(`http://localhost:5000/pd/filter/web?webStock=0&showAll=true&media=true`, {
+      headers: {
+        Authorization: `by_passs`,
+      },
+    });
+  } catch (error) {
+    res.setHeader("Content-Type", "text/html");
+    res.status(404).send(client_view.error_404({}));
+    console.log(err.message);
+    return;
+  }
+  data_source.data.data.forEach((item) => {
+    xml += `
+       <item>
+          <g:id>${item.id}</g:id>
+          <g:title>${item.name.toUpperCase()}</g:title>
+          <g:description>${item.description ? item.description : item.name.toLowerCase()}</g:description>
+          <g:link>${path_url + "/p/" + item.slug}</g:link>
+          <g:image_link>https://api.leanservices.work/product/static/${item.extensions.media.featured}</g:image_link>
+          <g:brand>SSSTUTTER</g:brand>
+          <g:condition>new</g:condition>
+          <g:availability>in stock</g:availability>
+          <g:price>${item.price} VND</g:price>
+          <g:sale_price>${!item.salePrice ? "" : item.salePrice + " VND"}</g:sale_price>
+          ${item.salePrice ? "<g:pattern>sale</g:pattern>" : ""}
+          <g:color>${item.color.map(i => i.name).join(", ")}</g:color>
+          <g:size>${item.size}</g:size>
+          <g:gender>${item.catId.join(',').includes('3vvRIM') ? 'male' : 'female'}</g:gender>
+          <g:google_product_category>${item.catId.join(',').includes('3vvRIM') ? 'For him' : 'For her'}</g:google_product_category>
+          <g:fb_product_category>${item.catId.join(',').includes('3vvRIM') ? 'For him' : 'For her'}</g:fb_product_category>
+        </item>
+      `;
+
+  });
+  res.set("Content-Type", "application/xml");
+  return res.send(
+    `<?xml version="1.0" encoding="UTF-8"?>
+		<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+			<channel>
+				<title>SSSTUTTER</title>
+				<link>https://ssstutter.com</link>
+				<description>Redefined from Inside</description>
+				${xml}
+			 </channel>
+		</rss>
+	`.replace(/(\r\n|\n|\r)/gm, "")
+  );
+});
 
 app.get("/c/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let cat_data;
   try {
-    cat_data = await axios.get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
+    cat_data = await axios.get(`http://localhost:5000/pd/attribute/category/search?slug=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
@@ -73,7 +126,7 @@ app.get("/p/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let product_data;
   try {
-    product_data = await axios.get(`https://api.leanservices.work/product/filter/web?webStock=true&slug=${slug}`, {
+    product_data = await axios.get(`http://localhost:5000/pd/filter/web?webStock=true&slug=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
@@ -134,7 +187,7 @@ app.get("/editorial/look/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let cat_data;
   try {
-    cat_data = await axios.get(`http://103.124.94.179:5000/pd/attribute/category/search?slug=${slug}`, {
+    cat_data = await axios.get(`http://localhost:5000/pd/attribute/category/search?slug=${slug}`, {
       headers: {
         Authorization: `by_pass`,
       },
@@ -164,18 +217,18 @@ app.get("/campaign/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let campaign_data;
   try {
-    campaign_data = await axios.get(`https://sss-dashboard.leanservices.work/w/campaign/detail-web?url=${slug}`, {
+    campaign_data = await axios.get(`http://localhost:5336/w/campaign/detail?url=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
     });
   } catch (err) {
+    console.log(err.message);
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
     return;
   }
   let campaign_detail = campaign_data.data;
-  console.log("campaign_detail: ", campaign_detail);
   res.setHeader("Content-Type", "text/html");
   if (campaign_detail.status == "inActive") {
     res.status(404).send(client_view.error_404({}));
@@ -226,6 +279,7 @@ app.get("/thankyou", (req, res, next) => {
     })
   );
 });
+
 app.get("/canceled", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
@@ -245,11 +299,12 @@ app.get("/blog", (req, res, next) => {
     })
   );
 });
+
 app.get("/blog/article/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let article_data;
   try {
-    article_data = await axios.get(`https://sss-dashboard.leanservices.work/w/post/detail?slug=${slug}`, {
+    article_data = await axios.get(`http://localhost:5336/w/post/detail?slug=${slug}`, {
       headers: {
         Authorization: `by_passs`,
       },
@@ -268,6 +323,7 @@ app.get("/blog/article/:slug", async (req, res, next) => {
     })
   );
 });
+
 app.get("/address", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
@@ -277,18 +333,16 @@ app.get("/address", (req, res, next) => {
     })
   );
 });
+
 app.get("/search", async (req, res, next) => {
   let query = req.query;
   let search_data;
   try {
-    search_data = await axios.get(
-      `https://api.leanservices.work/product/filter/web?name=${query.name}&media=true&webStock=true`,
-      {
-        headers: {
-          Authorization: `by_passs`,
-        },
-      }
-    );
+    search_data = await axios.get(`http://localhost:5000/pd/filter/web?name=${query.name}&media=true&webStock=true`, {
+      headers: {
+        Authorization: `by_passs`,
+      },
+    });
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
     res.status(404).send(client_view.error_404({}));
@@ -328,7 +382,7 @@ app.get("/self-portrait/product/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let product_data;
   try {
-    product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
+    product_data = await axios.get(`http://localhost:5000/pd/filter/web?&slug=${slug}&stock=0`, {
       headers: {
         Authorization: `by_passs`,
       },

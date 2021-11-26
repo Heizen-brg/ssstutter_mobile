@@ -72,7 +72,7 @@ export const __templates_campaign = {
       <ul class="price__filter">
         <li data-filter="price" data-price="0,100000">< 100k</li>
         <li data-filter="price" data-price="100000,300000">100k - 300k</li>
-        <li data-filter="price" data-price="300000,5000000">300k - 500k</li>
+        <li data-filter="price" data-price="300000,500000">300k - 500k</li>
         <li data-filter="price" data-price="500000">500k > </li>
       </ul>
     `;

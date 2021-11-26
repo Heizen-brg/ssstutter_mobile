@@ -244,6 +244,19 @@ export const __templates_product = {
     let div = document.createElement("div");
     div.className = "variation";
     div.innerHTML = `
+      <div itemscope itemtype="http://schema.org/Product">
+        <meta itemprop="brand" content="ssstutter">
+        <meta itemprop="name" content="${info.name}">
+        <meta itemprop="productID" content="${info.id}">
+        <meta itemprop="url" content="https://ssstutter.com/p/${info.slug}">
+        <meta itemprop="image" content="https://api.leanservices.work/product/static/${info.extensions.media.featured}">
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <link itemprop="availability" href="in stock">
+          <link itemprop="itemCondition" href="new">
+          <meta itemprop="price" content="${info.salePrice || info.price}">
+          <meta itemprop="priceCurrency" content="VND">
+        </div>
+      </div>
       <div>
         <div class="info">
           <h1 class="name">${info.name}</h1>

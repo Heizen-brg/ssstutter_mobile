@@ -242,7 +242,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
       __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
       __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
-      del_btn.parentNode.remove();
+      del_btn.parentNode.removeChild();
     });
   });
 };
@@ -349,29 +349,30 @@ export const __calc_final_amount = (div) => {
   let final_amount = purchase + shipping - discount;
   total_amount.dataset.price = final_amount
   //add gift box for black friday
-  // if (final_amount >= 999000 && !cart_items.querySelector('.blackfriday__gift')) {
-  //   let li_gift = document.createElement('li');
-  //   li_gift.className = 'blackfriday__gift'
-  //   li_gift.innerHTML = `
-  //   <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
-  //   </a>
-  //   <div>
-  //     <h6>SET QUÀ BLACK FRIDAY</h6>
-  //     <span class="product__variation">
-  //       <p>1 Voucher 100.000đ, 1 Vital Socks, 1 Leather Cross Bag </p>
-  //     </span>
-  //     <div class="price">
-  //       <p>0</p> 
-  //       <p class="discount">555.000đ</p>
-  //     </div>
-  //     <small>SSStutter sẽ gọi điện xác nhận đơn hàng của bạn & màu tất, cỡ túi trong Set quà Black Friday 555.000đ.</small>
-  //   </div>
-  //   `
-  //   cart_items.appendChild(li_gift);
-  // } else {
-  //   let bf_gift = document.querySelector('.blackfriday__gift');
-  //   cart_items.removeChild(bf_gift)
-  // }
+  if (final_amount >= 999000 && !cart_items.querySelector('.blackfriday__gift')) {
+    let li_gift = document.createElement('li');
+    li_gift.className = 'blackfriday__gift'
+    li_gift.innerHTML = `
+    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
+    </a>
+    <div>
+      <h6>SET QUÀ BLACK FRIDAY</h6>
+      <span class="product__variation">
+        <p>1 Voucher 100.000đ, 1 Vital Socks, 1 Leather Cross Bag </p>
+      </span>
+      <div class="price">
+        <p>0</p> 
+        <p class="discount">555.000đ</p>
+      </div>
+      <small>SSStutter sẽ gọi điện xác nhận đơn hàng của bạn & màu tất, cỡ túi trong Set quà Black Friday 555.000đ.</small>
+    </div>
+    `
+    cart_items.appendChild(li_gift);
+  } else {
+    let bf_gift = document.querySelector('.blackfriday__gift');
+    if (!bf_gift) return false;
+    cart_items.removeChild(bf_gift)
+  }
   total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };
 

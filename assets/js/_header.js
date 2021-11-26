@@ -122,7 +122,7 @@ export const __templates_header = {
           let menu_item = (data || [])
             .map((item) => {
               return `
-          <div data-active="${item.attribute}" data-action="megamenu" ><a href="${item.url}">${item.title}</a></div>
+          <div data-active="${item.attribute}" data-action="megamenu" ><a style="color:${item.style}" href="${item.url}">${item.title}</a></div>
           `;
             })
             .join("");
