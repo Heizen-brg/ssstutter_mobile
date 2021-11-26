@@ -3888,6 +3888,7 @@ h4 {
   background-color: rgba(0, 0, 0, 0.3);
   color: #000000;
   background-position: bottom;
+  filter: grayscale(1);
 }
 .campaign__page .campaign__filter .gender__filter li:hover {
   background-blend-mode: multiply;

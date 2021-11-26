@@ -66,8 +66,8 @@ export const __templates_header = {
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
-      <div class="freeship fade-in">Miễn phí vận chuyển đơn hàng trên 599.000đ</div>
-      <!-- <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a> -->
+      <!-- <div class="freeship fade-in">Miễn phí vận chuyển đơn hàng trên 599.000đ</div> -->
+      <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a>
     `;
     ["popup", "left", "right", "mobile"].forEach((pos) => {
       let block = header.querySelector(`.nav__${pos}`);
@@ -381,8 +381,12 @@ export const __templates_header = {
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
-                        ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
-                        <p>${__currency_format(item.price)}</p>
+                        ${
+                          item.salePrice
+                            ? `<p>${__currency_format(item.salePrice)}</p>
+                          <p class="discount">${__currency_format(item.price)}</p> `
+                            : `<p>${__currency_format(item.price)}</p>`
+                        }
                       </div>
                       ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                       <div class="color">
