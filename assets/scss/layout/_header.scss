@@ -16,19 +16,19 @@
     }
     background-color: $white;
     a {
-      color: $black !important;
+      color: $black;
     }
     svg {
-      fill: $black !important;
+      fill: $black;
     }
     &:hover {
       @include shadow(1px, 1px, 4px, $light);
       background-color: $white;
       a {
-        color: $black !important;
+        color: $black;
       }
       svg {
-        fill: $black !important;
+        fill: $black;
       }
     }
     // &.deactive {
@@ -92,7 +92,6 @@
           position: relative;
           a {
             @include font(13px, center, 500);
-            color: $white;
             &.special {
               color: $red;
             }
