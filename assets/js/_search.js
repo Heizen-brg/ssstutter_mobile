@@ -45,8 +45,12 @@ export const __templates_search = {
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
-                        ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
-                        <p>${__currency_format(item.price)}</p>
+                        ${
+                          item.salePrice
+                            ? `<p>${__currency_format(item.salePrice)}</p>
+                          <p class="discount">${__currency_format(item.price)}</p> `
+                            : `<p>${__currency_format(item.price)}</p>`
+                        }
                       </div>
                       ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                       <div class="color">
@@ -90,9 +94,13 @@ export const __templates_search = {
         </div>
         <h6 class="name">${item.name}</h6>
         <div class="price">
-          ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
-          <p>${__currency_format(item.price)}</p>
-        </div>
+            ${
+              item.salePrice
+                ? `<p>${__currency_format(item.salePrice)}</p>
+              <p class="discount">${__currency_format(item.price)}</p> `
+                : `<p>${__currency_format(item.price)}</p>`
+            }
+          </div>
         ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
         <div class="color">
             <p>+${item.color.length} màu</p>

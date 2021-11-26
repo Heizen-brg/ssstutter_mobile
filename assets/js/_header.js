@@ -66,6 +66,7 @@ export const __templates_header = {
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
+      <!-- <div class="freeship fade-in">Miễn phí vận chuyển đơn hàng trên 599.000đ</div> -->
       <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a>
     `;
     ["popup", "left", "right", "mobile"].forEach((pos) => {
@@ -150,7 +151,9 @@ export const __templates_header = {
               let parent_cat_arr = data.filter((cate) => cate.parentId == item.dataset.active);
               megamenu_categories.innerHTML = `
                 <ul>
-                  ${(parent_cat_arr || []).map((cate) => `<li data-cate="${cate.id}"><p>${cate.name}</p></li>`).join("")}
+                  ${(parent_cat_arr || [])
+                    .map((cate) => `<li data-cate="${cate.id}"><p>${cate.name}</p></li>`)
+                    .join("")}
                 </ul>
             `;
             }
@@ -247,8 +250,9 @@ export const __templates_header = {
           .map((item) => {
             return `
               <li data-cat="toggle" >
-                <a data-cat="${item.attribute}" class="${item.style}" ${item.attribute ? `data-src="${item.url}"` : `href="${item.url}"`
-              } >${item.title}</a>
+                <a data-cat="${item.attribute}" class="${item.style}" ${
+              item.attribute ? `data-src="${item.url}"` : `href="${item.url}"`
+            } >${item.title}</a>
                 <ul class="mega_menu_items mega_menu_items--show">
 
                 </ul>
@@ -371,13 +375,18 @@ export const __templates_header = {
                   <li>
                     <div class="product fade__in">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-                      })"></span></a>
+                        <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+                      item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                    })"></span></a>
                       </div>
                       <h6 class="name">${item.name}</h6>
                       <div class="price">
-                        ${item.salePrice ? `<p class="discount">${__currency_format(item.salePrice)}</p>` : ""}
-                        <p>${__currency_format(item.price)}</p>
+                        ${
+                          item.salePrice
+                            ? `<p>${__currency_format(item.salePrice)}</p>
+                          <p class="discount">${__currency_format(item.price)}</p> `
+                            : `<p>${__currency_format(item.price)}</p>`
+                        }
                       </div>
                       ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                       <div class="color">

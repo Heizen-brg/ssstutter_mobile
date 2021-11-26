@@ -94,8 +94,8 @@ module.exports = {
   },
 
   error_404(params = {}) {
-    let title = `404 NOT FOUND`;
-    let description = `Trang web này không tồn tại`;
+    let title = params.title || `404 NOT FOUND`;
+    let description = params.description || `Trang web này không tồn tại`;
     return `
 			<!DOCTYPE html>
 			<html lang="vi">
