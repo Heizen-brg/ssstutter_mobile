@@ -196,11 +196,9 @@ function list_campaign_winter() {
         let item = create_element("div");
         item.classList.add("item");
         item.innerHTML = `
-        <a href="editorial/product/${
-          product.slug
-        }" class="image" style="background-image:url(https://cdn.ssstutter.com/products/${
-          product.extensions.media.featured
-        })"></a>
+        <a href="editorial/product/${product.slug
+          }" class="image" style="background-image:url(https://cdn.ssstutter.com/products/${product.extensions.media.featured
+          })"></a>
         <p class="name">${product.name.toLowerCase()}</p>
         <p>
           ${product.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span>
@@ -221,7 +219,7 @@ function list_campaign_winter() {
 
   function section_slider_1() {
     let div = create_element("section");
-    div.classList.add("section-slide", "slide-1");
+    div.classList.add("section__slide", "slide-1");
     div.innerHTML = `
     <div class="grid-row">
       <div class="glide" id="winter-1">

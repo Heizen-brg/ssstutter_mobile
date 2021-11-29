@@ -22,7 +22,7 @@
         margin-left: 4px;
       }
     }
-  }    
+  }
 }
 
 .list-campaign-page-wrapper {
@@ -32,7 +32,7 @@
     width: 100%;
     display: block;
     margin: 0 auto;
-    
+
     @media (min-width: 768px) {
       max-width: 540px;
     }
@@ -44,10 +44,10 @@
       max-width: 1320px;
     }
   }
-  
+
   .section-video {
     margin: 0 auto;
-    
+
     margin-bottom: 20px;
     @media (min-width: 768px) {
       max-width: 365px;
@@ -230,7 +230,7 @@
       }
     }
   }
-  .section-slide {
+  .section__slide {
     max-width: 1024px;
     margin: 0 auto;
     padding: 25px 15px;
@@ -262,16 +262,16 @@
     &.slide-1 {
       .image {
         &.image-1 {
-          background-image: url(../img/editorial/artboard-1.jpg)
+          background-image: url(../img/editorial/artboard-1.jpg);
         }
         &.image-2 {
-          background-image: url(../img/editorial/artboard-2.jpg)
+          background-image: url(../img/editorial/artboard-2.jpg);
         }
         &.image-3 {
-          background-image: url(../img/editorial/artboard-3.jpg)
+          background-image: url(../img/editorial/artboard-3.jpg);
         }
         &.image-4 {
-          background-image: url(../img/editorial/artboard-4.jpg)
+          background-image: url(../img/editorial/artboard-4.jpg);
         }
       }
     }
@@ -358,7 +358,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(155, 155, 155, .25);
+    background: rgba(155, 155, 155, 0.25);
     z-index: 1111;
   }
   svg {
@@ -396,7 +396,7 @@
     svg {
       width: 24px;
     }
-    
+
     span {
       background: #fff;
       padding: 14px;
@@ -593,8 +593,8 @@
 .overflow-hidden {
   overflow: hidden !important;
 }
-.self-portrait-campaign {
-  .section-slide {
+.self__portrait {
+  .section__slide {
     padding: 40px 5px;
     position: relative;
     @media (min-width: 1024px) {
@@ -605,7 +605,7 @@
       background: #fff no-repeat top center;
       background-size: cover;
     }
-    .glide__arrow{ 
+    .glide__arrow {
       padding: 8px;
       display: none;
       @media (min-width: 1024px) {
@@ -667,7 +667,7 @@
         }
         &::before,
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           top: 50%;
           border-color: #333;
@@ -688,4 +688,3 @@
     }
   }
 }
-

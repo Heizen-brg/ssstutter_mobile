@@ -20,11 +20,7 @@ import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
 import campaign_category_page from "./list_campaign/campaign_category.js";
 import { campaign_product_detail_page } from "./list_campaign/campaign_product_detail.js";
 import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checkout.js";
-//
-// women campaign
-//
-import self_portrait_campaign from "./self_portrait/self_portrait.js";
-
+import { __templates_portrait } from "./self_portrait/self_portrait.js";
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
     Accept: "application/json",
@@ -152,7 +148,6 @@ export const __render = {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           let block = entry.target;
-          console.log('block: ', block);
           // app.innerHTML += __templates.busy_loading("show");
 
           block_loader.unobserve(block);
@@ -531,35 +526,22 @@ export const __render = {
   // campaign đồ nữ
   //
   self_portrait_campaign() {
-    let blocks = [self_portrait_campaign(), __templates_footer.footer()];
-    this.build("self-portrait-campaign", blocks);
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
+      }),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
+      __templates_portrait.self_portrait_campaign(),
+      __templates_footer.footer()
+    ];
+    this.build("self__portrait", blocks);
     __templates.api_loading("hide");
-    new Glide("#winter-1", {
-      type: "slider",
-      bound: true,
-      perView: 4,
-      gap: 20,
-      breakpoints: {
-        1024: {
-          perView: 4,
-        },
-        768: {
-          perView: 3,
-          peek: {
-            before: 0,
-            after: 0,
-          },
-        },
-        480: {
-          gap: 5,
-          perView: 2,
-          peek: {
-            before: 0,
-            after: 80,
-          },
-        },
-      },
-    }).mount();
   },
   /*
 flash_sale() {

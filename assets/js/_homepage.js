@@ -103,7 +103,7 @@ export const __templates_home = {
             .map((item) => {
               return `
               <li class="glide__slide"><a target="_blank" href="${item.link
-                }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${item.cta ? `<button>${item.cta}</button>` : ""
+                }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""
                 }</div></a></li>
               `;
             })
