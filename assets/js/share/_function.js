@@ -353,7 +353,7 @@ export const __calc_final_amount = (div) => {
     let li_gift = document.createElement("li");
     li_gift.className = "blackfriday__gift";
     li_gift.innerHTML = `
-    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
+    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637916929075.jpeg)">
     </a>
     <div>
       <h6>SET QUÀ BLACK FRIDAY</h6>

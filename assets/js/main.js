@@ -72,8 +72,6 @@ export const __render = {
     let pathname = window.location.pathname;
     let url_data = {
       "/": () => __render.homepage(),
-      // "/c/for-him": () => __render.categories_page({ category: "3vvRIM" }),
-      // "/c/for-her": () => __render.categories_page({ category: "y8Q15I" }),
       "/c": (params) => __render.categories_page(params),
       "/p": (params) => __render.product_page(params),
       "/campaign": (params) => __render.campaign(params),
@@ -150,6 +148,18 @@ export const __render = {
       if (!block) return;
       app.appendChild(block);
     });
+    let block_loader = new IntersectionObserver(function (entries, observer) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          let block = entry.target;
+          console.log('block: ', block);
+          // app.innerHTML += __templates.busy_loading("show");
+
+          block_loader.unobserve(block);
+        }
+      });
+    });
+    block_loader.observe(blocks[0]);
   },
   build_in_block(params = {}) {
     if (!params.block || !params.target) return false;
