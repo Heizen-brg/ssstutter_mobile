@@ -1,6 +1,6 @@
 import { __render, __requests } from "../main.js";
 import { __size_guide_data } from "./_data.js";
-import { __get_voucher, __show_cart_item, __show_cart_quantity } from "./_function.js";
+import { __currency_format, __get_voucher, __show_cart_item, __show_cart_quantity } from "./_function.js";
 import { __icons } from "./_icons.js";
 export const __templates_modal = {
   overlay(params = {}) {
@@ -299,6 +299,47 @@ export const __templates_modal = {
       ${__icons.swipe_up}
       `
     }
+    return div;
+  },
+  lookbook_detail(params) {
+    let div = document.createElement('div');
+    div.className = `lookbook__detail`;
+    div.innerHTML = `
+      <div class="lookbook__detail--featured">
+        <span style="background-image:url(${params.featured})"></span>
+      </div>
+      <ul class="lookbook__detail--products">
+
+      </ul>
+    `;
+    __requests({
+      method: "GET",
+      url: `https://api.ssstutter.com/product/filter/web?catId=${params.catId}&media=true&webStock=true&allActive=true&stock=0`
+    }, ({ data }) => {
+      let product = data.map((item) => {
+        return `
+        <li>
+          <div class="product">
+            <div class="thumbnail">
+              <a href="/p/${item.slug
+          }"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
+          })"></span></a>
+            </div>
+            <h6 class="name">${item.name.toLowerCase()}</h6>
+            <div class="price">
+              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+              <p>${__currency_format(item.salePrice || item.price)}</p>
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+          </div>
+        </li>
+          `
+      }
+      )
+        .join("");
+      let lookbook_dom = div.querySelector('.lookbook__detail--products');
+      lookbook_dom.innerHTML = product;
+    })
     return div;
   }
 }
