@@ -634,12 +634,57 @@
         padding: 40px 0;
         grid-template: auto / 1fr 1fr;
       }
-      .image__featured,
       .video {
         position: relative;
         padding-top: 100%;
         background: #f4f4f4 no-repeat center;
         background-size: cover;
+      }
+      .image__featured {
+        @include ratio(1, 1);
+        @include transition;
+        position: relative;
+        .product-opacity {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          display: grid;
+          place-content: center;
+          grid-template-columns: 1fr;
+          top: 0;
+          left: 0;
+          -webkit-box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.3);
+          -moz-box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.3);
+          box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.3);
+          transition: 0.5s;
+          z-index: 1;
+        }
+        &:hover > .product-opacity {
+          -webkit-box-shadow: inset 10px 10px 0px 400px rgba(0, 0, 0, 0.3);
+          -moz-box-shadow: inset 10px 10px 0px 400px rgba(0, 0, 0, 0.3);
+          box-shadow: inset 10px 10px 0px 400px rgba(0, 0, 0, 0.3);
+          .product-content {
+            opacity: 1;
+          }
+        }
+        .product-content {
+          opacity: 0;
+          transition: 0.8s;
+          background-color: transparent;
+          padding: 20px 0px;
+          width: 100%;
+          cursor: pointer;
+        }
+
+        .product-content p {
+          font-size: medium;
+          letter-spacing: 3px;
+          font-weight: bold;
+          color: $white;
+          text-align: center;
+          font-family: NewYork;
+          text-transform: capitalize;
+        }
       }
     }
   }
@@ -650,16 +695,21 @@
       font-size: large;
       line-height: 1.2;
       background-color: white;
-      margin-bottom: 20px;
       padding: 10px;
     }
     @media (min-width: 1024px) {
       padding: 40px 5%;
     }
     .image {
-      padding-top: calc(16 / 9 * 100%);
+      padding-top: calc(7 / 3 * 100%);
       background: #fff no-repeat top center;
       background-size: cover;
+      position: relative;
+      p {
+        position: absolute;
+        bottom: 30px;
+        width: 100%;
+      }
     }
     .glide__arrow {
       padding: 8px;
@@ -703,20 +753,20 @@
       }
       @media (min-width: 1024px) {
         grid-template: auto/20% 20% 20% 1fr;
-        grid-gap: 10px;
+        grid-gap: 0;
       }
       @media (min-width: 1200px) {
         grid-gap: 10px;
       }
       .model {
-        padding-top: calc(16 / 9 * 100%);
+        padding-top: calc(7 / 3 * 100%);
         background: #fff no-repeat center;
         background-size: cover;
       }
       .close {
         position: absolute;
         right: 20px;
-        top: 20px;
+        top: 70px;
         width: 28px;
         height: 28px;
         background: transparent;
@@ -777,6 +827,12 @@
       }
       .grid-row {
         grid-template-columns: 1fr 1fr;
+        .image__featured {
+          .product-content p {
+            font-size: large;
+            letter-spacing: 2px;
+          }
+        }
       }
     }
     .section__slide {

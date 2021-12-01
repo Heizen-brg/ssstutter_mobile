@@ -252,12 +252,10 @@
 }
 .lookbook__detail {
   width: 70vw;
-  height: 80vh;
   padding: 10px;
   @include grid(35% 1fr, null, 40px);
   &--featured {
     width: 100%;
-    margin-bottom: 25px;
     padding: 10px;
     @include flex(row, center, center);
     span {

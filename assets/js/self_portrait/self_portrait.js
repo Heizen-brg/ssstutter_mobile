@@ -27,12 +27,36 @@ export const __templates_portrait = {
           </div>
         </div>
         <div class=grid-row>
-          <div class="image__featured" data-cat="herCate5" data-featured="/assets/img/self_portrait/lookbook/look1.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look1.jpg)"></div>
-          <div class="image__featured" data-cat="herCate5" data-featured="/assets/img/self_portrait/lookbook/look2.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look2.jpg)"></div>
+          <div class="image__featured" data-cat="herCate7" data-featured="/assets/img/self_portrait/lookbook/look1.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look1.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
+          <div class="image__featured" data-cat="herCate7" data-featured="/assets/img/self_portrait/lookbook/look2.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look2.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class=grid-row>
-          <div class="image__featured" data-cat="herCate2" data-featured="/assets/img/self_portrait/lookbook/look3.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look3.jpg)"></div>
-          <div class="image__featured" data-cat="herCate2" data-featured="/assets/img/self_portrait/lookbook/look4.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look4.jpg)"></div>
+          <div class="image__featured" data-cat="herCate3" data-featured="/assets/img/self_portrait/lookbook/look3.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look3.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
+          <div class="image__featured" data-cat="herCate3" data-featured="/assets/img/self_portrait/lookbook/look4.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look4.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <div class="text__img">
@@ -42,17 +66,41 @@ export const __templates_portrait = {
         <div class="video__layout">
           <div class="video">
             <video width="100%" autoplay playsinline muted loop>
-              <source type="video/mp4" src="/assets/img/self_portrait/video/self-portrait.mp4">
+              <source type="video/mp4" src="/assets/img/self_portrait/video/self-portrait2.mp4">
             </video>
           </div>
         </div>
         <div class=grid-row>
-          <div class="image__featured" data-cat="herCate4" data-featured="/assets/img/self_portrait/lookbook/look5.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look5.jpg)"></div>
-          <div class="image__featured" data-cat="herCate4" data-featured="/assets/img/self_portrait/lookbook/look6.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look6.jpg)"></div>
+          <div class="image__featured" data-cat="herCate4" data-featured="/assets/img/self_portrait/lookbook/look5.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look5.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
+          <div class="image__featured" data-cat="herCate4" data-featured="/assets/img/self_portrait/lookbook/look6.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look6.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
         </div>        
         <div class=grid-row>
-          <div class="image__featured" data-cat="herCate3" data-featured="/assets/img/self_portrait/lookbook/look7.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look7.jpg)"></div>
-          <div class="image__featured" data-cat="herCate3" data-featured="/assets/img/self_portrait/lookbook/look8.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look8.jpg)"></div>
+          <div class="image__featured" data-cat="herCate5" data-featured="/assets/img/self_portrait/lookbook/look7.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look7.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
+          <div class="image__featured" data-cat="herCate5" data-featured="/assets/img/self_portrait/lookbook/look8.1.jpg" style="background-image: url(/assets/img/self_portrait/lookbook/look8.jpg)">
+            <div class="product-opacity">
+              <div class="product-content">
+                <p>see more....</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <div class="text__img">      
@@ -64,32 +112,40 @@ export const __templates_portrait = {
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
               <li class="glide__slide">
-                <div class="image" data-cat="herCate1" data-img="/assets/img/self_portrait/model/1.png" data-img1="/assets/img/self_portrait/model/1.1.png" data-img2="/assets/img/self_portrait/model/1.2.png" style="background-image: url(/assets/img/self_portrait/model/1.png)"></div>
-                <p>Look 1</p>
+                <div class="image" data-color="100" data-cat="herCate3" data-img="/assets/img/self_portrait/model/3.png" data-img1="/assets/img/self_portrait/model/3.1.png" data-img2="/assets/img/self_portrait/model/3.2.png" style="background-image: url(/assets/img/self_portrait/model/3.png)">
+                  <p>Look 1</p>
+                </div>
+              </li>
+
+              <li class="glide__slide">
+                <div class="image" data-color="503" data-cat="herCate4" data-img="/assets/img/self_portrait/model/4.png" data-img1="/assets/img/self_portrait/model/4.1.png" data-img2="/assets/img/self_portrait/model/4.2.png" style="background-image: url(/assets/img/self_portrait/model/4.png)">
+                  <p>Look 2</p>
+                </div>
               </li>
               <li class="glide__slide">
-                <div class="image" data-cat="herCate2" data-img="/assets/img/self_portrait/model/2.png" data-img1="/assets/img/self_portrait/model/2.1.png" data-img2="/assets/img/self_portrait/model/2.2.png" style="background-image: url(/assets/img/self_portrait/model/2.png)"></div>
-              <p>Look 2</p>
+                <div class="image" data-color="100" data-cat="herCate7" data-img="/assets/img/self_portrait/model/7.png" data-img1="/assets/img/self_portrait/model/7.1.png" data-img2="/assets/img/self_portrait/model/7.2.png" style="background-image: url(/assets/img/self_portrait/model/7.png)">
+                  <p>Look 3</p>
+                </div>
               </li>
               <li class="glide__slide">
-                <div class="image" data-cat="herCate3" data-img1="/assets/img/self_portrait/model/3.1.png" data-img2="/assets/img/self_portrait/model/3.2.png" style="background-image: url(/assets/img/self_portrait/model/3.png)"></div>
-                <p>Look 3</p>
+                <div class="image"  data-color="100" data-cat="herCate5" data-img="/assets/img/self_portrait/model/5.png" data-img1="/assets/img/self_portrait/model/5.1.png" data-img2="/assets/img/self_portrait/model/5.2.png" style="background-image: url(/assets/img/self_portrait/model/5.png)">
+                  <p>Look 5</p>
+                </div>
               </li>
               <li class="glide__slide">
-                <div class="image" data-cat="herCate4" data-img1="/assets/img/self_portrait/model/4.1.png" data-img2="/assets/img/self_portrait/model/4.2.png" style="background-image: url(/assets/img/self_portrait/model/4.png)"></div>
-                <p>Look 4</p>
+                <div class="image" data-color="304" data-cat="herCate6" data-img="/assets/img/self_portrait/model/6.png" data-img1="/assets/img/self_portrait/model/6.1.png" data-img2="/assets/img/self_portrait/model/6.2.png" style="background-image: url(/assets/img/self_portrait/model/6.png)">
+                  <p>Look 5</p>
+                </div>
               </li>
               <li class="glide__slide">
-                <div class="image" data-cat="herCate5" data-img1="/assets/img/self_portrait/model/5.1.png" data-img2="/assets/img/self_portrait/model/5.2.png" style="background-image: url(/assets/img/self_portrait/model/5.png)"></div>
-                <p>Look 5</p>
+                <div class="image" data-color="100" data-cat="herCate2" data-img="/assets/img/self_portrait/model/2.png" data-img1="/assets/img/self_portrait/model/2.1.png" data-img2="/assets/img/self_portrait/model/2.2.png" style="background-image: url(/assets/img/self_portrait/model/2.png)">
+                  <p>Look 6</p>
+                </div>
               </li>
               <li class="glide__slide">
-                <div class="image" data-cat="herCate6" data-img1="/assets/img/self_portrait/model/6.1.png" data-img2="/assets/img/self_portrait/model/6.2.png" style="background-image: url(/assets/img/self_portrait/model/6.png)"></div>
-                <p>Look 6</p>
-              </li>
-              <li class="glide__slide">
-                <div class="image" data-cat="herCate7" data-img1="/assets/img/self_portrait/model/7.1.png" data-img2="/assets/img/self_portrait/model/7.2.png" style="background-image: url(/assets/img/self_portrait/model/7.png)"></div>
-                <p>Look 7</p>
+                <div class="image" data-color="100" data-cat="herCate1" data-img="/assets/img/self_portrait/model/1.png" data-img1="/assets/img/self_portrait/model/1.1.png" data-img2="/assets/img/self_portrait/model/1.2.png" style="background-image: url(/assets/img/self_portrait/model/1.png)">
+                  <p>Look 7</p>
+                </div>
               </li>
             </ul>
     
@@ -118,9 +174,9 @@ export const __templates_portrait = {
       })
     }
     init_lookbook_modal();
-    product_slide.forEach(item => {
-      item.addEventListener('click', () => {
-        let image = item.querySelector('.image');
+    product_slide.forEach(slide => {
+      slide.addEventListener('click', () => {
+        let image = slide.querySelector('.image');
         let look_modal = document.createElement('div');
         look_modal.classList.add('look-detail');
         look_modal.innerHTML = `
@@ -139,7 +195,7 @@ export const __templates_portrait = {
               <div>
                 <div class="product">
                   <div class="thumbnail">
-                    <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.color_100_thumbnail.o})"></span></a>
+                    <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media[`color_${image.dataset.color}_thumbnail`].o})"></span></a>
                   </div>
                   <h6 class="name">${item.name.toLowerCase()}</h6>
                   <div class="price">
