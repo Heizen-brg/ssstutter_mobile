@@ -129,11 +129,11 @@ export const __templates_portrait = {
               </li>
               <li class="glide__slide">
                 <div class="image"  data-color="100" data-cat="herCate5" data-img="/assets/img/self_portrait/model/5.png" data-img1="/assets/img/self_portrait/model/5.1.png" data-img2="/assets/img/self_portrait/model/5.2.png" style="background-image: url(/assets/img/self_portrait/model/5.png)">
-                  <p>Look 5</p>
+                  <p>Look 4</p>
                 </div>
               </li>
               <li class="glide__slide">
-                <div class="image" data-color="304" data-cat="herCate6" data-img="/assets/img/self_portrait/model/6.png" data-img1="/assets/img/self_portrait/model/6.1.png" data-img2="/assets/img/self_portrait/model/6.2.png" style="background-image: url(/assets/img/self_portrait/model/6.png)">
+                <div class="image" data-color="100" data-cat="herCate6" data-img="/assets/img/self_portrait/model/6.png" data-img1="/assets/img/self_portrait/model/6.1.png" data-img2="/assets/img/self_portrait/model/6.2.png" style="background-image: url(/assets/img/self_portrait/model/6.png)">
                   <p>Look 5</p>
                 </div>
               </li>
@@ -195,7 +195,7 @@ export const __templates_portrait = {
               <div>
                 <div class="product">
                   <div class="thumbnail">
-                    <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media[`color_${image.dataset.color}_thumbnail`].o})"></span></a>
+                    <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span></a>
                   </div>
                   <h6 class="name">${item.name.toLowerCase()}</h6>
                   <div class="price">
