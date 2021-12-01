@@ -701,10 +701,14 @@
       padding: 40px 5%;
     }
     .image {
+      @include transition();
       padding-top: calc(7 / 3 * 100%);
       background: #fff no-repeat top center;
       background-size: cover;
       position: relative;
+      &:hover {
+        transform: scale(1.1);
+      }
       p {
         position: absolute;
         bottom: 30px;
@@ -744,12 +748,12 @@
       left: 0;
       height: 100%;
       width: 100%;
-      z-index: 111;
-      padding: 40px 10px;
+      z-index: 2;
+      padding: 10px;
       background: #fff;
       @media (min-width: 768px) {
         position: absolute;
-        padding: 40px 25px;
+        padding: 20px 25px;
       }
       @media (min-width: 1024px) {
         grid-template: auto/20% 20% 20% 1fr;
@@ -807,6 +811,7 @@
   .self__portrait {
     .text__img {
       padding: 0;
+      margin-top: 0;
       img {
         width: 80%;
         padding: 10px;
@@ -814,7 +819,7 @@
           width: 60%;
         }
         &.medium {
-          width: 100%;
+          width: 80%;
         }
       }
     }
@@ -827,6 +832,7 @@
       }
       .grid-row {
         grid-template-columns: 1fr 1fr;
+        padding: 20px 0;
         .image__featured {
           .product-content p {
             font-size: large;
@@ -836,9 +842,18 @@
       }
     }
     .section__slide {
+      padding: 20px 5px;
+      h3 {
+        padding: 0 10px;
+      }
       .look-detail {
         height: 100vh;
         overflow: auto;
+      }
+    }
+    .image {
+      p {
+        bottom: 0 !important;
       }
     }
   }
