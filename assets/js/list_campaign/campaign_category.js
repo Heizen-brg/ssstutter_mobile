@@ -73,7 +73,7 @@ function campaign_category_page(data) {
     <div class="product-list"></div>
     `;
 
-    fetch(`https://api.leanservices.work/product/filter/web?catId=${data.id}&showAll=true&stock=0`, {
+    fetch(`https://api.ssstutter.com/product/filter/web?catId=${data.id}&showAll=true&stock=0`, {
       method: "GET",
     })
       .then((response) => {

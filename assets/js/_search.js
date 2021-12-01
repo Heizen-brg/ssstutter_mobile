@@ -26,7 +26,7 @@ export const __templates_search = {
           __requests(
             {
               method: "GET",
-              url: `product/filter/web?name=${e.target.value}&media=true&webStock=true`,
+              url: `https://api.ssstutter.com/product/filter/web?name=${e.target.value}&media=true&webStock=true`,
             },
             ({ data, error }) => {
               __templates.busy_loading("hide");

@@ -53,7 +53,8 @@ export const __templates_home = {
               return `
             <li class="glide__slide">
               <a target="_blank" href="${item.link}">
-                <div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""}</div>
+                <div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""
+                }</div>
               </a>
             </li>
             `;
@@ -161,7 +162,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: `product/filter/web?sort=up&catId=newColl&media=true`,
+        url: `https://api.ssstutter.com/product/filter/web?sort=up&catId=newColl&media=true`,
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -174,8 +175,7 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
               </div>
               <div class="detail">
@@ -238,7 +238,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?sort=down&catId=newColl&media=true",
+        url: "https://api.ssstutter.com/product/filter/web?sort=down&catId=newColl&media=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -257,8 +257,7 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
+              <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
                 })"></span></a>
             </div>
             <div class="detail">
@@ -277,7 +276,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
           </div>
           <div class="detail">
@@ -391,7 +390,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: `product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true&webStock=true`,
+        url: `https://api.ssstutter.com/product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true&webStock=true`,
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -404,8 +403,7 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
               </div>
               <div class="detail">
@@ -448,7 +446,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
+        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -461,8 +459,7 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
               </div>
               <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -554,7 +551,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
+        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -573,8 +570,7 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
+              <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
                 })"></span></a>
             </div>
             <div class="detail">
@@ -593,7 +589,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
           </div>
           <div class="detail">
@@ -641,7 +637,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
+        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -660,8 +656,7 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug
-                }"><span style="background-image:url(https://api.leanservices.work/product/static/${next_item.extensions.media.featured
+              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
                 })"></span></a>
             </div>
             <h6 class="name">${next_item.name}</h6>
@@ -678,7 +673,7 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
           </div>
           <h6 class="name">${item.name}</h6>
@@ -745,7 +740,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
+        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -759,7 +754,7 @@ export const __templates_home = {
                     <div class="product">
                       <div class="thumbnail">
                         <a href="/p/${item.slug
-              }"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+              }"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
                       </div>
                       <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -818,7 +813,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true&webStock=true",
+        url: "https://api.ssstutter.com/product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -830,7 +825,7 @@ export const __templates_home = {
       <li>
         <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+          <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
         <div>
           <div class="detail">
@@ -852,7 +847,7 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true&webStock=true",
+        url: "https://api.ssstutter.com/product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true&webStock=true",
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -864,7 +859,7 @@ export const __templates_home = {
       <li>
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured
+            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
               })"></span></a>
           </div>
           <div class="detail">

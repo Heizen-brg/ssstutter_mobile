@@ -66,8 +66,8 @@ export const __templates_header = {
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
-      <!-- <div class="freeship fade-in">Miễn phí vận chuyển đơn hàng trên 599.000đ</div> -->
-      <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a>
+      <div class="freeship fade-in">Miễn phí vận chuyển đơn hàng trên 599.000đ</div>
+      <!-- <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a> -->
     `;
     ["popup", "left", "right", "mobile"].forEach((pos) => {
       let block = header.querySelector(`.nav__${pos}`);
@@ -362,7 +362,7 @@ export const __templates_header = {
           __requests(
             {
               method: "GET",
-              url: `product/filter/web?name=${e.target.value}&media=true&webStock=true`,
+              url: `https://api.ssstutter.com/product/filter/web?name=${e.target.value}&media=true&webStock=true`,
             },
             ({ data, error }) => {
               __templates.busy_loading("hide");

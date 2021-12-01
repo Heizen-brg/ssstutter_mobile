@@ -83,7 +83,7 @@ export const __templates = {
     __requests(
       {
         method: "GET",
-        url: `product/filter/web?limit=4&sort=down&media=true&webStock=true`,
+        url: `https://api.ssstutter.com/product/filter/web?limit=4&sort=down&media=true&webStock=true`,
         header: {
           authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
         },
@@ -97,7 +97,7 @@ export const __templates = {
           product_template.innerHTML = `
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(http://media.leanservices.work/product/${
+            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
             item.extensions.media.featured
           })"></span></a>
           </div>

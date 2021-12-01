@@ -1,10 +1,6 @@
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
-import {
-  __currency_format,
-  __init_filter,
-  __init_product_list,
-} from "./share/_function.js";
+import { __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 let mobile = window.innerWidth <= 435;
 let tablet = window.innerWidth <= 768 && window.innerWidth >= 435;
@@ -30,16 +26,16 @@ export const __templates_campaign = {
         minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      div.querySelector('.clock').innerHTML = `
+      div.querySelector(".clock").innerHTML = `
       <div class="text-center"><span>${days}</span>Ngày</div>
       <div class="text-center"><span>${hours}</span>Giờ</div>
       <div class="text-center"><span>${minutes}</span>Phút</div>
       <div class="text-center"><span>${seconds}</span>Giây</div>
       `;
 
-      if ((distance) < 0) {
+      if (distance < 0) {
         clearInterval(countdown);
-        div.querySelector('.clock').innerHTML = `
+        div.querySelector(".clock").innerHTML = `
         <div class="text-center"><span>00</span>Ngày</div>
         <div class="text-center"><span>00</span>Giờ</div>
         <div class="text-center"><span>00</span>Phút</div>
@@ -57,7 +53,9 @@ export const __templates_campaign = {
     let div = document.createElement("div");
     div.className = "hero__banner";
     div.innerHTML = `
-      <div style="background-image:url(https://sss-dashboard.leanservices.work${mobile ? params.thumbnail : params.banner}.jpeg)"></div>
+      <div style="background-image:url(https://sss-dashboard.leanservices.work${
+        mobile ? params.thumbnail : params.banner
+      }.jpeg)"></div>
     `;
     return div;
   },
@@ -76,60 +74,71 @@ export const __templates_campaign = {
         <li data-filter="price" data-price="500000">500k > </li>
       </ul>
     `;
-    let filter_btn = div.querySelectorAll('[data-filter]');
+    let filter_btn = div.querySelectorAll("[data-filter]");
     filter_btn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         if (btn.dataset.catid) {
-          div.querySelectorAll('[data-filter="price"]').forEach(i => i.dataset.catid = btn.dataset.catid)
+          div.querySelectorAll('[data-filter="price"]').forEach((i) => (i.dataset.catid = btn.dataset.catid));
         }
         let product_container = document.querySelector("#sale_products");
-        product_container.innerHTML = __templates.busy_loading('show')
+        product_container.innerHTML = __templates.busy_loading("show");
 
         let init_sale_products = ({ skip = 0, limit = 10, catId, price } = {}) => {
-
-          let query = `url=${params.url}&`
-          if (skip) query += `skip=${skip}&`
-          if (limit) query += `limit=${limit}&`
-          if (catId) query += `catId=${catId}&`
-          if (price) query += `salePrice=${price}&`
-          __requests({
-            method: "GET",
-            url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`
-          }, ({ data }) => {
-            if (!data.products.length) product_container.innerHTML += ` <p style="text-align:center">Không tìm thấy sản phẩm phù hợp</p>`
-            let product_items = (data.products || []).map(item => {
-              item.catId = item.catId.join(",").split(",")
-              let product_template = document.createElement("li");
-              product_template.dataset.cat = item.catId[0];
-              product_template.className = 'product';
-              product_template.innerHTML = `
+          let query = `url=${params.url}&`;
+          if (skip) query += `skip=${skip}&`;
+          if (limit) query += `limit=${limit}&`;
+          if (catId) query += `catId=${catId}&`;
+          if (price) query += `salePrice=${price}&`;
+          __requests(
+            {
+              method: "GET",
+              url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`,
+            },
+            ({ data }) => {
+              if (!data.products.length)
+                product_container.innerHTML += ` <p style="text-align:center">Không tìm thấy sản phẩm phù hợp</p>`;
+              let product_items = (data.products || []).map((item) => {
+                item.catId = item.catId.join(",").split(",");
+                let product_template = document.createElement("li");
+                product_template.dataset.cat = item.catId[0];
+                product_template.className = "product";
+                product_template.innerHTML = `
                 <div class="thumbnail">
-                  <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                  item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
                 })"></span></a>
                 </div>
                 <div class="detail">
                   <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
                   <div class="price">
-                    ${item.salePrice
-                  ? `<p>${__currency_format(item.salePrice)}</p>
+                    ${
+                      item.salePrice
+                        ? `<p>${__currency_format(item.salePrice)}</p>
                       <p class="discount">${__currency_format(item.price)}</p> `
-                  : `<p>${__currency_format(item.price)}</p>`
-                }
+                        : `<p>${__currency_format(item.price)}</p>`
+                    }
                   </div>
                   ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                   <div class="color">
                     <p>+${item.color.length} màu</p>
                   </div>
                 </div>
-              `
-              product_container.appendChild(product_template);
-              return product_template;
-            })
-            if (data.products.length >= 10) infinity_scroll(product_items[product_items.length - 2], product_container, { skip, limit, catId, price })
-            __templates.busy_loading("hide");
-          })
-        }
+              `;
+                product_container.appendChild(product_template);
+                return product_template;
+              });
+              if (data.products.length >= 10)
+                infinity_scroll(product_items[product_items.length - 2], product_container, {
+                  skip,
+                  limit,
+                  catId,
+                  price,
+                });
+              __templates.busy_loading("hide");
+            }
+          );
+        };
         let infinity_scroll = (anchor, container, query) => {
           if (!anchor) return false;
           let block_loader = new IntersectionObserver(function (entries, observer) {
@@ -146,9 +155,9 @@ export const __templates_campaign = {
         };
         console.log(btn.dataset.filter);
         init_sale_products({
-          catId: btn.dataset.catid || '',
-          price: btn.dataset.price || ''
-        })
+          catId: btn.dataset.catid || "",
+          price: btn.dataset.price || "",
+        });
       });
     });
 
@@ -166,51 +175,56 @@ export const __templates_campaign = {
         e.preventDefault();
 
         let product_container = document.querySelector("#sale_products");
-        product_container.innerHTML = __templates.busy_loading('show')
+        product_container.innerHTML = __templates.busy_loading("show");
 
         let init_sale_products = ({ skip = 0, limit = 10, catId, price } = {}) => {
-
-          let query = `url=${params.url}&`
-          if (skip) query += `skip=${skip}&`
-          if (limit) query += `limit=${limit}&`
-          if (catId) query += `catId=${catId}&`
-          if (price) query += `salePrice=${price}`
-          __requests({
-            method: "GET",
-            url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`
-          }, ({ data }) => {
-            let product_items = (data.products || []).map(item => {
-              item.catId = item.catId.join(",").split(",")
-              let product_template = document.createElement("li");
-              product_template.dataset.cat = item.catId[0];
-              product_template.className = 'product';
-              product_template.innerHTML = `
+          let query = `url=${params.url}&`;
+          if (skip) query += `skip=${skip}&`;
+          if (limit) query += `limit=${limit}&`;
+          if (catId) query += `catId=${catId}&`;
+          if (price) query += `salePrice=${price}`;
+          __requests(
+            {
+              method: "GET",
+              url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`,
+            },
+            ({ data }) => {
+              let product_items = (data.products || []).map((item) => {
+                item.catId = item.catId.join(",").split(",");
+                let product_template = document.createElement("li");
+                product_template.dataset.cat = item.catId[0];
+                product_template.className = "product";
+                product_template.innerHTML = `
                 <div class="thumbnail">
-                  <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                  item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
                 })"></span></a>
                 </div>
                 <div class="detail">
                   <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
                   <div class="price">
-                    ${item.salePrice
-                  ? `<p>${__currency_format(item.salePrice)}</p>
+                    ${
+                      item.salePrice
+                        ? `<p>${__currency_format(item.salePrice)}</p>
                       <p class="discount">${__currency_format(item.price)}</p> `
-                  : `<p>${__currency_format(item.price)}</p>`
-                }
+                        : `<p>${__currency_format(item.price)}</p>`
+                    }
                   </div>
                   ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                   <div class="color">
                     <p>+${item.color.length} màu</p>
                   </div>
                 </div>
-              `
-              product_container.appendChild(product_template);
-              return product_template;
-            })
-            if (data.products.length >= 10) infinity_scroll(product_items[product_items.length - 2], product_container, { skip, limit, catId })
-            __templates.busy_loading("hide");
-          })
-        }
+              `;
+                product_container.appendChild(product_template);
+                return product_template;
+              });
+              if (data.products.length >= 10)
+                infinity_scroll(product_items[product_items.length - 2], product_container, { skip, limit, catId });
+              __templates.busy_loading("hide");
+            }
+          );
+        };
         let infinity_scroll = (anchor, container, query) => {
           if (!anchor) return false;
           let block_loader = new IntersectionObserver(function (entries, observer) {
@@ -225,7 +239,7 @@ export const __templates_campaign = {
           });
           block_loader.observe(anchor);
         };
-        init_sale_products({ catId: btn.dataset.cate })
+        init_sale_products({ catId: btn.dataset.cate });
       });
     });
     return div;
@@ -240,44 +254,50 @@ export const __templates_campaign = {
     </ul>
     `;
 
-    let product_sale_container = div.querySelector('ul');
+    let product_sale_container = div.querySelector("ul");
     let init_sale_products = (query = `url=${params.url}&`) => {
-      __requests({
-        method: "GET",
-        url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`
-      }, ({ data }) => {
-        let product_items = (data.products || []).map(item => {
-          item.catId = item.catId.join(",").split(",")
-          let product_template = document.createElement("li");
-          product_template.dataset.cat = item.catId[0];
-          product_template.className = 'product';
-          product_template.innerHTML = `
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w/campaign/detail-web?${query}`,
+        },
+        ({ data }) => {
+          let product_items = (data.products || []).map((item) => {
+            item.catId = item.catId.join(",").split(",");
+            let product_template = document.createElement("li");
+            product_template.dataset.cat = item.catId[0];
+            product_template.className = "product";
+            product_template.innerHTML = `
             <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(https://api.leanservices.work/product/static/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+              item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
             })"></span></a>
             </div>
             <div class="detail">
               <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
               <div class="price">
-                ${item.salePrice
-              ? `<p>${__currency_format(item.salePrice)}</p>
+                ${
+                  item.salePrice
+                    ? `<p>${__currency_format(item.salePrice)}</p>
                   <p class="discount">${__currency_format(item.price)}</p> `
-              : `<p>${__currency_format(item.price)}</p>`
-            }
+                    : `<p>${__currency_format(item.price)}</p>`
+                }
               </div>
               ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
               <div class="color">
                 <p>+${item.color.length} màu</p>
               </div>
             </div>
-          `
-          product_sale_container.appendChild(product_template);
-          return product_template;
-        })
-        if (data.products.length >= 10) infinity_scroll(product_items[product_items.length - 2], product_sale_container)
-        __templates.busy_loading("hide");
-      })
-    }
+          `;
+            product_sale_container.appendChild(product_template);
+            return product_template;
+          });
+          if (data.products.length >= 10)
+            infinity_scroll(product_items[product_items.length - 2], product_sale_container);
+          __templates.busy_loading("hide");
+        }
+      );
+    };
     let infinity_scroll = (anchor, container) => {
       if (!anchor) return false;
       let block_loader = new IntersectionObserver(function (entries, observer) {
@@ -285,7 +305,7 @@ export const __templates_campaign = {
           if (entry.isIntersecting) {
             let block = entry.target;
             container.innerHTML += __templates.busy_loading("show");
-            let query = `url=${params.url}&skip=${container.childElementCount - 1}`
+            let query = `url=${params.url}&skip=${container.childElementCount - 1}`;
             init_sale_products(query);
             block_loader.unobserve(block);
           }
@@ -293,7 +313,7 @@ export const __templates_campaign = {
       });
       block_loader.observe(anchor);
     };
-    init_sale_products()
+    init_sale_products();
     return div;
   },
 };
