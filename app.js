@@ -68,21 +68,24 @@ app.get("/services/sitemap.xml", async (reg, res, next) => {
           <g:title>${item.name.toUpperCase()}</g:title>
           <g:description>${item.description ? item.description : item.name.toLowerCase()}</g:description>
           <g:link>${path_url + "/p/" + item.slug}</g:link>
-          <g:image_link>https://api.leanservices.work/product/static/${item.extensions.media.featured}</g:image_link>
+          <g:image_link>https://cdn.ssstutter.com/products/${item.extensions.media.featured}</g:image_link>
           <g:brand>SSSTUTTER</g:brand>
           <g:condition>new</g:condition>
           <g:availability>in stock</g:availability>
           <g:price>${item.price} VND</g:price>
           <g:sale_price>${!item.salePrice ? "" : item.salePrice + " VND"}</g:sale_price>
           ${item.salePrice ? "<g:pattern>sale</g:pattern>" : ""}
-          <g:color>${item.color.map(i => i.name).join(", ")}</g:color>
+          <g:color>${item.color.map((i) => i.name).join(", ")}</g:color>
           <g:size>${item.size}</g:size>
-          <g:gender>${item.catId.join(',').includes('3vvRIM') ? 'male' : 'female'}</g:gender>
-          <g:google_product_category>${item.catId.join(',').includes('3vvRIM') ? 'For him' : 'For her'}</g:google_product_category>
-          <g:fb_product_category>${item.catId.join(',').includes('3vvRIM') ? 'For him' : 'For her'}</g:fb_product_category>
+          <g:gender>${item.catId.join(",").includes("3vvRIM") ? "male" : "female"}</g:gender>
+          <g:google_product_category>${
+            item.catId.join(",").includes("3vvRIM") ? "For him" : "For her"
+          }</g:google_product_category>
+          <g:fb_product_category>${
+            item.catId.join(",").includes("3vvRIM") ? "For him" : "For her"
+          }</g:fb_product_category>
         </item>
       `;
-
   });
   res.set("Content-Type", "application/xml");
   return res.send(

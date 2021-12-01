@@ -39,7 +39,7 @@ export const __init_product_list = (params = { ids: product_ids }) => {
   __requests(
     {
       method: "GET",
-      url: `product/filter/web${url}&media=true&webStock=true`,
+      url: `https://api.ssstutter.com/product/filter/web${url}&media=true&webStock=true`,
     },
     ({ data, error }) => {
       if (!data.length) return (params.container.innerHTML = `<p>Không có sản phẩm</p>`);
@@ -53,17 +53,19 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         product_template.innerHTML = `
       <div class="product">
         <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
-          })"></span></a>
+          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+        })"></span></a>
         </div>
         <div class="detail">
           <h6 class="name">${item.name.toLowerCase()}</h6>
           <div class="price">
-            ${item.salePrice
-            ? `<p>${__currency_format(item.salePrice)}</p>
+            ${
+              item.salePrice
+                ? `<p>${__currency_format(item.salePrice)}</p>
               <p class="discount">${__currency_format(item.price)}</p> `
-            : `<p>${__currency_format(item.price)}</p>`
-          }
+                : `<p>${__currency_format(item.price)}</p>`
+            }
           </div>
           ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           <div class="color">
@@ -121,10 +123,11 @@ export const __show_cart_item = (wrapper, total, div) => {
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${prod.media[`color_${prod.colorId}_thumbnail`]
+      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+        prod.media[`color_${prod.colorId}_thumbnail`]
           ? prod.media[`color_${prod.colorId}_thumbnail`].x100.replace(".jpeg", ".webp")
           : "no_image.png"
-        })">
+      })">
       </a>
       <div>
         <h6>${prod.name}</h6>
@@ -132,11 +135,12 @@ export const __show_cart_item = (wrapper, total, div) => {
           <p>${prod.colorName}, ${prod.size}</p>
         </span>
         <div class="price">
-            ${prod.salePrice
-          ? `<p>${__currency_format(prod.salePrice)}</p>
+            ${
+              prod.salePrice
+                ? `<p>${__currency_format(prod.salePrice)}</p>
               <p class="discount">${__currency_format(prod.price)}</p> `
-          : `<p>${__currency_format(prod.price)}</p>`
-        }
+                : `<p>${__currency_format(prod.price)}</p>`
+            }
         </div>
         <div class="add__product">
           <button data-id="${prod.variation.id}" data-quantity="descrease">-</button>
@@ -366,7 +370,7 @@ export const __calc_final_amount = (div) => {
       </div>
       <small>SSStutter sẽ gọi điện xác nhận đơn hàng của bạn & màu tất, cỡ túi trong Set quà Black Friday 555.000đ.</small>
     </div>
-    `
+    `;
     cart_items.appendChild(li_gift);
   }
   if (final_amount < 999000 && cart_items.querySelector(".blackfriday__gift")) {

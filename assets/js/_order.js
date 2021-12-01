@@ -44,7 +44,7 @@ export const __templates_order = {
             return `
             <li>
               <span class="product__thumbnail"
-                style="background-image:url(https://api.leanservices.work/product/static/${item.thumbnail.x100.replace(
+                style="background-image:url(https://cdn.ssstutter.com/products/${item.thumbnail.x100.replace(
                   ".jpeg",
                   ".jpeg"
                 )})">

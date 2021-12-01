@@ -4,32 +4,33 @@ import { __get_voucher, __show_cart_item, __show_cart_quantity } from "./_functi
 import { __icons } from "./_icons.js";
 export const __templates_modal = {
   overlay(params = {}) {
-    let main_body = document.querySelector('#root');
-    let div = document.createElement('div');
-    div.className = 'modal__overlay';
+    let main_body = document.querySelector("#root");
+    let div = document.createElement("div");
+    div.className = "modal__overlay";
     div.innerHTML = `<div class="close__btn">${__icons.close}<div>`;
-    let content = document.createElement('div');
-    content.className = 'modal__content';
-    if (params.content) __render.build_in_block({
-      block: content,
-      target: params.content
-    });
+    let content = document.createElement("div");
+    content.className = "modal__content";
+    if (params.content)
+      __render.build_in_block({
+        block: content,
+        target: params.content,
+      });
     div.appendChild(content);
-    div.addEventListener('click', (e) => {
-      if (!e.target.classList.contains('modal__overlay')) return false;
+    div.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("modal__overlay")) return false;
       main_body.removeChild(div);
-    })
-    let close_btn = div.querySelector('.close__btn');
+    });
+    let close_btn = div.querySelector(".close__btn");
     if (close_btn)
-      close_btn.addEventListener('click', () => {
+      close_btn.addEventListener("click", () => {
         main_body.removeChild(div);
-      })
+      });
     main_body.appendChild(div);
     return div;
   },
   store_check() {
-    let div = document.createElement('div');
-    div.className = 'store__check--modal';
+    let div = document.createElement("div");
+    div.className = "store__check--modal";
     div.innerHTML = `
       <ul>
         <li>
@@ -45,8 +46,8 @@ export const __templates_modal = {
     return div;
   },
   size_check() {
-    let div = document.createElement('div');
-    div.className = 'size__guide--modal'
+    let div = document.createElement("div");
+    div.className = "size__guide--modal";
     div.innerHTML = `
       <h1>My fit size</h1>
       <div class="size__guide--container">
@@ -112,18 +113,18 @@ export const __templates_modal = {
         </form>
       </div>
     `;
-    let calc_btn = div.querySelector('button');
-    calc_btn.addEventListener('click', () => {
-      let height_input = div.querySelector('.height__input');
-      let weight_input = div.querySelector('.weight__input');
+    let calc_btn = div.querySelector("button");
+    calc_btn.addEventListener("click", () => {
+      let height_input = div.querySelector(".height__input");
+      let weight_input = div.querySelector(".weight__input");
       let user_info = {
         w: weight_input.value,
-        h: height_input.value
-      }
-      size_calc(user_info)
-    })
+        h: height_input.value,
+      };
+      size_calc(user_info);
+    });
     let size_calc = (params) => {
-      let response_size = div.querySelector('.response');
+      let response_size = div.querySelector(".response");
       // console.log(params);
       if ((params.w || params.h) == "") return false;
       let balance = __size_guide_data.balance;
@@ -132,13 +133,13 @@ export const __templates_modal = {
         if (v.constructor != Object) continue;
         if (params.h >= v.height.min && params.h <= v.height.max) {
           size_found = k;
-          if (params.w >= (v.weight.max + balance)) {
+          if (params.w >= v.weight.max + balance) {
             continue;
           } else {
             break;
           }
         } else {
-          if (params.h < (v.height.max + balance)) {
+          if (params.h < v.height.max + balance) {
             size_found = k;
           } else {
             continue;
@@ -148,27 +149,25 @@ export const __templates_modal = {
           size_found = k;
           break;
         } else {
-          if (params.w < (v.weight.max + balance)) {
+          if (params.w < v.weight.max + balance) {
             size_found = k;
           } else {
             continue;
           }
         }
-
       }
       if (size_found) {
-        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`
-        return __size_guide_data[size_found]
+        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`;
+        return __size_guide_data[size_found];
       } else {
-        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`
+        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`;
         return false;
       }
-
-    }
+    };
     return div;
   },
   sale_promotion() {
-    let div = document.querySelector('div');
+    let div = document.querySelector("div");
     div.className = "sale__promotion";
     div.innerHTML = `
     <span></span>
@@ -180,8 +179,8 @@ export const __templates_modal = {
     return div;
   },
   refund_policy() {
-    let div = document.createElement('div');
-    div.className = 'refund__policy';
+    let div = document.createElement("div");
+    div.className = "refund__policy";
     div.innerHTML = `
       <h2>QUY ĐỊNH ĐỔI HÀNG</h2>
       <h4>BẠN VUI LÒNG KIỂM TRA HOÁ ĐƠN VÀ TƯ TRANG TRƯỚC KHI RỜI QUẦY NHÉ !</h4>
@@ -199,8 +198,8 @@ export const __templates_modal = {
     return div;
   },
   card_payment_progress() {
-    let div = document.createElement('div');
-    div.className = 'payment__progress';
+    let div = document.createElement("div");
+    div.className = "payment__progress";
     div.innerHTML = `
       <h1>Đã mở công thanh toán online !</h1>
       <a href="/"><button>Quay lại trang chủ</buton></a>
@@ -209,8 +208,8 @@ export const __templates_modal = {
   },
 
   bag_combo_modal() {
-    let div = document.createElement('div');
-    div.className = 'combo__modal';
+    let div = document.createElement("div");
+    div.className = "combo__modal";
     div.innerHTML = `
       <h1>Ưu đãi khi mua túi kèm sách</h1>
       <h3>Combo 1 túi & 1 sách bất kỳ với giá 449.000k</h3>
@@ -239,55 +238,58 @@ export const __templates_modal = {
         </li>
       </ul>
     `;
-    let book_label = div.querySelectorAll('li');
-    book_label.forEach(book => {
-      book.addEventListener('click', (e) => {
+    let book_label = div.querySelectorAll("li");
+    book_label.forEach((book) => {
+      book.addEventListener("click", (e) => {
         e.preventDefault();
-        __requests({
-          method: "GET",
-          url: `product/filter/web?ids=${book.dataset.value}`
-        }, ({ data }) => {
-          if (!data) data = []
-          console.log(data)
-          data = data.map(i => {
-            return {
-              color: "transparent",
-              colorId: "000",
-              colorName: "Ngẫu nhiên",
-              id: i.id,
-              media: i.extensions.media,
-              name: i.name,
-              price: i.price,
-              quantity: 1,
-              salePrice: i.salePrice,
-              size: "F",
-              slug: i.slug,
-              variation: i.variation[0]
-            }
-          })
-          let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
-            ? JSON.parse(localStorage.getItem("cartItem"))
-            : [];
-          let cart_menu = document.querySelector('[data-menu="cart"]');
-          cart_selected = [...cart_selected, ...data]
-          localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-          cart_menu.classList.add("active");
-          __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-          __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
-          __get_voucher({ discountDiv: cart_menu });
-        })
-      })
-    })
+        __requests(
+          {
+            method: "GET",
+            url: `https://api.ssstutter.com/product/filter/web?ids=${book.dataset.value}`,
+          },
+          ({ data }) => {
+            if (!data) data = [];
+            console.log(data);
+            data = data.map((i) => {
+              return {
+                color: "transparent",
+                colorId: "000",
+                colorName: "Ngẫu nhiên",
+                id: i.id,
+                media: i.extensions.media,
+                name: i.name,
+                price: i.price,
+                quantity: 1,
+                salePrice: i.salePrice,
+                size: "F",
+                slug: i.slug,
+                variation: i.variation[0],
+              };
+            });
+            let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
+              ? JSON.parse(localStorage.getItem("cartItem"))
+              : [];
+            let cart_menu = document.querySelector('[data-menu="cart"]');
+            cart_selected = [...cart_selected, ...data];
+            localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+            cart_menu.classList.add("active");
+            __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+            __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+            __get_voucher({ discountDiv: cart_menu });
+          }
+        );
+      });
+    });
 
     return div;
   },
   promotion_book_combo() {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = `book__promotion`;
     div.innerHTML = `
       <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637225147506.jpeg)">
       </div>
-    `
+    `;
     if (window.innerWidth < 436) {
       div.innerHTML = `
       <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219407036.jpeg)">
@@ -297,8 +299,8 @@ export const __templates_modal = {
       <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219558465.jpeg)">
       </div>
       ${__icons.swipe_up}
-      `
+      `;
     }
     return div;
-  }
-}
+  },
+};
