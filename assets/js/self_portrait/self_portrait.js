@@ -1,18 +1,12 @@
 import { __requests } from "../main.js";
 import { __templates } from "../share/_components.js";
-import {
-  __currency_format,
-  __init_filter,
-  __init_product_list,
-} from "../share/_function.js";
+import { __currency_format, __init_filter, __init_product_list } from "../share/_function.js";
 import { __icons } from "../share/_icons.js";
 import { __templates_modal } from "../share/_modal.js";
 export const __templates_portrait = {
-
   self_portrait_campaign(params) {
-
     let div = document.createElement("div");
-    div.className = ""
+    div.className = "";
     div.innerHTML = `
       <div class="text__img">      
         <img src="/assets/img/self_portrait/text/start.png"/>
@@ -157,28 +151,28 @@ export const __templates_portrait = {
         </div>
       </section>
       `;
-    let slide_container = div.querySelector('.section__slide')
-    let product_slide = div.querySelectorAll('.glide__slide');
+    let slide_container = div.querySelector(".section__slide");
+    let product_slide = div.querySelectorAll(".glide__slide");
     let init_lookbook_modal = () => {
-      let lookbook_img = div.querySelectorAll('.image__featured');
-      lookbook_img.forEach(img => {
-        img.addEventListener('click', (e) => {
+      let lookbook_img = div.querySelectorAll(".image__featured");
+      lookbook_img.forEach((img) => {
+        img.addEventListener("click", (e) => {
           e.preventDefault();
           __templates_modal.overlay({
             content: __templates_modal.lookbook_detail({
               featured: img.dataset.featured,
-              catId: img.dataset.cat
-            })
-          })
-        })
-      })
-    }
+              catId: img.dataset.cat,
+            }),
+          });
+        });
+      });
+    };
     init_lookbook_modal();
-    product_slide.forEach(slide => {
-      slide.addEventListener('click', () => {
-        let image = slide.querySelector('.image');
-        let look_modal = document.createElement('div');
-        look_modal.classList.add('look-detail');
+    product_slide.forEach((slide) => {
+      slide.addEventListener("click", () => {
+        let image = slide.querySelector(".image");
+        let look_modal = document.createElement("div");
+        look_modal.classList.add("look-detail");
         look_modal.innerHTML = `
           <div class="model" style="background-image: url(${image.dataset.img})"></div>
           <div class="model" style="background-image: url(${image.dataset.img1})"></div>
@@ -186,16 +180,21 @@ export const __templates_portrait = {
           <div class="gallery"></div>
           <button class="close" type="button"></button>
           `;
-        __requests({
-          method: "GET",
-          url: `https://api.ssstutter.com/product/filter/web?catId=${image.dataset.cat}&media=true&webStock=true&allActive=true&stock=0`
-        }, ({ data }) => {
-          let product = data.map((item) => {
-            return `
+        __requests(
+          {
+            method: "GET",
+            url: `https://api.ssstutter.com/product/filter/web?catId=${image.dataset.cat}&media=true&webStock=true&allActive=true&stock=0`,
+          },
+          ({ data }) => {
+            let product = data
+              .map((item) => {
+                return `
               <div>
                 <div class="product">
                   <div class="thumbnail">
-                    <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span></a>
+                    <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                  item.extensions.media.featured
+                })"></span></a>
                   </div>
                   <h6 class="name">${item.name.toLowerCase()}</h6>
                   <div class="price">
@@ -205,14 +204,14 @@ export const __templates_portrait = {
                   ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                 </div>
               </div>
-                `
+                `;
+              })
+              .join("");
+            let gallery = div.querySelector(".gallery");
+            gallery.innerHTML = product;
           }
-          )
-            .join("");
-          let gallery = div.querySelector('.gallery');
-          gallery.innerHTML = product;
-        })
-        look_modal.querySelector('.close').addEventListener('click', () => {
+        );
+        look_modal.querySelector(".close").addEventListener("click", () => {
           look_modal.remove();
         });
 
@@ -248,7 +247,5 @@ export const __templates_portrait = {
       }).mount();
     }, 300);
     return div;
-  }
-
-}
-
+  },
+};
