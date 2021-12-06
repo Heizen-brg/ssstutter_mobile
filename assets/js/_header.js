@@ -3,8 +3,8 @@ import { __render, __requests } from "./main.js";
 import { __currency_format, __get_voucher, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
 import { __templates } from "./share/_components.js";
 import { CONFIG } from "./config.js";
-let mobile = window.innerWidth <= 435;
-let tablet = window.innerWidth <= 768 && window.innerWidth > 435;
+let mobile = window.innerWidth <= 575;
+let tablet = window.innerWidth <= 768 && window.innerWidth > 575;
 let desktop = window.innerWidth > 780;
 let typing_timer = null;
 let close_menu = () => {

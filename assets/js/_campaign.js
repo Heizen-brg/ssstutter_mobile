@@ -2,8 +2,8 @@ import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
-let mobile = window.innerWidth <= 435;
-let tablet = window.innerWidth <= 768 && window.innerWidth >= 435;
+let mobile = window.innerWidth <= 575;
+let tablet = window.innerWidth <= 768 && window.innerWidth >= 575;
 let desktop = window.innerWidth > 780;
 export const __templates_campaign = {
   campaign_detail(params) {

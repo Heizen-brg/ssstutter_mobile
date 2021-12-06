@@ -574,7 +574,7 @@
     grid-column: 1/3;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .header {
     position: fixed;
     top: 0;
@@ -1152,7 +1152,7 @@
   box-sizing: content-box;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .product .thumbnail ul {
     width: 100%;
     height: 100%;
@@ -1572,7 +1572,7 @@ svg {
     height: 30px;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .glide__bullets {
     bottom: -15px;
   }
@@ -2165,7 +2165,7 @@ h4 {
   width: 104%;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .home .slide__banner .glide__slide a div {
     display: block;
     width: 100%;
@@ -2575,7 +2575,7 @@ h4 {
     margin-top: auto;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .categories .categories__list ul {
     padding-bottom: 10px;
     max-width: 371px;
@@ -3017,7 +3017,7 @@ h4 {
     grid-gap: 15px;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .product__page .gallery {
     grid-area: 1/1/2/7;
   }
@@ -3489,7 +3489,7 @@ h4 {
     grid-area: 5/1/6/7;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .checkout__page .checkout__form div {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -3618,7 +3618,7 @@ h4 {
   color: #aeaeae;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .blog__page .highlight {
     padding: 5%;
     grid-gap: 10px;
@@ -3769,7 +3769,7 @@ h4 {
   padding: 0 5%;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .article__page .article__related ul {
     padding: 5%;
     width: 100vw;
@@ -3958,7 +3958,7 @@ h4 {
   grid-area: 5/1/7/7;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .campaign__page {
     grid-gap: 20px;
   }
@@ -4356,7 +4356,7 @@ h4 {
     grid-area: 4/1/5/7;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .search__page .input {
     padding: 5%;
   }
@@ -4492,7 +4492,7 @@ h4 {
     min-width: 50vw;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .thankyou__overview {
     min-width: 80vw;
   }
@@ -4554,7 +4554,7 @@ h4 {
     min-width: 50vw;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .thankyou__overview {
     min-width: 80vw;
   }
@@ -5524,7 +5524,7 @@ h4 {
     grid-gap: 20px;
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .related__product ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, 47%);
@@ -6244,7 +6244,7 @@ h4 {
   width: 50%;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .ce-block__content {
     max-width: none;
   }

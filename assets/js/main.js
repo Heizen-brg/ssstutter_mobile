@@ -62,8 +62,8 @@ export const __requests = (params, callback, callback_error = false) => {
     });
 };
 
-let mobile = window.innerWidth <= 435;
-let tablet = window.innerWidth <= 768 && window.innerWidth >= 435;
+let mobile = window.innerWidth <= 575;
+let tablet = window.innerWidth <= 768 && window.innerWidth >= 575;
 let desktop = window.innerWidth > 780;
 
 export const __render = {

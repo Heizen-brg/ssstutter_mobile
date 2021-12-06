@@ -16,7 +16,7 @@
     }
   }
 }
-@media (max-width: 435px) {
+@media (max-width: 575px) {
   .related__product {
     ul {
       @include grid(repeat(auto-fit, 47%), null, 20px);
