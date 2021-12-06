@@ -97,7 +97,7 @@ export const __templates_categories = {
     div.className = "categories__filter";
     div.innerHTML = `
     <div class="filter__toggle">
-      <span class="mobile-cate-trigger" style="text-transform: capitalize">${params.category.name.replace("-", "").toLowerCase()} ${__icons.carret_down}</span>
+      <span class="mobile-cate-trigger" style="text-transform: capitalize">${params.category.name.replace("-", "").toLowerCase()} ${__icons.down}</span>
       <span data-toggle="filter">${__icons.plus} Lọc </span>
     </div>
     <div class="filter__list">
