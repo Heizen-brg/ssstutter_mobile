@@ -42,8 +42,13 @@ export const __init_product_list = (params = { ids: product_ids }) => {
       url: `https://api.ssstutter.com/product/filter/web${url}&media=true&webStock=true`,
     },
     ({ data, error }) => {
-      if (!data.length) return (params.container.innerHTML = `<p>Không có sản phẩm</p>`);
       __templates.api_loading("hide");
+      if (!data.length)  {
+        __templates.busy_loading("hide");
+        params.container.innerHTML += `<p class="empty_product">Không còn sản phẩm phù hợp</p>`;
+        return false;
+
+      }
       let products = (data || []).map((item) => {
         window.product_ids.push(item.id);
         let product_template = document.createElement("li");
