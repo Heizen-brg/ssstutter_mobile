@@ -506,8 +506,8 @@ export const __templates_modal = {
       theWheel.rotationAngle = 0;
       var segmentNumber = {
         1: 2600,
-        2: 160,
-        3: 100,
+        2: 1600,
+        3: 1000,
         4: 26,
         5: 15,
         6: 2,
