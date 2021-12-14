@@ -2447,6 +2447,7 @@ h4 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(32%, 1fr));
   grid-gap: 10px;
+  position: relative;
 }
 @media (min-width: 1024px) {
   .categories .categories__products > ul {
@@ -2457,6 +2458,12 @@ h4 {
 }
 .categories .categories__products > ul li {
   width: 100%;
+}
+.categories .categories__products > ul .empty_product {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: -10px;
 }
 .categories .footer {
   grid-area: 5/1/7/7;
