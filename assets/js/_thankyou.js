@@ -20,6 +20,7 @@ export const __templates_thankyou = {
     `;
     localStorage.removeItem("cartItem");
     localStorage.removeItem('giftItem');
+    localStorage.removeItem('giftItem2');
     let continue_btn = div.querySelector("button");
     continue_btn.addEventListener("click", (e) => {
       window.location.href = "/";

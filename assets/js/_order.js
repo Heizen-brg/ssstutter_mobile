@@ -28,6 +28,8 @@ export const __templates_order = {
     </div>
     `;
     localStorage.removeItem("cartItem");
+    localStorage.removeItem('giftItem');
+    localStorage.removeItem('giftItem2');
     let continue_btn = div.querySelector("button");
     continue_btn.addEventListener("click", (e) => {
       window.location.href = "/";
