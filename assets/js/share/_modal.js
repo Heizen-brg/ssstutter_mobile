@@ -428,7 +428,6 @@ export const __templates_modal = {
         document.querySelector('[data-toggle="cart_toggle"]')
       );
       __get_voucher({ discountDiv: cart_menu, gift: indicatedSegment.text });
-      console.log(cart_quantity, gift1);
       if (cart_quantity === 3 && localStorage.getItem("giftItem")) {
         spin_btn.disabled = true;
         spin_btn.innerHTML = "Bạn đã hết lượt quay";
