@@ -9,7 +9,13 @@ export const __templates_landing = {
   body(params) {
     console.log(params);
     let div = document.createElement('div');
-    div.innerHTML = `sadsad`
+    let script = JSON.parse(params.script);
+    // let css = JSON.parse(params.css);
+    div.innerHTML = `
+    <style>${params.css}</style>
+    ${params.content.blocks[0].data.html}
+    `;
+    script
     return div;
   }
 };

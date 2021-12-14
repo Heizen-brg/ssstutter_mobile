@@ -125,12 +125,12 @@
       @media (min-width: 1024px) {
         place-content: normal;
       }
-      svg {
-        // width: 50%;
-        width: 44px;
-        height: auto;
-      }
       a {
+        display: grid;
+        img {
+          width: 100%;
+          height: auto;
+        }
         &::after {
           content: "ssstutter";
           font-size: 18px;
@@ -186,6 +186,12 @@
     background-color: rgba($white, 0.95);
     &--title {
       @include flex(row, space-between, center);
+      a {
+        svg {
+          width: 80%;
+          height: auto;
+        }
+      }
     }
   }
   .freeship {
@@ -548,7 +554,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        svg {
+        img {
           display: none;
           width: 25px;
           height: 25px;
@@ -614,7 +620,7 @@
         a {
           width: 80%;
           img {
-            width: 100%;
+            width: 60%;
           }
           font-size: 22px;
           color: #191919;

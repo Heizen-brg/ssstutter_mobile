@@ -10,17 +10,18 @@ import { __templates } from "./share/_components.js";
 import { __templates_search } from "./_search.js";
 import { __templates_order } from "./_order.js";
 import { __templates_address } from "./_address.js";
-import { __push_notification } from "./share/_function.js";
+import { __push_notification, __snow_drop } from "./share/_function.js";
 import { __templates_thankyou } from "./_thankyou.js";
 import { __templates_canceled } from "./_canceled.js";
 import { __templates_campaign } from "./_campaign.js";
-
+import { __templates_landing } from "./_landing.js";
 // import flash_sale_page from "./list_campaign/flash_sale.js";
 import list_campaign_winter from "./list_campaign/list_campaign_winter.js";
 import campaign_category_page from "./list_campaign/campaign_category.js";
 import { campaign_product_detail_page } from "./list_campaign/campaign_product_detail.js";
 import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checkout.js";
 import { __templates_portrait } from "./self_portrait/self_portrait.js";
+import { __templates_blog_category } from "./_blog_category.js";
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
     Accept: "application/json",
@@ -75,15 +76,15 @@ export const __render = {
       "/c": (params) => __render.categories_page(params),
       "/p": (params) => __render.product_page(params),
       "/campaign": (params) => __render.campaign(params),
-      "/landingpage": (params) => __render.landing_page(params),
       "/checkout": () => __render.checkout_page(),
       "/blog": () => __render.blog_page(),
+      "/blog/category": (params) => __render.blog_categories(params),
       "/blog/article": (params) => __render.article_page(params),
       "/address": () => __render.address_page(),
       "/search": (params) => __render.search_page(params),
       "/thankyou": () => __render.thankyou_page(),
       "/canceled": () => __render.canceled_page(),
-      // "/editorial": () => __render.list_campaign_winter(),
+      "/editorial": (params) => __render.landing_page(params),
       // "/editorial/product": (params) => __render.campaign_product_detail_page(params),
       // "/editorial/look": (params) => __render.campaign_category_page(params),
       "/flash-sale": () => __render.flash_sale(),
@@ -101,6 +102,12 @@ export const __render = {
         return false;
       }
       url_data["/blog/article"]({ article });
+    } else if (pathname.includes(`/blog/category`)) {
+      let article = blog_category;
+      if (typeof article === "undefined") {
+        return false;
+      }
+      url_data["/blog/category"]({ article });
     } else if (pathname.includes(`/c/`)) {
       let category = category_detail;
       if (typeof category === "undefined") {
@@ -113,13 +120,12 @@ export const __render = {
         return false;
       }
       url_data["/campaign"](campaign);
-    } else if (pathname.includes(`/landingpage`)) {
-      let landing_page = landingpage_detail.data;
-      console.log("landing_page: ", landing_page);
+    } else if (pathname.includes(`/editorial`)) {
+      let landing_page = page_detail.data;
       if (typeof landing_page === "undefined") {
         return false;
       }
-      url_data["/landingpage"](landing_page);
+      url_data["/editorial"](landing_page);
     } else if (pathname.includes(`/search`)) {
       let products_list = search_result;
       if (typeof products_list === "undefined") {
@@ -134,21 +140,16 @@ export const __render = {
     let app = document.getElementById("root");
     app.className = page;
     app.innerHTML = "";
-    blocks.map((block) => {
-      if (!block) return;
-      app.appendChild(block);
-    });
-    let block_loader = new IntersectionObserver(function (entries, observer) {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          let block = entry.target;
-          // app.innerHTML += __templates.busy_loading("show");
-
-          block_loader.unobserve(block);
-        }
+    __snow_drop();
+    let init_block = (params ={}) => {
+      blocks.map((block) => {
+        if (!block) return;
+        params.container.appendChild(block);
       });
-    });
-    block_loader.observe(blocks[0]);
+    }
+
+
+    init_block({container : app})
   },
   build_in_block(params = {}) {
     if (!params.block || !params.target) return false;
@@ -192,7 +193,9 @@ export const __render = {
       // __templates_home.lookbook(),
       __templates_footer.footer(),
     ];
+
     this.build("home", blocks);
+    
     __templates.api_loading("hide");
   },
 
@@ -344,6 +347,26 @@ export const __render = {
     __templates.api_loading("hide");
   },
 
+  blog_categories(params) {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
+      __templates_header.cart(),
+      __templates_blog_category.blog_highlight(params.data),
+      __templates_blog_category.blog_latest(params.data),
+      __templates_footer.footer(),
+    ];
+    this.build("blog__page", blocks);
+    __templates.api_loading("hide");
+  },
+
   article_page(params) {
     let blocks = [
       __templates_header.header({
@@ -410,7 +433,7 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
-      __templates_landing.body(),
+      __templates_landing.body(params),
       __templates_footer.footer(),
     ];
     this.build("landing__page", blocks);

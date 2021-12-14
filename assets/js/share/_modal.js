@@ -1,13 +1,21 @@
 import { __render, __requests } from "../main.js";
 import { __size_guide_data } from "./_data.js";
-import { __currency_format, __get_voucher, __show_cart_item, __show_cart_quantity } from "./_function.js";
+import {
+  __currency_format,
+  __get_voucher,
+  __push_notification,
+  __show_cart_item,
+  __show_cart_quantity,
+} from "./_function.js";
 import { __icons } from "./_icons.js";
 export const __templates_modal = {
   overlay(params = {}) {
     let main_body = document.querySelector("#root");
     let div = document.createElement("div");
     div.className = "modal__overlay";
-    div.innerHTML = `<div class="close__btn">${__icons.close}<div>`;
+    params.close == "show"
+      ? (div.innerHTML = `<div class="close__btn">${__icons.close}<div>`)
+      : "";
     let content = document.createElement("div");
     content.className = "modal__content";
     if (params.content)
@@ -27,6 +35,11 @@ export const __templates_modal = {
       });
     main_body.appendChild(div);
     return div;
+  },
+  close() {
+    let main_body = document.querySelector("#root");
+    let modal_overlay = document.querySelector(".modal__overlay");
+    main_body.removeChild(modal_overlay);
   },
   store_check() {
     let div = document.createElement("div");
@@ -273,8 +286,13 @@ export const __templates_modal = {
             cart_selected = [...cart_selected, ...data];
             localStorage.setItem("cartItem", JSON.stringify(cart_selected));
             cart_menu.classList.add("active");
-            __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-            __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+            __show_cart_item(
+              cart_menu.querySelector("ul"),
+              cart_menu.querySelector("[data-amount]")
+            );
+            __show_cart_quantity(
+              document.querySelector('[data-toggle="cart_toggle"]')
+            );
             __get_voucher({ discountDiv: cart_menu });
           }
         );
@@ -304,7 +322,7 @@ export const __templates_modal = {
     return div;
   },
   lookbook_detail(params) {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = `lookbook__detail`;
     div.innerHTML = `
       <div class="lookbook__detail--featured">
@@ -314,34 +332,196 @@ export const __templates_modal = {
 
       </ul>
     `;
-    __requests({
-      method: "GET",
-      url: `https://api.ssstutter.com/product/filter/web?catId=${params.catId}&media=true&webStock=true&allActive=true&stock=0`
-    }, ({ data }) => {
-      let product = data.map((item) => {
-        return `
+    __requests(
+      {
+        method: "GET",
+        url: `https://api.ssstutter.com/product/filter/web?catId=${params.catId}&media=true&webStock=true&allActive=true&stock=0`,
+      },
+      ({ data }) => {
+        let product = data
+          .map((item) => {
+            return `
         <li>
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug
-          }"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-          })"></span></a>
+              <a href="/p/${
+                item.slug
+              }"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+              item.extensions.media.featured
+            })"></span></a>
             </div>
             <h6 class="name">${item.name.toLowerCase()}</h6>
             <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+              ${
+                item.salePrice
+                  ? `<p class="discount">${__currency_format(item.price)}</p>`
+                  : ""
+              }
               <p>${__currency_format(item.salePrice || item.price)}</p>
             </div>
             ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           </div>
         </li>
-          `
+          `;
+          })
+          .join("");
+        let lookbook_dom = div.querySelector(".lookbook__detail--products");
+        lookbook_dom.innerHTML = product;
       }
-      )
-        .join("");
-      let lookbook_dom = div.querySelector('.lookbook__detail--products');
-      lookbook_dom.innerHTML = product;
-    })
+    );
     return div;
-  }
-}
+  },
+  lucky_wheel_modal(params) {
+    let div = document.createElement("div");
+    div.className = "lucky__wheel";
+    div.innerHTML = `
+    <h1>Vòng quay may mắn</h1>
+    <div>
+      <img src="/assets/img/wheel/kim.png"/>
+      <div>
+        <img src="/assets/img/wheel/center.png"/>
+        <canvas  data-responsiveMinWidth="180"
+        data-responsiveScaleHeight="true" 
+        data-responsiveMargin="50" id='myCanvas' width='420' height='420'> Canvas not supported, use another browser.</canvas>
+      </div>
+      <button data-active="spin">Spin</button>
+    </div>
+    `;
+    let canvas = div.querySelector("#myCanvas");
+    let spin_btn = div.querySelector('[data-active="spin"]');
+
+    let alertPrize = (indicatedSegment) => {
+      let gift1 = localStorage.getItem("giftItem");
+      let gift2 = localStorage.getItem("giftItem2");
+
+      let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
+        ? JSON.parse(localStorage.getItem("cartItem"))
+        : [];
+      let cart_quantity = cart_selected.reduce((total, current) => {
+        if (current.catId.includes("sGT8Q5")) return total;
+        if (current.name.toLowerCase().includes("great life")) return total;
+        return total + current.quantity;
+      }, 0);
+      cart_quantity = parseInt(cart_quantity);
+
+      let cart_menu = document.querySelector('[data-menu="cart"]');
+      __push_notification(
+        "success",
+        `Chúc mừng bạn đã nhận được ${indicatedSegment.text}, phần quà đã được thêm vào giỏ hàng`
+      );
+      cart_selected = [...cart_selected];
+      if (!gift1)
+        localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
+      if (gift1 && !gift2)
+        localStorage.setItem(
+          "giftItem2",
+          JSON.stringify(indicatedSegment.text)
+        );
+      localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+      // localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
+      cart_menu.classList.add("active");
+      __show_cart_item(
+        cart_menu.querySelector("ul"),
+        cart_menu.querySelector("[data-amount]")
+      );
+      __show_cart_quantity(
+        document.querySelector('[data-toggle="cart_toggle"]')
+      );
+      __get_voucher({ discountDiv: cart_menu, gift: indicatedSegment.text });
+      if (cart_quantity === 3 && localStorage.getItem("giftItem")) {
+        spin_btn.disabled = true;
+        spin_btn.innerHTML = "Bạn đã hết lượt quay";
+        return;
+      }
+
+      if (
+        cart_quantity >= 4 &&
+        localStorage.getItem("giftItem") &&
+        localStorage.getItem("giftItem2")
+      ) {
+        spin_btn.disabled = true;
+        spin_btn.innerHTML = "Bạn đã hết lượt quay";
+        return;
+      }
+      // spin_btn.disabled = true;
+      // spin_btn.innerHTML = "Bạn đã hết lượt quay";
+    };
+
+    let theWheel = new Winwheel({
+      canvasId: canvas,
+      numSegments: 9,
+      responsive: true,
+      drawText: false,
+      drawMode: "segmentImage",
+      // Definition of all the segments.
+      segments: [
+        {
+          text: "Pin, Khăn Tay, Bật lửa, Túi Bút",
+          image: "/assets/img/wheel/1.png",
+        },
+        {
+          image: "/assets/img/wheel/2.png",
+          text: "Vòng tay, Mũ (S-cap ver.2), Túi ",
+        },
+        {
+          image: "/assets/img/wheel/3.png",
+          text: "Quần Short / Áo thun bất kỳ",
+        },
+        {
+          text: "Voucher 5%",
+          image: "/assets/img/wheel/4.png",
+        },
+        {
+          text: "Voucher 10%",
+          image: "/assets/img/wheel/5.png",
+        },
+        {
+          text: "Áo sơ mi",
+          image: "/assets/img/wheel/6.png",
+        },
+        {
+          text: "Áo nỉ",
+          image: "/assets/img/wheel/7.png",
+        },
+        {
+          text: "Quần",
+          image: "/assets/img/wheel/8.png",
+        },
+        {
+          text: "Voucher 1 triệu đồng",
+          image: "/assets/img/wheel/9.png",
+        },
+      ],
+      // Definition of the animation
+      animation: {
+        type: "spinToStop",
+        duration: 5,
+        spins: 10,
+        callbackFinished: alertPrize,
+      },
+    });
+
+    spin_btn.addEventListener("click", (e) => {
+      theWheel.rotationAngle = 0;
+      var segmentNumber = {
+        1: 2600,
+        2: 1600,
+        3: 1000,
+        4: 26,
+        5: 15,
+        6: 2,
+        7: 2,
+        8: 2,
+        9: 1,
+      };
+      let a = Object.keys(segmentNumber).reduce((total, current) => {
+        return [...total, ...Array(segmentNumber[current]).fill(current)];
+      }, []);
+      let random = a[Math.floor(Math.random() * a.length)];
+      var stopAt = theWheel.getRandomForSegment(random);
+      theWheel.animation.stopAngle = stopAt;
+      theWheel.startAnimation();
+    });
+    return div;
+  },
+};

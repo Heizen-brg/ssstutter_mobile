@@ -2,14 +2,15 @@ import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 
 
-export const __templates_blog = {
-  blog_highlight() {
+export const __templates_blog_category = {
+  blog_highlight(params) {
     let section = document.createElement('section');
+    let query = '';
     section.className = 'highlight';
     section.innerHTML = __templates.busy_loading('show');
     __requests({
       method: 'GET',
-      url: `https://sss-dashboard.leanservices.work/w/post/get?limit=3&skip=0`
+      url: `https://sss-dashboard.leanservices.work/w/post/get?&limit=3&skip=0&${query}`
     }, ({ data }) => {
       let highlight_item = (data || []).map(item => {
         return `
@@ -25,42 +26,16 @@ export const __templates_blog = {
     })
     return section;
   },
-  blog_categories() {
+
+  blog_latest(params) {
+    console.log(params);
     let section = document.createElement('section');
-    section.className = 'category';
-    section.innerHTML = `
-        <h1>Danh mục</h1>
-        <ul>
-        </ul>
-    `;
-    let cate_list = section.querySelector('ul');
-    cate_list.innerHTML = __templates.busy_loading('show');
-    __requests({
-      method: 'GET',
-      url: `https://sss-dashboard.leanservices.work/w/blog/get`
-    }, ({ data }) => {
-      let cate_blog_item = (data || []).map(cat => {
-        return `
-        <li>
-          <a href="/blog/category/${cat.slug}">
-            <span
-              style="background-image: url(https://sss-dashboard.leanservices.work/${cat.thumbnail}.jpeg);"></span>
-          </a>
-          <p><a href="/blog/${cat.slug}">${cat.title}</a></p>
-        </li>
-        `
-      }).join('');
-      cate_list.innerHTML = cate_blog_item;
-    })
-    return section;
-  },
-  blog_latest() {
-    let section = document.createElement('section');
+    let query = '';
     section.className = 'latest';
     section.innerHTML = __templates.busy_loading('show');
     __requests({
       method: 'GET',
-      url: `https://sss-dashboard.leanservices.work/w/post/get?skip=3`
+      url: `https://sss-dashboard.leanservices.work/w/post/get?skip=3&${query}`
     }, ({ data }) => {
       let blog_item = (data || []).map(item => {
         return `

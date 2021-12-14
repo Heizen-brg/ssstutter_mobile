@@ -1,5 +1,6 @@
 import { __currency_format } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
+import { CONFIG } from "./config.js";
 
 export const __templates_order = {
   order_overview(params) {
@@ -28,6 +29,8 @@ export const __templates_order = {
     </div>
     `;
     localStorage.removeItem("cartItem");
+    localStorage.removeItem('giftItem');
+    localStorage.removeItem('giftItem2');
     let continue_btn = div.querySelector("button");
     continue_btn.addEventListener("click", (e) => {
       window.location.href = "/";
@@ -35,6 +38,7 @@ export const __templates_order = {
     return div;
   },
   order_items(params) {
+    console.log(params);
     let div = document.createElement("div");
     div.className = "order__items";
     div.innerHTML = `
@@ -44,7 +48,7 @@ export const __templates_order = {
             return `
             <li>
               <span class="product__thumbnail"
-                style="background-image:url(https://cdn.ssstutter.com/products/${item.thumbnail.x100.replace(
+                style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.thumbnail.x100.replace(
                   ".jpeg",
                   ".jpeg"
                 )})">
