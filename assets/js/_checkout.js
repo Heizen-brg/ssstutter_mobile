@@ -21,7 +21,7 @@ let order_data = {
   discountCode: [],
   customerNote: "",
   shippingAddress: "",
-  note:"",
+  note: "",
 };
 let shippingFormat = {
   city: "",
@@ -237,8 +237,8 @@ export const __templates_checkout = {
     });
     confirm_btn.addEventListener("click", () => {
       let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
-      let gift_purchased = JSON.parse(localStorage.getItem("giftItem")) || '';
-      let gift2_purchased = JSON.parse(localStorage.getItem("giftItem2")) || '';
+      let gift_purchased = JSON.parse(localStorage.getItem("giftItem")) || "";
+      let gift2_purchased = JSON.parse(localStorage.getItem("giftItem2")) || "";
 
       let order_item_format = items_purchased.map((item) => {
         return {
@@ -247,9 +247,19 @@ export const __templates_checkout = {
           barcode: item.variation.barcode,
         };
       });
+      let cart_quantity = items_purchased.reduce((total, current) => {
+        if (current.catId && current.catId.includes("sGT8Q5")) return total;
+        if (current.catId && current.catId.includes("kYx45S")) return total;
+        if (current.name.toLowerCase().includes("great life")) return total;
+        return total + current.quantity;
+      }, 0);
+      cart_quantity = parseInt(cart_quantity);
+      let note = "";
+      if (cart_quantity === 3) note = gift_purchased;
+      if (cart_quantity >= 4) note = gift_purchased + " || " + gift2_purchased;
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
-      order_data.note = gift_purchased+ ' ||' + gift2_purchased;
+      order_data.note = note;
       if (
         !order_data.customerName ||
         !order_data.customerPhone ||
