@@ -23,7 +23,10 @@ export const __templates_product = {
     <ul>
       ${(gallery[`color_${color}_gallery`] || [])
         .map(
-          (img) => `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace(".jpeg", ".jpeg")}"></li>`
+          (img) =>
+            `<li style="background-image:url(${
+              CONFIG.DOMAIN_IMG_CDN
+            }/${img.o.replace(".jpeg", ".jpeg")}"></li>`
         )
         .join("")}
     </ul>
@@ -73,7 +76,9 @@ export const __templates_product = {
       color_value.map((item, index) => {
         let flat_img = document.createElement("li");
         flat_img.style.backgroundImage = `url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".jpeg")
+          item.photo == null
+            ? "no_image.png"
+            : item.photo.o.replace(".jpeg", ".jpeg")
         })`;
         let color_variation = div.querySelector(".flatlay > ul");
         color_variation.appendChild(flat_img);
@@ -250,7 +255,9 @@ export const __templates_product = {
         <meta itemprop="name" content="${info.name}">
         <meta itemprop="productID" content="${info.id}">
         <meta itemprop="url" content="https://ssstutter.com/p/${info.slug}">
-        <meta itemprop="image" content="https://cdn.ssstutter.com/products/${info.extensions.media.featured}">
+        <meta itemprop="image" content="https://cdn.ssstutter.com/products/${
+          info.extensions.media.featured
+        }">
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <link itemprop="availability" href="in stock">
           <link itemprop="itemCondition" href="new">
@@ -364,7 +371,9 @@ export const __templates_product = {
             </div>
           </li>
           
-          <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
+          <li  data-action="refund_policy">Hướng dẫn đổi trả ${
+            __icons.right
+          }</li>
           <li style="margin: 0; border: 0; cursor: default; padding: 0;">
             <div id="refund_policy" class="mobile-variation">
               <p>
@@ -409,29 +418,37 @@ export const __templates_product = {
     // }
 
     if (div.querySelector(".subscribe-new-product")) {
-      div.querySelector(".subscribe-new-product button").addEventListener("click", () => {
-        __templates.api_loading("show");
-        __requests(
-          {
-            method: "POST",
-            url: "order/order/subscribe-order",
-            body: JSON.stringify({
-              id: params.id,
-              name: div.querySelector('.subscribe-new-product input[name="subscribe_name"]').value,
-              phone: div.querySelector('.subscribe-new-product input[name="subscribe_phone"]').value,
-              email: div.querySelector('.subscribe-new-product input[name="subscribe_mail"]').value,
-            }),
-          },
-          () => {
-            __templates.api_loading("hide");
-            div.querySelector(".subscribe-new-product").innerHTML = `
+      div
+        .querySelector(".subscribe-new-product button")
+        .addEventListener("click", () => {
+          __templates.api_loading("show");
+          __requests(
+            {
+              method: "POST",
+              url: "order/order/subscribe-order",
+              body: JSON.stringify({
+                id: params.id,
+                name: div.querySelector(
+                  '.subscribe-new-product input[name="subscribe_name"]'
+                ).value,
+                phone: div.querySelector(
+                  '.subscribe-new-product input[name="subscribe_phone"]'
+                ).value,
+                email: div.querySelector(
+                  '.subscribe-new-product input[name="subscribe_mail"]'
+                ).value,
+              }),
+            },
+            () => {
+              __templates.api_loading("hide");
+              div.querySelector(".subscribe-new-product").innerHTML = `
             <p class="text-center"><b>Đăng ký nhận thông tin thành công!</b></p>
             <p style="margin-bottom: 6px;">SSStutter sẽ liên hệ lại ngay khi có thông tin về hàng của sản phẩm</p>
             <p style="margin-bottom: 0;">Khi cần trợ giúp, vui lòng gọi 086 993 6266</p>
             `;
-          }
-        );
-      });
+            }
+          );
+        });
     }
 
     div.querySelector(".find-size").addEventListener("click", () => {
@@ -489,6 +506,7 @@ export const __templates_product = {
       name: info.name,
       media: info.extensions.media,
       id: info.id,
+      catId : info.catId.join(''),
       price: info.price,
       salePrice: info.salePrice,
       variation: info.variation[0],
@@ -524,7 +542,9 @@ export const __templates_product = {
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
           style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.x400.replace(".jpeg", ".jpeg")
+          item.photo == null
+            ? "no_image.png"
+            : item.photo.x400.replace(".jpeg", ".jpeg")
         })"
         >
         </button>
@@ -551,7 +571,9 @@ export const __templates_product = {
           return `
         <li><button data-index="${index}" class=" size__variation ${
             index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${
+            i.size
+          }">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;
@@ -585,7 +607,9 @@ export const __templates_product = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
+                  `<li style="background-image:url(${
+                    CONFIG.DOMAIN_IMG_CDN
+                  }/${img.o.replace("jpeg", "jpeg")})"></li>`
               )
               .join("")}
           </ul>
@@ -599,6 +623,7 @@ export const __templates_product = {
     };
     let init_add_to_cart = (params) => {
       let to_cart_btn = null;
+      let gift_purchased = JSON.parse(localStorage.getItem("giftItem")) || "";
       if (div.querySelector(".add")) {
         to_cart_btn = div.querySelector(".add");
         to_cart_btn.addEventListener("click", (e) => {
@@ -609,28 +634,40 @@ export const __templates_product = {
           let variation = params.variation;
           e.preventDefault();
           user_selection.variation = variation.find(
-            (item) => item.color == user_selection.colorId && item.size == user_selection.size
+            (item) =>
+              item.color == user_selection.colorId &&
+              item.size == user_selection.size
           );
           let new_selected_item = { ...user_selection };
-          let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
+          let [product_in_cart] = cart_selected.filter(
+            (i) => i.variation.id === new_selected_item.variation.id
+          );
           if (product_in_cart) {
             __requests(
               {
                 method: "GET",
-                url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
-                  product_in_cart.quantity + 1
-                }`,
+                url: `product/variation/check-stock?id=${
+                  product_in_cart.variation.id
+                }&stock=${product_in_cart.quantity + 1}`,
               },
               ({ data }) => {
-                if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+                if (!data)
+                  return __push_notification("fail", "Sản phẩm hết hàng!");
                 cart_selected = cart_selected.map((i) => {
-                  if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+                  if (i.variation.id === new_selected_item.variation.id)
+                    i.quantity = parseInt(i.quantity) + 1;
                   return i;
                 });
+        
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-                if (params.id !== "fpf6QW3v2OC0b1TX9WQb6QNAw13BeNHA") cart_menu.classList.add("active");
-                __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-                __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+                cart_menu.classList.add("active");
+                __show_cart_item(
+                  cart_menu.querySelector("ul"),
+                  cart_menu.querySelector("[data-amount]")
+                );
+                __show_cart_quantity(
+                  document.querySelector('[data-toggle="cart_toggle"]')
+                );
                 __get_voucher({ discountDiv: cart_menu });
               }
             );
@@ -641,18 +678,24 @@ export const __templates_product = {
                 url: `product/variation/check-stock?id=${new_selected_item.variation.id}&stock=1`,
               },
               ({ data }) => {
-                if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+                if (!data)
+                  return __push_notification("fail", "Sản phẩm hết hàng!");
                 cart_selected.push(new_selected_item);
+                let cart_quantity = cart_selected.reduce((total, current) => {
+                  return total + current.quantity;
+                }, 0);
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-                if (params.id !== "fpf6QW3v2OC0b1TX9WQb6QNAw13BeNHA") cart_menu.classList.add("active");
-                __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-                __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+               cart_menu.classList.add("active");
+                __show_cart_item(
+                  cart_menu.querySelector("ul"),
+                  cart_menu.querySelector("[data-amount]")
+                );
+                __show_cart_quantity(
+                  document.querySelector('[data-toggle="cart_toggle"]')
+                );
                 __get_voucher({ discountDiv: cart_menu });
               }
             );
-          }
-          if (params.id == "fpf6QW3v2OC0b1TX9WQb6QNAw13BeNHA") {
-            __templates_modal.overlay({ content: __templates_modal.bag_combo_modal() });
           }
         });
       }
@@ -661,12 +704,16 @@ export const __templates_product = {
     triggers.forEach((btn) => {
       if (window.innerWidth > 767) {
         btn.addEventListener("click", () => {
-          __templates_modal.overlay({ content: __templates_modal[btn.dataset.action]() });
+          __templates_modal.overlay({
+            content: __templates_modal[btn.dataset.action](),
+          });
         });
       } else {
         if (btn.parentElement.querySelector(".mobile-variation")) {
           btn.addEventListener("click", () => {
-            btn.parentElement.querySelector("#" + btn.getAttribute("data-action")).classList.toggle("show");
+            btn.parentElement
+              .querySelector("#" + btn.getAttribute("data-action"))
+              .classList.toggle("show");
           });
         }
       }

@@ -48,7 +48,7 @@ export const __templates_header = {
       <div class="nav">
         <div class="nav__logo">
           <a href="/">
-            ${__icons.new_ssstutter}
+            <img src="/assets/img/logo_noel.png"/>
           </a>
         </div>
         <div class="nav__left"></div>
@@ -57,7 +57,7 @@ export const __templates_header = {
       <div class="side__nav" data-menu="side_nav">
         <div class="side__nav--title">
           <a href="/">
-          ssstutter
+            <img src="/assets/img/logo_noel.png"/>
           </a>
           <div class="close">${__icons.close}</div>
         </div>

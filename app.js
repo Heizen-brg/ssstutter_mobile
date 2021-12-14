@@ -26,25 +26,13 @@ app.set("etag", false);
 
 app.get("/", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
-  // return res.status(404).send(
-  //   client_view.error_404({
-  //     message: "Website đang bảo trì",
-  //     title: "maintenance".toUpperCase(),
-  //     description: "Website đang bảo trì",
-  //   })
-  // );
   res.send(
     client_view.html({
       title: "SSSTUTTER - REFINED LIFE",
     })
   );
 });
-// app.get("/", (req, res, next) => {
-//   res.setHeader("Content-Type", "text/html");
-//   res.send(
-//     client_view.maintain({})
-//   );
-// });
+
 app.get("/services/sitemap.xml", async (reg, res, next) => {
   let path_url = "https://ssstutter.com";
   let xml = "";
@@ -122,7 +110,7 @@ app.get("/c/:slug", async (req, res, next) => {
   } else {
     res.send(
       client_view.html({
-        title: `${info.name ? info.name.replace("-", "") : "SSSTUTTER - REFINED LIFE"}`,
+        title: `SSSTUTTER - ${info.name ? info.name.replace("-", "") : "SSSTUTTER - REFINED LIFE"}`,
         command: `var category_detail = ${JSON.stringify(info)}`,
       })
     );
@@ -159,66 +147,66 @@ app.get("/p/:slug", async (req, res, next) => {
   }
 });
 
-app.get("/editorial/product/:slug", async (req, res, next) => {
-  return res.redirect(`https://ssstutter.com/p/${req.params.slug}`);
-  let { slug } = req.params;
-  let product_data;
-  try {
-    product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
-      headers: {
-        Authorization: `by_passs`,
-      },
-    });
-  } catch (err) {
-    res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
-    console.log(err.message);
-    return;
-  }
-  res.setHeader("Authorization", "by_passs");
-  res.setHeader("Content-Type", "text/html");
-  let info = product_data.data.data;
-  if (!info || !info.length) {
-    res.status(404).send(client_view.error_404({}));
-  } else {
-    res.send(
-      client_view.html({
-        title: info[0].name,
-        command: `var product_editorial_detail = ${JSON.stringify(info[0])}`,
-      })
-    );
-  }
-});
+// app.get("/editorial/product/:slug", async (req, res, next) => {
+//   return res.redirect(`https://ssstutter.com/p/${req.params.slug}`);
+//   let { slug } = req.params;
+//   let product_data;
+//   try {
+//     product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
+//       headers: {
+//         Authorization: `by_passs`,
+//       },
+//     });
+//   } catch (err) {
+//     res.setHeader("Content-Type", "text/html");
+//     res.status(404).send(client_view.error_404({}));
+//     console.log(err.message);
+//     return;
+//   }
+//   res.setHeader("Authorization", "by_passs");
+//   res.setHeader("Content-Type", "text/html");
+//   let info = product_data.data.data;
+//   if (!info || !info.length) {
+//     res.status(404).send(client_view.error_404({}));
+//   } else {
+//     res.send(
+//       client_view.html({
+//         title: info[0].name,
+//         command: `var product_editorial_detail = ${JSON.stringify(info[0])}`,
+//       })
+//     );
+//   }
+// });
 
-app.get("/editorial/look/:slug", async (req, res, next) => {
-  let { slug } = req.params;
-  let cat_data;
-  try {
-    cat_data = await axios.get(`http://localhost:5000/pd/attribute/category/search?slug=${slug}`, {
-      headers: {
-        Authorization: `by_pass`,
-      },
-    });
-  } catch (err) {
-    res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
-    console.log(err.message);
-    return;
-  }
-  res.setHeader("Authorization", "by_passs");
-  res.setHeader("Content-Type", "text/html");
-  let info = cat_data.data.data;
-  if (!info) {
-    res.status(404).send(client_view.error_404({}));
-  } else {
-    res.send(
-      client_view.html({
-        title: `${info.name.replace("-", "")}`,
-        command: `var category_editorial_detail = ${JSON.stringify(info)}`,
-      })
-    );
-  }
-});
+// app.get("/editorial/look/:slug", async (req, res, next) => {
+//   let { slug } = req.params;
+//   let cat_data;
+//   try {
+//     cat_data = await axios.get(`http://localhost:5000/pd/attribute/category/search?slug=${slug}`, {
+//       headers: {
+//         Authorization: `by_pass`,
+//       },
+//     });
+//   } catch (err) {
+//     res.setHeader("Content-Type", "text/html");
+//     res.status(404).send(client_view.error_404({}));
+//     console.log(err.message);
+//     return;
+//   }
+//   res.setHeader("Authorization", "by_passs");
+//   res.setHeader("Content-Type", "text/html");
+//   let info = cat_data.data.data;
+//   if (!info) {
+//     res.status(404).send(client_view.error_404({}));
+//   } else {
+//     res.send(
+//       client_view.html({
+//         title: `${info.name.replace("-", "")}`,
+//         command: `var category_editorial_detail = ${JSON.stringify(info)}`,
+//       })
+//     );
+//   }
+// });
 
 app.get("/campaign/:slug", async (req, res, next) => {
   let { slug } = req.params;
@@ -258,15 +246,7 @@ app.get("/checkout", (req, res, next) => {
     })
   );
 });
-// app.get("/editorial/checkout", (req, res, next) => {
-//   res.setHeader("Content-Type", "text/html");
-//   res.send(
-//     client_view.html({
-//       title: "Thanh toán",
-//       command: "",
-//     })
-//   );
-// });
+
 app.get("/order", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
@@ -307,6 +287,30 @@ app.get("/blog", (req, res, next) => {
   );
 });
 
+app.get("/blog/category/:slug", async(req, res, next) => {
+  let { slug } = req.params;
+  let article_data;
+  try {
+    article_data = await axios.get(`https://sss-dashboard.leanservices.work/w/post/get?slug=${slug}`, {
+      headers: {
+        Authorization: `by_passs`,
+      },
+    });
+  } catch (err) {
+    res.setHeader("Content-Type", "text/html");
+    res.status(404).send(client_view.error_404({}));
+    return console.log(err.message);
+  }
+  let blog_detail = article_data.data;
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "SSSTORY",
+      command: `var blog_category = ${JSON.stringify(blog_detail)}`,
+    })
+  );
+});
+
 app.get("/blog/article/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let article_data;
@@ -325,7 +329,7 @@ app.get("/blog/article/:slug", async (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
-      title: blog_detail.title,
+      title: `SSSTORY - ${blog_detail.data.title.toUpperCase()}`,
       command: `var blog_detail = ${JSON.stringify(blog_detail)}`,
     })
   );
@@ -365,15 +369,40 @@ app.get("/search", async (req, res, next) => {
   );
 });
 
-app.get("/editorial", (req, res, next) => {
+app.get("/editorial/:slug", async (req, res, next) => {
+  let {slug} = req.params;
+  let page_data;
+  try {
+    page_data = await axios.get(`https://sss-dashboard.leanservices.work/w/pages/detail?slug=${slug}`, {
+      headers: {
+        Authorization: `by_passs`,
+      },
+    });
+  } catch (err) {
+    res.setHeader("Content-Type", "text/html");
+    res.status(404).send(client_view.error_404({}));
+    return;
+  }
+  let data = page_data.data;
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
-      title: "WARM YOUR DAY UP SSSTUTTER",
-      command: "",
+      title: data.data.title.toUpperCase(),
+      command: `var page_detail = ${JSON.stringify(data)} `,
     })
   );
 });
+
+
+// app.get("/editorial", (req, res, next) => {
+//   res.setHeader("Content-Type", "text/html");
+//   res.send(
+//     client_view.html({
+//       title: "WARM YOUR DAY UP SSSTUTTER",
+//       command: "",
+//     })
+//   );
+// });
 
 app.get("/self-portrait", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
@@ -415,15 +444,15 @@ app.get("/self-portrait/product/:slug", async (req, res, next) => {
   }
 });
 
-app.get("/flash-sale", (req, res, next) => {
-  res.setHeader("Content-Type", "text/html");
-  res.send(
-    client_view.html({
-      title: "Flash sale",
-      command: "",
-    })
-  );
-});
+// app.get("/flash-sale", (req, res, next) => {
+//   res.setHeader("Content-Type", "text/html");
+//   res.send(
+//     client_view.html({
+//       title: "Flash sale",
+//       command: "",
+//     })
+//   );
+// });
 
 app.use((req, res, next) => {
   res.setHeader("Content-Type", "text/html");

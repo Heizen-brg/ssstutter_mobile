@@ -116,7 +116,7 @@ export const __templates_home = {
               perView: 1,
               autoplay: 5000,
             }).mount();
-          }, 100);
+          }, 200);
         }
       );
     };
@@ -367,147 +367,92 @@ export const __templates_home = {
     section.innerHTML = `
       <h2><a href="/">what's new</a></h2>
       <div class="gender__toggle">
-        <button data-active="male_arrivals" class="active">For Him</button>
-        <button data-active="female_arrivals">For Her</button>
+        <button data-cate="3vvRIM">For Him</button>
+        <button data-cate="y8Q15I">For Her</button>
       </div>
       <div class="products__slider">
-        <div class="glide active" data-gender="male_arrivals" id="male_arrivals">
+        <div class="glide active" id="new_arrivals">
           <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
-                ${__templates.busy_loading("show")}
-            </ul>
-          </div>
-        </div>
-        <div class="glide" data-gender="female_arrivals" id="female_arrivals">
-        <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
+            <ul class="glide__slides" >
                 ${__templates.busy_loading("show")}
             </ul>
           </div>
         </div>
       </div>
     `;
-    __requests(
-      {
-        method: "GET",
-        url: `https://api.ssstutter.com/product/filter/web?limit=10&sort=up&catId=3vvRIM&media=true&webStock=true`,
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+    let init_new_arrivals = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w/section/detail?type=new_arrivals`,
         },
-      },
-      (res) => {
-        let products = res.data
-          .map(
-            (item) =>
-              `
-          <li class="glide__slide">
-            <div class="product">
-              <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
-              </div>
-              <div class="detail">
-                <h6 class="name">${item.name.toLowerCase()}</h6>
-                <div class="price">
-                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                  <p>${__currency_format(item.salePrice || item.price)}</p>
+        ({data}) => {
+          let products = data.products
+            .map(
+              (item) =>
+                `
+            <li class="glide__slide" data-cate="${item.catId[0][0]}">
+              <div class="product">
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
+                })"></span></a>
                 </div>
-                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                <div class="detail">
+                  <h6 class="name">${item.name.toLowerCase()}</h6>
+                  <div class="price">
+                  ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                    <p>${__currency_format(item.salePrice || item.price)}</p>
+                  </div>
+                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                </div>
               </div>
-            </div>
-          </li>
-        `
-          )
-          .join("");
-        let glide__track = section.querySelector("#male_arrivals .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#male_arrivals", {
-          type: "slider",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 20,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
+            </li>
+          `
+            )
+            .join("");
+          let glide__track = section.querySelector(".glide__slides");
+          glide__track.innerHTML = products;
+          new Glide(`#new_arrivals`, {
+            type: "carousel",
+            bound: true,
+            perView: 4,
+            autoplay: 5000,
+            gap: 20,
+            hoverpause: true,
+            peek: {
+              before: 0,
+              after: 100,
             },
-            480: {
-              perView: 2,
+            breakpoints: {
+              1024: {
+                perView: 3,
+              },
+              480: {
+                perView: 2,
+              },
             },
-          },
-        }).mount();
-      }
-    );
-    __requests(
-      {
-        method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
-      },
-      (res) => {
-        let products = res.data
-          .map(
-            (item) =>
-              `
-          <li class="glide__slide">
-            <div class="product">
-              <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
-              </div>
-              <h6 class="name">${item.name.toLowerCase()}</h6>
-              <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                <p>${__currency_format(item.salePrice || item.price)}</p>
-              </div>
-              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-            </div>
-          </li>
-        `
-          )
-          .join("");
-        let glide__track = section.querySelector("#female_arrivals .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#female_arrivals", {
-          type: "slider",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 20,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-            },
-          },
-        }).mount();
-      }
-    );
-    let toggle_gender = section.querySelectorAll("[data-active]");
-    toggle_gender.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (btn.classList.contains("active")) {
-          return false;
-        } else {
-          this.hide_menu();
-          this.show_menu(btn);
+          }).mount();
+
+          let toggle_gender = section.querySelectorAll("[data-cate]");
+          toggle_gender.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              toggle_gender.forEach(i => i.classList.remove("active"));
+              btn.classList.toggle('active');
+              let slide_item = glide__track.querySelectorAll('.glide__slide');
+              slide_item.forEach(item => {
+                if (item.dataset.cate != btn.dataset.cate) {
+                  item.style.display  = "none"
+                } else {
+                  item.style.display = "block"
+                }
+              })
+            });
+          });
         }
-      });
-    });
+      );
+    }
+
+    init_new_arrivals()
     return section;
   },
   mobile_new_arrivals() {
@@ -516,18 +461,11 @@ export const __templates_home = {
     section.innerHTML = `
       <h2><a href="/">what's new</a></h2>
       <div class="gender__toggle">
-        <button class="active" data-active="male_arrivals">For Him</button>
-        <button data-active="female_arrivals">For Her</button>
+        <button data-cate="3vvRIM">For Him</button>
+        <button data-cate="y8Q15I">For Her</button>
       </div>
       <div class="products__slider">
-        <div class="glide active" data-gender="male_arrivals" id="male_arrivals">
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
-                ${__templates.busy_loading("show")}
-            </ul>
-          </div>
-        </div>
-        <div class="glide" data-gender="female_arrivals" id="female_arrivals">
+        <div class="glide active" " id="mobile_new_arrivals">
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
                 ${__templates.busy_loading("show")}
@@ -536,186 +474,108 @@ export const __templates_home = {
         </div>
       </div>
     `;
-    let toggle_gender = section.querySelectorAll("[data-active]");
-    toggle_gender.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (btn.classList.contains("active")) {
-          return false;
-        } else {
-          this.hide_menu();
-          this.show_menu(btn);
-          ``;
-        }
-      });
-    });
-    __requests(
-      {
-        method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+    let init_new_arrivals = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w/section/detail?type=new_arrivals`,
         },
-      },
-      (res) => {
-        let item_per_view = 4;
-        let stop_loop = Math.ceil(res.length / item_per_view);
-        let products = res.data
-          .map((item, index) => {
-            let current_index = index * 2;
-            if (index - 1 > stop_loop) return "";
-            item = res.data[current_index];
-            if (!item) return "";
-            let next_item = res.data[current_index + 1];
-            if (next_item) {
-              next_item = `
+        ({data}) => {
+          let item_per_view = 4;
+          let stop_loop = Math.ceil(data.products.length / item_per_view);
+          let products = data.products.map((item, index) => {
+              let current_index = index * 2;
+              if (index - 1 > stop_loop) return "";
+              item = data.products[current_index];
+              if (!item) return "";
+              let next_item = data.products[current_index + 1];
+              if (next_item) {
+                next_item = `
+            <div class="product">
+              <div class="thumbnail">
+                <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
+                  })"></span></a>
+              </div>
+              <div class="detail">
+                <h6 class="name">${next_item.name.toLowerCase()}</h6>
+                <div class="price">
+                ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
+                  <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+                </div>
+                ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
+              </div>
+            </div>
+            `;
+              } else next_item = "";
+  
+              return `
+        <li class="glide__slide" data-cate="${item.catId[0][0]}">
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
+              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
                 })"></span></a>
             </div>
             <div class="detail">
-              <h6 class="name">${next_item.name.toLowerCase()}</h6>
+              <h6 class="name">${item.name.toLowerCase()}</h6>
               <div class="price">
-              ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
-                <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                <p>${__currency_format(item.salePrice || item.price)}</p>
               </div>
-              ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
+              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
             </div>
           </div>
+            ${next_item}
+        </li>
           `;
-            } else next_item = "";
-
-            return `
-      <li class="glide__slide">
-        <div class="product">
-          <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
-          </div>
-          <div class="detail">
-            <h6 class="name">${item.name.toLowerCase()}</h6>
-            <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-              <p>${__currency_format(item.salePrice || item.price)}</p>
-            </div>
-            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-          </div>
-        </div>
-          ${next_item}
-      </li>
-        `;
-          })
-          .join("");
-        let glide__track = section.querySelector("#male_arrivals .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#male_arrivals", {
-          type: "carousel",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 10,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-              peek: {
-                before: 0,
-                after: 0,
-              },
-            },
-          },
-        }).mount();
-      }
-    );
-    __requests(
-      {
-        method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=y8Q15I&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
-      },
-      (res) => {
-        let item_per_view = 4;
-        let stop_loop = Math.ceil(res.length / item_per_view);
-        let products = res.data
-          .map((item, index) => {
-            let current_index = index * 2;
-            if (index - 1 > stop_loop) return "";
-            item = res.data[current_index];
-            if (!item) return "";
-            let next_item = res.data[current_index + 1];
-            if (next_item) {
-              next_item = `
-          <div class="product">
-            <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
-                })"></span></a>
-            </div>
-            <h6 class="name">${next_item.name}</h6>
-            <div class="price">
-            ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
-              <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
-            </div>
-            ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
-          </div>
-          `;
-            } else next_item = "";
-
-            return `
-      <li class="glide__slide">
-        <div class="product">
-          <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
-          </div>
-          <h6 class="name">${item.name}</h6>
-          <div class="price">
-            ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-            <p>${__currency_format(item.salePrice || item.price)}</p>
-          </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-        </div>
-          ${next_item}
-      </li>
-        `;
-          })
-          .join("");
-        let glide__track = section.querySelector("#female_arrivals .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#female_arrivals", {
-          type: "carousel",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 10,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-              peek: {
-                before: 0,
-                after: 0,
-              },
-            },
-          },
-        }).mount();
-      }
-    );
+            })
+            .join("");
+          let glide__track = section.querySelector(".glide__slides");
+          glide__track.innerHTML = products;
+              new Glide(`#mobile_new_arrivals`, {
+                type: "slider",
+                bound: true,
+                perView: 2,
+                autoplay: 5000,
+                gap: 10,
+                hoverpause: true,
+                peek: {
+                  before: 0,
+                  after: 100,
+                },
+                breakpoints: {
+                  1024: {
+                    perView: 3,
+                  },
+                  480: {
+                    perView: 2,
+                    peek: {
+                      before: 0,
+                      after: 0,
+                    },
+                  },
+                },
+              }).mount(); 
+              let toggle_gender = section.querySelectorAll("[data-cate]");
+              toggle_gender.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                  toggle_gender.forEach(i => i.classList.remove("active"));
+                  btn.classList.toggle('active');
+                  let slide_item = glide__track.querySelectorAll('.glide__slide');
+                  slide_item.forEach(item => {
+                    if (item.dataset.cate != btn.dataset.cate) {
+                      item.style.display  = "none"
+                    } else {
+                      item.style.display = "block"
+                    }
+                  })
+                });
+              });
+        }
+      );
+  
+    }
+    init_new_arrivals()
+  
     return section;
   },
   stylepick() {
@@ -740,13 +600,10 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?limit=10&sort=down&catId=3vvRIM&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
+        url: "https://sss-dashboard.leanservices.work/w/section/detail?type=style_pick",
       },
-      (res) => {
-        let product = res.data
+      ({data}) => {
+        let product = data.products
           .map(
             (item) =>
               `
@@ -800,95 +657,61 @@ export const __templates_home = {
     section.innerHTML = `
       <h2>weekly best</h2>
       <div class="gender__toggle">
-        <button class="active" data-active="male_arrivals">For Him</button>
-        <button data-active="female_arrivals">For Her</button>
+        <button data-cate="3vvRIM">For Him</button>
+        <button data-cate="y8Q15I">For Her</button>
       </div>
-      <ul data-gender="male_arrivals" class="weekly__best--list active">
-        ${__templates.busy_loading("show")}
-      </ul>
-      <ul data-gender="female_arrivals" class="weekly__best--list">
+      <ul class="weekly__best--list active">
         ${__templates.busy_loading("show")}
       </ul>
     `;
-    __requests(
-      {
-        method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?limit=8&sort=down&catId=3vvRIM&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+    let init_item_list = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w/section/detail?type=weekly_best`,
         },
-      },
-      (res) => {
-        let product = res.data
-          .map(
-            (item) => ` 
-      <li>
-        <div class="product">
-        <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
-        <div>
-          <div class="detail">
-          <h6 class="name">${item.name.toLowerCase()}</h6>
-          <div class="price">
-            ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-            <p>${__currency_format(item.salePrice || item.price)}</p>
-          </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-          </div>
-        </div>
-      </li>`
-          )
-          .join("");
-        let glide = section.querySelector('[data-gender="male_arrivals"]');
-        glide.innerHTML = product;
-      }
-    );
-    __requests(
-      {
-        method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?limit=8&sort=down&catId=y8Q15I&media=true&webStock=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
-      },
-      (res) => {
-        let product = res.data
-          .map(
-            (item) => ` 
-      <li>
-        <div class="product">
-          <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
-          </div>
-          <div class="detail">
-            <h6 class="name">${item.name}</h6>
-            <div class="price">
-              ${!item.salePrice ? "" : `<p class="discount">${__currency_format(item.price)}</p>`}
-              <p>${__currency_format(item.salePrice || item.price)}</p>
-            </div>
-            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-          </div>
-        </div>
-      </li>`
-          )
-          .join("");
-        let glide = section.querySelector('[data-gender="female_arrivals"]');
-        glide.innerHTML = product;
-      }
-    );
-    let toggle_gender = section.querySelectorAll("[data-active]");
-    toggle_gender.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (btn.classList.contains("active")) {
-          return false;
-        } else {
-          this.hide_menu();
-          this.show_menu(btn);
+        ({data}) => {
+          let products = data.products.map((item) => ` 
+            <li data-cate="${item.catId[0][0]}">
+              <div class="product">
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
+                      })"></span></a>
+                </div>
+                <div class="detail">
+                  <h6 class="name">${item.name.toLowerCase()}</h6>
+                  <div class="price">
+                    ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                    <p>${__currency_format(item.salePrice || item.price)}</p>
+                  </div>
+                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                </div>
+              </div>
+            </li>`
+                )
+            .join("");
+          let container = section.querySelector(".weekly__best--list");
+          container.innerHTML = products;
+          let toggle_gender = section.querySelectorAll("[data-cate]");
+          toggle_gender.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              toggle_gender.forEach(i => i.classList.remove("active"));
+              btn.classList.toggle('active');
+              let slide_item = container.querySelectorAll('[data-cate]');
+              slide_item.forEach(item => {
+                if (item.dataset.cate != btn.dataset.cate) {
+                  item.style.display  = "none"
+                } else {
+                  item.style.display = "block"
+                }
+              })
+            });
+          });
         }
-      });
-    });
+      );
+
+    }
+    init_item_list()
     return section;
   },
   blog() {

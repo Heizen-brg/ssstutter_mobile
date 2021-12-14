@@ -4,7 +4,7 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 10;
+  z-index: 101;
   background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-content: center;
@@ -41,7 +41,8 @@
   background-color: $white;
   border-radius: 4px;
   box-shadow: 1px 1px 2px 2px $light;
-  -webkit-animation: slide-in-fwd-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: slide-in-fwd-center 0.4s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-fwd-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 @-webkit-keyframes slide-in-fwd-center {
@@ -268,6 +269,50 @@
     place-content: center;
   }
 }
+
+.lucky__wheel {
+  padding: 30px;
+  background-image: url(/assets/img/wheel/16X9.jpg);
+  background-size: cover;
+  background-position: center;
+  h1 {
+    @include font(large, center, 600);
+    margin-bottom: 20px;
+    color: #cd8d37;
+  }
+  div {
+    @include flex(column, center, center);
+    position: relative;
+    width: 90vw;
+    > img {
+      position: absolute;
+      width: 30px;
+      top: 0;
+      z-index: 2;
+    }
+    div {
+      position: relative;
+      width: 100%;
+      img {
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    button {
+      @include font(medium, center, 600);
+      border: none;
+      text-transform: uppercase;
+      background-color: #bd3120;
+      color: $white;
+      border-radius: 10px;
+      padding: 15px 25px;
+    }
+  }
+}
 @media (max-width: 768px) {
   .modal__overlay {
     .close__btn {
@@ -329,7 +374,6 @@
       position: fixed;
       bottom: 10px;
       fill: $silver;
-
     }
   }
   .lookbook__detail {
@@ -337,6 +381,27 @@
     grid-gap: 10px;
     &--featured {
       margin-bottom: 0;
+    }
+  }
+  .lucky__wheel {
+    > div {
+      width: 60vw;
+      > img {
+        width: 20px;
+      }
+      > div {
+        canvas {
+          width: 100%;
+        }
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      button {
+        padding: 10px;
+        font-size: small;
+      }
     }
   }
 }

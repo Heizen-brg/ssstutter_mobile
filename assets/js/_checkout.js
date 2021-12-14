@@ -21,6 +21,7 @@ let order_data = {
   discountCode: [],
   customerNote: "",
   shippingAddress: "",
+  note:"",
 };
 let shippingFormat = {
   city: "",
@@ -236,6 +237,9 @@ export const __templates_checkout = {
     });
     confirm_btn.addEventListener("click", () => {
       let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
+      let gift_purchased = JSON.parse(localStorage.getItem("giftItem")) || '';
+      let gift2_purchased = JSON.parse(localStorage.getItem("giftItem2")) || '';
+
       let order_item_format = items_purchased.map((item) => {
         return {
           id: item.variation.id,
@@ -245,6 +249,7 @@ export const __templates_checkout = {
       });
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
+      order_data.note = gift_purchased+ ' ||' + gift2_purchased;
       if (
         !order_data.customerName ||
         !order_data.customerPhone ||
