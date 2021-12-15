@@ -123,8 +123,11 @@
     place-content: normal;
   }
 }
-.header .nav__logo svg {
-  width: 44px;
+.header .nav__logo a {
+  display: grid;
+}
+.header .nav__logo a img {
+  width: 100%;
   height: auto;
 }
 .header .nav__logo a::after {
@@ -188,6 +191,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+.header .side__nav--title a svg {
+  width: 80%;
+  height: auto;
 }
 .header .freeship {
   position: absolute;
@@ -633,7 +640,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  .header .nav__logo svg {
+  .header .nav__logo img {
     display: none;
     width: 25px;
     height: 25px;
@@ -725,7 +732,7 @@
     color: #191919;
   }
   .header .side__nav--title a img {
-    width: 100%;
+    width: 60%;
   }
   .header .side__nav--title .close svg {
     width: 18px;
@@ -5742,7 +5749,7 @@ h4 {
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 10;
+  z-index: 101;
   background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-content: center;
@@ -6082,6 +6089,57 @@ h4 {
   place-content: center;
 }
 
+.lucky__wheel {
+  padding: 30px;
+  background-image: url(/assets/img/wheel/16X9.jpg);
+  background-size: cover;
+  background-position: center;
+}
+.lucky__wheel h1 {
+  font-size: large;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #cd8d37;
+}
+.lucky__wheel div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 90vw;
+}
+.lucky__wheel div > img {
+  position: absolute;
+  width: 30px;
+  top: 0;
+  z-index: 2;
+}
+.lucky__wheel div div {
+  position: relative;
+  width: 100%;
+}
+.lucky__wheel div div img {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.lucky__wheel div button {
+  font-size: medium;
+  text-align: center;
+  font-weight: 600;
+  border: none;
+  text-transform: uppercase;
+  background-color: #bd3120;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 15px 25px;
+}
+
 @media (max-width: 768px) {
   .modal__overlay .close__btn {
     right: 10px;
@@ -6158,6 +6216,24 @@ h4 {
   }
   .lookbook__detail--featured {
     margin-bottom: 0;
+  }
+
+  .lucky__wheel > div {
+    width: 60vw;
+  }
+  .lucky__wheel > div > img {
+    width: 20px;
+  }
+  .lucky__wheel > div > div canvas {
+    width: 100%;
+  }
+  .lucky__wheel > div > div img {
+    width: 30px;
+    height: 30px;
+  }
+  .lucky__wheel > div button {
+    padding: 10px;
+    font-size: small;
   }
 }
 .color__picker {

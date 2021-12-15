@@ -314,7 +314,7 @@ export const __get_voucher = (params, callback) => {
     if (current.catId && current.catId.includes("sGT8Q5")) return total;
     if (current.catId && current.catId.includes("kYx45S")) return total;
     if (current.name.toLowerCase().includes("great life")) return total;
-    return total + current.quantity;
+    return total + parseInt(current.quantity);
   }, 0);
   cart_quantity = parseInt(cart_quantity);
   if (!gift_purchased && cart_quantity === 3) {
@@ -385,7 +385,7 @@ export const __calc_final_amount = (div, gift) => {
     if (current.catId && current.catId.includes("sGT8Q5")) return total;
     if (current.catId && current.catId.includes("kYx45S")) return total;
     if (current.name.toLowerCase().includes("great life")) return total;
-    return total + current.quantity;
+    return total + parseInt(current.quantity);
   }, 0);
   cart_quantity = parseInt(cart_quantity);
   let giftDiv1 = cart_items.querySelector(".blackfriday__gift");
