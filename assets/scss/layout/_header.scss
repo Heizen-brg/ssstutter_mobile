@@ -132,9 +132,12 @@
           height: auto;
         }
         &::after {
-          content: "ssstutter";
-          font-size: 18px;
+          content: '';
+          background-image: url(/assets/img/logo_noel.png);
+          @include ratio(17,6);
           display: none;
+          width: 120px ;
+          background-size: contain;
         }
       }
     }

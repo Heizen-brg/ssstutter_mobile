@@ -1,4 +1,4 @@
-import { SimpleImage, Header, Paragraph, List } from "./editor-plugin/plugin-list.js";
+import { SimpleImage, Header, Paragraph, List, Button } from "./editor-plugin/plugin-list.js";
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 export const __templates_article = {
@@ -70,7 +70,11 @@ export const __templates_article = {
         list: {
           class: List,
           inlineToolbar: true
-        }
+        },
+        button : {
+          class : Button,
+          inlineToolbar : true,
+        },
       },
       data: {
         blocks: data.content.blocks

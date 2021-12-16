@@ -27,7 +27,36 @@
   line-height: 1.5em;
   outline: none;
 }
-
+.ce-button {
+  padding: 10px 15px;
+  font-size: medium;
+  display: flex;
+  outline: none;
+  button {
+    @include flex(row, center, center);
+    @include border($light, 5px);
+    @include transition;
+    box-shadow: 1px 1px 4px #dbdbdb;
+    background-color: $white;
+    padding: 10px;
+    font-weight: 600;
+    &:hover {
+      background-color: $black;
+     a {
+      color: $white !important;
+     }
+    }
+  }
+  &--left {
+    justify-content: flex-start;
+  }
+  &--center {
+    justify-content: center;
+  }
+  &--right {
+    justify-content: end;
+  }
+}
 .ce-header p,
 .ce-header div {
   padding: 0 !important;

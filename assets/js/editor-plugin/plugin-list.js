@@ -221,6 +221,220 @@ export class Paragraph {
   }
 }
 
+export class Button {
+  static get DEFAULT_PLACEHOLDER() {
+    return 'Button';
+  }
+  static get ALIGNMENTS() {
+    return {
+      left: 'left',
+      center: 'center',
+      right: 'right',
+      justify: 'justify'
+    };
+  }
+  static get isReadOnlySupported() {
+    return true;
+  }
+  static get DEFAULT_ALIGNMENT() {
+    return Button.ALIGNMENTS.left;
+  }
+  constructor({ data, config, api, readOnly }) {
+    this.api = api;
+    this.config = config;
+    this.readOnly = readOnly;
+    this._CSS = {
+      block: this.api.styles.block,
+      wrapper: 'ce-button',
+      alignment: {
+        left: 'ce-button--left',
+        center: 'ce-button--center',
+        right: 'ce-button--right',
+        justify: 'ce-button--justify',
+      }
+    }
+    this.CSS = {
+      baseClass: this.api.styles.block,
+      loading: this.api.styles.loader,
+      input: this.api.styles.input,
+      settingsButton: this.api.styles.settingsButton,
+      settingsButtonActive: this.api.styles.settingsButtonActive,
+    }
+
+    this.settings = [
+      {
+        name: 'left',
+        icon: __icons.text_left
+      },
+      {
+        name: 'center',
+        icon: __icons.text_center
+      },
+      {
+        name: 'right',
+        icon: __icons.text_right
+      },
+
+    ];
+
+    this.onKeyUp = this.onKeyUp.bind(this)
+
+    /**
+     * Placeholder for paragraph if it is first Block
+     * @type {string}
+     */
+    this._placeholder = config.placeholder ? config.placeholder : Button.DEFAULT_PLACEHOLDER;
+
+    this._data = {
+      text: data.text || '',
+      alignment: data.alignment || config.defaultAlignment || Button.DEFAULT_ALIGNMENT
+    };
+    this._element = this.drawView();
+    this.data = data;
+
+    this._preserveBlank = config.preserveBlank !== undefined ? config.preserveBlank : false;
+
+  }
+
+  onKeyUp(e) {
+    if (e.code !== 'Backspace' && e.code !== 'Delete') {
+      return;
+    }
+
+    const { textContent } = this._element;
+
+    if (textContent === '') {
+      this._element.innerHTML = '';
+    }
+  }
+
+  drawView() {
+    let div = document.createElement('DIV');
+
+    div.classList.add(this._CSS.wrapper, this._CSS.block, this._CSS.alignment[this.data.alignment]);
+    div.contentEditable = !this.readOnly;
+    div.spellcheck = false;
+    div.dataset.placeholder = this.api.i18n.t(this._placeholder);
+    div.innerHTML =`<button>${this.data.text}</button>` ;
+
+    div.addEventListener('keyup', this.onKeyUp);
+
+    return div;
+  }
+
+  render() {
+    return this._element;
+  }
+
+  merge(data) {
+
+    let newData = {
+      text: this.data.text += data.text,
+      alignment: this.data.alignment,
+    };
+
+    this._element.innerHTML = `<button>${this.data.text}</button>`;
+
+    this.data = newData;
+  }
+
+  validate(savedData) {
+    if (savedData.text.trim() === '' && !this._preserveBlank) {
+      return false;
+    }
+
+    return true;
+  }
+
+  save(toolsContent) {
+    return Object.assign(this.data, {
+      text: toolsContent.innerHTML,
+    });
+  }
+
+  onPaste(event) {
+    const data = {
+      text: event.detail.data.innerHTML,
+      alignment: this.config.defaultAlignment || Button.DEFAULT_ALIGNMENT
+    };
+
+    this.data = data;
+  }
+
+  get data() {
+    return this._data;
+  }
+
+  set data(data) {
+    this._data = {
+      text: data.text || '',
+      alignment: data.alignment || this.config.defaultAlignment || Button.DEFAULT_ALIGNMENT
+    }
+    this._element.innerHTML = `<button>${this._data.text}</button>` || '';
+  }
+
+  static get conversionConfig() {
+    return {
+      export: 'text', // to convert button to other block, use 'text' property of saved data
+      import: 'text' // to covert other block's exported string to button, fill 'text' property of tool data
+    };
+  }
+
+  static get sanitize() {
+    return {
+      text: {},
+      alignment: {}
+    };
+  }
+
+  static get pasteConfig() {
+    return {
+      tags: ['BUTTON']
+    };
+  }
+
+  renderSettings() {
+    const wrapper = document.createElement('div');
+
+    this.settings.map(tune => {
+
+      const button = document.createElement('div');
+      button.classList.add('cdx-settings-button');
+      button.innerHTML = tune.icon;
+
+      button.classList.toggle(this.CSS.settingsButtonActive, tune.name === this.data.alignment);
+
+      wrapper.appendChild(button);
+
+      return button;
+    }).forEach((element, index, elements) => {
+
+      element.addEventListener('click', () => {
+
+        this._toggleTune(this.settings[index].name);
+
+        elements.forEach((el, i) => {
+          const { name } = this.settings[i];
+          el.classList.toggle(this.CSS.settingsButtonActive, name === this.data.alignment);
+          this._element.classList.toggle(this._CSS.alignment[name], name === this.data.alignment)
+        });
+      });
+    });
+
+    return wrapper;
+  }
+
+  _toggleTune(tune) {
+    this.data.alignment = tune;
+  }
+
+  static get toolbox() {
+    return {
+      icon: __icons.button,
+      title: 'Button'
+    };
+  }
+}
 
 export class ProductList {
   static get toolbox() {

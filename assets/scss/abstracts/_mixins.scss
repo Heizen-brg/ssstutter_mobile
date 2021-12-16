@@ -30,6 +30,7 @@
 @mixin shadow($w, $h, $i, $blur, $color: null) {
   box-shadow: $w $h $i $blur $color;
 }
+
 @mixin font($size: null, $align: null, $weight: null) {
   font-size: $size;
   text-align: $align;
