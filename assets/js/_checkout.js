@@ -255,8 +255,8 @@ export const __templates_checkout = {
       }, 0);
       cart_quantity = parseInt(cart_quantity);
       let note = "";
-      if (cart_quantity === 3) note = gift_purchased;
-      if (cart_quantity >= 4) note = gift_purchased + " || " + gift2_purchased;
+      if (cart_quantity === 3) note = "Quà 1: " + gift_purchased;
+      if (cart_quantity >= 4) note = "Quà 1: " + gift_purchased + " || Quà 2: " + gift2_purchased;
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
       order_data.note = note;

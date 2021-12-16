@@ -430,12 +430,12 @@ export const __templates_modal = {
       // Definition of all the segments.
       segments: [
         {
-          text: "Pin, Khăn Tay, Bật lửa, Túi Bút",
+          text: "Pin / Khăn Tay / Bật lửa / Túi Bút",
           image: "/assets/img/wheel/1.png",
         },
         {
           image: "/assets/img/wheel/2.png",
-          text: "Vòng tay, Mũ (S-cap ver.2), Túi ",
+          text: "Vòng tay / Mũ (S-cap ver.2) / Túi ",
         },
         {
           image: "/assets/img/wheel/3.png",
