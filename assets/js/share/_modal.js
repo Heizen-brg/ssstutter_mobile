@@ -565,7 +565,7 @@ export const __templates_modal = {
             perView: 1,
             peek: {
               before: 0,
-              after: 50,
+              after: 0,
             },
           },
         },
