@@ -313,6 +313,17 @@
     }
   }
 }
+
+.campaign__guide {
+  width: 40vw;
+  ul {
+    > li {
+      div {
+        @include ratio(1, 1);
+      }
+    }
+  }
+}
 @media (max-width: 768px) {
   .modal__overlay {
     .close__btn {
@@ -401,6 +412,14 @@
       button {
         padding: 10px;
         font-size: small;
+      }
+    }
+  }
+  .campaign__guide {
+    width: 80vw;
+    ul {
+      > li {
+        width: inherit;
       }
     }
   }

@@ -2,6 +2,7 @@ import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
+import { __templates_modal } from "./share/_modal.js";
 let mobile = window.innerWidth <= 575;
 let tablet = window.innerWidth <= 768 && window.innerWidth >= 575;
 let desktop = window.innerWidth > 780;
@@ -56,7 +57,13 @@ export const __templates_campaign = {
       <div style="background-image:url(https://sss-dashboard.leanservices.work${
         mobile ? params.thumbnail : params.banner
       }.jpeg)"></div>
+      <h1>${params.description}</h1>
     `;
+    if (params.modal) {
+      setTimeout(() => {
+        __templates_modal.overlay({content : __templates_modal.campaign_guide_modal(params.modal)})
+      }, 1000);
+    }
     return div;
   },
   campaign_filter(params) {

@@ -13,7 +13,9 @@ export const __templates_modal = {
     let main_body = document.querySelector("#root");
     let div = document.createElement("div");
     div.className = "modal__overlay";
-    params.close == "show" ? (div.innerHTML = `<div class="close__btn">${__icons.close}<div>`) : "";
+    params.close == "show"
+      ? (div.innerHTML = `<div class="close__btn">${__icons.close}<div>`)
+      : "";
     let content = document.createElement("div");
     content.className = "modal__content";
     if (params.content)
@@ -284,8 +286,13 @@ export const __templates_modal = {
             cart_selected = [...cart_selected, ...data];
             localStorage.setItem("cartItem", JSON.stringify(cart_selected));
             cart_menu.classList.add("active");
-            __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-            __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+            __show_cart_item(
+              cart_menu.querySelector("ul"),
+              cart_menu.querySelector("[data-amount]")
+            );
+            __show_cart_quantity(
+              document.querySelector('[data-toggle="cart_toggle"]')
+            );
             __get_voucher({ discountDiv: cart_menu });
           }
         );
@@ -337,13 +344,19 @@ export const __templates_modal = {
         <li>
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+              <a href="/p/${
+                item.slug
+              }"><span style="background-image:url(https://cdn.ssstutter.com/products/${
               item.extensions.media.featured
             })"></span></a>
             </div>
             <h6 class="name">${item.name.toLowerCase()}</h6>
             <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+              ${
+                item.salePrice
+                  ? `<p class="discount">${__currency_format(item.price)}</p>`
+                  : ""
+              }
               <p>${__currency_format(item.salePrice || item.price)}</p>
             </div>
             ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
@@ -398,13 +411,23 @@ export const __templates_modal = {
         `Chúc mừng bạn đã nhận được ${indicatedSegment.text}, phần quà đã được thêm vào giỏ hàng`
       );
       cart_selected = [...cart_selected];
-      if (!gift1) localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
-      if (gift1 && !gift2) localStorage.setItem("giftItem2", JSON.stringify(indicatedSegment.text));
+      if (!gift1)
+        localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
+      if (gift1 && !gift2)
+        localStorage.setItem(
+          "giftItem2",
+          JSON.stringify(indicatedSegment.text)
+        );
       localStorage.setItem("cartItem", JSON.stringify(cart_selected));
       // localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
       cart_menu.classList.add("active");
-      __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-      __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+      __show_cart_item(
+        cart_menu.querySelector("ul"),
+        cart_menu.querySelector("[data-amount]")
+      );
+      __show_cart_quantity(
+        document.querySelector('[data-toggle="cart_toggle"]')
+      );
       __get_voucher({ discountDiv: cart_menu, gift: indicatedSegment.text });
       if (cart_quantity === 3 && localStorage.getItem("giftItem")) {
         spin_btn.disabled = true;
@@ -412,7 +435,11 @@ export const __templates_modal = {
         return;
       }
 
-      if (cart_quantity >= 4 && localStorage.getItem("giftItem") && localStorage.getItem("giftItem2")) {
+      if (
+        cart_quantity >= 4 &&
+        localStorage.getItem("giftItem") &&
+        localStorage.getItem("giftItem2")
+      ) {
         spin_btn.disabled = true;
         spin_btn.innerHTML = "Bạn đã hết lượt quay";
         return;
@@ -496,6 +523,54 @@ export const __templates_modal = {
       theWheel.animation.stopAngle = stopAt;
       theWheel.startAnimation();
     });
+    return div;
+  },
+  campaign_guide_modal(data) {
+    let div = document.createElement("div");
+    div.className = "campaign__guide";
+    div.innerHTML = `
+      <div class="glide" id="campaign_guide">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides campaign__guide--items" >
+          
+          </ul>
+        </div>
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
+          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
+        </div>
+      </div>  
+    `;
+    let guide_container = div.querySelector(".campaign__guide--items");
+    let guide_item = (data || [])
+      .map((item) => {
+        return `
+      <li class="glide__slide">
+          <div style="background-image:url(https://sss-dashboard.leanservices.work${item}.jpeg)"></div>
+      </li>
+      `;
+      })
+      .join("");
+    guide_container.innerHTML = guide_item;
+    setTimeout(() => {
+      new Glide("#campaign_guide", {
+        type: "slider",
+        perView: 1,
+        peek: {
+          before: 0,
+          after: 150,
+        },
+        breakpoints: {
+          525: {
+            perView: 1,
+            peek: {
+              before: 0,
+              after: 50,
+            },
+          },
+        },
+      }).mount();
+    }, 500);
     return div;
   },
 };
