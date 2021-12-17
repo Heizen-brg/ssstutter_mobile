@@ -62,18 +62,23 @@ export const __init_product_list = (params = { ids: product_ids }) => {
         })"></span></a>
         </div>
         <div class="detail">
-          <h6 class="name">${item.name.toLowerCase()}</h6>
-          <div class="price">
-            ${
-              item.salePrice
-                ? `<p>${__currency_format(item.salePrice)}</p>
-              <p class="discount">${__currency_format(item.price)}</p> `
-                : `<p>${__currency_format(item.price)}</p>`
-            }
+          <div class="info">
+            <h6 class="name">${item.name.toLowerCase()}</h6>
+            <div class="price">
+              ${
+                item.salePrice
+                  ? `<p>${__currency_format(item.salePrice)}</p>
+                <p class="discount">${__currency_format(item.price)}</p> `
+                  : `<p>${__currency_format(item.price)}</p>`
+              }
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+            <div class="color">
+              <p>+${item.color.length} màu</p>
+            </div>
           </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-          <div class="color">
-             <p>+${item.color.length} màu</p>
+          <div class="promotion">
+              <p>Giảm thêm tới 300K</p>
           </div>
         </div>
       </div>

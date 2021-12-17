@@ -129,7 +129,7 @@
       position: sticky;
       top: 100px;
       align-self: flex-start;
-      .info {
+      .detail {
         margin-bottom: 24px;
         h1 {
           @include font(large, start, bold);
@@ -143,6 +143,16 @@
           .discount {
             color: $silver;
             text-decoration: line-through;
+          }
+        }
+        .promotion {
+          @include border(#1A401B,4px);
+          background-color: #1A401B;
+          padding: 5px;
+          color: $white;
+          font-size: x-small;
+          p {
+            margin: 5px;
           }
         }
       }
@@ -328,6 +338,11 @@
       > div {
         h1 {
           font-size: x-large;
+        }
+        .detail {
+          .promotion {
+            margin-top: 10px;
+          }
         }
         .color {
           ul {

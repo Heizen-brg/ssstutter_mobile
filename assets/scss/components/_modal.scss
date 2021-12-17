@@ -315,7 +315,8 @@
 }
 
 .campaign__guide {
-  width: 60vw;
+  width: 500px;
+  height: 500px;
   ul {
     > li {
       div {
@@ -417,6 +418,7 @@
   }
   .campaign__guide {
     width: 80vw;
+    height: auto;
     ul {
       > li {
         width: inherit;
