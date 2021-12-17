@@ -57,7 +57,7 @@ export const __templates_campaign = {
       <div style="background-image:url(https://sss-dashboard.leanservices.work${
         mobile ? params.thumbnail : params.banner
       }.jpeg)"></div>
-      <h1>${params.description}</h1>
+      <h1>${params.description.replace(/\|/g, '<br>')}</h1>
     `;
     if (params.modal) {
       setTimeout(() => {

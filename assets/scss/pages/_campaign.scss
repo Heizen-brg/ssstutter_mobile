@@ -54,9 +54,11 @@
       @include ratio(18, 7);
     }
     h1 {
-      margin: 3%;
+      @include shadow(1px, 1px, 4px, $silver);
+      margin: 2%;
       text-align: center;
       line-height: 2;
+      padding: 20px;
     }
   }
   .campaign__filter {
@@ -137,6 +139,9 @@
       margin-bottom: 40px;
       div {
         @include ratio(4, 5);
+      }
+      h1 {
+        font-size: x-small;
       }
     }
     .categories__filter {
