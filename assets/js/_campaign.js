@@ -57,7 +57,7 @@ export const __templates_campaign = {
       <div style="background-image:url(https://sss-dashboard.leanservices.work${
         mobile ? params.thumbnail : params.banner
       }.jpeg)"></div>
-      <h1>${params.description.replace(/\|/g, '<br>')}</h1>
+      ${params.description ? ` <h1>${params.description.replace(/\|/g, '<br>')}</h1>` : ''}
     `;
     if (params.modal) {
       setTimeout(() => {
@@ -73,7 +73,7 @@ export const __templates_campaign = {
       ${
         params.gender ? `
       <ul class="gender__filter">
-        <li data-filter="catId" data-catId="3vvRIM" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637640613530.jpeg)" ></li>
+        <li class="active" data-filter="catId" data-catId="3vvRIM" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637640613530.jpeg)" ></li>
         <li data-filter="catId" data-catId="y8Q15I" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637640619351.jpeg)" ></li>
       </ul>` : ''
       }
@@ -91,6 +91,8 @@ export const __templates_campaign = {
     let filter_btn = div.querySelectorAll("[data-filter]");
     filter_btn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
+        filter_btn.forEach(i => i.classList.remove('active'));
+        btn.classList.add('active');
         e.preventDefault();
         if (btn.dataset.catid) {
           div.querySelectorAll('[data-filter="price"]').forEach((i) => (i.dataset.catid = btn.dataset.catid));
@@ -189,7 +191,7 @@ export const __templates_campaign = {
     `;
 
     let product_sale_container = div.querySelector("ul");
-    let init_sale_products = (query = `url=${params.url}&`) => {
+    let init_sale_products = (query = `url=${params.url}&limit=10&catId=3vvRIM`) => {
       __requests(
         {
           method: "GET",
@@ -208,18 +210,20 @@ export const __templates_campaign = {
             })"></span></a>
             </div>
             <div class="detail">
-              <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
-              <div class="price">
-                ${
-                  item.salePrice
-                    ? `<p>${__currency_format(item.salePrice)}</p>
-                  <p class="discount">${__currency_format(item.price)}</p> `
-                    : `<p>${__currency_format(item.price)}</p>`
-                }
-              </div>
-              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-              <div class="color">
-                <p>+${item.color.length} màu</p>
+              <div class="info">
+                <h6 class="name">${item.name.toLocaleLowerCase()}</h6>
+                <div class="price">
+                  ${
+                    item.salePrice
+                      ? `<p>${__currency_format(item.salePrice)}</p>
+                    <p class="discount">${__currency_format(item.price)}</p> `
+                      : `<p>${__currency_format(item.price)}</p>`
+                  }
+                </div>
+                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                <div class="color">
+                  <p>+${item.color.length} màu</p>
+                </div>
               </div>
             </div>
           `;

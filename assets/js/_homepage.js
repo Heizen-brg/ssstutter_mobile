@@ -398,12 +398,14 @@ export const __templates_home = {
                 })"></span></a>
                 </div>
                 <div class="detail">
-                  <h6 class="name">${item.name.toLowerCase()}</h6>
-                  <div class="price">
-                  ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                    <p>${__currency_format(item.salePrice || item.price)}</p>
+                  <div class="info">
+                    <h6 class="name">${item.name.toLowerCase()}</h6>
+                    <div class="price">
+                    ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                      <p>${__currency_format(item.salePrice || item.price)}</p>
+                    </div>
+                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                   </div>
-                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                 </div>
               </div>
             </li>
@@ -497,12 +499,14 @@ export const __templates_home = {
                   })"></span></a>
               </div>
               <div class="detail">
-                <h6 class="name">${next_item.name.toLowerCase()}</h6>
-                <div class="price">
-                ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
-                  <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
-                </div>
-                ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
+                <div class="info">
+                    <h6 class="name">${next_item.name.toLowerCase()}</h6>
+                    <div class="price">
+                    ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
+                      <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+                    </div>
+                    ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
+                  </div>
               </div>
             </div>
             `;
@@ -516,12 +520,14 @@ export const __templates_home = {
                 })"></span></a>
             </div>
             <div class="detail">
-              <h6 class="name">${item.name.toLowerCase()}</h6>
-              <div class="price">
+              <div class="info">
+                <h6 class="name">${item.name.toLowerCase()}</h6>
+                <div class="price">
                 ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                <p>${__currency_format(item.salePrice || item.price)}</p>
+                  <p>${__currency_format(item.salePrice || item.price)}</p>
+                </div>
+                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
               </div>
-              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
             </div>
           </div>
             ${next_item}
@@ -679,12 +685,14 @@ export const __templates_home = {
                       })"></span></a>
                 </div>
                 <div class="detail">
-                  <h6 class="name">${item.name.toLowerCase()}</h6>
-                  <div class="price">
+                  <div class="info">
+                    <h6 class="name">${item.name.toLowerCase()}</h6>
+                    <div class="price">
                     ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                    <p>${__currency_format(item.salePrice || item.price)}</p>
+                      <p>${__currency_format(item.salePrice || item.price)}</p>
+                    </div>
+                    ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                   </div>
-                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                 </div>
               </div>
             </li>`
