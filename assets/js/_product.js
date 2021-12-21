@@ -266,15 +266,23 @@ export const __templates_product = {
         </div>
       </div>
       <div>
-        <div class="info">
-          <h1 class="name">${info.name}</h1>
-          <div class="price">
-          ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
-          ${
-            info.salePrice
-              ? `<p class="discount">${__currency_format(info.price)}</p>`
-              : ` <p>${__currency_format(info.price)}</p>`
-          }
+        <div class="detail">
+          <div class="info">
+            <h1 class="name">${info.name}</h1>
+            <div class="price">
+            ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
+            ${
+              info.salePrice
+                ? `<p class="discount">${__currency_format(info.price)}</p>`
+                : ` <p>${__currency_format(info.price)}</p>`
+            }
+            </div>
+          </div>
+          <div class="promotion">
+              <h5>Ưu đãi Giáng Sinh từ 15.12 tới 24.12</h5>
+              <p> Mua 2 SP bất kỳ: Giảm 70.000Đ</p>
+              <p>Mua 3 SP bất kỳ: Giảm 200.000Đ + 1 lượt quay may mắn</p>
+              <p>Mua 4 SP bất kỳ: Giảm 300.000Đ + 2 lượt quay may mắn</p>
           </div>
         </div>
         <div class="color">

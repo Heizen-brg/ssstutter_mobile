@@ -556,19 +556,7 @@ export const __templates_modal = {
       new Glide("#campaign_guide", {
         type: "slider",
         perView: 1,
-        peek: {
-          before: 0,
-          after: 150,
-        },
-        breakpoints: {
-          525: {
-            perView: 1,
-            peek: {
-              before: 0,
-              after: 0,
-            },
-          },
-        },
+
       }).mount();
     }, 500);
     return div;

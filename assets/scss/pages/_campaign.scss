@@ -77,9 +77,9 @@
           color: $white;
         }
         &.active {
-          @include border($silver, 0px);
           opacity: 1 !important;
-          background-blend-mode: multiply;
+          background-blend-mode: normal;
+          filter: grayscale(0);
           color: $white;
         }
         &.inactive {
