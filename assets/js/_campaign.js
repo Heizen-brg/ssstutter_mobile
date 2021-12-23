@@ -1,6 +1,6 @@
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
-import { __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
+import { __countdown_timer, __currency_format, __init_filter, __init_product_list } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
 let mobile = window.innerWidth <= 575;
@@ -17,34 +17,8 @@ export const __templates_campaign = {
     <p>${params.description}</p>
     <a href="#sale_products">Khám phá ngay</a>
     `;
-
-    let end_date = new Date(params.end_time).getTime();
-    let countdown = setInterval(() => {
-      let distance = end_date - Date.now();
-
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      div.querySelector(".clock").innerHTML = `
-      <div class="text-center"><span>${days}</span>Ngày</div>
-      <div class="text-center"><span>${hours}</span>Giờ</div>
-      <div class="text-center"><span>${minutes}</span>Phút</div>
-      <div class="text-center"><span>${seconds}</span>Giây</div>
-      `;
-
-      if (distance < 0) {
-        clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = `
-        <div class="text-center"><span>00</span>Ngày</div>
-        <div class="text-center"><span>00</span>Giờ</div>
-        <div class="text-center"><span>00</span>Phút</div>
-        <div class="text-center"><span>00</span>Giây</div>
-        `;
-      }
-    }, 1000);
-
+ let clock_div = div.querySelector(".clock");
+ __countdown_timer({div :clock_div, end : params.end_time })
     // btn.addEventListener('click', (e) => {
     //   e.preventDefault();
     // })
@@ -59,7 +33,7 @@ export const __templates_campaign = {
       }.jpeg)"></div>
       ${params.description ? ` <h1>${params.description.replace(/\|/g, '<br>')}</h1>` : ''}
     `;
-    if (params.modal) {
+    if (params.modal.length) {
       setTimeout(() => {
         __templates_modal.overlay({content : __templates_modal.campaign_guide_modal(params.modal)})
       }, 1000);

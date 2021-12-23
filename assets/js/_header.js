@@ -1,6 +1,6 @@
 import { __icons } from "./share/_icons.js";
 import { __render, __requests } from "./main.js";
-import { __currency_format, __get_voucher, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
+import { __countdown_timer, __currency_format, __get_voucher, __show_cart_item, __show_cart_quantity } from "./share/_function.js";
 import { __templates } from "./share/_components.js";
 import { CONFIG } from "./config.js";
 let mobile = window.innerWidth <= 575;
@@ -66,7 +66,7 @@ export const __templates_header = {
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
-      <div class="freeship fade-in">Miễn phí vận chuyển đơn hàng trên 599.000đ</div>
+      <div class="freeship fade-in clock"></div>
       <!-- <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a> -->
     `;
     ["popup", "left", "right", "mobile"].forEach((pos) => {
@@ -80,6 +80,9 @@ export const __templates_header = {
         block.innerHTML = "";
       } else block.innerHTML = params[pos];
     });
+    let clock_div = header.querySelector(".clock");
+    let end_time = new Date('Dec 26 2021 23:59:59').getTime()
+    __countdown_timer({div :clock_div, end : end_time })
     header.querySelector(".close").addEventListener("click", () => {
       this.hide_menu();
     });
@@ -100,10 +103,10 @@ export const __templates_header = {
     window.onscroll = function () {
       if (window.pageYOffset > params.page_y_offset) {
         if (document.querySelector(".header .freeship")) {
-          document.querySelector(".header .freeship").style.display = "block";
+          document.querySelector(".header .freeship").classList.add('active');
         }
       } else {
-        document.querySelector(".header .freeship").style.display = "none";
+        document.querySelector(".header .freeship").classList.remove('active');
       }
     };
 

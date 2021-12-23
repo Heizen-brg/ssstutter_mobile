@@ -478,6 +478,35 @@ export const __show_cart_quantity = (wrapper) => {
   if (purchase_items_list && purchase_items_list.length) wrapper.innerHTML = `( ${purchase_items_list.length} )`;
 };
 
+export const __countdown_timer = (params) => {
+  let end_date = new Date(params.end).getTime();
+  let countdown = setInterval(() => {
+    let distance = end_date - Date.now();
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+      hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+      minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    params.div.innerHTML = `
+    <div class="text-center"><span>${days}</span>Ngày</div>
+    <div class="text-center"><span>${hours}</span>Giờ</div>
+    <div class="text-center"><span>${minutes}</span>Phút</div>
+    <div class="text-center"><span>${seconds}</span>Giây</div>
+    `;
+
+    if (distance < 0) {
+      clearInterval(countdown);
+      params.div.innerHTML = `
+      <div class="text-center"><span>00</span>Ngày</div>
+      <div class="text-center"><span>00</span>Giờ</div>
+      <div class="text-center"><span>00</span>Phút</div>
+      <div class="text-center"><span>00</span>Giây</div>
+      `;
+    }
+  }, 1000);
+}
+
 export const __snow_drop = () => {
   "use strict";
 

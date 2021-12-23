@@ -207,6 +207,19 @@
     padding: 8px;
     background: #ececec;
     display: none;
+     > div {
+       > span {
+         margin: 0 5px;
+       }
+     }
+    &.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &::before {
+        content: 'Ưu đãi Giáng Sinh sẽ kết thúc trong';
+      }
+    }
   }
 }
 
