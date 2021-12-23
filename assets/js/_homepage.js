@@ -53,8 +53,9 @@ export const __templates_home = {
               return `
             <li class="glide__slide">
               <a target="_blank" href="${item.link}">
-                <div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""
-                }</div>
+                <div style="background-image:url(https://sss-dashboard.leanservices.work${item.img}.jpeg)">${
+                item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""
+              }</div>
               </a>
             </li>
             `;
@@ -103,9 +104,11 @@ export const __templates_home = {
           let banner_item = (data || [])
             .map((item) => {
               return `
-              <li class="glide__slide"><a target="_blank" href="${item.link
-                }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""
-                }</div></a></li>
+              <li class="glide__slide"><a target="_blank" href="${
+                item.link
+              }"><div style="background-image:url(https://sss-dashboard.leanservices.work${item.mobile_img}.jpeg)">${
+                item.cta ? `<button style="background-color:${item.color}">${item.cta}</button>` : ""
+              }</div></a></li>
               `;
             })
             .join("");
@@ -175,16 +178,19 @@ export const __templates_home = {
           <li class="glide__slide">
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
+                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                item.extensions.media.featured
               })"></span></a>
               </div>
               <div class="detail">
-                <h6 class="name">${item.name.toLowerCase()}</h6>
-                <div class="price">
-                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                  <p>${__currency_format(item.salePrice || item.price)}</p>
+                <div class="info">
+                  <h6 class="name">${item.name.toLowerCase()}</h6>
+                  <div class="price">
+                  ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                    <p>${__currency_format(item.salePrice || item.price)}</p>
+                  </div>
+                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                 </div>
-                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
               </div>
             </div>
           </li>
@@ -257,16 +263,19 @@ export const __templates_home = {
               next_item = `
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
-                })"></span></a>
+              <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                next_item.extensions.media.featured
+              })"></span></a>
             </div>
             <div class="detail">
-              <h6 class="name">${next_item.name.toLowerCase()}</h6>
-              <div class="price">
-              ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
-                <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+              <div class="info">
+                <h6 class="name">${next_item.name.toLowerCase()}</h6>
+                <div class="price">
+                ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
+                  <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
+                </div>
+                ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
               </div>
-              ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
             </div>
           </div>
           `;
@@ -276,16 +285,19 @@ export const __templates_home = {
       <li class="glide__slide">
         <div class="product">
           <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-              })"></span></a>
+            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+              item.extensions.media.featured
+            })"></span></a>
           </div>
           <div class="detail">
-            <h6 class="name">${item.name.toLowerCase()}</h6>
-            <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-              <p>${__currency_format(item.salePrice || item.price)}</p>
+            <div class="info">
+              <h6 class="name">${item.name.toLowerCase()}</h6>
+              <div class="price">
+                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+                <p>${__currency_format(item.salePrice || item.price)}</p>
+              </div>
+              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
             </div>
-            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
           </div>
         </div>
           ${next_item}
@@ -386,7 +398,7 @@ export const __templates_home = {
           method: "GET",
           url: `https://sss-dashboard.leanservices.work/w/section/detail?type=new_arrivals`,
         },
-        ({data}) => {
+        ({ data }) => {
           let products = data.products
             .map(
               (item) =>
@@ -394,7 +406,8 @@ export const __templates_home = {
             <li class="glide__slide" data-cate="${item.catId[0][0]}">
               <div class="product">
                 <div class="thumbnail">
-                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                  item.extensions.media.featured
                 })"></span></a>
                 </div>
                 <div class="detail">
@@ -438,23 +451,23 @@ export const __templates_home = {
           let toggle_gender = section.querySelectorAll("[data-cate]");
           toggle_gender.forEach((btn) => {
             btn.addEventListener("click", () => {
-              toggle_gender.forEach(i => i.classList.remove("active"));
-              btn.classList.toggle('active');
-              let slide_item = glide__track.querySelectorAll('.glide__slide');
-              slide_item.forEach(item => {
+              toggle_gender.forEach((i) => i.classList.remove("active"));
+              btn.classList.toggle("active");
+              let slide_item = glide__track.querySelectorAll(".glide__slide");
+              slide_item.forEach((item) => {
                 if (item.dataset.cate != btn.dataset.cate) {
-                  item.style.display  = "none"
+                  item.style.display = "none";
                 } else {
-                  item.style.display = "block"
+                  item.style.display = "block";
                 }
-              })
+              });
             });
           });
         }
       );
-    }
+    };
 
-    init_new_arrivals()
+    init_new_arrivals();
     return section;
   },
   mobile_new_arrivals() {
@@ -482,10 +495,11 @@ export const __templates_home = {
           method: "GET",
           url: `https://sss-dashboard.leanservices.work/w/section/detail?type=new_arrivals`,
         },
-        ({data}) => {
+        ({ data }) => {
           let item_per_view = 4;
           let stop_loop = Math.ceil(data.products.length / item_per_view);
-          let products = data.products.map((item, index) => {
+          let products = data.products
+            .map((item, index) => {
               let current_index = index * 2;
               if (index - 1 > stop_loop) return "";
               item = data.products[current_index];
@@ -495,8 +509,9 @@ export const __templates_home = {
                 next_item = `
             <div class="product">
               <div class="thumbnail">
-                <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${next_item.extensions.media.featured
-                  })"></span></a>
+                <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                  next_item.extensions.media.featured
+                })"></span></a>
               </div>
               <div class="detail">
                 <div class="info">
@@ -511,13 +526,14 @@ export const __templates_home = {
             </div>
             `;
               } else next_item = "";
-  
+
               return `
         <li class="glide__slide" data-cate="${item.catId[0][0]}">
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-                })"></span></a>
+              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                item.extensions.media.featured
+              })"></span></a>
             </div>
             <div class="detail">
               <div class="info">
@@ -537,51 +553,50 @@ export const __templates_home = {
             .join("");
           let glide__track = section.querySelector(".glide__slides");
           glide__track.innerHTML = products;
-              new Glide(`#mobile_new_arrivals`, {
-                type: "slider",
-                bound: true,
+          new Glide(`#mobile_new_arrivals`, {
+            type: "slider",
+            bound: true,
+            perView: 2,
+            autoplay: 5000,
+            gap: 10,
+            hoverpause: true,
+            peek: {
+              before: 0,
+              after: 100,
+            },
+            breakpoints: {
+              1024: {
+                perView: 3,
+              },
+              480: {
                 perView: 2,
-                autoplay: 5000,
-                gap: 10,
-                hoverpause: true,
                 peek: {
                   before: 0,
-                  after: 100,
+                  after: 0,
                 },
-                breakpoints: {
-                  1024: {
-                    perView: 3,
-                  },
-                  480: {
-                    perView: 2,
-                    peek: {
-                      before: 0,
-                      after: 0,
-                    },
-                  },
-                },
-              }).mount(); 
-              let toggle_gender = section.querySelectorAll("[data-cate]");
-              toggle_gender.forEach((btn) => {
-                btn.addEventListener("click", () => {
-                  toggle_gender.forEach(i => i.classList.remove("active"));
-                  btn.classList.toggle('active');
-                  let slide_item = glide__track.querySelectorAll('.glide__slide');
-                  slide_item.forEach(item => {
-                    if (item.dataset.cate != btn.dataset.cate) {
-                      item.style.display  = "none"
-                    } else {
-                      item.style.display = "block"
-                    }
-                  })
-                });
+              },
+            },
+          }).mount();
+          let toggle_gender = section.querySelectorAll("[data-cate]");
+          toggle_gender.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              toggle_gender.forEach((i) => i.classList.remove("active"));
+              btn.classList.toggle("active");
+              let slide_item = glide__track.querySelectorAll(".glide__slide");
+              slide_item.forEach((item) => {
+                if (item.dataset.cate != btn.dataset.cate) {
+                  item.style.display = "none";
+                } else {
+                  item.style.display = "block";
+                }
               });
+            });
+          });
         }
       );
-  
-    }
-    init_new_arrivals()
-  
+    };
+    init_new_arrivals();
+
     return section;
   },
   stylepick() {
@@ -608,7 +623,7 @@ export const __templates_home = {
         method: "GET",
         url: "https://sss-dashboard.leanservices.work/w/section/detail?type=style_pick",
       },
-      ({data}) => {
+      ({ data }) => {
         let product = data.products
           .map(
             (item) =>
@@ -616,8 +631,10 @@ export const __templates_home = {
                   <li class="glide__slide">
                     <div class="product">
                       <div class="thumbnail">
-                        <a href="/p/${item.slug
-              }"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
+                        <a href="/p/${
+                          item.slug
+                        }"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                item.extensions.media.featured
               })"></span></a>
                       </div>
                       <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -676,13 +693,16 @@ export const __templates_home = {
           method: "GET",
           url: `https://sss-dashboard.leanservices.work/w/section/detail?type=weekly_best`,
         },
-        ({data}) => {
-          let products = data.products.map((item) => ` 
+        ({ data }) => {
+          let products = data.products
+            .map(
+              (item) => ` 
             <li data-cate="${item.catId[0][0]}">
               <div class="product">
                 <div class="thumbnail">
-                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured
-                      })"></span></a>
+                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                item.extensions.media.featured
+              })"></span></a>
                 </div>
                 <div class="detail">
                   <div class="info">
@@ -696,30 +716,29 @@ export const __templates_home = {
                 </div>
               </div>
             </li>`
-                )
+            )
             .join("");
           let container = section.querySelector(".weekly__best--list");
           container.innerHTML = products;
           let toggle_gender = section.querySelectorAll("[data-cate]");
           toggle_gender.forEach((btn) => {
             btn.addEventListener("click", () => {
-              toggle_gender.forEach(i => i.classList.remove("active"));
-              btn.classList.toggle('active');
-              let slide_item = container.querySelectorAll('[data-cate]');
-              slide_item.forEach(item => {
+              toggle_gender.forEach((i) => i.classList.remove("active"));
+              btn.classList.toggle("active");
+              let slide_item = container.querySelectorAll("[data-cate]");
+              slide_item.forEach((item) => {
                 if (item.dataset.cate != btn.dataset.cate) {
-                  item.style.display  = "none"
+                  item.style.display = "none";
                 } else {
-                  item.style.display = "block"
+                  item.style.display = "block";
                 }
-              })
+              });
             });
           });
         }
       );
-
-    }
-    init_item_list()
+    };
+    init_item_list();
     return section;
   },
   blog() {
@@ -785,9 +804,11 @@ export const __templates_home = {
           .map((item) => {
             return `
         <li class="glide__slide">
-          <a href="https://ssstutter.com/starter/product/${item.slug
-              }"  target="_blank" style="background-image:url(https://ipo.leanservices.work/w/static/${item.media.featured ? item.media.featured : ""
-              })">
+          <a href="https://ssstutter.com/starter/product/${
+            item.slug
+          }"  target="_blank" style="background-image:url(https://ipo.leanservices.work/w/static/${
+              item.media.featured ? item.media.featured : ""
+            })">
             <span>${item.name}</span>
           </a>
         </li>
