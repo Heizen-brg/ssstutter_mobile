@@ -78,7 +78,6 @@ export const __init_product_list = (params = { ids: product_ids }) => {
             </div>
           </div>
           <div class="promotion">
-              <p>Giảm thêm tới 300K</p>
           </div>
         </div>
       </div>
