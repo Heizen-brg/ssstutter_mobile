@@ -131,7 +131,6 @@ export const __render = {
     let app = document.getElementById("root");
     app.className = page;
     app.innerHTML = "";
-    __snow_drop();
     let init_block = (params ={}) => {
       blocks.map((block) => {
         if (!block) return;

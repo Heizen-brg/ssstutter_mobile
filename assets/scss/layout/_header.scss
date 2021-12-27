@@ -133,7 +133,7 @@
         }
         &::after {
           content: '';
-          background-image: url(/assets/img/logo_noel.png);
+          background-image: url(/assets/img/logo.png);
           @include ratio(17,6);
           display: none;
           width: 120px ;
@@ -154,7 +154,6 @@
           white-space: nowrap;
           span {
             display: inline-block;
-            transform: translate(0, -50%);
             font-size: 12px;
             /*
             p {
@@ -559,6 +558,7 @@
           div {
             padding: 0;
             margin: 0;
+            @include flex(row,center,center);
             &::after {
               display: none;
             }
@@ -570,10 +570,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        img {
+        img,svg {
           display: none;
-          width: 25px;
-          height: 25px;
         }
         a {
           &::after {
@@ -595,6 +593,7 @@
             position: relative;
             padding: 0;
             margin-right: 15px;
+            @include flex(row,center,center);
             &:last-child {
               margin-right: 0;
             }

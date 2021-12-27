@@ -315,25 +315,25 @@ export const __get_voucher = (params, callback) => {
       price: parseInt(item.salePrice) || parseInt(item.price),
     };
   });
-  let cart_quantity = items_purchased.reduce((total, current) => {
-    if (current.catId && current.catId.includes("sGT8Q5")) return total;
-    if (current.catId && current.catId.includes("kYx45S")) return total;
-    if (current.name.toLowerCase().includes("great life")) return total;
-    return total + parseInt(current.quantity);
-  }, 0);
-  cart_quantity = parseInt(cart_quantity);
-  if (!gift_purchased && cart_quantity === 3) {
-    __templates_modal.overlay({
-      content: __templates_modal.lucky_wheel_modal(),
-      close: "hide",
-    });
-  }
-  if ((!gift_purchased || !gift_purchased_2) && cart_quantity > 3) {
-    __templates_modal.overlay({
-      content: __templates_modal.lucky_wheel_modal(),
-      close: "hide",
-    });
-  }
+  // let cart_quantity = items_purchased.reduce((total, current) => {
+  //   if (current.catId && current.catId.includes("sGT8Q5")) return total;
+  //   if (current.catId && current.catId.includes("kYx45S")) return total;
+  //   if (current.name.toLowerCase().includes("great life")) return total;
+  //   return total + parseInt(current.quantity);
+  // }, 0);
+  // cart_quantity = parseInt(cart_quantity);
+  // if (!gift_purchased && cart_quantity === 3) {
+  //   __templates_modal.overlay({
+  //     content: __templates_modal.lucky_wheel_modal(),
+  //     close: "hide",
+  //   });
+  // }
+  // if ((!gift_purchased || !gift_purchased_2) && cart_quantity > 3) {
+  //   __templates_modal.overlay({
+  //     content: __templates_modal.lucky_wheel_modal(),
+  //     close: "hide",
+  //   });
+  // }
   __requests(
     {
       method: "POST",
@@ -350,13 +350,13 @@ export const __get_voucher = (params, callback) => {
         : document.querySelector('[data-amount="discount"]');
       discount_amount.dataset.price = data.amount;
       discount_amount.innerHTML = `-${__currency_format(data.amount)}`;
-      __calc_final_amount(params.discountDiv, gift_purchased);
+      __calc_final_amount(params.discountDiv);
       let checkout_cart = document.querySelector(".checkout__cart");
       if (checkout_cart) {
         let checkout_discount = checkout_cart.querySelector('[data-amount="discount"]');
         checkout_discount.dataset.price = data.amount;
         checkout_discount.innerHTML = `-${__currency_format(data.amount)}`;
-        __calc_final_amount(checkout_cart, gift_purchased);
+        __calc_final_amount(checkout_cart);
       }
       if (callback) callback();
     },
@@ -364,7 +364,7 @@ export const __get_voucher = (params, callback) => {
   );
 };
 
-export const __calc_final_amount = (div, gift) => {
+export const __calc_final_amount = (div) => {
   let purchase_amount = document.querySelector('[data-amount="purchase"]');
   let discount_amount = document.querySelector('[data-amount="discount"]');
   let total_amount = document.querySelector('[data-amount="total"]');
@@ -383,59 +383,21 @@ export const __calc_final_amount = (div, gift) => {
   let final_amount = purchase + shipping - discount;
   total_amount.dataset.price = final_amount;
   //add gift box for black friday
-  let gift1 = localStorage.getItem("giftItem");
-  let gift2 = localStorage.getItem("giftItem2");
-  let cart_selected = JSON.parse(localStorage.getItem("cartItem")) ? JSON.parse(localStorage.getItem("cartItem")) : [];
-  let cart_quantity = cart_selected.reduce((total, current) => {
-    if (current.catId && current.catId.includes("sGT8Q5")) return total;
-    if (current.catId && current.catId.includes("kYx45S")) return total;
-    if (current.name.toLowerCase().includes("great life")) return total;
-    return total + parseInt(current.quantity);
-  }, 0);
-  cart_quantity = parseInt(cart_quantity);
-  let giftDiv1 = cart_items.querySelector(".blackfriday__gift");
-  let giftDiv2 = cart_items.querySelector(".blackfriday__gift__2");
-  if (giftDiv1) giftDiv1.remove();
-  if (giftDiv2) giftDiv2.remove();
-  if (cart_quantity >= 3 && gift1) {
-    let li_gift = document.createElement("li");
-    li_gift.className = "blackfriday__gift";
-    li_gift.innerHTML = `
-    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
-    </a>
-    <div>
-      <h6>QUÀ QUAY THƯỞNG</h6>
-        <small>${gift1}</small>
-      <div class="price">
-        <p>0</p>
-      </div>
-      <span class="product__variation">
-        <p>SSStutter sẽ gọi điện xác nhận đơn hàng và phần quà của bạn trong thời gian sớm nhất.</p>
-      </span>
-    </div>
-    `;
-    cart_items.appendChild(li_gift);
-  }
-  if (cart_quantity >= 4 && gift2) {
-    let li_gift = document.createElement("li");
-    li_gift.className = "blackfriday__gift__2";
-    li_gift.innerHTML = `
-    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
-    </a>
-    <div>
-      <h6>QUÀ QUAY THƯỞNG</h6>
-        <small>${gift2}</small>
-      <div class="price">
-        <p>0</p>
-      </div>
-      <span class="product__variation">
-        <p>SSStutter sẽ gọi điện xác nhận đơn hàng và phần quà của bạn trong thời gian sớm nhất.</p>
-      </span>
-    </div>
-    `;
-    cart_items.appendChild(li_gift);
-  }
-  // if (gift && !cart_items.querySelector('.blackfriday__gift')) {
+  // let gift1 = localStorage.getItem("giftItem");
+  // let gift2 = localStorage.getItem("giftItem2");
+  // let cart_selected = JSON.parse(localStorage.getItem("cartItem")) ? JSON.parse(localStorage.getItem("cartItem")) : [];
+  // let cart_quantity = cart_selected.reduce((total, current) => {
+  //   if (current.catId && current.catId.includes("sGT8Q5")) return total;
+  //   if (current.catId && current.catId.includes("kYx45S")) return total;
+  //   if (current.name.toLowerCase().includes("great life")) return total;
+  //   return total + parseInt(current.quantity);
+  // }, 0);
+  // cart_quantity = parseInt(cart_quantity);
+  // let giftDiv1 = cart_items.querySelector(".blackfriday__gift");
+  // let giftDiv2 = cart_items.querySelector(".blackfriday__gift__2");
+  // if (giftDiv1) giftDiv1.remove();
+  // if (giftDiv2) giftDiv2.remove();
+  // if (cart_quantity >= 3 && gift1) {
   //   let li_gift = document.createElement("li");
   //   li_gift.className = "blackfriday__gift";
   //   li_gift.innerHTML = `
@@ -443,7 +405,7 @@ export const __calc_final_amount = (div, gift) => {
   //   </a>
   //   <div>
   //     <h6>QUÀ QUAY THƯỞNG</h6>
-  //       <small>${gift}</small>
+  //       <small>${gift1}</small>
   //     <div class="price">
   //       <p>0</p>
   //     </div>
@@ -454,6 +416,7 @@ export const __calc_final_amount = (div, gift) => {
   //   `;
   //   cart_items.appendChild(li_gift);
   // }
+
 
   total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };

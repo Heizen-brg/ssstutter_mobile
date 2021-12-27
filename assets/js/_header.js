@@ -48,7 +48,7 @@ export const __templates_header = {
       <div class="nav">
         <div class="nav__logo">
           <a href="/">
-            <img src="/assets/img/logo_noel.png"/>
+            ${__icons.ssstutter}
           </a>
         </div>
         <div class="nav__left"></div>
@@ -57,7 +57,7 @@ export const __templates_header = {
       <div class="side__nav" data-menu="side_nav">
         <div class="side__nav--title">
           <a href="/">
-            <img src="/assets/img/logo_noel.png"/>
+            <img src="/assets/img/logo.png"/>
           </a>
           <div class="close">${__icons.close}</div>
         </div>
@@ -66,8 +66,6 @@ export const __templates_header = {
           <h1>SSStutter - LEANOW JOINT STOCK COMPANY®</h1>
         </div>
       </div>
-      <div class="freeship fade-in clock"></div>
-      <!-- <a href="/campaign/black-friday" class="freeship fade-in">Black Friday Sale upto 70% - Available Now!</a> -->
     `;
     ["popup", "left", "right", "mobile"].forEach((pos) => {
       let block = header.querySelector(`.nav__${pos}`);
@@ -80,9 +78,7 @@ export const __templates_header = {
         block.innerHTML = "";
       } else block.innerHTML = params[pos];
     });
-    let clock_div = header.querySelector(".clock");
-    let end_time = new Date('Dec 26 2021 23:59:59').getTime()
-    __countdown_timer({div :clock_div, end : end_time })
+   
     header.querySelector(".close").addEventListener("click", () => {
       this.hide_menu();
     });
@@ -97,16 +93,6 @@ export const __templates_header = {
         } else {
           nav_bar.classList.add("deactive");
         }
-      }
-    };
-
-    window.onscroll = function () {
-      if (window.pageYOffset > params.page_y_offset) {
-        if (document.querySelector(".header .freeship")) {
-          document.querySelector(".header .freeship").classList.add('active');
-        }
-      } else {
-        document.querySelector(".header .freeship").classList.remove('active');
       }
     };
 
@@ -208,35 +194,19 @@ export const __templates_header = {
         <div class="clock"></div>
       </a>
     `;
-    // let endDate = new Date("2021-10-19T23:59").getTime();
-    // setInterval(() => {
-    //   let startDate = Date.now();
-    //   let days = Math.floor((endDate - startDate) / (1000 * 3600 * 24)),
-    //     hours = Math.floor(
-    //       ((endDate - startDate) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    //     ),
-    //     minutes = Math.floor(
-    //       ((endDate - startDate) % (1000 * 60 * 60)) / (1000 * 60)
-    //     ),
-    //     seconds = Math.floor(((endDate - startDate) % (1000 * 60)) / 1000);
-
-    //   div.querySelector(".clock").innerHTML = `
-    //   <div class="text-center"><span>${days}</span>Ngày</div>
-    //   <div class="text-center"><span>${hours}</span>Giờ</div>
-    //   <div class="text-center"><span>${minutes}</span>Phút</div>
-    //   <div class="text-center"><span>${seconds}</span>Giây</div>
-    //   `;
-
-    //   if (endDate - startDate < 0) {
-    //     clearInterval(countdown);
-    //     div.querySelector(".product-clock").innerHTML = `
-    //     <div class="text-center"><span>00</span>Ngày</div>
-    //     <div class="text-center"><span>00</span>Giờ</div>
-    //     <div class="text-center"><span>00</span>Phút</div>
-    //     <div class="text-center"><span>00</span>Giây</div>
-    //     `;
+    // window.onscroll = function () {
+    //   if (window.pageYOffset > params.page_y_offset) {
+    //     if (document.querySelector(".header .freeship")) {
+    //       document.querySelector(".header .freeship").classList.add('active');
+    //     }
+    //   } else {
+    //     document.querySelector(".header .freeship").classList.remove('active');
     //   }
-    // }, 1000);
+    // };
+
+    // let clock_div = div.querySelector(".clock");
+    // let end_time = new Date('Dec 26 2021 23:59:59').getTime()
+    // __countdown_timer({div :clock_div, end : end_time })
     return div;
   },
 
