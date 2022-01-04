@@ -146,13 +146,15 @@
           }
         }
         .promotion {
-          @include border(#1A401B,4px);
-          background-color: #1A401B;
-          padding: 5px;
-          color: $white;
-          font-size: x-small;
-          p {
-            margin: 5px;
+          >div {
+            @include border(#1A401B,4px);
+            background-color: #1A401B;
+            padding: 5px;
+            color: $white;
+            font-size: x-small;
+            p {
+              margin: 5px;
+            }
           }
         }
       }

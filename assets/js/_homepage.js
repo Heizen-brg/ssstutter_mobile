@@ -419,6 +419,9 @@ export const __templates_home = {
                     </div>
                     ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
                   </div>
+                  <div class="promotion">
+                    
+                  </div>
                 </div>
               </div>
             </li>
@@ -521,7 +524,10 @@ export const __templates_home = {
                       <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
                     </div>
                     ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
-                  </div>
+                </div>
+                <div class="promotion">
+                  
+                </div>
               </div>
             </div>
             `;
@@ -634,7 +640,7 @@ export const __templates_home = {
                         <a href="/p/${
                           item.slug
                         }"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-                item.extensions.media.featured
+                item.extensions.media[Object.keys( item.extensions.media )[1]].o
               })"></span></a>
                       </div>
                       <h6 class="name">${item.name.toLowerCase()}</h6>
@@ -712,6 +718,9 @@ export const __templates_home = {
                       <p>${__currency_format(item.salePrice || item.price)}</p>
                     </div>
                     ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                  </div>
+                  <div class="promotion">
+                    
                   </div>
                 </div>
               </div>

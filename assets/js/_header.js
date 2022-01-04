@@ -46,13 +46,7 @@ export const __templates_header = {
     header.innerHTML = `
       <div class="nav__popup"></div>
       <div class="nav">
-        <div class="nav__logo">
-          <a href="/">
-            ${__icons.ssstutter}
-          </a>
-        </div>
         <div class="nav__left"></div>
-        <div class="nav__right"></div>
       </div>
       <div class="side__nav" data-menu="side_nav">
         <div class="side__nav--title">
@@ -121,6 +115,10 @@ export const __templates_header = {
       );
     } else {
       div.innerHTML = `
+      <div data-active="" data-action="home" class="${params.home}"><a href="/">${__icons.home}</a></div>
+      <div data-active="" data-action="category" class="${params.category}"><a href="/c/for-him">${__icons.shopping}</a></div>
+      <div data-active="" data-action="search">${__icons.search}</div>
+      <div data-active="" data-action="cart">${__icons.cart}<span data-toggle="cart_toggle"></span></div>
       <div data-active="" data-action="side_nav">${__icons.nav}</div>
     `;
     }
@@ -155,6 +153,8 @@ export const __templates_header = {
         });
       }
     });
+    let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
+    __show_cart_quantity(cart_quantity);
     return div;
   },
 
@@ -163,14 +163,11 @@ export const __templates_header = {
     div.className = "nav__right--items";
     div.innerHTML = `
       <div data-active="" data-action="search">${__icons.search}</div>
-      <div data-active="" data-action="cart">
-        ${__icons.cart}
-        <span data-toggle="cart_toggle"></span>
-      </div>
+      <div data-active="" data-action="search">${__icons.search}</div>
+
     `;
     let triggers = div.querySelectorAll("[data-action]");
-    let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
-    __show_cart_quantity(cart_quantity);
+
     triggers.forEach((item) => {
       item.addEventListener("click", (e) => {
         if (item.classList.contains("active")) {

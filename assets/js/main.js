@@ -160,7 +160,7 @@ export const __render = {
 
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left(),
+        left: __templates_header.left({home:'active'}),
         right: __templates_header.right(),
         mobile: __templates_header.mobile(),
         page_y_offset: 1550,
@@ -187,7 +187,7 @@ export const __render = {
   categories_page(params) {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left(),
+        left: __templates_header.left({category:'active'}),
         right: __templates_header.right(),
         mobile: __templates_header.mobile(),
         page_y_offset: 400,
@@ -228,7 +228,7 @@ export const __render = {
     ];
     this.build("product__page", blocks);
     __templates.api_loading("hide");
-    if (fbq) fbq("track", "ViewContent");
+    // if (fbq) fbq("track", "ViewContent");
   },
 
   checkout_page() {

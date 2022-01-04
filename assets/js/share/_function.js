@@ -437,7 +437,7 @@ export const __to_slug = (str, mark_space = "-") => {
 };
 export const __show_cart_quantity = (wrapper) => {
   let purchase_items_list = JSON.parse(localStorage.getItem("cartItem"));
-  if (purchase_items_list && purchase_items_list.length) wrapper.innerHTML = `( ${purchase_items_list.length} )`;
+  if (purchase_items_list && purchase_items_list.length) wrapper.innerHTML = `${purchase_items_list.length}`;
 };
 
 export const __countdown_timer = (params) => {

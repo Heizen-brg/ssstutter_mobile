@@ -231,12 +231,8 @@
     display: flex;
     flex-direction: column;
     // grid-template-columns: auto;
-    padding-top: 70px;
     position: relative;
     grid-gap: 0;
-    .categories__info {
-      display: none;
-    }
     .categories__list {
       display: none;
       position: absolute;

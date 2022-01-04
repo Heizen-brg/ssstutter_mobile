@@ -279,7 +279,7 @@ export const __templates_product = {
             </div>
           </div>
           <div class="promotion">
-       
+           
           </div>
         </div>
         <div class="color">

@@ -121,10 +121,12 @@
     padding: 0 6px;
     @include flex(row,space-between,start);
     .promotion {
-      background-color: $red;
-      color : $white;
-      padding: 5px;
-      font-size: x-small;
+      > div {
+        background-color: $red;
+        color : $white;
+        padding: 5px;
+        font-size: x-small;
+      }
     }
     @media (min-width: 768px) {
       padding: 0;
@@ -157,7 +159,7 @@
     .discount {
       color: $silver;
       text-decoration: line-through;
-      margin-left: 10px;
+      margin-right: 10px;
     }
   }
   .tag {

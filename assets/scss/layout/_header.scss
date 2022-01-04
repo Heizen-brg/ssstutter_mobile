@@ -1,7 +1,8 @@
 .header {
   @include position(fixed, 0, null, null, 0);
+  @include shadow_box;
   width: 100%;
-  height: 58px;
+  height: 60px;
   z-index: 100;
   border-bottom: 1px solid #ececec;
   .nav {
@@ -92,17 +93,6 @@
           position: relative;
           a {
             @include font(13px, center, 500);
-            &.special {
-              color: $red;
-            }
-          }
-          &::after {
-            content: "";
-            @include position(absolute, null, null, 0, 0);
-            @include transition;
-            width: 0%;
-            height: 3px;
-            background-color: $black;
           }
           &:hover {
             &::after {
@@ -110,34 +100,8 @@
             }
           }
           &.active {
-            &::after {
-              width: 100%;
-            }
+            @include shadow_box;
           }
-        }
-      }
-    }
-    &__logo {
-      @include grid();
-      place-content: center;
-      width: 100%;
-      // padding: 10px;
-      @media (min-width: 1024px) {
-        place-content: normal;
-      }
-      a {
-        display: grid;
-        img {
-          width: 100%;
-          height: auto;
-        }
-        &::after {
-          content: '';
-          background-image: url(/assets/img/logo.png);
-          @include ratio(17,6);
-          display: none;
-          width: 120px ;
-          background-size: contain;
         }
       }
     }
@@ -184,7 +148,7 @@
     bottom: -9999px;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 60px);
     background-color: rgba($white, 0.95);
     &--title {
       @include flex(row, space-between, center);
@@ -276,7 +240,6 @@
 }
 
 .search__container {
-  @include shadow(1px, 5px, 4px, $light);
   display: none;
   width: 100%;
   padding: 20px 5%;
@@ -310,7 +273,7 @@
     ul {
       @include grid(repeat(auto-fill, minmax(23%, 1fr)), null, 20px);
       overflow: auto;
-      max-height: 62vh;
+      max-height: 75vh;
       li {
         width: 100%;
       }
@@ -338,7 +301,6 @@
     display: grid;
   }
   .mini__cart {
-    @include shadow(1px, 1px, 5px, 4px, $light);
     width: 100%;
     background-color: $white;
     &--header {
@@ -514,16 +476,18 @@
 }
 @media (max-width: 575px) {
   .header {
-    @include position(fixed, 0, auto, 0, auto);
+    top: auto;
+    bottom: 0;
     .nav {
-      padding: 0 14px;
+      padding: 0 14px; 
+      @include grid(1fr,null,0);
+
       svg {
         width: 24px;
       }
       // box-shadow: 0 2px 5px 0 $light;
       // grid-template-columns: 0.5fr 1fr 0.5fr;
       // grid-gap: 0;
-      display: flex;
       &.deactive {
         background-color: $white;
         box-shadow: none;
@@ -554,77 +518,45 @@
       &__left {
         place-content: initial;
         &--items {
-          justify-content: space-around;
+          @include grid(repeat(5,1fr),null,0);
+          place-items: center;
           div {
-            padding: 0;
-            margin: 0;
             @include flex(row,center,center);
-            &::after {
-              display: none;
-            }
-          }
-        }
-      }
-      &__logo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        img,svg {
-          display: none;
-        }
-        a {
-          &::after {
-            display: block;
-          }
-        }
-      }
-      &__right {
-        place-content: initial;
-        margin-left: auto;
-        &--items {
-          justify-content: space-around;
-          /*
-          [data-action="search"] {
-            display: none;
-          }
-          */
-          div {
+            @include border(transparent,4px);
+            @include transition;
             position: relative;
-            padding: 0;
-            margin-right: 15px;
-            @include flex(row,center,center);
-            &:last-child {
-              margin-right: 0;
+            padding: 10px;
+            margin: 0;
+            width: 50px;
+            height: 50px;
+            > a {
+              @include grid(1fr, null, null);
+              place-content: center;
             }
-            /*
-            &::after {
-              content: "";
-              @include position(absolute, null, null, 0, 0);
-              @include transition;
-              width: 0%;
-              height: 3px;
-              background-color: $black;
+            > span {
+              position: absolute;
+              left: 40px;
+              bottom: 10px;
+              font-size: x-small;
+              width: fit-content;
             }
-            */
             &.active {
-              background-color: transparent;
-              &::after {
-                width: 100%;
-              }
-              a {
-                color: $black;
+              background-color: $black;
+              color: $white;
+              > a {
+                color: $white;
               }
             }
           }
         }
       }
+
     }
     .side__nav {
       @include transition;
       left: -99999;
       &.active {
-        @include fade-up;
+        @include fade-right;
         top: 0;
       }
       &--title {
@@ -648,7 +580,7 @@
       }
       .nav__mobile {
         ul {
-          max-height: 65vh;
+          max-height: 75vh;
           overflow: auto;
           li {
             border-bottom: 1px solid #ececec;
@@ -723,7 +655,7 @@
   }
   .search__container {
     padding: 0;
-    min-height: 100vh;
+    min-height: calc(100vh - 60px);
     overflow: auto;
     &.active {
       @include fade-up;
@@ -745,6 +677,7 @@
     }
   }
   .cart__container {
+    height: calc(100vh - 60px);
     &.active {
       @include fade-up;
     }

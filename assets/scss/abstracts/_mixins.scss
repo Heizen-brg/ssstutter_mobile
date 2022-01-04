@@ -30,7 +30,9 @@
 @mixin shadow($w, $h, $i, $blur, $color: null) {
   box-shadow: $w $h $i $blur $color;
 }
-
+@mixin shadow_box() {
+  box-shadow: 1px 1px 4px #dbdbdb;
+}
 @mixin font($size: null, $align: null, $weight: null) {
   font-size: $size;
   text-align: $align;
@@ -46,7 +48,7 @@
 @mixin ratio($w, $h) {
   display: block;
   width: 100%;
-  padding-top: ($h/$w) * 100%;
+  padding-top: calc($h/$w) * 100%;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

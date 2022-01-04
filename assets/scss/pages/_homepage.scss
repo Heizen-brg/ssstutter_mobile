@@ -1,4 +1,5 @@
 .home {
+
   .product {
     .price {
       margin-bottom: 10px;
@@ -267,132 +268,132 @@
   //
   // Thanh's code
   //
-  .subcription {
-    position: relative;
-    margin-top: -2px;
-    @media (min-width: 768px) {
-      padding: 80px 0 40px;
-    }
-    .container {
-      display: grid;
-      max-width: 1140px;
-      margin: auto;
-      @media (min-width: 768px) {
-        padding: 0 25px;
-        grid-gap: 28px;
-        grid-template: auto / 280px 1fr;
-      }
-      @media (min-width: 1024px) {
-        grid-template: auto / 460px 1fr;
-      }
-      .image {
-        order: 1;
-        padding-top: (5 / 4 * 100%);
-        background: #cecece no-repeat bottom center;
-        background-size: cover;
-        position: relative;
-        @media (min-width: 768px) {
-          order: 0;
-          padding-top: (5 / 4 * 100%);
-        }
-        a {
-          position: absolute;
-          display: block;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-        }
-      }
-      .content {
-        order: 0;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        // text-align: center;
-        // padding: 40px 20px;
-        // position: absolute;
-        // top: 50%;
-        // left: 50%;
-        // height: calc(100% - 50px);
-        // transform: translate(-50%, -50%);
-        // -webkit-backdrop-filter: blur(10px);
-        // backdrop-filter: blur(10px);
-        // background: rgba(155, 155, 155, .2);
-        // width: calc(100% - 40px);
-        // color: #fff;
-        @media (min-width: 768px) {
-          order: 1;
-          height: auto;
-          width: auto;
-          padding: 40px;
-          position: static;
-          transform: none;
-          background: transparent;
-          // -webkit-backdrop-filter: blur(0);
-          // backdrop-filter: blur(0);
-          color: #191919;
-        }
-        h2,
-        p {
-          text-shadow: 0 0 1px rgba(0, 0, 0, 1);
-          @media (min-width: 1024px) {
-            text-shadow: none;
-          }
-        }
-        p {
-          margin-bottom: 8px;
-        }
-        h2 {
-          font-family: serif;
-          margin: 28px 0 18px;
-          font-size: 16px;
-          padding: 0 10px;
-          text-transform: capitalize;
-          @media (min-width: 768px) {
-            padding: 0;
-            font-family: serif;
-            font-size: 42px;
-            margin: 0 0 28px;
-            line-height: 1.2;
-          }
-          br {
-            display: none;
-            @media (min-width: 768px) {
-              display: inherit;
-            }
-          }
-        }
-        .clock {
-          min-height: 24px;
-          margin-bottom: 42px;
-        }
-        .btn-row {
-          margin-top: auto;
-          @media (min-width: 768px) {
-            margin-top: 0;
-          }
-        }
-        a {
-          display: none;
-          padding: 14px 22px;
-          border: 1px solid #fff;
-          color: #fff;
-          font-size: 12px;
-          text-shadow: 0 0 1px rgba(0, 0, 0, 1);
-          background: rgba(0, 0, 0, 0.15);
-          @media (min-width: 768px) {
-            font-size: 14px;
-            display: inline-block;
-            background: transparent;
-            border-color: #191919;
-            color: #191919;
-            text-shadow: none;
-          }
-        }
-      }
-    }
-  }
+  // .subcription {
+  //   position: relative;
+  //   margin-top: -2px;
+  //   @media (min-width: 768px) {
+  //     padding: 80px 0 40px;
+  //   }
+  //   .container {
+  //     display: grid;
+  //     max-width: 1140px;
+  //     margin: auto;
+  //     @media (min-width: 768px) {
+  //       padding: 0 25px;
+  //       grid-gap: 28px;
+  //       grid-template: auto / 280px 1fr;
+  //     }
+  //     @media (min-width: 1024px) {
+  //       grid-template: auto / 460px 1fr;
+  //     }
+  //     .image {
+  //       order: 1;
+  //       padding-top: (5 / 4 * 100%);
+  //       background: #cecece no-repeat bottom center;
+  //       background-size: cover;
+  //       position: relative;
+  //       @media (min-width: 768px) {
+  //         order: 0;
+  //         padding-top: (5 / 4 * 100%);
+  //       }
+  //       a {
+  //         position: absolute;
+  //         display: block;
+  //         top: 0;
+  //         right: 0;
+  //         bottom: 0;
+  //         left: 0;
+  //       }
+  //     }
+  //     .content {
+  //       order: 0;
+  //       display: flex;
+  //       justify-content: center;
+  //       flex-direction: column;
+  //       // text-align: center;
+  //       // padding: 40px 20px;
+  //       // position: absolute;
+  //       // top: 50%;
+  //       // left: 50%;
+  //       // height: calc(100% - 50px);
+  //       // transform: translate(-50%, -50%);
+  //       // -webkit-backdrop-filter: blur(10px);
+  //       // backdrop-filter: blur(10px);
+  //       // background: rgba(155, 155, 155, .2);
+  //       // width: calc(100% - 40px);
+  //       // color: #fff;
+  //       @media (min-width: 768px) {
+  //         order: 1;
+  //         height: auto;
+  //         width: auto;
+  //         padding: 40px;
+  //         position: static;
+  //         transform: none;
+  //         background: transparent;
+  //         // -webkit-backdrop-filter: blur(0);
+  //         // backdrop-filter: blur(0);
+  //         color: #191919;
+  //       }
+  //       h2,
+  //       p {
+  //         text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+  //         @media (min-width: 1024px) {
+  //           text-shadow: none;
+  //         }
+  //       }
+  //       p {
+  //         margin-bottom: 8px;
+  //       }
+  //       h2 {
+  //         font-family: serif;
+  //         margin: 28px 0 18px;
+  //         font-size: 16px;
+  //         padding: 0 10px;
+  //         text-transform: capitalize;
+  //         @media (min-width: 768px) {
+  //           padding: 0;
+  //           font-family: serif;
+  //           font-size: 42px;
+  //           margin: 0 0 28px;
+  //           line-height: 1.2;
+  //         }
+  //         br {
+  //           display: none;
+  //           @media (min-width: 768px) {
+  //             display: inherit;
+  //           }
+  //         }
+  //       }
+  //       .clock {
+  //         min-height: 24px;
+  //         margin-bottom: 42px;
+  //       }
+  //       .btn-row {
+  //         margin-top: auto;
+  //         @media (min-width: 768px) {
+  //           margin-top: 0;
+  //         }
+  //       }
+  //       a {
+  //         display: none;
+  //         padding: 14px 22px;
+  //         border: 1px solid #fff;
+  //         color: #fff;
+  //         font-size: 12px;
+  //         text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+  //         background: rgba(0, 0, 0, 0.15);
+  //         @media (min-width: 768px) {
+  //           font-size: 14px;
+  //           display: inline-block;
+  //           background: transparent;
+  //           border-color: #191919;
+  //           color: #191919;
+  //           text-shadow: none;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   .editorial-slide-pc,
   .editorial-slide-sp {
