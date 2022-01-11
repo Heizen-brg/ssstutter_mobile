@@ -242,7 +242,6 @@ export const __render = {
       __templates_header.search({
         option: __templates.related_product(),
       }),
-      __templates_header.cart(),
       __templates_checkout.checkout_form(),
       __templates_checkout.checkout__method(),
       __templates_checkout.checkout__cart(),

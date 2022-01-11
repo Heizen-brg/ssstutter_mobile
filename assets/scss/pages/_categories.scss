@@ -1,20 +1,6 @@
 .categories {
   @include grid(repeat(6, 1fr), null, 20px 10px);
-  .categories__info {
-    grid-area: 1 / 1 / 2 / 7;
-    padding: 2.5% 5% 0 5%;
-    h1 {
-      @include font(x-large, start, bold);
-    }
-    p {
-      margin-top: 15px;
-      color: #adadad;
-      margin-bottom: 40px;
-      @media (min-width: 1024px) {
-        max-width: 50%;
-      }
-    }
-  }
+ 
 
   .categories__list {
     grid-area: 2 / 1 / 3 / 7;
@@ -226,18 +212,34 @@
   }
 }
 
-@media (max-width: 769px) {
+@media (min-width: 100px) {
   .categories {
     display: flex;
     flex-direction: column;
     // grid-template-columns: auto;
     position: relative;
     grid-gap: 0;
+    .categories__info {
+      grid-area: 1 / 1 / 2 / 7;
+      padding: 2.5% 5% 0 5%;
+      h1 {
+        @include font(x-large, start, bold);
+        font-family: NewYork ;
+      }
+      p {
+        margin-top: 15px;
+        color: #adadad;
+        margin-bottom: 40px;
+        @media (min-width: 1024px) {
+          max-width: 50%;
+        }
+      }
+    }
     .categories__list {
       display: none;
       position: absolute;
       top: 100px;
-      left: 10px;
+      left: 5%;
       z-index: 1;
       background: #fff;
       box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
@@ -252,7 +254,18 @@
         // @include grid(repeat(auto-fit, minmax(20%, 1fr)), null, 20px);
         // @include hidden_scroll;
         max-width: 100vw;
+        padding-bottom: 10px;
         overflow: auto;
+        li {
+          white-space: nowrap;
+          margin-bottom: 6px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          p {
+            padding: 0;
+          }
+        }
       }
       &.show {
         display: block;
@@ -267,10 +280,10 @@
       .filter__toggle {
         @include flex(row, start, center);
         // display: inline-flex;
+        padding: 10px 3%;
         cursor: pointer;
         .mobile-cate-trigger {
           margin-right: auto;
-          font-family: serif;
           font-size: 16px;
           // max-width: 50%;
           display: block;
@@ -284,6 +297,10 @@
             margin-left: 6px;
             transform: translate(0, 4px);
           }
+        }
+        span {
+          padding:10px;
+          @include shadow_box;
         }
         span[data-toggle="filter"] {
           display: flex;
@@ -300,20 +317,23 @@
       }
       .filter__list {
         position: fixed;
-        width: 50%;
-        height: 100%;
+        width: 100%;
+        height: calc(100vh - 60px);
         top: 0;
         left: -9999px;
-        background: $white;
+        background-color: rgba($color: $white, $alpha: 0.9);
         z-index: 10;
+        @include flex(column,space-evenly,center);
+        @include shadow_box;
         @include transition;
         &.active {
           left: 0%;
         }
         ul {
-          padding: 100px 5%;
+          padding: 5%;
         }
         .filter__action {
+          width: 100%;
           @include flex(row, space-around, center);
           button {
             @include border($black, 4px);
@@ -329,48 +349,7 @@
       // grid-area: 2 / 1 / 5 / 7;
       grid-area: auto;
       order: 1;
-      padding: 10px 0;
-    }
-    .footer {
-      order: 2;
-      margin-top: auto;
-    }
-  }
-}
-
-@media (max-width: 575px) {
-  .categories {
-    // padding-top: 0px;
-    .categories__list {
-      // grid-area: 1 / 1 / 2 / 7;
-      ul {
-        // grid-template-columns: repeat(20, 120px);
-        // display: flex;
-        padding-bottom: 10px;
-        max-width: 371px;
-        li {
-          white-space: nowrap;
-          margin-bottom: 6px;
-          &:last-child {
-            margin-bottom: 0;
-          }
-          p {
-            padding: 0;
-          }
-        }
-      }
-    }
-    .categories__filter {
-      // grid-area: 2 / 1 / 3 / 7;
-      .filter__list {
-        width: 100%;
-        ul {
-          padding: 5%;
-        }
-      }
-    }
-
-    .categories__products {
+      padding:2% 5%;
       ul {
         li {
           &:first-child {
@@ -386,6 +365,19 @@
             }
           }
         }
+      }
+    }
+    .footer {
+      order: 2;
+      margin-top: auto;
+    }
+  }
+}
+@media (min-width: 768px) {
+  .categories {
+    .categories__filter {
+      .filter__list {
+        width: 50%;
       }
     }
   }

@@ -21,6 +21,14 @@ window.data_filter = {
       tax: "size",
       data: [],
     },
+    {
+      tax: "price",
+      data : []
+    },
+    {
+      tax: "sortBy=price&sort",
+      data : []
+    },
   ],
   price: null,
 };
@@ -98,7 +106,7 @@ export const __templates_categories = {
     div.innerHTML = `
     <div class="filter__toggle">
       <span class="mobile-cate-trigger" style="text-transform: capitalize">${params.category.name.replace("-", "").toLowerCase()} ${__icons.down}</span>
-      <span data-toggle="filter">${__icons.plus} Lọc </span>
+      <span data-toggle="filter">${__icons.plus} Filter </span>
     </div>
     <div class="filter__list">
       <ul class="filter__list--wrapper">
@@ -129,7 +137,7 @@ export const __templates_categories = {
           </ul>
         </li>
         <li class="size">
-          <h4>Kích cỡ quần jeans
+          <h4>Size quần jeans
             ${__icons.right}
           </h4>
           <ul>
@@ -147,7 +155,7 @@ export const __templates_categories = {
           </ul>
         </li>
         <li class="size">
-          <h4>Kích cỡ giày
+          <h4>Size giày
             ${__icons.right}
           </h4>
           <ul>
@@ -165,19 +173,50 @@ export const __templates_categories = {
           </ul>
         </li>
         <li class="sort">
+          <h4>Mức giá
+            ${__icons.right}
+          </h4>
+          <ul>
+            <li data-name="pa_price" data-price="0,100000">
+              <label>
+                <input type="radio" name="price">
+                <span>Dưới 100k</span>
+              </label>
+            </li>
+            <li data-name="pa_price" data-price="100000,300000">
+              <label>
+                <input type="radio" name="price">
+                <span>100k - 300k</span>
+              </label>
+            </li>
+            <li data-name="pa_price" data-price="300000,500000">
+              <label>
+                <input type="radio" name="price">
+                <span>300k - 500k</span>
+              </label>
+            </li>
+            <li data-name="pa_price" data-price="500000">
+              <label>
+                <input type="radio" name="price">
+                <span>Trên 500k</span>
+              </label>
+            </li>
+          </ul>
+        </li>
+        <li class="sort">
           <h4>Sắp xếp
             ${__icons.right}
           </h4>
           <ul>
-            <li>
-              <label for="up_price">
-                <input id="up_price" name="filter_price" value="asc" type="radio">
+            <li data-name="pa_sort" data-sort="up">
+              <label>
+                <input type="radio" name="sort">
                 <span>Giá tăng dần</span>
               </label>
             </li>
-            <li>
-              <label for="down_price">
-                <input id="down_price" name="filter_price" value="desc" type="radio">
+            <li data-name="pa_sort" data-sort="down">
+              <label>
+                <input type="radio" name="sort">
                 <span>Giá giảm dần</span>
               </label>
             </li>
@@ -273,6 +312,7 @@ export const __templates_categories = {
         }
       });
     });
+
     let filter_label = div.querySelectorAll(".filter__list--wrapper > li");
     filter_label.forEach((label) => {
       let trigger = label.querySelector("h4");
@@ -308,6 +348,96 @@ export const __templates_categories = {
           btn.classList.add("active");
           if (size_attr) {
             window.data_filter.q[1].data.push(size_attr);
+            btn_input.checked = true;
+          }
+        }
+        if (mobile) {
+          let apply_btn = div.querySelector('[data-action="apply_filter"]');
+          apply_btn.addEventListener("click", (e) => {
+            div.querySelector(".filter__list").classList.remove("active");
+            e.preventDefault();
+            __init_product_list({
+              infinity: false,
+              container: product_container,
+              query: __init_filter(window.data_filter, product_container, 0),
+            });
+          });
+        } else {
+          __init_product_list({
+            infinity: false,
+            container: product_container,
+            query: __init_filter(window.data_filter, product_container, 0),
+          });
+        }
+      });
+    });
+    
+    let price_range_list = div.querySelectorAll('[data-name="pa_price"]');
+    price_range_list.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        let product_container = document.querySelector(".categories__products > ul");
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let price_range = btn.dataset.price;
+        let btn_input = btn.querySelector("input");
+        btn_input.checked = true;
+        if (btn.classList.contains("active")) {
+          if (window.data_filter.q[2].data) {
+            let d = window.data_filter.q[2].data;
+            window.data_filter.q[2].data = [];
+            btn_input.checked = false;
+          }
+          btn.classList.remove("active");
+        } else {
+          btn.classList.add("active");
+          if (price_range) {
+            window.data_filter.q[2].data =[]
+            window.data_filter.q[2].data.push(price_range);
+            btn_input.checked = true;
+          }
+        }
+        if (mobile) {
+          let apply_btn = div.querySelector('[data-action="apply_filter"]');
+          apply_btn.addEventListener("click", (e) => {
+            div.querySelector(".filter__list").classList.remove("active");
+            e.preventDefault();
+            __init_product_list({
+              infinity: false,
+              container: product_container,
+              query: __init_filter(window.data_filter, product_container, 0),
+            });
+          });
+        } else {
+          __init_product_list({
+            infinity: false,
+            container: product_container,
+            query: __init_filter(window.data_filter, product_container, 0),
+          });
+        }
+      });
+    });
+
+    let sort_list = div.querySelectorAll('[data-name="pa_sort"]');
+    sort_list.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        let product_container = document.querySelector(".categories__products > ul");
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let sort_type = btn.dataset.sort;
+        let btn_input = btn.querySelector("input");
+        btn_input.checked = true;
+        if (btn.classList.contains("active")) {
+          if (window.data_filter.q[3].data) {
+            let d = window.data_filter.q[3].data;
+            window.data_filter.q[3].data = [];
+            btn_input.checked = false;
+          }
+          btn.classList.remove("active");
+        } else {
+          btn.classList.add("active");
+          if (sort_type) {
+            window.data_filter.q[3].data =[]
+            window.data_filter.q[3].data.push(sort_type);
             btn_input.checked = true;
           }
         }

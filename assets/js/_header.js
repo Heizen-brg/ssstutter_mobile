@@ -96,24 +96,7 @@ export const __templates_header = {
   left(params = {}) {
     let div = document.createElement("div");
     div.className = "nav__left--items";
-    if (desktop || tablet) {
-      __requests(
-        {
-          method: "GET",
-          url: `https://sss-dashboard.leanservices.work/w/menu/get`,
-        },
-        ({ data }) => {
-          let menu_item = (data || [])
-            .map((item) => {
-              return `
-          <div data-active="${item.attribute}" data-action="megamenu" ><a style="color:${item.style}" href="${item.url}">${item.title}</a></div>
-          `;
-            })
-            .join("");
-          div.innerHTML = menu_item;
-        }
-      );
-    } else {
+
       div.innerHTML = `
       <div data-active="" data-action="home" class="${params.home}"><a href="/">${__icons.home}</a></div>
       <div data-active="" data-action="category" class="${params.category}"><a href="/c/for-him">${__icons.shopping}</a></div>
@@ -121,40 +104,16 @@ export const __templates_header = {
       <div data-active="" data-action="cart">${__icons.cart}<span data-toggle="cart_toggle"></span></div>
       <div data-active="" data-action="side_nav">${__icons.nav}</div>
     `;
-    }
     let menu = div.querySelectorAll("[data-action]");
     menu.forEach((item) => {
-      if (desktop || tablet) {
-        item.addEventListener("mouseenter", (e) => {
-          this.hide_menu();
-          this.show_menu(item);
-          let megamenu_categories = document.querySelector(".megamenu__categories");
-          __requests(
-            {
-              method: "GET",
-              url: `product/attribute/category/get`,
-            },
-            ({ data, error }) => {
-              let parent_cat_arr = data.filter((cate) => cate.parentId == item.dataset.active);
-              megamenu_categories.innerHTML = `
-                <ul>
-                  ${(parent_cat_arr || [])
-                    .map((cate) => `<li data-cate="${cate.id}"><p>${cate.name}</p></li>`)
-                    .join("")}
-                </ul>
-            `;
-            }
-          );
-        });
-      } else {
+     
         item.addEventListener("click", (e) => {
           this.hide_menu();
           this.show_menu(item);
         });
-      }
     });
     let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
-    __show_cart_quantity(cart_quantity);
+    // __show_cart_quantity(cart_quantity);
     return div;
   },
 
