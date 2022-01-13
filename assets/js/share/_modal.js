@@ -189,6 +189,17 @@ export const __templates_modal = {
     `;
     return div;
   },
+  app_promotion() {
+    let div = document.querySelector("div");
+    div.className = "sale__promotion";
+    div.innerHTML = `
+      <h2>Cảm ơn bạn đã tải ứng dụng</h2>
+      <p> Bạn đã dược tặng 01 voucher giảm giá</p>
+      <p>SSSTUTTERAPP</p>
+      <div><button>Xác nhận</button></div>
+    `;
+    return div;
+  },
   refund_policy() {
     let div = document.createElement("div");
     div.className = "refund__policy";

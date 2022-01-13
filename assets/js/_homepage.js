@@ -3,6 +3,7 @@ import { __icons } from "./share/_icons.js";
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format } from "./share/_function.js";
+import { __templates_modal } from "./share/_modal.js";
 
 export const __templates_home = {
   hide_menu() {
@@ -62,6 +63,8 @@ export const __templates_home = {
             })
             .join("");
           banner_container.innerHTML = banner_item;
+          __templates_modal.overlay({content : __templates_modal.app_promotion()})
+
           setTimeout(() => {
             new Glide(".glide", {
               type: "slider",
@@ -69,6 +72,7 @@ export const __templates_home = {
               autoplay: 5000,
             }).mount();
           }, 100);
+
         }
       );
     };
@@ -113,6 +117,8 @@ export const __templates_home = {
             })
             .join("");
           banner_container.innerHTML = banner_item;
+          __templates_modal.overlay({content : __templates_modal.app_promotion()})
+
           setTimeout(() => {
             new Glide(".glide", {
               type: "slider",
@@ -126,230 +132,6 @@ export const __templates_home = {
     get_banner_list();
     return section;
   },
-
-  subcription() {
-    let div = document.createElement("section");
-    div.classList.add("subcription");
-    div.innerHTML = `
-    <div class="container">
-      <div class="image" style="background-image: url(assets/img/test.jpg);"><a href="/editorial" target="_blank"></a></div>
-      <div class="content">
-        <h2>New collection</h2>
-        <div class="btn-row">
-          <a href="/editorial" target="_blank">Xem chi tiết</a>
-        </div>
-      </div>
-    </div>
-    `;
-
-    return div;
-  },
-
-  editorial_product() {
-    let div = document.createElement("section");
-    div.classList.add("editorial-slide-pc");
-    div.innerHTML = `
-    <p class="title">"Warm your day up"</p>
-    <p class="sub-title">Collection Fall / Winter 2021</p>
-    <div class="products__slider">
-      <div class="glide active" id="editorial_products">
-        <div class="glide__track" data-glide-el="track">
-          <ul class="glide__slides">
-             
-          </ul>
-        </div>
-      </div>
-    </div>
-    `;
-
-    __requests(
-      {
-        method: "GET",
-        url: `https://api.ssstutter.com/product/filter/web?sort=up&catId=newColl&media=true`,
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
-      },
-      (res) => {
-        let products = res.data
-          .map(
-            (item) =>
-              `
-          <li class="glide__slide">
-            <div class="product">
-              <div class="thumbnail">
-                <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-                item.extensions.media.featured
-              })"></span></a>
-              </div>
-              <div class="detail">
-                <div class="info">
-                  <h6 class="name">${item.name.toLowerCase()}</h6>
-                  <div class="price">
-                  ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                    <p>${__currency_format(item.salePrice || item.price)}</p>
-                  </div>
-                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-                </div>
-              </div>
-            </div>
-          </li>
-        `
-          )
-          .join("");
-        let glide__track = div.querySelector("#editorial_products .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#editorial_products", {
-          type: "slider",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 20,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-            },
-          },
-        }).mount();
-      }
-    );
-
-    return div;
-  },
-  mobile_editorial_product() {
-    let section = document.createElement("section");
-    section.className = "editorial-slide-sp";
-    section.innerHTML = `
-    <p class="title">"Warm your day up"</p>
-    <p class="sub-title">Collection Fall / Winter 2021</p>
-      <div class="products__slider">
-        <div class="glide active" id="editorial_products1">
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
-              ${__templates.busy_loading("show")}
-            </ul>
-          </div>
-        </div>
-      </div>
-    `;
-
-    __requests(
-      {
-        method: "GET",
-        url: "https://api.ssstutter.com/product/filter/web?sort=down&catId=newColl&media=true",
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
-        },
-      },
-      (res) => {
-        let item_per_view = 4;
-        let stop_loop = Math.ceil(res.length / item_per_view);
-        let products = res.data
-          .map((item, index) => {
-            let current_index = index * 2;
-            if (index - 1 > stop_loop) return "";
-            item = res.data[current_index];
-            if (!item) return "";
-            let next_item = res.data[current_index + 1];
-            if (next_item) {
-              next_item = `
-          <div class="product">
-            <div class="thumbnail">
-              <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-                next_item.extensions.media.featured
-              })"></span></a>
-            </div>
-            <div class="detail">
-              <div class="info">
-                <h6 class="name">${next_item.name.toLowerCase()}</h6>
-                <div class="price">
-                ${next_item.salePrice ? `<p class="discount">${__currency_format(next_item.price)}</p>` : ""}
-                  <p>${__currency_format(next_item.salePrice || next_item.price)}</p>
-                </div>
-                ${next_item.discount > 0 ? `<p class="tag">${next_item.discount}%</p>` : ""}
-              </div>
-            </div>
-          </div>
-          `;
-            } else next_item = "";
-
-            return `
-      <li class="glide__slide">
-        <div class="product">
-          <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-              item.extensions.media.featured
-            })"></span></a>
-          </div>
-          <div class="detail">
-            <div class="info">
-              <h6 class="name">${item.name.toLowerCase()}</h6>
-              <div class="price">
-                ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-                <p>${__currency_format(item.salePrice || item.price)}</p>
-              </div>
-              ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-            </div>
-          </div>
-        </div>
-          ${next_item}
-      </li>
-        `;
-          })
-          .join("");
-        let glide__track = section.querySelector("#editorial_products1 .glide__slides");
-        glide__track.innerHTML = products;
-        new Glide("#editorial_products1", {
-          type: "carousel",
-          bound: true,
-          perView: 4,
-          autoplay: 5000,
-          gap: 10,
-          hoverpause: true,
-          peek: {
-            before: 0,
-            after: 100,
-          },
-          breakpoints: {
-            1024: {
-              perView: 3,
-            },
-            480: {
-              perView: 2,
-              peek: {
-                before: 0,
-                after: 0,
-              },
-            },
-          },
-        }).mount();
-      }
-    );
-    return section;
-  },
-  /*
-  home_video() {
-    let div = document.createElement("section");
-    div.classList.add("home-video");
-    div.innerHTML = `
-    <div class="video">
-      <video autoplay playsinline muted loop>
-        <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
-      </video>
-    </div>
-    `;
-
-    // return div;
-  },
-  */
 
   categories() {
     let section = document.createElement("section");
