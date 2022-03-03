@@ -276,8 +276,10 @@ export const __templates_checkout = {
       __requests(
         {
           method: "POST",
-          url: "order/order/web/create",
+          url: "https://leanservices.work/order/order/web/create?mobile=true",
           body: JSON.stringify(order_data),
+          header: { Authorization: "by-passs", "Content-Type": "application/json" },
+
         },
         ({ data, error }) => {
           if (data.paymentUrl) {

@@ -191,12 +191,12 @@ export const __templates_modal = {
   },
   app_promotion() {
     let div = document.querySelector("div");
-    div.className = "sale__promotion";
+    div.className = "app__promotion";
     div.innerHTML = `
       <h2>Cảm ơn bạn đã tải ứng dụng</h2>
       <p> Bạn đã dược tặng 01 voucher giảm giá</p>
-      <p>SSSTUTTERAPP</p>
-      <div><button>Xác nhận</button></div>
+      <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/1-2022/1642392857065.jpeg)"></span>
+      <small>⚠️  Ứng dụng vẫn đang trong quá trình phát triển, trong quá trình trải nghiệm mua sắm nếu gặp bất kì vấn đề gì, xin vui lòng gửi góp ý qua email technology@ssstutter.com, xin cảm ơn ! </small>
     `;
     return div;
   },

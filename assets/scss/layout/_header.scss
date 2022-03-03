@@ -4,7 +4,6 @@
   width: 100%;
   height: 60px;
   z-index: 100;
-  border-bottom: 1px solid #ececec;
   .nav {
     @include transition();
     // @include shadow(1px, 1px, 4px, $light);
@@ -13,19 +12,19 @@
     padding: 0;
     background-color: $white;
     a {
-      color: $black;
+      color: #585858;
     }
     svg {
-      fill: $black;
+      fill: #585858;
     }
     &:hover {
       @include shadow(1px, 1px, 4px, $light);
       background-color: $white;
       a {
-        color: $black;
+        color: #585858;
       }
       svg {
-        fill: $black;
+        fill: #585858;
       }
     }
     // &.deactive {
@@ -87,16 +86,16 @@
           letter-spacing: 1.3px;
           margin: 0 15px;
           position: relative;
+          color: #585858;
           a {
             @include font(13px, center, 500);
-          }
-          &:hover {
-            &::after {
-              width: 100%;
-            }
+            color: #585858;
           }
           &.active {
-            @include shadow_box;
+           color: $black;
+           svg {
+            fill: $black;
+           }
           }
         }
       }
@@ -483,13 +482,6 @@
               bottom: 10px;
               font-size: x-small;
               width: fit-content;
-            }
-            &.active {
-              background-color: $black;
-              color: $white;
-              > a {
-                color: $white;
-              }
             }
           }
         }

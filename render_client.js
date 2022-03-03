@@ -26,6 +26,60 @@ module.exports = {
 				<script>
 					${params.command || ""}
 				</script>
+				<script>
+				const loadScript = (src, call_before, async = true, type = "text/javascript") => {
+        			return new Promise((resolve, reject) => {
+					try {
+						if (call_before) call_before();
+						const el = document.createElement("script");
+						const container = document.head || document.body;
+
+						el.type = type;
+						el.async = async;
+						el.src = src;
+
+						el.addEventListener("load", () => {
+						resolve({ status: true });
+						});
+
+						el.addEventListener("error", () => {
+						reject({
+							status: false,
+							message: "Failed to load the script"+ src,
+						});
+						});
+
+						container.appendChild(el);
+					} catch (err) {
+						reject(err);
+					}
+					});
+				};
+
+				loadScript("https://connect.facebook.net/en_US/fbevents.js", () => {
+					if (window.fbq) return;
+					n = window.fbq = function () {
+					n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+					};
+					if (!window._fbq) window._fbq = n;
+					n.push = n;
+					n.loaded = !0;
+					n.version = "2.0";
+					n.queue = [];
+				})
+					.then((data) => {
+					fbq("init", "2822192974735799");
+					fbq("track", "PageView");
+					})
+					.catch((err) => {
+					console.error(err);
+					});
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+
+					gtag('config', 'UA-126233540-1');
+				</script>
 			</head>
 			<body>
 				<main id="root"></main>

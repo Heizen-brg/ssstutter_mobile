@@ -1,5 +1,6 @@
 import { __requests } from "../main.js";
 import { __currency_format } from "./_function.js";
+import { __icons } from "./_icons.js";
 export const __templates = {
   notification(params) {
     return `
@@ -117,4 +118,5 @@ export const __templates = {
     );
     return div;
   },
+
 };

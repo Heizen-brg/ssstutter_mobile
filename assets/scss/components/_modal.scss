@@ -182,6 +182,35 @@
     @include font(medium, center, 600);
   }
 }
+.app__promotion {
+  padding: 20px;
+  h2 {
+    @include font(medium, center, bold);
+  }
+  span {
+    @include ratio(366, 125);
+    margin: 10px 0;
+  }
+  p {
+    @include font(small, center, 600);
+  }
+  div {
+    @include flex(row,center,center);
+    button {
+      padding: 10px;
+      @include border($silver,4px);
+      background-color: $white;
+    }
+  }
+  small {
+    display: block;
+    margin-top: 30px;
+    @include font(xx-small,center,500);
+    line-height: 1.2;
+    padding:0 10px;
+    color: $silver;
+  }
+}
 .refund__policy {
   padding: 40px;
   line-height: 2;

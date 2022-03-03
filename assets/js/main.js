@@ -18,6 +18,7 @@ import { __templates_landing } from "./_landing.js";
 import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checkout.js";
 import { __templates_portrait } from "./self_portrait/self_portrait.js";
 import { __templates_blog_category } from "./_blog_category.js";
+import { __templates_history } from "./_history.js";
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
     Accept: "application/json",
@@ -77,6 +78,7 @@ export const __render = {
       "/blog/article": (params) => __render.article_page(params),
       "/address": () => __render.address_page(),
       "/search": (params) => __render.search_page(params),
+      "/history": () => __render.history_page(),
       "/thankyou": () => __render.thankyou_page(),
       "/canceled": () => __render.canceled_page(),
       "/editorial": (params) => __render.landing_page(params),
@@ -161,9 +163,7 @@ export const __render = {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left({home:'active'}),
-        right: __templates_header.right(),
         mobile: __templates_header.mobile(),
-        page_y_offset: 1550,
       }),
       __templates_header.megamenu(),
       __templates_header.search({
@@ -176,7 +176,6 @@ export const __render = {
       __templates_home.stylepick(),
       __templates_home.weekly(),
       __templates_home.blog(),
-      __templates_footer.footer(),
     ];
 
     this.build("home", blocks);
@@ -187,7 +186,7 @@ export const __render = {
   categories_page(params) {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({category:'active'}),
+        left: __templates_header.left(),
         right: __templates_header.right(),
         mobile: __templates_header.mobile(),
         page_y_offset: 400,
@@ -201,7 +200,6 @@ export const __render = {
       __templates_categories.categories({ category: params }),
       __templates_categories.products({ category: params }),
       __templates_categories.filter({ category: params }),
-      __templates_footer.footer(),
     ];
     this.build("categories", blocks);
     __templates.api_loading("hide");
@@ -224,7 +222,6 @@ export const __render = {
       __templates_product.product_gallery(params.product),
       __templates_product.flatlay_view(params.product),
       __templates_product.variation(params.product),
-      __templates_footer.footer(),
     ];
     this.build("product__page", blocks);
     __templates.api_loading("hide");
@@ -245,7 +242,6 @@ export const __render = {
       __templates_checkout.checkout_form(),
       __templates_checkout.checkout__method(),
       __templates_checkout.checkout__cart(),
-      __templates_footer.footer(),
     ];
     this.build("checkout__page", blocks);
     __templates.api_loading("hide");
@@ -266,7 +262,6 @@ export const __render = {
       __templates_header.cart(),
       __templates_order.order_overview(params),
       __templates_order.order_items(params),
-      __templates_footer.footer(),
     ];
     this.build("order__confirmation", blocks);
     __templates.api_loading("hide");
@@ -285,7 +280,6 @@ export const __render = {
       }),
       __templates_header.cart(),
       __templates_thankyou.thankyou_overview(),
-      __templates_footer.footer(),
     ];
     this.build("thankyou", blocks);
     __templates.api_loading("hide");
@@ -304,7 +298,6 @@ export const __render = {
       }),
       __templates_header.cart(),
       __templates_canceled.canceled_overview(),
-      __templates_footer.footer(),
     ];
     this.build("thankyou", blocks);
     __templates.api_loading("hide");
@@ -325,7 +318,6 @@ export const __render = {
       __templates_blog.blog_highlight(),
       __templates_blog.blog_categories(),
       __templates_blog.blog_latest(),
-      __templates_footer.footer(),
     ];
     this.build("blog__page", blocks);
     __templates.api_loading("hide");
@@ -345,7 +337,6 @@ export const __render = {
       __templates_header.cart(),
       __templates_blog_category.blog_highlight(params.data),
       __templates_blog_category.blog_latest(params.data),
-      __templates_footer.footer(),
     ];
     this.build("blog__page", blocks);
     __templates.api_loading("hide");
@@ -365,7 +356,6 @@ export const __render = {
       __templates_header.cart(),
       __templates_article.related(),
       __templates_article.content(params.article),
-      __templates_footer.footer(),
     ];
     this.build("article__page", blocks);
     __templates.api_loading("hide");
@@ -391,7 +381,6 @@ export const __render = {
       __templates_campaign.banner(params),
       __templates_campaign.campaign_filter(params),
       __templates_campaign.sale_products(params),
-      __templates_footer.footer(),
     ];
     this.build("campaign__page", blocks);
     __templates.api_loading("hide");
@@ -411,7 +400,6 @@ export const __render = {
       }),
       __templates_header.cart(),
       __templates_landing.body(params),
-      __templates_footer.footer(),
     ];
     this.build("landing__page", blocks);
     __templates.api_loading("hide");
@@ -429,7 +417,6 @@ export const __render = {
       __templates_header.cart(),
       __templates_search.input(),
       __templates_search.products_list(params.products_list),
-      __templates_footer.footer(),
     ];
     this.build("search__page", blocks);
     __templates.api_loading("hide");
@@ -446,13 +433,26 @@ export const __render = {
       __templates_header.cart(),
       __templates_address.map_banner(),
       __templates_address.address_info(),
-      __templates_footer.footer(),
     ];
     this.build("address__page", blocks);
     __templates.api_loading("hide");
   },
 
-
+  history_page(params) {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left({history:'active'}),
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
+        page_y_offset: 500,
+      }),
+      __templates_header.megamenu(),
+      __templates_header.cart(),
+      __templates_history.products(),
+    ];
+    this.build("history__page", blocks);
+    __templates.api_loading("hide");
+  },
 
 };
 

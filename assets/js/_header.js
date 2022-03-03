@@ -44,13 +44,13 @@ export const __templates_header = {
     let header = document.createElement("header");
     header.className = "header";
     header.innerHTML = `
-      <div class="nav__popup"></div>
-      <div class="nav">
+    <div class="nav__popup"></div>
+    <div class="nav">
         <div class="nav__left"></div>
       </div>
       <div class="side__nav" data-menu="side_nav">
         <div class="side__nav--title">
-          <a href="/">
+          <a href="https://m.ssstutter.com/">
             <img src="/assets/img/logo.png"/>
           </a>
           <div class="close">${__icons.close}</div>
@@ -61,7 +61,7 @@ export const __templates_header = {
         </div>
       </div>
     `;
-    ["popup", "left", "right", "mobile"].forEach((pos) => {
+    ["popup", "left",  "mobile"].forEach((pos) => {
       let block = header.querySelector(`.nav__${pos}`);
       if (params[pos]) {
         __render.build_in_block({
@@ -77,18 +77,18 @@ export const __templates_header = {
       this.hide_menu();
     });
 
-    window.onscroll = () => {
-      let nav_bar = header.querySelector(".nav");
-      let main = document.getElementById("root");
-      if (main.classList.contains("home") && !mobile) {
-        let prevScrollpos = window.pageYOffset;
-        if (prevScrollpos > 100) {
-          nav_bar.classList.remove("deactive");
-        } else {
-          nav_bar.classList.add("deactive");
-        }
-      }
-    };
+    // window.onscroll = () => {
+    //   let nav_bar = header.querySelector(".nav");
+    //   let main = document.getElementById("root");
+    //   if (main.classList.contains("home") && !mobile) {
+    //     let prevScrollpos = window.pageYOffset;
+    //     if (prevScrollpos > 100) {
+    //       nav_bar.classList.remove("deactive");
+    //     } else {
+    //       nav_bar.classList.add("deactive");
+    //     }
+    //   }
+    // };
 
     return header;
   },
@@ -96,20 +96,22 @@ export const __templates_header = {
   left(params = {}) {
     let div = document.createElement("div");
     div.className = "nav__left--items";
-
       div.innerHTML = `
-      <div data-active="" data-action="home" class="${params.home}"><a href="/">${__icons.home}</a></div>
-      <div data-active="" data-action="category" class="${params.category}"><a href="/c/for-him">${__icons.shopping}</a></div>
+      <div data-active="" data-action="home" class="${params.home}"><a href="https://m.ssstutter.com/">${__icons.home}</a></div>
+      <div data-active="" data-action="history" class="${params.history}"><a href="/history">${__icons.history}</a></div>
       <div data-active="" data-action="search">${__icons.search}</div>
       <div data-active="" data-action="cart">${__icons.cart}<span data-toggle="cart_toggle"></span></div>
       <div data-active="" data-action="side_nav">${__icons.nav}</div>
     `;
     let menu = div.querySelectorAll("[data-action]");
     menu.forEach((item) => {
-     
         item.addEventListener("click", (e) => {
-          this.hide_menu();
-          this.show_menu(item);
+          if (item.classList.contains("active")) {
+            this.hide_menu();
+          } else {
+            this.hide_menu();
+            this.show_menu(item);
+          }
         });
     });
     let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
@@ -308,20 +310,27 @@ export const __templates_header = {
                       item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
                     })"></span></a>
                       </div>
-                      <h6 class="name">${item.name}</h6>
-                      <div class="price">
-                        ${
-                          item.salePrice
-                            ? `<p>${__currency_format(item.salePrice)}</p>
-                          <p class="discount">${__currency_format(item.price)}</p> `
-                            : `<p>${__currency_format(item.price)}</p>`
-                        }
+                      <div class="detail">
+                        <div class="info">
+                          <h6 class="name">${item.name.toLowerCase()}</h6>
+                          <div class="price">
+                            ${
+                              item.salePrice
+                                ? `<p>${__currency_format(item.salePrice)}</p>
+                              <p class="discount">${__currency_format(item.price)}</p> `
+                                : `<p>${__currency_format(item.price)}</p>`
+                            }
+                          </div>
+                         ${
+                           item.salePrice || item.salePrice === 0
+                             ? `<p class="tag">${100 - (item.salePrice / item.price) * 100}%</p>`
+                             : ""
+                         }
+                          <div class="color">
+                            <p>+${item.color.length} màu</p>
+                          </div>
+                        </div>
                       </div>
-                      ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-                      <div class="color">
-                          <p>+${item.color.length} màu</p>
-                      </div>
-                    </div>
                   </li>
                 `;
                   })
@@ -343,6 +352,7 @@ export const __templates_header = {
     });
     return div;
   },
+
 
   cart(params = {}) {
     let div = document.createElement("div");

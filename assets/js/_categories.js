@@ -7,13 +7,13 @@ import {
   __init_filter,
   __init_product_list,
   __to_slug,
+  __keep_scroll_postion,
 } from "./share/_function.js";
 let mobile = window.innerWidth <= 425;
 
 window.data_filter = {
   existed_ids: [],
-  q: [
-    {
+  q: [{
       tax: "color",
       data: [],
     },
@@ -23,50 +23,50 @@ window.data_filter = {
     },
     {
       tax: "price",
-      data : []
+      data: []
     },
     {
       tax: "sortBy=price&sort",
-      data : []
+      data: []
     },
   ],
   price: null,
 };
 
 export const __templates_categories = {
-  infomation(params = {}) {
-    let section = document.createElement("section");
-    section.className = "categories__info";
-    section.innerHTML = `
-      <h1 class="info__title">${params.category.name.replace("-", "")}</h1>
-      <p>Tất cả những sản phẩm Mới nhất nằm trong BST được mở bán Hàng Tuần sẽ được cập nhật liên tục tại đây. Chắc chắn bạn sẽ tìm thấy những sản phẩm Đẹp Nhất - Vừa Vặn Nhất - Phù Hợp nhất với phong cách của mình.
-      </p>
-    `;
-    return section;
-  },
-  categories(params = {}) {
-    let section = document.createElement("section");
-    section.className = "categories__list";
-    __requests(
-      {
-        method: "GET",
-        url: `product/attribute/category/get`,
-      },
-      ({ data, error }) => {
-        let top_cat = data.filter(i => !i.parentId).map(i => i.id)
-        let parent_cat_arr
-        if (top_cat.includes(params.category.id)) {
-          parent_cat_arr = data.filter(
-            (item) => item.parentId === params.category.id
-          );
+    infomation(params = {}) {
+      let section = document.createElement("section");
+      section.className = "categories__info";
+      section.innerHTML = `
+    <h1 class="info__title">${params.category.name.replace("-", "")}</h1>
+    <p>Tất cả những sản phẩm Mới nhất nằm trong BST được mở bán Hàng Tuần sẽ được cập nhật liên tục tại đây. Chắc chắn bạn sẽ tìm thấy những sản phẩm Đẹp Nhất - Vừa Vặn Nhất - Phù Hợp nhất với phong cách của mình.
+    </p>
+  `;
+      return section;
+    },
 
-        } else {
-          parent_cat_arr = data.filter(
-            (item) => item.parentId === params.category.parentId
-          );
-        }
-        // console.log(parent_cat_arr);
-        section.innerHTML = `
+    categories(params = {}) {
+      let section = document.createElement("section");
+      section.className = "categories__list";
+      __requests({
+            method: "GET",
+            url: `product/attribute/category/get`,
+          },
+          ({ data, error }) => {
+            let top_cat = data.filter(i => !i.parentId).map(i => i.id)
+            let parent_cat_arr
+            if (top_cat.includes(params.category.id)) {
+              parent_cat_arr = data.filter(
+                (item) => item.parentId === params.category.id
+              );
+
+            } else {
+              parent_cat_arr = data.filter(
+                (item) => item.parentId === params.category.parentId
+              );
+            }
+            // console.log(parent_cat_arr);
+            section.innerHTML = `
         <ul>
           ${(parent_cat_arr || [])
             .map(
@@ -89,14 +89,23 @@ export const __templates_categories = {
     <ul data-cate="${params.category.id}">
       ${__templates.busy_loading("show")}
     </ul>
+    <button class="back__top">${__icons.up}</button>
     `;
-    let product_container = params.container
-      ? params.container
-      : div.querySelector("ul");
-    __init_product_list({
-      container: product_container,
-      query: __init_filter(window.data_filter, product_container, 0),
-    });
+    let product_container = params.container? params.container: div.querySelector("ul");
+    let current_skip_item = sessionStorage.getItem('current_product');
+    let top_btn = div.querySelector(".back__top");
+
+    top_btn.addEventListener('click',(e)=> {
+      product_container.scrollIntoView({behavior: "smooth"})
+    })
+
+    __keep_scroll_postion({container:product_container,query: product_container.dataset.cate });
+    if (!current_skip_item) {
+      __init_product_list({
+        container: product_container,
+        query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+      });
+    }
     return div;
   },
 
@@ -282,18 +291,14 @@ export const __templates_categories = {
                 __init_product_list({
                   infinity: false,
                   container: product_container,
-                  query: __init_filter(
-                    window.data_filter,
-                    product_container,
-                    0
-                  ),
+                  query:__init_filter({data:window.data_filter,container: product_container, skip: 0})
                 });
               });
             } else {
               __init_product_list({
                 infinity: false,
                 container: product_container,
-                query: __init_filter(window.data_filter, product_container, 0),
+                query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
               });
             }
           });
@@ -359,14 +364,14 @@ export const __templates_categories = {
             __init_product_list({
               infinity: false,
               container: product_container,
-              query: __init_filter(window.data_filter, product_container, 0),
+              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
             });
           });
         } else {
           __init_product_list({
             infinity: false,
             container: product_container,
-            query: __init_filter(window.data_filter, product_container, 0),
+            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
           });
         }
       });
@@ -404,14 +409,14 @@ export const __templates_categories = {
             __init_product_list({
               infinity: false,
               container: product_container,
-              query: __init_filter(window.data_filter, product_container, 0),
+              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
             });
           });
         } else {
           __init_product_list({
             infinity: false,
             container: product_container,
-            query: __init_filter(window.data_filter, product_container, 0),
+            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
           });
         }
       });
@@ -449,14 +454,14 @@ export const __templates_categories = {
             __init_product_list({
               infinity: false,
               container: product_container,
-              query: __init_filter(window.data_filter, product_container, 0),
+              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
             });
           });
         } else {
           __init_product_list({
             infinity: false,
             container: product_container,
-            query: __init_filter(window.data_filter, product_container, 0),
+            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
           });
         }
       });
@@ -479,5 +484,3 @@ document.addEventListener('mouseup', (e) => {
     if (document.querySelector('.categories__list')) document.querySelector('.categories__list').classList.remove('show');
   }
 });
-
-

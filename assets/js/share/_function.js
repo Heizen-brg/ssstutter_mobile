@@ -3,8 +3,11 @@ import { __templates } from "./_components.js";
 import { __icons } from "./_icons.js";
 import { CONFIG } from "../config.js";
 import { __templates_modal } from "./_modal.js";
+
 export const __currency_format = (n) =>
-  `${new Intl.NumberFormat("vi-VN", {}).format(parseInt(n))} <span class="currency-symbol">&#x20AB;</span>`;
+  `${new Intl.NumberFormat("vi-VN", {}).format(
+    parseInt(n)
+  )} <span class="currency-symbol">&#x20AB;</span>`;
 
 export const __push_notification = (type, msg, delay) => {
   let wrapper = document.createElement("div");
@@ -19,22 +22,39 @@ export const __push_notification = (type, msg, delay) => {
   } else return noti;
 };
 
+export const __keep_scroll_postion = async (params = {}) => {
+  let current_skip_item = sessionStorage.getItem("current_product");
+  let last_item_id = sessionStorage.getItem("product_id");
+  __init_product_list({
+    container: params.container,
+    query: `?catId=${params.query}&limit=${current_skip_item}&skip=0`,
+  });
+};
+
 export const __remove_item_in_array = (el, array) => {
   let index = array.indexOf(el);
   if (index > -1) array.splice(index, 1);
   return [...new Set(array)];
 };
 
-export const __init_filter = (data, container, skip) => {
+export const __init_filter = (params = {}) => {
   let query = "";
-  skip = skip != 0 ? container.childElementCount - 1 : 0;
-  query = `?sort=up&catId=${container.dataset.cate}&skip=${skip}&limit=10`;
-  return (query += data.q.map((i) => (i.data.length ? `&${i.tax}=${[...new Set(i.data)].join(",")}` : "")).join(""));
+  let skip = params.skip != 0 ? params.container.childElementCount - 1 : 0;
+  sessionStorage.setItem("current_product", skip);
+  query = `?&catId=${params.container.dataset.cate}&skip=${skip}&limit=10`;
+  return (query += params.data.q
+    .map((i) =>
+      i.data.length ? `&${i.tax}=${[...new Set(i.data)].join(",")}` : ""
+    )
+    .join(""));
 };
-// container, query, product_ids
+
 export const __init_product_list = (params = { ids: product_ids }) => {
-  params.infinity ? false : ((params.container.innerHTML = ""), __templates.api_loading("show"));
-  window.product_ids = params.ids || (window.product_ids ? window.product_ids : []);
+  params.infinity
+    ? false
+    : ((params.container.innerHTML = ""), __templates.api_loading("show"));
+  window.product_ids =
+    params.ids || (window.product_ids ? window.product_ids : []);
   let url = !params.query ? `?catId=3vvRIM&` : params.query;
   __requests(
     {
@@ -51,52 +71,67 @@ export const __init_product_list = (params = { ids: product_ids }) => {
       let products = (data || []).map((item) => {
         window.product_ids.push(item.id);
         let product_template = document.createElement("li");
-        product_template.dataset.gender = item.gender;
         product_template.dataset.price = item.price;
-        product_template.dataset.sale = item.discount;
+        product_template.id = item.id;
         product_template.innerHTML = `
-      <div class="product">
-        <div class="thumbnail">
-          <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
+                <div class="product">
+                  <div class="thumbnail">
+                    <a href="/p/${
+                      item.slug
+                    }"><span style="background-image:url(${
+          CONFIG.DOMAIN_IMG_CDN
+        }/${
+          item.extensions.media.featured
+            ? item.extensions.media.featured
+            : "no_image.png"
         })"></span></a>
-        </div>
-        <div class="detail">
-          <div class="info">
-            <h6 class="name">${item.name.toLowerCase()}</h6>
-            <div class="price">
-              ${
-                item.salePrice
-                  ? `<p>${__currency_format(item.salePrice)}</p>
-                <p class="discount">${__currency_format(item.price)}</p> `
-                  : `<p>${__currency_format(item.price)}</p>`
-              }
-            </div>
-            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
-            <div class="color">
-              <p>+${item.color.length} màu</p>
-            </div>
-          </div>
-          <div class="promotion">
-          </div>
-        </div>
-      </div>
-      `;
-        /*
-        let color_bar = product_template.querySelector(".color");
-        item.color.map((color) => {
-          let color_box = document.createElement("span");
-          color_box.className = "";
-          color_box.dataset.color_id = color ? color.id : "";
-          color_box.style.background = color ? color.value : "";
-          color_bar.appendChild(color_box);
-          return color_box;
-        });
-        */
+                  </div>
+                  <div class="detail">
+                    <div class="info">
+                      <h6 class="name">${item.name.toLowerCase()}</h6>
+                      <div class="price">
+                        ${
+                          item.salePrice
+                            ? `<p>${__currency_format(item.salePrice)}</p>
+                          <p class="discount">${__currency_format(
+                            item.price
+                          )}</p> `
+                            : `<p>${__currency_format(item.price)}</p>`
+                        }
+                      </div>
+                      ${
+                        item.salePrice || item.salePrice === 0
+                          ? `<p class="tag">${Math.floor(
+                              100 - (item.salePrice / item.price) * 100
+                            )}%</p>`
+                          : ""
+                      }
+                      <div class="color">
+                        <p>+${item.color.length} màu</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
         params.container.appendChild(product_template);
+        // mark product position
+        let product_item = params.container.querySelectorAll("li");
+        product_item.forEach((item) => {
+          item.addEventListener("click", (e) => {
+            sessionStorage.setItem("product_id", item.id);
+          });
+        });
+        let last_item_id = sessionStorage.getItem("product_id");
+        let last_item_visit = document.getElementById(last_item_id);
+        if (last_item_visit) {
+          last_item_visit.scrollIntoView({ block: "center" });
+        }
+        // end of  mark product position
+
         return product_template;
       });
-      if (data.length >= 10) __infinity_scroll(products[products.length - 3], params.container);
+      if (data.length >= 10)
+        __infinity_scroll(products[products.length - 3], params.container);
       __templates.busy_loading("hide");
     }
   );
@@ -112,7 +147,10 @@ export const __infinity_scroll = (anchor, container) => {
         __init_product_list({
           infinity: true,
           container: container,
-          query: __init_filter(window.data_filter, container),
+          query: __init_filter({
+            data: window.data_filter,
+            container: container,
+          }),
         });
         block_loader.unobserve(block);
       }
@@ -124,14 +162,19 @@ export const __infinity_scroll = (anchor, container) => {
 export const __show_cart_item = (wrapper, total, div) => {
   let purchase_items_list = JSON.parse(localStorage.getItem("cartItem"));
   if (!purchase_items_list) {
-    wrapper.innerHTML = '<p class="empty__cart">Giỏ hàng chưa có sản phẩm nào</p>';
+    wrapper.innerHTML =
+      '<p class="empty__cart">Giỏ hàng chưa có sản phẩm nào</p>';
     return false;
   }
   let inner_item = purchase_items_list
     .map((prod, index) => {
       return `
     <li>
-      <a href="/p/${prod.slug}" class="product__thumbnail" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+      <a href="/p/${
+        prod.slug
+      }" class="product__thumbnail" style="background-image:url(${
+        CONFIG.DOMAIN_IMG_CDN
+      }/${
         prod.media[`color_${prod.colorId}_thumbnail`]
           ? prod.media[`color_${prod.colorId}_thumbnail`].x100
           : "no_image.png"
@@ -151,12 +194,18 @@ export const __show_cart_item = (wrapper, total, div) => {
             }
         </div>
         <div class="add__product">
-          <button data-id="${prod.variation.id}" data-quantity="descrease">-</button>
+          <button data-id="${
+            prod.variation.id
+          }" data-quantity="descrease">-</button>
           <input data-index=${index} value="${prod.quantity}" type="number"/>
-          <button data-id="${prod.variation.id}" data-quantity="inscrease">+</button>
+          <button data-id="${
+            prod.variation.id
+          }" data-quantity="inscrease">+</button>
         </div>
       </div>
-      <div class="clear__product" data-id="${prod.variation.id}" data-index=${index}>
+      <div class="clear__product" data-id="${
+        prod.variation.id
+      }" data-index=${index}>
             ${__icons.close}
       </div>
     </li>
@@ -200,19 +249,28 @@ export const __show_cart_item = (wrapper, total, div) => {
           __requests(
             {
               method: "GET",
-              url: `product/variation/check-stock?id=${btn.dataset.id}&stock=${parseInt(input_quantity.value) + 1}`,
+              url: `product/variation/check-stock?id=${btn.dataset.id}&stock=${
+                parseInt(input_quantity.value) + 1
+              }`,
             },
             ({ data }) => {
               __templates.api_loading("hide");
-              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+              if (!data)
+                return __push_notification("fail", "Sản phẩm hết hàng!");
               input_quantity.value++;
-              init_quantity_value(input_quantity.value, input_quantity.dataset.index);
+              init_quantity_value(
+                input_quantity.value,
+                input_quantity.dataset.index
+              );
             }
           );
         } else {
           if (input_quantity.value == 1) return false;
           input_quantity.value--;
-          init_quantity_value(input_quantity.value, input_quantity.dataset.index);
+          init_quantity_value(
+            input_quantity.value,
+            input_quantity.dataset.index
+          );
         }
       });
     });
@@ -225,14 +283,20 @@ export const __show_cart_item = (wrapper, total, div) => {
       purchase_items_list[index].quantity = value;
 
       let total_amount = purchase_items_list.reduce((total, current) => {
-        if (current.salePrice) return total + current.quantity * current.salePrice;
+        if (current.salePrice)
+          return total + current.quantity * current.salePrice;
         return total + current.quantity * current.price;
       }, 0);
       total.innerHTML = __currency_format(total_amount);
       total.dataset.price = total_amount;
-      let customer_phone = document.querySelector('[data-value="customer_phone"]');
+      let customer_phone = document.querySelector(
+        '[data-value="customer_phone"]'
+      );
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
-      __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
+      __get_voucher(
+        { customerPhone: customer_phone ? customer_phone.value : null },
+        __check_shipping
+      );
     };
 
     del_btn.addEventListener("click", (e) => {
@@ -245,15 +309,23 @@ export const __show_cart_item = (wrapper, total, div) => {
       // );
       // let total_amount = total_amount_arr.reduce((a, b) => a + b, 0);
       let total_amount = purchase_items_list.reduce((total, current) => {
-        if (current.salePrice) return total + current.quantity * current.salePrice;
+        if (current.salePrice)
+          return total + current.quantity * current.salePrice;
         return total + current.quantity * current.price;
       }, 0);
-      let customer_phone = document.querySelector('[data-value="customer_phone"]');
+      let customer_phone = document.querySelector(
+        '[data-value="customer_phone"]'
+      );
       total.innerHTML = __currency_format(total_amount);
       total.dataset.price = total_amount;
       localStorage.setItem("cartItem", JSON.stringify(purchase_items_list));
-      __get_voucher({ customerPhone: customer_phone ? customer_phone.value : null }, __check_shipping);
-      __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+      __get_voucher(
+        { customerPhone: customer_phone ? customer_phone.value : null },
+        __check_shipping
+      );
+      __show_cart_quantity(
+        document.querySelector('[data-toggle="cart_toggle"]')
+      );
       del_btn.parentNode.remove();
     });
   });
@@ -262,23 +334,31 @@ export const __show_cart_item = (wrapper, total, div) => {
 export const __check_shipping = () => {
   if (!document.querySelector('[data-value="customer_city"]')) return;
   let shippingFormat = {
-    city: document.querySelector('[data-value="customer_city"]').querySelector("option:checked").textContent,
-    district: document.querySelector('[data-value="customer_district"]').querySelector("option:checked").textContent,
-    ward: document.querySelector('[data-value="customer_ward"]').querySelector("option:checked").textContent,
+    city: document
+      .querySelector('[data-value="customer_city"]')
+      .querySelector("option:checked").textContent,
+    district: document
+      .querySelector('[data-value="customer_district"]')
+      .querySelector("option:checked").textContent,
+    ward: document
+      .querySelector('[data-value="customer_ward"]')
+      .querySelector("option:checked").textContent,
     address: document.querySelector('[data-value="customer_address"]').value,
   };
   let checkout_cart = document.querySelector(".checkout__cart");
   let final_price;
   if (checkout_cart) {
-    final_price = checkout_cart.querySelector('[data-amount="total"]').dataset.price || 0;
+    final_price =
+      checkout_cart.querySelector('[data-amount="total"]').dataset.price || 0;
   } else {
-    final_price = document.querySelector('[data-amount="total"]').dataset.price || 0;
+    final_price =
+      document.querySelector('[data-amount="total"]').dataset.price || 0;
   }
   let shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
   __requests(
     {
       method: "POST",
-      url: `order/shipping/fee/web`,
+      url: `https://leanservices.work/order/shipping/fee/web`,
       body: JSON.stringify({
         moneyTotal: final_price,
         shippingAddress: shippingAddress,
@@ -293,7 +373,9 @@ export const __check_shipping = () => {
       shipping_fee.dataset.price = data;
       let checkout_cart = document.querySelector(".checkout__cart");
       if (checkout_cart) {
-        let checkout_shipping = checkout_cart.querySelector('[data-amount="shipping"]');
+        let checkout_shipping = checkout_cart.querySelector(
+          '[data-amount="shipping"]'
+        );
         checkout_shipping.innerHTML = __currency_format(parseInt(data));
         checkout_shipping.dataset.price = data;
         __calc_final_amount(checkout_cart);
@@ -336,7 +418,7 @@ export const __get_voucher = (params, callback) => {
   __requests(
     {
       method: "POST",
-      url: `order/voucher/customer-voucher`,
+      url: `https://leanservices.work/order/voucher/customer-voucher`,
       body: JSON.stringify({
         customerPhone: params.customerPhone || "",
         items: products,
@@ -352,14 +434,22 @@ export const __get_voucher = (params, callback) => {
       __calc_final_amount(params.discountDiv);
       let checkout_cart = document.querySelector(".checkout__cart");
       if (checkout_cart) {
-        let checkout_discount = checkout_cart.querySelector('[data-amount="discount"]');
+        let checkout_discount = checkout_cart.querySelector(
+          '[data-amount="discount"]'
+        );
         checkout_discount.dataset.price = data.amount;
         checkout_discount.innerHTML = `-${__currency_format(data.amount)}`;
         __calc_final_amount(checkout_cart);
       }
       if (callback) callback();
     },
-    (res) => callback(res)
+    (res) => {
+      if (res.error && res.error.includes("with status code 400")) {
+        localStorage.removeItem("cartItem");
+        console.log("here");
+      }
+      if (callback) callback();
+    }
   );
 };
 
@@ -392,30 +482,34 @@ export const __calc_final_amount = (div) => {
   //   return total + parseInt(current.quantity);
   // }, 0);
   // cart_quantity = parseInt(cart_quantity);
-  // let giftDiv1 = cart_items.querySelector(".blackfriday__gift");
+  let giftDiv1 = cart_items.querySelector(".blackfriday__gift");
   // let giftDiv2 = cart_items.querySelector(".blackfriday__gift__2");
-  // if (giftDiv1) giftDiv1.remove();
+  if (giftDiv1) giftDiv1.remove();
   // if (giftDiv2) giftDiv2.remove();
-  // if (cart_quantity >= 3 && gift1) {
-  //   let li_gift = document.createElement("li");
-  //   li_gift.className = "blackfriday__gift";
-  //   li_gift.innerHTML = `
-  //   <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637651035392.jpeg)">
-  //   </a>
-  //   <div>
-  //     <h6>QUÀ QUAY THƯỞNG</h6>
-  //       <small>${gift1}</small>
-  //     <div class="price">
-  //       <p>0</p>
-  //     </div>
-  //     <span class="product__variation">
-  //       <p>SSStutter sẽ gọi điện xác nhận đơn hàng và phần quà của bạn trong thời gian sớm nhất.</p>
-  //     </span>
-  //   </div>
-  //   `;
-  //   cart_items.appendChild(li_gift);
+  let li_gift = document.createElement("li");
+  li_gift.className = "blackfriday__gift";
+  let promotion_sale = (text) => {
+    li_gift.innerHTML = `
+    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/1-2022/1642388421877.jpeg)">
+    </a>
+    <div>
+      <h6>QUÀ ƯU ĐÃI</h6>
+        <small>${text}</small>
+      <div class="price">
+        <p>0</p>
+      </div>
+      <span class="product__variation">
+        <p>SSStutter sẽ gọi điện xác nhận đơn hàng và phần quà của bạn trong thời gian sớm nhất.</p>
+      </span>
+    </div>
+    `;
+    cart_items.appendChild(li_gift);
+  };
+  // if (final_amount >= 999000 && final_amount < 1499000) {
+  //   promotion_sale("PACK 02 TẤT PREMIUM SOCKS");
+  // } else if (final_amount >= 1499000) {
+  //   promotion_sale("PACK 02 TẤT PREMIUM SOCKS & 1 MŨ BẤT KỲ");
   // }
-
 
   total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };
@@ -435,9 +529,28 @@ export const __to_slug = (str, mark_space = "-") => {
   str = str.replace(/-+$/g, "");
   return str;
 };
+
 export const __show_cart_quantity = (wrapper) => {
   let purchase_items_list = JSON.parse(localStorage.getItem("cartItem"));
-  if (purchase_items_list && purchase_items_list.length) wrapper.innerHTML = `${purchase_items_list.length}`;
+  if (purchase_items_list && purchase_items_list.length)
+    wrapper.innerHTML = `( ${purchase_items_list.length} )`;
+};
+
+export const __source_tracking = (url) => {
+  let old_source = localStorage.getItem("source");
+  if (old_source) {
+    old_source = JSON.parse(old_source);
+    let expired_time = 14 * 24 * 60 * 60 * 1000;
+    if (Date.now() - old_source.time > expired_time) {
+      localStorage.removeItem("source");
+    }
+  }
+  if (!url.includes("?source=")) return false;
+  let source_obj = {
+    type: url.split("=")[1],
+    time: Date.now(),
+  };
+  localStorage.setItem("source", JSON.stringify(source_obj));
 };
 
 export const __countdown_timer = (params) => {
@@ -467,7 +580,7 @@ export const __countdown_timer = (params) => {
       `;
     }
   }, 1000);
-}
+};
 
 export const __snow_drop = () => {
   "use strict";
@@ -532,7 +645,11 @@ export const __snow_drop = () => {
 
   // Add a DOMContentLoaded listener, or fire the function immediately if that already happened
   function ready(fn) {
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+    if (
+      document.attachEvent
+        ? document.readyState === "complete"
+        : document.readyState !== "loading"
+    ) {
       fn();
     } else {
       document.addEventListener("DOMContentLoaded", fn);
@@ -548,7 +665,8 @@ export const __snow_drop = () => {
 
     //Once in awhile, have closer snowflakes
     //Z-axis is in CSS px units
-    let z = (flake.dataset.origZ = Math.random() < 0.1 ? Math.ceil(Math.random() * 100) + 25 : 0);
+    let z = (flake.dataset.origZ =
+      Math.random() < 0.1 ? Math.ceil(Math.random() * 100) + 25 : 0);
 
     let life = (flake.dataset.life = Math.ceil(Math.random() * 4000) + 6000); //Milliseconds
     flake.dataset.origLife = life; //Timestamps for flake creation
