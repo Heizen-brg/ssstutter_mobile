@@ -425,10 +425,6 @@ export const __templates_home = {
                 ${__templates.busy_loading("show")}
             </ul>
           </div>
-          <div class="glide__arrows" data-glide-el="controls">
-            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
-            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
-          </div>
         </div>
       </div>
     `;

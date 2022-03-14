@@ -128,7 +128,10 @@ app.get("/p/:slug", async (req, res, next) => {
     });
   } catch (err) {
     res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
+    res.status(404).send(client_view.error_404({
+      title : "Không có thông tin sản phẩm",
+      message: "Không có thông tin sản phẩm"
+    }));
     console.log(err.message);
     return;
   }
@@ -147,66 +150,6 @@ app.get("/p/:slug", async (req, res, next) => {
   }
 });
 
-// app.get("/editorial/product/:slug", async (req, res, next) => {
-//   return res.redirect(`https://ssstutter.com/p/${req.params.slug}`);
-//   let { slug } = req.params;
-//   let product_data;
-//   try {
-//     product_data = await axios.get(`https://api.leanservices.work/product/filter/web?&slug=${slug}&stock=0`, {
-//       headers: {
-//         Authorization: `by_passs`,
-//       },
-//     });
-//   } catch (err) {
-//     res.setHeader("Content-Type", "text/html");
-//     res.status(404).send(client_view.error_404({}));
-//     console.log(err.message);
-//     return;
-//   }
-//   res.setHeader("Authorization", "by_passs");
-//   res.setHeader("Content-Type", "text/html");
-//   let info = product_data.data.data;
-//   if (!info || !info.length) {
-//     res.status(404).send(client_view.error_404({}));
-//   } else {
-//     res.send(
-//       client_view.html({
-//         title: info[0].name,
-//         command: `var product_editorial_detail = ${JSON.stringify(info[0])}`,
-//       })
-//     );
-//   }
-// });
-
-// app.get("/editorial/look/:slug", async (req, res, next) => {
-//   let { slug } = req.params;
-//   let cat_data;
-//   try {
-//     cat_data = await axios.get(`http://localhost:5000/pd/attribute/category/search?slug=${slug}`, {
-//       headers: {
-//         Authorization: `by_pass`,
-//       },
-//     });
-//   } catch (err) {
-//     res.setHeader("Content-Type", "text/html");
-//     res.status(404).send(client_view.error_404({}));
-//     console.log(err.message);
-//     return;
-//   }
-//   res.setHeader("Authorization", "by_passs");
-//   res.setHeader("Content-Type", "text/html");
-//   let info = cat_data.data.data;
-//   if (!info) {
-//     res.status(404).send(client_view.error_404({}));
-//   } else {
-//     res.send(
-//       client_view.html({
-//         title: `${info.name.replace("-", "")}`,
-//         command: `var category_editorial_detail = ${JSON.stringify(info)}`,
-//       })
-//     );
-//   }
-// });
 
 app.get("/campaign/:slug", async (req, res, next) => {
   let { slug } = req.params;
@@ -220,13 +163,17 @@ app.get("/campaign/:slug", async (req, res, next) => {
   } catch (err) {
     console.log(err.message);
     res.setHeader("Content-Type", "text/html");
-    res.status(404).send(client_view.error_404({}));
+    res.status(404).send(client_view.error_404({
+      message : "Sự kiện này đã kết thúc, hẹn bạn trong sự kiện tiếp theo của SSSTUTTER !"
+    }));
     return console.log("line 175", err.message);
   }
   let campaign_detail = campaign_data.data;
   res.setHeader("Content-Type", "text/html");
   if (campaign_detail.data.status == "inActive") {
-    res.status(404).send(client_view.error_404({}));
+    res.status(404).send(client_view.error_404({
+      message : "Sự kiện này đã kết thúc, hẹn bạn trong sự kiện tiếp theo của SSSTUTTER !"
+    }));
   } else {
     res.send(
       client_view.html({

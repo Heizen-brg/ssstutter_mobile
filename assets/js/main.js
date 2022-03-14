@@ -447,6 +447,9 @@ export const __render = {
         page_y_offset: 500,
       }),
       __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
       __templates_header.cart(),
       __templates_history.products(),
     ];

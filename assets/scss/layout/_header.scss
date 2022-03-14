@@ -18,7 +18,7 @@
       fill: #585858;
     }
     &:hover {
-      @include shadow(1px, 1px, 4px, $light);
+      box-shadow: 1px 4px 1px 4px $light;
       background-color: $white;
       a {
         color: #585858;
@@ -92,10 +92,15 @@
             color: #585858;
           }
           &.active {
-           color: $black;
-           svg {
-            fill: $black;
-           }
+            color: $black;
+            border-radius: 6px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            background: #ffffff;
+            box-shadow: inset 5px -5px 10px #dbdbdb, inset 5px 5px 10px #ffffff;
+            svg {
+              fill: $black;
+            }
           }
         }
       }
@@ -165,17 +170,17 @@
     padding: 8px;
     background: #ececec;
     display: none;
-     > div {
-       > span {
-         margin: 0 5px;
-       }
-     }
+    > div {
+      > span {
+        margin: 0 5px;
+      }
+    }
     &.active {
       display: flex;
       justify-content: center;
       align-items: center;
       &::before {
-        content: 'Ưu đãi Giáng Sinh sẽ kết thúc trong';
+        content: "Ưu đãi Giáng Sinh sẽ kết thúc trong";
       }
     }
   }
@@ -426,21 +431,18 @@
   }
 }
 
-
 @media (min-width: 175px) {
   .header {
     top: auto;
     bottom: 0;
     .nav {
-      @include grid(1fr,null,0);
-
       svg {
         width: 24px;
       }
       // box-shadow: 0 2px 5px 0 $light;
       // grid-template-columns: 0.5fr 1fr 0.5fr;
       // grid-gap: 0;
- 
+
       &__popup {
         position: fixed;
         top: 0;
@@ -461,11 +463,11 @@
       &__left {
         place-content: initial;
         &--items {
-          @include grid(repeat(5,1fr),null,0);
+          @include grid(repeat(5, 1fr), null, 0);
           place-items: center;
           div {
-            @include flex(row,center,center);
-            @include border(transparent,4px);
+            @include flex(row, center, center);
+            @include border(transparent, 4px);
             @include transition;
             position: relative;
             padding: 10px;
@@ -486,12 +488,10 @@
           }
         }
       }
-
     }
     .side__nav {
       @include transition;
       right: -99999;
-      @include shadow_box;
 
       &.active {
         @include fade-left;
@@ -595,7 +595,6 @@
     padding: 0;
     height: calc(100vh - 60px);
     overflow: auto;
-    @include shadow_box;
 
     &.active {
       @include fade-up;
@@ -618,7 +617,6 @@
   }
   .cart__container {
     height: calc(100vh - 60px);
-    @include shadow_box;
     &.active {
       @include fade-up;
     }
