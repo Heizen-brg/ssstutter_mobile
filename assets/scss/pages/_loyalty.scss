@@ -1,0 +1,102 @@
+.loyalty__page {
+  width: 100%;
+  .loyalty__header {
+    @include grid(50px 1fr 50px , null , 10px);
+    padding: 10px;
+    align-items: center;
+    h4 {
+      @include font(large, center, 700 );
+    }
+    p {
+      text-align: center;
+      color: $silver;
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+  .loyalty__profile {
+    @include grid(1fr, null, 10px);
+    width: 100%;
+    place-content: center;
+    padding: 20px;
+    margin: 10px 0;
+    &--avt {
+      width: 100%;
+      position: relative;
+      place-self: center;
+      @include shadow_box();
+      @include border(transparent, 15px);
+      .card {
+        @include ratio(16,9);
+        @include border(transparent, 15px);
+        box-shadow: 5px 5px 10px 5px #dbdbdb;
+        position: relative;
+        >div {
+          position: absolute;
+          bottom: 10px;
+          left: 20px;
+          color: $white;
+        }
+      }
+      .barcode {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        width: 100%;
+      }
+    }
+
+  }
+  .loyalty__menu {
+    width: 100%;
+    hr {
+      display: block;
+      width: 60%;
+      @include border($light,0)
+    }
+    ul {
+      width: 100%;
+      padding: 10px 20px;
+      margin-top: 20px;
+      li {
+        @include flex(row,flex-start,center);
+        @include shadow_box();
+        @include border(transparent,15px);
+        padding: 15px;      
+        margin: 10px 0;  
+
+         >span {
+          @include border($light, 15px);
+          display: grid;
+          padding: 10px;
+          margin-right: 20px;
+          svg {
+            width: 25px;
+            height: 25px;
+          }
+         }
+         > div {
+          small {
+            color: $silver;
+            font-size: 12px;
+          }
+         }
+      }
+    }
+    .logout {
+      margin-top: 40px;
+      @include flex(row,flex-end,center);
+      button {
+        @include border(transparent,0);
+        @include shadow_box;
+        @include font(medium,center,700);
+        width: 40%;
+        padding: 15px;
+        background-color: $white;
+        border-bottom-left-radius: 15px;
+      }
+    }
+  }
+}

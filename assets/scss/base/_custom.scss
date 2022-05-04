@@ -2,7 +2,20 @@ svg {
   width: 25px;
   height: 25px;
 }
-
+input {
+  @include border($silver, 4px);
+  padding: 10px 15px;
+  line-height: 1.5;
+  &.error {
+    @include border($light-red, 4px);
+  }
+  &:hover {
+    @include border($black, 4px);
+  }
+  &:focus {
+    @include border($black, 4px);
+  }
+}
 .glide {
   position: relative;
   width: 100%;

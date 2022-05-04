@@ -19,6 +19,10 @@ import { __templates_checkout_pre_order } from "./list_campaign/pre_order_checko
 import { __templates_portrait } from "./self_portrait/self_portrait.js";
 import { __templates_blog_category } from "./_blog_category.js";
 import { __templates_history } from "./_history.js";
+import { __templates_loyalty } from "./_loyalty.js";
+import { __templates_login } from "./_login.js";
+
+
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
     Accept: "application/json",
@@ -83,6 +87,8 @@ export const __render = {
       "/canceled": () => __render.canceled_page(),
       "/editorial": (params) => __render.landing_page(params),
       "/flash-sale": () => __render.flash_sale(),
+      "/loyalty": (params) => __render.loyalty_page(params),
+      "/login": () => __render.login_page(),
     };
 
     if (pathname.includes(`/p/`)) {
@@ -170,12 +176,14 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
-      banner,
+      __templates_header.statusbar(),
+      __templates_header.popup(),
       __templates_home.categories(),
+      banner,
       new_arrivals,
       __templates_home.stylepick(),
       __templates_home.weekly(),
-      __templates_home.blog(),
+      __templates_home.instagram()
     ];
 
     this.build("home", blocks);
@@ -196,6 +204,7 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
+      __templates_header.statusbar(),
       __templates_categories.infomation({ category: params }),
       __templates_categories.categories({ category: params }),
       __templates_categories.products({ category: params }),
@@ -219,6 +228,7 @@ export const __render = {
         option: __templates.related_product(params.product),
       }),
       __templates_header.cart(),
+      __templates_header.statusbar(),
       __templates_product.product_gallery(params.product),
       __templates_product.flatlay_view(params.product),
       __templates_product.variation(params.product),
@@ -377,6 +387,8 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
+      __templates_header.statusbar(),
+
       countdown,
       __templates_campaign.banner(params),
       __templates_campaign.campaign_filter(params),
@@ -457,6 +469,45 @@ export const __render = {
     __templates.api_loading("hide");
   },
 
+  loyalty_page(params) {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left({loyalty:'active'}),
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
+        page_y_offset: 500,
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
+      __templates_header.cart(),
+      __templates_loyalty.header(),
+      __templates_loyalty.profile(),
+      __templates_loyalty.customer_menu(),
+    ];
+    this.build("loyalty__page", blocks);
+    __templates.api_loading("hide");
+  },
+
+  login_page (params) {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left({loyalty:'active'}),
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
+        page_y_offset: 500,
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
+      __templates_header.cart(),
+      __templates_login.login()
+    ];
+    this.build("login__page", blocks);
+    __templates.api_loading("hide");
+  }
 };
 
 __render.website();

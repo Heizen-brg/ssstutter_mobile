@@ -15,7 +15,7 @@ export const __templates_modal = {
     div.className = "modal__overlay";
     params.close == "show" ? (div.innerHTML = `<div class="close__btn">${__icons.close}<div>`) : "";
     let content = document.createElement("div");
-    content.className = "modal__content";
+    content.className = `modal__content ${params.style ? params.style : ""} `;
     if (params.content)
       __render.build_in_block({
         block: content,
@@ -228,7 +228,6 @@ export const __templates_modal = {
     `;
     return div;
   },
-
   bag_combo_modal() {
     let div = document.createElement("div");
     div.className = "combo__modal";
@@ -544,4 +543,282 @@ export const __templates_modal = {
     }, 500);
     return div;
   },
+
+  //loyalty modal
+  account_modal() {
+    let div = document.createElement('div');
+    div.className = "loyalty__account";
+    div.innerHTML = `
+      <div class="account__header">
+        <span data-action="close">${__icons.back}</span>
+        <h3>Thông tin cá nhân</h3>
+      </div>
+      <div class="account__overview">
+        <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647397717026.jpeg)">
+          <div>
+            <div class="loyalty__info">
+              <h3>name</h3>
+              <p>GOLD MEMBER</p>
+            </div>
+            <div class="loyalty__point">
+              <h3>Tiêu dùng: 2.000.000</h3>
+              <p>Điểm thưởng: 200</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="account__form">
+        <label>
+            <p>Họ và tên</p>
+            <input type="text"/>
+        </label>
+        <label>
+            <p>Email</p>
+            <input type="email"/>
+        </label>
+        <label>
+            <p>Số điện thoại</p>
+            <input type="text"/>
+        </label>
+        <label>
+            <p>Địa chỉ</p>
+            <textarea></textarea>
+        </label>
+      </div>
+    `;
+    let back_btn = div.querySelector('[data-action="close"]');
+    back_btn.addEventListener('click',(e)=> {
+      this.close();
+    })
+    return div;
+  },
+
+  voucher_modal() {
+    let div = document.createElement('div');
+    div.className = "voucher__modal";
+    div.innerHTML = `
+    <div class="voucher__header">
+      <span data-action="close">${__icons.back}</span>
+      <h3>Mã giảm giá</h3>
+    </div>
+    <ul class="voucher__list">
+      <li class="voucher__item">
+        <div class="voucher__item--img">
+          <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
+        </div>
+        <div class="voucher__item--info">
+          <h3>SSST1503A</h3>
+          <p>Giảm 100% max 50k</p>
+          <small>HSD: 12/3/2022 - 12/4/2022 </small>
+
+        </div>
+      </li>
+      <li class="voucher__item">
+        <div class="voucher__item--img">
+          <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
+        </div>
+        <div class="voucher__item--info">
+          <h3>SSST1503A</h3>
+          <p>Giảm 100% max 50k</p>
+          <small>HSD: 12/3/2022 - 12/4/2022 </small>
+
+        </div>
+      </li>
+      <li class="voucher__item">
+        <div class="voucher__item--img">
+          <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
+        </div>
+        <div class="voucher__item--info">
+          <h3>SSST1503A</h3>
+          <p>Giảm 100% max 50k</p>
+          <small>HSD: 12/3/2022 - 12/4/2022 </small>
+        </div>
+      </li>
+    <ul>
+    `;
+    let back_btn = div.querySelector('[data-action="close"]');
+    back_btn.addEventListener('click',(e)=> {
+      this.close();
+    })
+    return div
+  },
+  history_modal() {
+    let div = document.createElement('div');
+    div.className = "history__modal";
+    div.innerHTML = `
+    <div class="history__header">
+      <span data-action="close">${__icons.back}</span>
+      <h3>Thông tin cá nhân</h3>
+    </div>
+    `;
+    let back_btn = div.querySelector('[data-action="close"]');
+    back_btn.addEventListener('click',(e)=> {
+      this.close();
+    })
+    return div
+  },
+  order_modal() {
+    let div = document.createElement('div');
+    div.className = "order__modal";
+    div.innerHTML = `
+    <div class="order__header">
+      <span data-action="close">${__icons.back}</span>
+      <h3>Quản lý đơn hàng</h3>
+    </div>
+    <ul class="order__list">
+      <li data-id="1" class="order__list--item">
+        <h5>Đơn hàng: 12345678910JQK</h5>
+        <div class="order__item--info">
+          <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
+          <div>
+            <h5>name</h5>
+            <small>variation</small>
+          </div>
+        </div>
+        <div class="see__more"><button>Xem thêm</button></div>
+      </li>
+      <li data-id="1" class="order__list--item">
+        <h5>Đơn hàng: 12345678910JQK</h5>
+        <div class="order__item--info">
+          <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
+          <div>
+            <h5>name</h5>
+            <small>variation</small>
+          </div>
+        </div>
+        <div class="see__more"><button>Xem thêm</button></div>
+      </li>
+    </ul>
+    `;
+    
+    let back_btn = div.querySelector('[data-action="close"]');
+    back_btn.addEventListener('click',(e)=> {
+      this.close();
+    })
+
+    let show_order_detail = () => {
+      let order_list = div.querySelectorAll(".order__list--item");
+      order_list.forEach(item => {
+        item.addEventListener('click',(e) => {
+            this.overlay({content: this.order_detail()})
+        })
+      })
+    };
+  show_order_detail();
+    return div
+  },
+  setting_modal() {
+    let div = document.createElement('div');
+    div.className = "setting__modal";
+    div.innerHTML = `
+    <div class="setting__header">
+      <span data-action="close">${__icons.back}</span>
+      <h3>Cài đặt</h3>
+    </div>
+    <div class="setting__menu">
+      <ul>
+        <li>Đổi mật khẩu </li>
+        <li>Liên kết thẻ ngân hàng</li>
+        <li>Hỗ trợ</li>
+      </ul>
+    </div>
+    `;
+    let back_btn = div.querySelector('[data-action="close"]');
+    back_btn.addEventListener('click',(e)=> {
+      this.close();
+    })
+    return div;
+  },
+
+  order_detail () {
+    let div = document.createElement('div');
+    div.className = "order__detail--modal";
+    div.innerHTML = `
+      <h5>Đơn hàng: 12345678910JQK</h5>
+      <div class="order__info">
+        <h1>Thông tin</h1>
+        <div class="overview">
+            <p>Khách hàng : Nguyễn Minh Duông</p>
+            <p>Điện thoại : 0966868496</p>
+            <p>Địa chỉ nhận hàng : Số 17 ngõ 238/106 Cổ Bi, Gia Lâm, Hà Nội</p>
+        </div>
+        <div class="purchase__list">
+          <div class="class="glide__track" data-glide-el="track"">
+            <ul class="glide__slides">
+              <li class="glide__slide">
+                <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
+                <div class="item__info">
+                  <h5>name</h5>
+                  <small>variation</small>
+                  <div><p>200.000</p><em>x5</em></div>
+                </div>
+                <div class="item__total">Total : <strong>1.000.000</strong></div>
+              </li>
+              <li>
+                <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
+                <div class="item__info">
+                  <h5>name</h5>
+                  <small>variation</small>
+                  <div><p>200.000</p><em>x5</em></div>
+                </div>
+                <div class="item__total">Total : <strong>1.000.000</strong></div>
+              </li>
+            </ul>
+          </div>
+        </div> 
+        <div class="total__bill">
+          <h1>Tổng hoá đơn:</h1>
+          <strong>2.000.000</strong>
+        </div>
+      </div>
+      <div class="order__tracking">
+      <h1>Hành trình</h1>
+        <ul>
+          <li class="active">
+            <i>13/2/2022</i>
+            <p>Đang chuẩn bị hàng</p>          
+          </li>
+          <li>
+            <i>13/2/2022</i>
+            <p>Đang giao cho hãng vận chuyển</p>          
+          </li>
+        </ul>
+      </div>
+    `;
+    setTimeout(() => {
+      new Glide(".purchase__list", {
+        type: "carousel",
+        perView: 1,
+        peek: {
+          before : 0,
+          after : 50
+        },
+        autoplay: 5000,
+      }).mount();
+    }, 100);
+    return div;
+  },
+
+  logout_modal () {
+    let div = document.createElement('div');
+    div.className = "logout__modal";
+    div.innerHTML = `
+      <h3>Bạn có muốn đăng xuất</h3>
+      <div>
+        <button data-action="logout">Đăng xuất</button>
+        <button data-action="close">Huỷ</button>
+      </div>
+    `;
+    let logout = div.querySelector('[data-action="logout"]');
+    let back_btn = div.querySelector('[data-action="close"]');
+    back_btn.addEventListener('click',(e)=> {
+      this.close();
+    })
+
+    logout.addEventListener('click',(e)=> {
+      window.location.href = '/'
+    })
+    
+    return div;
+  }
 };

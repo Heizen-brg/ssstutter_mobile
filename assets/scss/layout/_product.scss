@@ -39,6 +39,7 @@
     position: relative;
     a {
       width: 100%;
+      display: block;
       span {
         @include ratio(4, 5);
         background-color: rgba($color: $light, $alpha: 0.6);

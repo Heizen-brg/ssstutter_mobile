@@ -198,7 +198,27 @@ app.get("/history", (req, res, next) => {
   res.setHeader("Content-Type", "text/html");
   res.send(
     client_view.html({
-      title: "LỊCH SỬ",
+      title: "SSSTUTTER - ĐÃ XEM GẦN ĐÂY",
+      command: "",
+    })
+  );
+});
+
+app.get("/loyalty", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "LOYALTY",
+      command: "",
+    })
+  );
+});
+
+app.get("/login", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "SSSTUTTER - LOGIN",
       command: "",
     })
   );

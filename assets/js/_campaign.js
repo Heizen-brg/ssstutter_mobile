@@ -14,7 +14,7 @@ export const __templates_campaign = {
     <h2>${params.title}</h2>
     <p>Kêt thúc trong</p>
     <div class="clock"></div>
-    <p>${params.description}</p>
+    ${params.description ? `<p>${params.description}</p>`: ''}
     <a href="#sale_products">Khám phá ngay</a>
     `;
  let clock_div = div.querySelector(".clock");

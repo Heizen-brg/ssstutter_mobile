@@ -1,9 +1,69 @@
+.status__bar {
+  @include grid(50px 1fr 50px , null,10px);
+  @include shadow_box;
+  align-items: center;
+  padding:5px 10px;
+  .logo {
+    visibility: hidden;
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  .title {
+    @include font(x-large,center,500);
+  }
+  .menu {
+    @include flex(row,flex-end,center); 
+      div {
+        padding: 5px;
+        position: relative;
+        span {
+          position: absolute;
+          right: -5px;
+          bottom: 0;
+          font-size: 10px;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+        }
+        svg {
+          width: 17px;
+          height: 17px;
+        }
+      }
+    }
+  }
+  .promotion__popup {
+    a {
+      background-color: $black;
+      color: $white;
+      width: 100%;
+      p {
+        text-align: center;
+        padding: 10px;
+        font-size: x-small;
+        letter-spacing: 1.2px;
+      }
+      .clock {
+        @include flex(row, center, center);
+        div {
+          margin: 0 10px;
+          span {
+            @include font(medium, center, 600);
+            margin-right: 5px;
+            
+          }
+        }
+      }
+    }
+  }
 .header {
   @include position(fixed, 0, null, null, 0);
-  @include shadow_box;
   width: 100%;
-  height: 60px;
+  height: 50px;
   z-index: 100;
+
   .nav {
     @include transition();
     // @include shadow(1px, 1px, 4px, $light);
@@ -17,16 +77,7 @@
     svg {
       fill: #585858;
     }
-    &:hover {
-      box-shadow: 1px 4px 1px 4px $light;
-      background-color: $white;
-      a {
-        color: #585858;
-      }
-      svg {
-        fill: #585858;
-      }
-    }
+
     // &.deactive {
     //   background-color: transparent;
     //   box-shadow: none;
@@ -49,34 +100,11 @@
     //     }
     //   }
     // }
-    &__popup {
-      @include grid();
-      &--items {
-        a {
-          background-color: $black;
-          color: $white;
-          @include grid(200px 1fr 300px, null, 0);
-          align-items: center;
-          p {
-            text-align: center;
-            padding: 5px;
-          }
-          .clock {
-            @include flex(row, center, center);
-            div {
-              margin: 0 10px;
-              span {
-                @include font(medium, center, 600);
-                margin-right: 5px;
-              }
-            }
-          }
-        }
-      }
-    }
+
     &__left {
       @include grid();
       place-content: center;
+      height: 100%;
       &--items {
         @include flex(row, flex-start, center);
         div {
@@ -86,20 +114,26 @@
           letter-spacing: 1.3px;
           margin: 0 15px;
           position: relative;
-          color: #585858;
+          color: $silver;
           a {
-            @include font(13px, center, 500);
-            color: #585858;
+            @include font(12px, center, 500);
+            color: $silver;
+            svg {
+              fill: $silver;
+            }
           }
           &.active {
             color: $black;
-            border-radius: 6px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            background: #ffffff;
-            box-shadow: inset 5px -5px 10px #dbdbdb, inset 5px 5px 10px #ffffff;
+            // border-radius: 6px;
+            // border-top-left-radius: 0;
+            // border-top-right-radius: 0;
+            // background: #ffffff;
+            // box-shadow: inset 5px -5px 10px #dbdbdb, inset 5px 5px 10px #ffffff;
             svg {
               fill: $black;
+            }
+            a {
+              color: $black;
             }
           }
         }
@@ -148,7 +182,7 @@
     bottom: -9999px;
     right: 0;
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 50px);
     background-color: rgba($white, 0.95);
     &--title {
       @include flex(row, space-between, center);
@@ -437,7 +471,8 @@
     bottom: 0;
     .nav {
       svg {
-        width: 24px;
+        width: 17px;
+        height: 17px;
       }
       // box-shadow: 0 2px 5px 0 $light;
       // grid-template-columns: 0.5fr 1fr 0.5fr;
@@ -463,21 +498,22 @@
       &__left {
         place-content: initial;
         &--items {
-          @include grid(repeat(5, 1fr), null, 0);
+          @include grid(repeat(4, 1fr), null, 0);
           place-items: center;
           div {
-            @include flex(row, center, center);
+            @include flex(column, center, center);
             @include border(transparent, 4px);
             @include transition;
             position: relative;
-            padding: 10px;
+            padding: 5px 10px;
             margin: 0;
-            width: 50px;
-            height: 50px;
-            > a {
-              @include grid(1fr, null, null);
-              place-content: center;
+            p {
+              @include font(xx-small,center,500);
             }
+            // > a {
+            //   @include grid(1fr, null, null);
+            //   place-content: center;
+            // }
             > span {
               position: absolute;
               left: 40px;
@@ -593,7 +629,7 @@
   }
   .search__container {
     padding: 0;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 50px);
     overflow: auto;
 
     &.active {
@@ -616,7 +652,7 @@
     }
   }
   .cart__container {
-    height: calc(100vh - 60px);
+    height: calc(100vh - 50px);
     &.active {
       @include fade-up;
     }

@@ -3,7 +3,6 @@ import { __icons } from "./share/_icons.js";
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import { __currency_format } from "./share/_function.js";
-
 export const __templates_home = {
     hide_menu() {
       let gender = document.querySelectorAll("[data-gender]");
@@ -22,11 +21,11 @@ export const __templates_home = {
           container.classList.remove("active");
       });
     },
-    banner() {
+  banner() {
       let section = document.createElement("section");
       section.className = "slide__banner";
       section.innerHTML = `
-      <div class="glide">
+      <div class="glide" id="banner_glide">
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides banner__container">
           
@@ -62,7 +61,7 @@ export const __templates_home = {
             .join("");
           banner_container.innerHTML = banner_item;
           setTimeout(() => {
-            new Glide(".glide", {
+            new Glide("#banner_glide", {
               type: "slider",
               perView: 1,
               autoplay: 5000,
@@ -126,21 +125,6 @@ export const __templates_home = {
     return section;
   },
 
-  /*
-  home_video() {
-    let div = document.createElement("section");
-    div.classList.add("home-video");
-    div.innerHTML = `
-    <div class="video">
-      <video autoplay playsinline muted loop>
-        <source type="video/mp4" src="/assets/img/SSSTUTTER_Leak_01.mp4">
-      </video>
-    </div>
-    `;
-
-    // return div;
-  },
-  */
 
   categories() {
     let section = document.createElement("section");
@@ -155,7 +139,7 @@ export const __templates_home = {
         let cat_item = (data || [])
           .map((item) => {
             return `
-          <div><a href="${item.slug}" class="categories__banner" style="background-image:url(https://sss-dashboard.leanservices.work/${item.thumbnail}.jpeg)"></a></div>
+          <div><a href="${item.slug}">${item.title}</a></div>
           `;
           })
           .join("");
@@ -164,6 +148,7 @@ export const __templates_home = {
     );
     return section;
   },
+
   new_arrivals(product = {}) {
     let section = document.createElement("section");
     section.className = "new-arrivals__slide";
@@ -266,24 +251,12 @@ export const __templates_home = {
     });
     return section;
   },
+
   mobile_new_arrivals() {
     let section = document.createElement("section");
     section.className = "new-arrivals__slide";
     section.innerHTML = `
-      <h2><a href="/">what's new</a></h2>
-      <div class="gender__toggle">
-        <button class="active" data-cate="3vvRIM">For Him</button>
-        <button data-cate="y8Q15I">For Her</button>
-      </div>
-      <div class="products__slider">
-        <div class="glide active" id="mobile_new_arrivals">
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
-                ${__templates.busy_loading("show")}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <a href="/c/for-him" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647935739373.jpeg)"></a>
     `;
     let init_new_arrivals = (params = "3vvRIM") => {
       __requests(
@@ -311,22 +284,22 @@ export const __templates_home = {
               </div>
               <div class="detail">
                 <div class="info">
-                  <h6 class="name">${item.name.toLowerCase()}</h6>
+                  <h6 class="name">${next_item.name.toLowerCase()}</h6>
                   <div class="price">
                     ${
-                      item.salePrice
-                        ? `<p>${__currency_format(item.salePrice)}</p>
-                      <p class="discount">${__currency_format(item.price)}</p> `
-                        : `<p>${__currency_format(item.price)}</p>`
+                      next_item.salePrice
+                        ? `<p>${__currency_format(next_item.salePrice)}</p>
+                      <p class="discount">${__currency_format(next_item.price)}</p> `
+                        : `<p>${__currency_format(next_item.price)}</p>`
                     }
                   </div>
                   ${
-                    item.salePrice || item.salePrice === 0
-                      ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
+                    next_item.salePrice || next_item.salePrice === 0
+                      ? `<p class="tag">${Math.floor(100 - (next_item.salePrice / next_item.price) * 100)}%</p>`
                       : ""
                   }
                   <div class="color">
-                    <p>+${item.color.length} màu</p>
+                    <p>+${next_item.color.length} màu</p>
                   </div>
                 </div>
               </div>
@@ -375,7 +348,7 @@ export const __templates_home = {
             type: "slider",
             bound: true,
             perView: 2,
-            autoplay: 5000,
+            autoplay: 3000,
             gap: 10,
             hoverpause: true,
             peek: {
@@ -399,7 +372,7 @@ export const __templates_home = {
       );
     };
 
-    init_new_arrivals();
+    // init_new_arrivals();
 
 
     let toggle_gender = section.querySelectorAll("[data-cate]");
@@ -413,11 +386,12 @@ export const __templates_home = {
 
     return section;
   },
+
   stylepick() {
     let section = document.createElement("section");
     section.className = "stylepick__slide";
     section.innerHTML = `
-      <h2>style pick</h2>
+      <h2>picker for you</h2>
       <div class="products__slider">
         <div class="glide active" id="stylepick">
           <div class="glide__track" data-glide-el="track">
@@ -431,10 +405,10 @@ export const __templates_home = {
     __requests(
       {
         method: "GET",
-        url: "https://sss-dashboard.leanservices.work/w/section/detail?type=style_pick",
+        url: `https://api.ssstutter.com/product/filter/web?limit=10&sort=down&media=true&webStock=true`,
       },
       ({ data }) => {
-        let product = data.products
+        let product = data
           .map(
             (item) =>
               `
@@ -480,8 +454,8 @@ export const __templates_home = {
           type: "carousel",
           bound: true,
           perView: 3,
-          autoplay: 5000,
-          gap: 10,
+          autoplay: 4000,
+          gap: 1,
           hoverpause: true,
           breakpoints: {
             800: {
@@ -517,7 +491,7 @@ export const __templates_home = {
       __requests(
         {
           method: "GET",
-          url: `https://api.ssstutter.com/product/filter/web?limit=8&catId=${params}&sort=up&sortBy=stock&media=true&webStock=true`,
+          url: `https://api.ssstutter.com/product/filter/web?limit=6&catId=${params}&sort=up&sortBy=stock&media=true&webStock=true`,
         },
         ({ data }) => {
           let products = data
@@ -529,27 +503,6 @@ export const __templates_home = {
                   <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
                 item.extensions.media.featured
               })"></span></a>
-                </div>
-                <div class="detail">
-                  <div class="info">
-                    <h6 class="name">${item.name.toLowerCase()}</h6>
-                    <div class="price">
-                      ${
-                        item.salePrice
-                          ? `<p>${__currency_format(item.salePrice)}</p>
-                        <p class="discount">${__currency_format(item.price)}</p> `
-                          : `<p>${__currency_format(item.price)}</p>`
-                      }
-                    </div>
-                    ${
-                      item.salePrice || item.salePrice === 0
-                        ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
-                        : ""
-                    }
-                    <div class="color">
-                      <p>+${item.color.length} màu</p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </li>`
@@ -605,4 +558,23 @@ export const __templates_home = {
     );
     return section;
   },
-};
+  instagram() {
+    let section = document.createElement('section');
+    section.className = "instagram__feed";
+    section.innerHTML = `
+      <h2>instagram</h2>
+      <div id="instafeed"></div>
+    `;
+    setTimeout(() => {
+      var feed = new Instafeed({
+        accessToken: `IGQVJWQ3RYaWhySFJxTmdJYWhHNDBzRUxVN1djRG9yV2RtWUROZAkpyZA3hrcWNWckh3OUFxdGtRVGtYbkdMMmpRbHNkVEpMNm01NEdmeWRhUTNBdV9TU1NFQ1ZAVcHRZANXhPV2cyV0ozVTJWSlFTX0t4QQZDZD`,
+        limit : 9,
+        template : '<a href="{{link}}" style="background-image:url({{image}})"></a>'	
+      });
+      
+      feed.run();
+     
+    }, 100);
+    return section;
+  }
+}

@@ -158,13 +158,13 @@ iframe {
 }
 a {
   text-decoration: none;
-  color: #585858;
+  color: $silver;
   display: inline-block;
   cursor: pointer;
   // font-family: "Roboto", sans-serif;
 }
 a:visited {
-  color: #585858;
+  color: $silver;
 }
 
 h1,

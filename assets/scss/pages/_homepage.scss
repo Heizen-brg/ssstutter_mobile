@@ -34,81 +34,80 @@
 
   .categories__banner {
     @include grid(repeat(2, 1fr), 1fr, 10px);
-    padding: 20px 0;
-    @media (min-width: 768px) {
-      @include grid(repeat(2, 1fr), 1fr, 20px);
-    }
+    padding: 10px 0;
     div {
-      a {
-        @include ratio(7, 4);
-        @include transition;
-        background-color: rgba($color: black, $alpha: 0.2);
-        background-blend-mode: normal;
-        &:hover {
-          background-blend-mode: multiply;
-        }
-      }
+     a {
+       @include font(medium,center,600);
+       width: 100%;
+       color: $silver;
+       text-transform: capitalize;
+     }
     }
   }
 
   .new-arrivals__slide {
     // padding: 5%;
-    padding: 25px 0;
+    padding: 10px;
+    background-color: $light;
     @media (min-width: 768px) {
       padding: 25px 10px;
     }
     @media (min-width: 1024px) {
       padding: 5%;
     }
-    h2 {
-      @include font(3rem, center, bold);
-      cursor: pointer;
+    a {
+      @include ratio(16,9);
+      display: block;
     }
-    .gender__toggle {
-      @include flex(row, center, center);
-      margin: 20px 0;
-      button {
-        @include font(medium, center, 600);
-        border: thin solid transparent;
-        background-color: transparent;
-        margin: 0 10px;
-        padding: 10px;
-        position: relative;
-        &::before {
-          @include position(absolute, 0, 0, null, null);
-          content: "";
-          width: 5px;
-          height: 5px;
-          background-color: $red;
-          border-radius: 50px;
-          opacity: 0;
-          @include transition;
-        }
-        &::after {
-          @include position(absolute, null, null, 0, 0);
-          content: "";
-          width: 0%;
-          height: 3px;
-          background-color: $black;
-          border-radius: 4px;
-          @include transition;
-        }
-        &.active,
-        &:hover {
-          &::before {
-            opacity: 1;
-          }
-          &::after {
-            width: 100%;
-          }
-        }
-      }
-    }
+    // h2 {
+    //   @include font(3rem, center, bold);
+    //   cursor: pointer;
+    // }
+    // .gender__toggle {
+    //   @include flex(row, center, center);
+    //   margin: 20px 0;
+    //   button {
+    //     @include font(medium, center, 600);
+    //     border: thin solid transparent;
+    //     background-color: transparent;
+    //     margin: 0 10px;
+    //     padding: 10px;
+    //     position: relative;
+    //     &::before {
+    //       @include position(absolute, 0, 0, null, null);
+    //       content: "";
+    //       width: 5px;
+    //       height: 5px;
+    //       background-color: $red;
+    //       border-radius: 50px;
+    //       opacity: 0;
+    //       @include transition;
+    //     }
+    //     &::after {
+    //       @include position(absolute, null, null, 0, 0);
+    //       content: "";
+    //       width: 0%;
+    //       height: 3px;
+    //       background-color: $black;
+    //       border-radius: 4px;
+    //       @include transition;
+    //     }
+    //     &.active,
+    //     &:hover {
+    //       &::before {
+    //         opacity: 1;
+    //       }
+    //       &::after {
+    //         width: 100%;
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   .stylepick__slide {
     padding: 5%;
-    background-color: #adbabf;
+    background-color: #a79e8d;
     h2 {
       @include font(3rem, center, bold);
       color: $white;
@@ -124,6 +123,9 @@
         .discount {
           color: $white;
         }
+      }
+      .color {
+        color: $white;
       }
     }
   }
@@ -483,21 +485,30 @@
     .stylepick__slide {
       padding: 5% 0;
       h2 {
-        @include font(x-large, center, bold);
+        @include font(large, center, bold);
         margin: 5% 0;
       }
     }
     .weekly__best {
       h2 {
-        @include font(x-large, center, bold);
+        @include font(large, center, bold);
       }
       ul {
-        @include grid(repeat(auto-fit, minmax(45%, 1fr)), null, 10px);
+        @include grid(repeat(auto-fit, minmax(30%, 1fr)), null, 5px);
+        li {
+          &:first-child {
+           grid-row: span 2;
+           grid-column: span 2;
+          }
+        }
+        .product {
+          margin: 0;
+        }
       }
     }
     .blog {
       h2 {
-        @include font(x-large, center, bold);
+        @include font(large, center, bold);
         margin: 0 0 5%;
       }
       .blog__list {
@@ -508,16 +519,29 @@
           &:nth-child(even) {
             margin-top: 0;
           }
+          a {
+            p {
+              font-size: small;
+            }
+          }
         }
       }
     }
-    .lookbook {
-      margin-top: 50px;
-      padding: 5% 0;
+    .instagram__feed {
+      padding: 10px;
       h2 {
-        @include font(x-large, center, bold);
-        margin: 5%;
+        @include font(large, center, bold);
+        margin: 0 0 5%;
       }
+      div {
+        @include grid(repeat(3, 1fr),null, 5px);
+        width: 100%;
+        a {
+          display: block;
+          @include ratio(1,1);
+        }
+      }
+
     }
   }
 }

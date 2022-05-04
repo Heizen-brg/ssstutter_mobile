@@ -31,22 +31,9 @@ export const __templates_history = {
               item.extensions.media.featured ? item.extensions.media.featured : "no_image.png"
             })"></span></a>
             </div>
-            <div class="detail">
-              <div class="info">
-                <h6 class="name">${item.name.toLowerCase()}</h6>
-                <div class="price">
-                  ${item.salePrice ? `<p>${__currency_format(item.salePrice)}</p><p class="discount">${__currency_format(item.price)}</p> `: `<p>${__currency_format(item.price)}</p>`}
-                </div>
-                ${item.salePrice || item.salePrice === 0 ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`: ""}
-                <div class="color">
-                  <p>+${item.color.length} màu</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </li>
         `;
-      }).join('');
+      }).reverse().join('');
       history_container.innerHTML = products;
           };
        

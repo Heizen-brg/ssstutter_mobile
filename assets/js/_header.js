@@ -39,6 +39,32 @@ export const __templates_header = {
         : container.classList.remove("active");
     });
   },
+  statusbar(params ={}) {
+    let div = document.createElement("div");
+    div.className = "status__bar";
+    div.innerHTML = `
+    <div class="logo">${__icons.ssstutter}</div>
+    <div class="title">ssstutter</div>
+    <div class="menu">
+      <div data-active="" data-action="search"><a>${__icons.search}</a></div>
+      <div data-active="" data-action="cart"><a>${__icons.shopping}</a><span data-toggle="cart_toggle"></span></div>
+    </div>
+    `;
+    let menu = div.querySelectorAll("[data-action]");
+    menu.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          if (item.classList.contains("active")) {
+            this.hide_menu();
+          } else {
+            this.hide_menu();
+            this.show_menu(item);
+          }
+        });
+    });
+    let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
+    __show_cart_quantity(cart_quantity);
+    return div;
+  },
 
   header(params = {}) {
     let header = document.createElement("header");
@@ -47,6 +73,7 @@ export const __templates_header = {
     <div class="nav__popup"></div>
     <div class="nav">
         <div class="nav__left"></div>
+        <div class="nav__right"></div>
       </div>
       <div class="side__nav" data-menu="side_nav">
         <div class="side__nav--title">
@@ -97,11 +124,10 @@ export const __templates_header = {
     let div = document.createElement("div");
     div.className = "nav__left--items";
       div.innerHTML = `
-      <div data-active="" data-action="home" class="${params.home}"><a href="https://m.ssstutter.com/">${__icons.home}</a></div>
-      <div data-active="" data-action="history" class="${params.history}"><a href="/history">${__icons.history}</a></div>
-      <div data-active="" data-action="search">${__icons.search}</div>
-      <div data-active="" data-action="cart">${__icons.cart}<span data-toggle="cart_toggle"></span></div>
-      <div data-active="" data-action="side_nav">${__icons.nav}</div>
+      <div data-active="" data-action="home" class="${params.home}"><a href="https://m.ssstutter.com/">${__icons.home} <p>home</p></a></div>
+      <div data-active="" data-action="history" class="${params.history}"><a href="/history">${__icons.history} <p>history</p></a></div>
+      <div data-active="" data-action="loyalty" class="${params.loyalty}"><a href="/login">${__icons.user} <p>user</p></a></div>
+      <div data-active="" data-action="side_nav"><a>${__icons.nav} <p>menu</p></a></div>
     `;
     let menu = div.querySelectorAll("[data-action]");
     menu.forEach((item) => {
@@ -114,8 +140,7 @@ export const __templates_header = {
           }
         });
     });
-    let cart_quantity = div.querySelector('[data-toggle="cart_toggle"]');
-    // __show_cart_quantity(cart_quantity);
+
     return div;
   },
 
@@ -144,11 +169,11 @@ export const __templates_header = {
 
   popup(params = {}) {
     let div = document.createElement("div");
-    div.className = "nav__popup--items";
+    div.className = "promotion__popup";
     div.innerHTML = `
-      <a href="/campaign/friends-day">
+      <a>
         <div></div>
-        <p>FRIENDS DAY - Ưu đãi Ngày bạn bè: Đồng giá 199.000 cho áo thun - Quần Short</p>
+        <p>Free ship cho hoá đơn trên 600k</p>
         <div class="clock"></div>
       </a>
     `;
