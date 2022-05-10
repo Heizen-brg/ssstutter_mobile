@@ -1,4 +1,4 @@
-import { __requests } from "../main.js";
+import { __render, __requests } from "../main.js";
 import { __templates } from "./_components.js";
 import { __icons } from "./_icons.js";
 import { CONFIG } from "../config.js";
@@ -423,6 +423,7 @@ export const __get_voucher = (params, callback) => {
         customerPhone: params.customerPhone || "",
         items: products,
         discountCode: params.discountCode || [],
+        source : 'app'
       }),
     },
     ({ data, error }) => {
@@ -453,7 +454,7 @@ export const __get_voucher = (params, callback) => {
   );
 };
 
-export const __calc_final_amount = (div) => {
+export const __calc_final_amount = (div, callback) => {
   let purchase_amount = document.querySelector('[data-amount="purchase"]');
   let discount_amount = document.querySelector('[data-amount="discount"]');
   let total_amount = document.querySelector('[data-amount="total"]');
@@ -474,7 +475,7 @@ export const __calc_final_amount = (div) => {
   //add gift box for black friday
   // let gift1 = localStorage.getItem("giftItem");
   // let gift2 = localStorage.getItem("giftItem2");
-  // let cart_selected = JSON.parse(localStorage.getItem("cartItem")) ? JSON.parse(localStorage.getItem("cartItem")) : [];
+  let cart_selected = JSON.parse(localStorage.getItem("cartItem")) ? JSON.parse(localStorage.getItem("cartItem")) : [];
   // let cart_quantity = cart_selected.reduce((total, current) => {
   //   if (current.catId && current.catId.includes("sGT8Q5")) return total;
   //   if (current.catId && current.catId.includes("kYx45S")) return total;
@@ -488,9 +489,9 @@ export const __calc_final_amount = (div) => {
   // if (giftDiv2) giftDiv2.remove();
   let li_gift = document.createElement("li");
   li_gift.className = "blackfriday__gift";
-  let promotion_sale = (text) => {
+  let promotion_sale = (text= '') => {
     li_gift.innerHTML = `
-    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/1-2022/1642388421877.jpeg)">
+    <a class="product__thumbnail" style="background-image:url(https://sss-dashboard.leanservices.work/upload/5-2022/1652090881676.jpeg)">
     </a>
     <div>
       <h6>QUÀ ƯU ĐÃI</h6>
@@ -499,18 +500,25 @@ export const __calc_final_amount = (div) => {
         <p>0</p>
       </div>
       <span class="product__variation">
-        <p>SSStutter sẽ gọi điện xác nhận đơn hàng và phần quà của bạn trong thời gian sớm nhất.</p>
+        <p>Ấn vào để chọn màu và size</p>
       </span>
     </div>
     `;
     cart_items.appendChild(li_gift);
+    li_gift.addEventListener('click',(e)=> {
+      __templates.api_loading('show');
+      __requests({
+        method : "GET",
+        url : `https://leanservices.work/pd/filter/web?webStock=true&id=i09nOsLTQCg1si1Cdbnk64BAS2J3sxPO&media=true`,
+      },({data}) => {
+        __templates.api_loading('hide');
+        __templates_modal.overlay({content : __templates_modal.promotion_gift_combo(data[0])})
+      })
+    })
   };
-  // if (final_amount >= 999000 && final_amount < 1499000) {
-  //   promotion_sale("PACK 02 TẤT PREMIUM SOCKS");
-  // } else if (final_amount >= 1499000) {
-  //   promotion_sale("PACK 02 TẤT PREMIUM SOCKS & 1 MŨ BẤT KỲ");
-  // }
-
+  if (final_amount>= 99000 &&!cart_selected.some(item => item.id == 'i09nOsLTQCg1si1Cdbnk64BAS2J3sxPO') ) {
+    promotion_sale('GREATE LIFE TEE')
+  }
   total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };
 

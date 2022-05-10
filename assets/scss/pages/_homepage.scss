@@ -528,10 +528,10 @@
       }
     }
     .instagram__feed {
-      padding: 10px;
+      padding: 5% 0;
       h2 {
         @include font(large, center, bold);
-        margin: 0 0 5%;
+        margin: 5% 0 ;
       }
       div {
         @include grid(repeat(3, 1fr),null, 5px);

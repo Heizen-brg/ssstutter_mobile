@@ -1,0 +1,210 @@
+.arrivals {
+    &__info {
+      padding: 2.5% 5% 0 5%;
+      h1 {
+        @include font(x-large, start, bold);
+      }
+      p {
+        margin-top: 15px;
+        color: #adadad;
+        margin-bottom: 40px;
+        line-height: 1.5;
+        @media (max-width: 1024px) {
+          max-width: 100%;
+        }
+      }
+    }
+    &__products {
+      width: 100%;
+      padding: 0 10px;
+      position: relative;
+      padding: 20px 5%;
+      .banner  {
+        span {
+          @include ratio(16,9);
+        }
+      }
+      >ul {
+        @include grid(repeat(auto-fill, minmax(20%, 1fr)), null, 10px);
+        position: relative;
+        @media (max-width: 1024px) {
+          @include grid(repeat(auto-fill, minmax(30%, 1fr)), null, 20px);
+        }
+        li {
+          width: 100%;
+        }
+        .empty_product {
+          width: 100%;
+          text-align: center;
+          position: absolute;
+          bottom: -10px;
+        }
+      }
+      .back__top {
+        @include border($white, 5px);
+        @include shadow_box();
+        display: grid;
+        padding: 5px;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: $white;
+        &:hover {
+          background-color: $light;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 769px) {
+    .arrivals {
+      display: flex;
+      flex-direction: column;
+      // grid-template-columns: auto;
+      padding-top: 70px;
+      position: relative;
+      grid-gap: 0;
+      .arrivals__info {
+        display: none;
+      }
+      .arrivals__list {
+        display: none;
+        position: absolute;
+        top: 100px;
+        left: 10px;
+        z-index: 1;
+        background: #fff;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+        overflow: auto;
+        max-height: 70vh;
+        // grid-area: 2 / 1 / 3 / 7;
+        padding: 15px 15px 8px;
+        border-bottom: thin solid $light;
+        ul {
+          display: block;
+          // @include grid(repeat(auto-fit, minmax(20%, 1fr)), null, 20px);
+          // @include hidden_scroll;
+          max-width: 100vw;
+          overflow: auto;
+        }
+        &.show {
+          display: block;
+        }
+      }
+      .arrivals__filter {
+        grid-area: auto;
+        grid-template-columns: auto;
+        order: 0;
+        padding: 0 15px;
+        .filter__toggle {
+          @include flex(row, start, center);
+          // display: inline-flex;
+          cursor: pointer;
+          .mobile-cate-trigger {
+            margin-right: auto;
+            font-family: serif;
+            font-size: 16px;
+            // max-width: 50%;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            svg {
+              width: 20px;
+              height: auto;
+              display: inline-block;
+              margin-left: 6px;
+              transform: translate(0, 4px);
+            }
+          }
+          span[data-toggle="filter"] {
+            display: flex;
+            align-items: center;
+            svg {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          svg {
+            margin-right: 6px;
+            padding: 3px;
+          }
+        }
+        .filter__list {
+          position: fixed;
+          width: 50%;
+          height: 100%;
+          top: 0;
+          left: -9999px;
+          background: $white;
+          z-index: 10;
+          @include transition;
+          &.active {
+            left: 0%;
+          }
+          ul {
+            padding: 100px 5%;
+          }
+          .filter__action {
+            @include flex(row, space-around, center);
+            margin-top: 20px;
+            button {
+              @include border($black, 4px);
+              padding: 10px 15px;
+              background-color: transparent;
+              width: 40%;
+            }
+          }
+        }
+      }
+      .arrivals__products {
+        // grid-area: 2 / 1 / 5 / 7;
+        grid-area: auto;
+        order: 1;
+        padding: 10px 0;
+      }
+      .footer {
+        order: 2;
+        margin-top: auto;
+      }
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .arrivals {
+      // padding-top: 0px;
+
+      .arrivals__products {
+        ul {
+          li {
+            &:first-child {
+              grid-column: 1/3;
+              .detail {
+                flex-direction: row;
+                .price {
+                  p {
+                    display: inline-block;
+                    &.discount {
+                      margin-left: 10px;
+                    }
+                  }
+                }
+              }
+            }
+            &:nth-child(5n + 1) {
+              grid-column: 1/3;
+              .detail {
+                flex-direction: row;
+                p {
+                  display: inline-block;
+                  &.discount {
+                    margin-left: 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

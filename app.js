@@ -116,7 +116,24 @@ app.get("/c/:slug", async (req, res, next) => {
     );
   }
 });
-
+app.get("/parisienne", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "PARISIENNE - SSSTUTTER",
+      command: "",
+    })
+  );
+});
+app.get("/new-arrivals", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "NEW ARRIVALS - SSSTUTTER",
+      command: "",
+    })
+  );
+});
 app.get("/p/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let product_data;
@@ -219,6 +236,16 @@ app.get("/login", (req, res, next) => {
   res.send(
     client_view.html({
       title: "SSSTUTTER - LOGIN",
+      command: "",
+    })
+  );
+});
+
+app.get("/register", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "SSSTUTTER - ĐĂNG KÝ",
       command: "",
     })
   );

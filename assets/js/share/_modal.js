@@ -1,3 +1,4 @@
+import { CONFIG } from "../config.js";
 import { __render, __requests } from "../main.js";
 import { __size_guide_data } from "./_data.js";
 import {
@@ -304,24 +305,217 @@ export const __templates_modal = {
 
     return div;
   },
-  promotion_book_combo() {
+  promotion_gift_combo(params) {
+    let info = params;
+    info.size = info.size.sort((a, b) => a - b);
     let div = document.createElement("div");
-    div.className = `book__promotion`;
+    div.className = `gift__promotion`;
     div.innerHTML = `
-      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637225147506.jpeg)">
+      <div class="featured" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${params.extensions.media.featured.replace(".jpeg", ".jpeg")})">
       </div>
+      <div class="info">
+        <h1>${info.name}</h1>
+        <div class="color">
+          <p>chọn màu : <strong class="color__name"> </strong></p>
+          <ul>
+          
+          </ul>
+        </div>
+        <div class="size">
+          <p>chọn size</p>
+          <ul>
+
+          </ul>
+        </div>
+        <div class="interact">
+          <button class="add"><h1>Thêm vào giỏ hàng</h1></button>
+        </div> 
+      </div>
+
     `;
-    if (window.innerWidth < 436) {
-      div.innerHTML = `
-      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219407036.jpeg)">
-      </div>
-      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219553094.jpeg)">
-      </div>
-      <div style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637219558465.jpeg)">
-      </div>
-      ${__icons.swipe_up}
-      `;
-    }
+    let user_selection = {
+      name: info.name,
+      media: info.extensions.media,
+      id: info.id,
+      catId: info.catId.join(""),
+      price: info.price,
+      salePrice: info.salePrice,
+      variation: info.variation[0],
+      color: info.color[0].value,
+      colorId: info.color[0].id,
+      colorName: info.color[0].name,
+      size: info.size[0],
+      slug: info.slug,
+      quantity: 1,
+    };
+    let init_size = (params) => {
+      user_selection.size = 0;
+      let size_wrapper = div.querySelector(".size > ul");
+      let size_arr = Object.values(info.variation)
+        .filter((i) => i.color === params)
+        .map((j) => {
+          return {
+            size: j.size,
+            isStock: j.isStock,
+          };
+        });
+      let size_render = size_arr
+        .sort((a, b) => a.size - b.size)
+        .map((i, index) => {
+          return `
+        <li><button data-index="${index}" class=" size__variation ${
+            index == 0 && info.variation[index].isStock ? "active" : ""
+          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+        })
+        .join("");
+      size_wrapper.innerHTML = size_render;
+      let size_variation = div.querySelectorAll(".size__variation");
+      size_variation.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          size_variation.forEach((btn) => btn.classList.remove("active"));
+          btn.classList.add("active");
+          user_selection.size = btn.dataset.value;
+        });
+      });
+    };
+    let on_change_variation = () => {
+      let color_variation = div.querySelectorAll(".color__variation");
+      color_variation.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          let product_gallery = div.querySelector(".featured");
+          let color_name_select = div.querySelector(".color__name");
+          let product = JSON.parse(btn.dataset.product);
+          let gallery = product.extensions.media;
+          let variation = product.variation;
+          let color = JSON.parse(btn.dataset.color);
+          // console.log(variation);
+          color_name_select.innerHTML = color.name;
+          color_variation.forEach((btn) => btn.classList.remove("active"));
+          btn.classList.add("active");
+          product_gallery.innerHTML = `
+          <ul>
+            ${(gallery[`color_${color.id}_gallery`] || [])
+              .map(
+                (img) =>
+                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
+              )
+              .join("")}
+          </ul>
+          `;
+          user_selection.color = color.value;
+          user_selection.colorName = color.name;
+          user_selection.colorId = color.id;
+          init_size(color.id);
+        });
+      });
+    };
+    let init_add_to_cart = (params) => {
+      let to_cart_btn = null;
+      // let gift_purchased = JSON.parse(localStorage.getItem("giftItem")) || "";
+      to_cart_btn = div.querySelector(".add");
+      to_cart_btn.addEventListener("click", (e) => {
+        let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
+          ? JSON.parse(localStorage.getItem("cartItem"))
+          : [];
+        let cart_menu = document.querySelector('[data-menu="cart"]');
+        let variation = params.variation;
+        e.preventDefault();
+        user_selection.variation = variation.find(
+          (item) => item.color == user_selection.colorId && item.size == user_selection.size
+        );
+        if (!user_selection.variation) {
+          __push_notification('fail', 'Vui lòng chọn màu và size')
+          return false
+        }
+        let new_selected_item = { ...user_selection };
+        let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
+        to_cart_btn.disabled = true;
+        if (product_in_cart) {
+          __requests(
+            {
+              method: "GET",
+              url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
+                product_in_cart.quantity + 1
+              }`,
+            },
+            ({ data }) => {
+              to_cart_btn.disabled = false;
+              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+              cart_selected = cart_selected.map((i) => {
+                if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+                return i;
+              });
+
+              localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+              cart_menu.classList.add("active");
+              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+              __get_voucher({ discountDiv: cart_menu });
+            }
+          );
+        } else {
+          
+          __requests(
+            {
+              method: "GET",
+              url: `product/variation/check-stock?id=${new_selected_item.variation.id}&stock=1`,
+            },
+            ({ data }) => {
+              to_cart_btn.disabled = false;
+              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!  Vui lòng chọn màu và size khác");
+              cart_selected.push(new_selected_item);
+
+              localStorage.setItem("cartItem", JSON.stringify(cart_selected));
+              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
+              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+              __get_voucher({ discountDiv: cart_menu });
+              this.close();
+            }
+          );
+        }
+      });
+    };
+    let init_flatlay_img = (value) => {
+      let media = info.extensions.media;
+      let colors_arr = info.color;
+      let color_value = colors_arr.map((color) => {
+        return {
+          id: color.id,
+          name: color.name,
+          value: color.value,
+          photo: media[`color_${color.id}_thumbnail`],
+        };
+      });
+      color_value.map((item, index) => {
+        let isStock = Object.values(info.variation)
+          .filter((i) => i.color === item.id)
+          .some((i) => i.isStock);
+        if (!info.preOrder && !isStock) return;
+        let flat_color = document.createElement("li");
+        flat_color.innerHTML = `
+        <button 
+          class="color__variation 
+          ${index == 0 && info.variation[index].isStock ? "active" : ""}" 
+          data-product='${JSON.stringify(info).replace("'", "")}'
+          data-color='${JSON.stringify(item)}'
+          data-index="${index}"
+          style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+          item.photo == null ? "no_image.png" : item.photo.x400.replace(".jpeg", ".jpeg")
+        })"
+        >
+        </button>
+        `;
+        let color_variation = div.querySelector(".color > ul");
+        color_variation.appendChild(flat_color);
+        if (index == 0) init_size(item.id);
+        return flat_color;
+      });
+    };
+    init_flatlay_img();
+    on_change_variation();
+    init_add_to_cart(info);
     return div;
   },
   lookbook_detail(params) {
@@ -508,6 +702,7 @@ export const __templates_modal = {
     });
     return div;
   },
+
   campaign_guide_modal(data) {
     let div = document.createElement("div");
     div.className = "campaign__guide";
@@ -545,7 +740,7 @@ export const __templates_modal = {
   },
 
   //loyalty modal
-  account_modal() {
+  account_modal(params) {
     let div = document.createElement('div');
     div.className = "loyalty__account";
     div.innerHTML = `
@@ -555,14 +750,15 @@ export const __templates_modal = {
       </div>
       <div class="account__overview">
         <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647397717026.jpeg)">
+          <img class="barcode" id="account_barcode"/>
           <div>
             <div class="loyalty__info">
-              <h3>name</h3>
-              <p>GOLD MEMBER</p>
+              <h3>${params.name}</h3>
+              <p>${params.grade}</p>
             </div>
             <div class="loyalty__point">
-              <h3>Tiêu dùng: 2.000.000</h3>
-              <p>Điểm thưởng: 200</p>
+              <h3>Tiêu dùng: ${params.totalPayment}</h3>
+              <p>Điểm thưởng: ${params.totalPoint}</p>
             </div>
           </div>
         </div>
@@ -570,19 +766,19 @@ export const __templates_modal = {
       <div class="account__form">
         <label>
             <p>Họ và tên</p>
-            <input type="text"/>
+            <input type="text" value="${params.name}"/>
         </label>
         <label>
             <p>Email</p>
-            <input type="email"/>
+            <input type="email" value="${params.email}"/>
         </label>
         <label>
             <p>Số điện thoại</p>
-            <input type="text"/>
+            <input type="number" value="${params.phone}"/>
         </label>
         <label>
             <p>Địa chỉ</p>
-            <textarea></textarea>
+            <textarea value="${params.address}"></textarea>
         </label>
       </div>
     `;
@@ -590,10 +786,20 @@ export const __templates_modal = {
     back_btn.addEventListener('click',(e)=> {
       this.close();
     })
+    setTimeout(() => {
+      JsBarcode("#account_barcode", params.id, {
+        width:2,
+        height:20,
+        background : 'transparent',
+        lineColor : 'black',
+        displayValue: false
+
+      });
+    }, 100);
     return div;
   },
 
-  voucher_modal() {
+  voucher_modal(params) {
     let div = document.createElement('div');
     div.className = "voucher__modal";
     div.innerHTML = `
@@ -657,7 +863,7 @@ export const __templates_modal = {
     })
     return div
   },
-  order_modal() {
+  order_modal(params) {
     let div = document.createElement('div');
     div.className = "order__modal";
     div.innerHTML = `
@@ -707,7 +913,7 @@ export const __templates_modal = {
   show_order_detail();
     return div
   },
-  setting_modal() {
+  setting_modal(params) {
     let div = document.createElement('div');
     div.className = "setting__modal";
     div.innerHTML = `
@@ -730,7 +936,7 @@ export const __templates_modal = {
     return div;
   },
 
-  order_detail () {
+  order_detail (params) {
     let div = document.createElement('div');
     div.className = "order__detail--modal";
     div.innerHTML = `

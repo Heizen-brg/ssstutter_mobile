@@ -1,6 +1,24 @@
 .login__form {
   @include grid(1fr , null ,50px);
   padding: 30% 20%;
+  .coming__soon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $white;
+    @include grid(1fr,null,0);
+    padding: 2%;
+    place-content: center;
+    h1 {
+      @include font(large,center,700);
+      margin-bottom: 40px;
+    }
+    p {
+      @include font(medium,center,500);
+    }
+  }
   &--logo {
     place-self: center;
     svg {
@@ -27,6 +45,9 @@
       &:focus {
         background-color: $light;
       }
+    }
+    p {
+      @include font(small,center,600)
     }
   }
 }

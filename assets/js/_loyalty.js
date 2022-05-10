@@ -17,7 +17,9 @@ export const __templates_loyalty = {
     return div;
   },
 
-  profile () {
+  profile (params) {
+    console.log(params);
+
     let div = document.createElement("div");
     div.className = 'loyalty__profile';
     div.innerHTML = `
@@ -25,14 +27,14 @@ export const __templates_loyalty = {
         <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647397717026.jpeg)">
           <img class="barcode" id="barcode"/>
           <div>
-            <h3 class="loyalty__profile--name">name</h3>
-            <p>GOLD MEMBER</p>
+            <h3 class="loyalty__profile--name">${params.name}</h3>
+            <p>${params.grade}</p>
           </div>
         </div>
       </div>
    `;
     setTimeout(() => {
-      JsBarcode("#barcode", "2345678910JQKA", {
+      JsBarcode("#barcode", params.id, {
         width:2,
         height:20,
         background : 'transparent',
@@ -45,7 +47,7 @@ export const __templates_loyalty = {
     return div;
   },
 
-  customer_menu() {
+  customer_menu(params) {
     let div = document.createElement('div');
     div.className = "loyalty__menu";
     div.innerHTML = `
@@ -89,7 +91,7 @@ export const __templates_loyalty = {
     let logout = div.querySelector('.logout');
     menu.forEach(item => {
       item.addEventListener('click',(e)=> {
-        __templates_modal.overlay({content: __templates_modal[`${item.dataset.action}_modal`](),style : 'fullscreen'})
+        __templates_modal.overlay({content: __templates_modal[`${item.dataset.action}_modal`](params),style : 'fullscreen'})
       })
     })
 

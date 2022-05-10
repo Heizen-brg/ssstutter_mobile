@@ -593,12 +593,13 @@
 .overflow-hidden {
   overflow: hidden !important;
 }
-.self__portrait {
+.parisienne__page {
   .text__img {
     width: 100%;
     text-align: center;
     padding: 20px;
     margin-top: 20px;
+    @include flex(column,center,center);
     img {
       width: 30%;
       &.small {
@@ -608,30 +609,26 @@
   }
   .section__layout {
     padding: 25px 10px 0;
+    @include flex(column,center,center);
     @media (min-width: 768px) {
       padding: 40px 8% 0;
     }
-    .video__layout {
-      width: 100%;
-      .video {
-        @include ratio(16, 9);
+    .hero__layout {
+      width: 50%;
+      margin-bottom: 40px;
+      >div {
+        @include ratio(4,5);
         background-color: $white;
         position: relative;
-        video {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-        }
       }
     }
     .grid-row {
-      padding: 25px 0;
+      padding: 10px 0;
       display: grid;
+      width: 100%;
       grid-gap: 20px;
       @media (min-width: 768px) {
-        padding: 40px 0;
+        padding: 10px 0;
         grid-template: auto / 1fr 1fr;
       }
       .video {
@@ -702,7 +699,7 @@
     }
     .image {
       @include transition();
-      padding-top: calc(7 / 3 * 100%);
+      padding-top: calc(5 / 4 * 100%);
       background: #fff no-repeat top center;
       background-size: cover;
       position: relative;
@@ -711,7 +708,7 @@
       }
       p {
         position: absolute;
-        bottom: 30px;
+        bottom: 10px;
         width: 100%;
       }
     }
@@ -736,6 +733,7 @@
       p {
         padding: 15px 0;
         text-align: center;
+        color: $white;
       }
     }
     .look-detail {
@@ -763,7 +761,7 @@
         grid-gap: 10px;
       }
       .model {
-        padding-top: calc(7 / 3 * 100%);
+        padding-top: calc(5 / 4 * 100%);
         background: #fff no-repeat center;
         background-size: cover;
       }

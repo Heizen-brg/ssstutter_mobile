@@ -14,16 +14,19 @@ import { CONFIG } from "./config.js";
 import { __size_guide_data } from "./share/_data.js";
 let user_selection = {};
 export const __templates_product = {
-    product_gallery(params = {}) {
-      let gallery = params.extensions ? params.extensions.media : {};
-      let color = params.color[0].id;
-      let div = document.createElement("div");
-      div.className = "gallery";
-      div.innerHTML = `
+  product_gallery(params = {}) {
+    let gallery = params.extensions ? params.extensions.media : {};
+    let color = params.color[0].id;
+    let div = document.createElement("div");
+    div.className = "gallery";
+    div.innerHTML = `
     <ul>
       ${(gallery[`color_${color}_gallery`] || [])
         .map(
-          (img) => `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace(".jpeg", ".jpeg")}"></li>`
+          (img) =>
+            `<li style="background-image:url(${
+              CONFIG.DOMAIN_IMG_CDN
+            }/${img.o.replace(".jpeg", ".jpeg")}"></li>`
         )
         .join("")}
     </ul>
@@ -73,7 +76,9 @@ export const __templates_product = {
       color_value.map((item, index) => {
         let flat_img = document.createElement("li");
         flat_img.style.backgroundImage = `url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.o.replace(".jpeg", ".jpeg")
+          item.photo == null
+            ? "no_image.png"
+            : item.photo.o.replace(".jpeg", ".jpeg")
         })`;
         let color_variation = div.querySelector(".flatlay > ul");
         color_variation.appendChild(flat_img);
@@ -251,7 +256,9 @@ export const __templates_product = {
         <meta itemprop="name" content="${info.name}">
         <meta itemprop="productID" content="${info.id}">
         <meta itemprop="url" content="https://ssstutter.com/p/${info.slug}">
-        <meta itemprop="image" content="https://cdn.ssstutter.com/products/${info.extensions.media.featured}">
+        <meta itemprop="image" content="https://cdn.ssstutter.com/products/${
+          info.extensions.media.featured
+        }">
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <link itemprop="availability" href="in stock">
           <link itemprop="itemCondition" href="new">
@@ -264,7 +271,11 @@ export const __templates_product = {
           <div class="info">
             <h1 class="name">${info.name}</h1>
             <div class="price">
-            ${info.salePrice ? `<p>${__currency_format(info.salePrice)}</p>` : ""}
+            ${
+              info.salePrice
+                ? `<p>${__currency_format(info.salePrice)}</p>`
+                : ""
+            }
             ${
               info.salePrice
                 ? `<p class="discount">${__currency_format(info.price)}</p>`
@@ -348,7 +359,9 @@ export const __templates_product = {
             </div>
           </li>
           
-          <li  data-action="refund_policy">Hướng dẫn đổi trả ${__icons.right}</li>
+          <li  data-action="refund_policy">Hướng dẫn đổi trả ${
+            __icons.right
+          }</li>
           <li style="margin: 0; border: 0; cursor: default; padding: 0;">
             <div id="refund_policy" class="mobile-variation">
               <p>
@@ -377,8 +390,6 @@ export const __templates_product = {
         </ul>
       </div>
     `;
-
-
 
     div.querySelector(".find-size").addEventListener("click", () => {
       let height_input = div.querySelector(".height__input");
@@ -471,7 +482,9 @@ export const __templates_product = {
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
           style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.x400.replace(".jpeg", ".jpeg")
+          item.photo == null
+            ? "no_image.png"
+            : item.photo.x400.replace(".jpeg", ".jpeg")
         })"
         >
         </button>
@@ -499,7 +512,9 @@ export const __templates_product = {
           return `
         <li><button data-index="${index}" class=" size__variation ${
             index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${
+            i.size
+          }">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;
@@ -533,7 +548,9 @@ export const __templates_product = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
+                  `<li style="background-image:url(${
+                    CONFIG.DOMAIN_IMG_CDN
+                  }/${img.o.replace("jpeg", "jpeg")})"></li>`
               )
               .join("")}
           </ul>
@@ -558,29 +575,48 @@ export const __templates_product = {
           let variation = params.variation;
           e.preventDefault();
           user_selection.variation = variation.find(
-            (item) => item.color == user_selection.colorId && item.size == user_selection.size
+            (item) =>
+              item.color == user_selection.colorId &&
+              item.size == user_selection.size
           );
+          if (!user_selection.variation) {
+            __push_notification('fail', 'Vui lòng chọn màu và size')
+            return false
+          }
           let new_selected_item = { ...user_selection };
-          let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
+          let [product_in_cart] = cart_selected.filter(
+            (i) => i.variation.id === new_selected_item.variation.id
+          );
           if (product_in_cart) {
             __requests(
               {
                 method: "GET",
-                url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
-                  product_in_cart.quantity + 1
-                }`,
+                url: `product/variation/check-stock?id=${
+                  product_in_cart.variation.id
+                }&stock=${product_in_cart.quantity + 1}`,
               },
               ({ data }) => {
-                if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+                if (!data)
+                  return __push_notification("fail", "Sản phẩm hết hàng!");
                 cart_selected = cart_selected.map((i) => {
-                  if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+                  if (i.variation.id === new_selected_item.variation.id)
+                    i.quantity = parseInt(i.quantity) + 1;
                   return i;
                 });
 
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
                 cart_menu.classList.add("active");
-                __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-                __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+                let final_amount = cart_selected.reduce((total, current) => {
+                  if (current.salePrice) return total + current.quantity * current.salePrice;
+                  return total + current.quantity * current.price;
+                }, 0);
+                __show_cart_item(
+                  cart_menu.querySelector("ul"),
+                  cart_menu.querySelector("[data-amount]")
+                );
+                __show_cart_quantity(
+                  document.querySelector('[data-toggle="cart_toggle"]')
+                );
                 __get_voucher({ discountDiv: cart_menu });
               }
             );
@@ -591,15 +627,22 @@ export const __templates_product = {
                 url: `product/variation/check-stock?id=${new_selected_item.variation.id}&stock=1`,
               },
               ({ data }) => {
-                if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+                if (!data)
+                  return __push_notification("fail", "Sản phẩm hết hàng!");
                 cart_selected.push(new_selected_item);
-                let cart_quantity = cart_selected.reduce((total, current) => {
-                  return total + current.quantity;
-                }, 0);
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
                 cart_menu.classList.add("active");
-                __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-                __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+                let final_amount = cart_selected.reduce((total, current) => {
+                  if (current.salePrice) return total + current.quantity * current.salePrice;
+                  return total + current.quantity * current.price;
+                }, 0);
+                __show_cart_item(
+                  cart_menu.querySelector("ul"),
+                  cart_menu.querySelector("[data-amount]")
+                );
+                __show_cart_quantity(
+                  document.querySelector('[data-toggle="cart_toggle"]')
+                );
                 __get_voucher({ discountDiv: cart_menu });
               }
             );
@@ -611,15 +654,15 @@ export const __templates_product = {
     let init_favorite_item = () => {
       let current_item = localStorage.getItem("history_item");
       let history_item = [];
-      if (current_item) history_item = JSON.parse(current_item)  ;
+      if (current_item) history_item = JSON.parse(current_item);
       let [product_in_cart] = history_item.filter((i) => i.id === info.id);
       if (product_in_cart) {
         return false;
       } else {
         history_item.push(info);
-        localStorage.setItem('history_item', JSON.stringify(history_item))
+        localStorage.setItem("history_item", JSON.stringify(history_item));
       }
-    }
+    };
     let triggers = div.querySelectorAll("[data-action]");
     triggers.forEach((btn) => {
       if (window.innerWidth > 767) {
@@ -631,7 +674,9 @@ export const __templates_product = {
       } else {
         if (btn.parentElement.querySelector(".mobile-variation")) {
           btn.addEventListener("click", () => {
-            btn.parentElement.querySelector("#" + btn.getAttribute("data-action")).classList.toggle("show");
+            btn.parentElement
+              .querySelector("#" + btn.getAttribute("data-action"))
+              .classList.toggle("show");
           });
         }
       }
@@ -640,13 +685,6 @@ export const __templates_product = {
     on_change_variation();
     init_add_to_cart(info);
     init_favorite_item();
-    if (params.id == "fpf6QW3v2OC0b1TX9WQb6QNAw13BeNHA") {
-      setTimeout(() => {
-        __templates_modal.overlay({
-          content: __templates_modal.promotion_book_combo(),
-        });
-      }, 2000);
-    }
     return div;
   },
 };

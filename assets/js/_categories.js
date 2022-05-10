@@ -99,12 +99,14 @@ export const __templates_categories = {
       product_container.scrollIntoView({behavior: "smooth"})
     })
 
-    __keep_scroll_postion({container:product_container,query: product_container.dataset.cate });
     if (!current_skip_item) {
       __init_product_list({
         container: product_container,
         query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
       });
+    } else {
+      __keep_scroll_postion({container:product_container,query: product_container.dataset.cate });
+
     }
     return div;
   },

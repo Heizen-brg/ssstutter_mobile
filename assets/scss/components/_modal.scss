@@ -278,14 +278,136 @@
     }
   }
 }
-.book__promotion {
-  width: 60vw;
-  div {
-    @include ratio(16, 9);
-    margin: 10px;
+.gift__promotion {
+  width: 90vw;
+  .featured {
+    @include ratio(4, 5);
   }
-  svg {
-    display: none;
+  .info {
+    padding: 10px;
+    >h1 {
+      @include font(large,start,700);
+    }
+    .color {
+      margin: 26px 0 34px;
+      p {
+        @include font(14px, start, 500);
+        text-transform: capitalize;
+      }
+      ul {
+        @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 16px);
+        margin-top: 10px;
+        li {
+          @include ratio(1, 1);
+          @include transition;
+          box-sizing: content-box;
+          position: relative;
+          button {
+            @include border($light, 0);
+            @include ratio(1, 1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-color: $white;
+            &:hover,
+            &.active {
+              border: 1.5px solid $black;
+            }
+            &:disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+    .size {
+      margin: 0 0 16px;
+      p {
+        @include font(14px, start, 500);
+        text-transform: capitalize;
+      }
+      ul {
+        @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 18px);
+        margin-top: 10px;
+        li {
+          @include ratio(1, 1);
+          @include transition;
+          position: relative;
+          box-sizing: content-box;
+          button {
+            @include border($light, 0);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-color: $white;
+            &:hover,
+            &.active {
+              border: 1px solid $black;
+            }
+            &:disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+              pointer-events: none;
+              &::before {
+                content: '✗';
+                color: $red;
+                font-size: 25px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                opacity: 0.7;
+                transform: translate(-50%, -50%);
+              }
+            }
+          }
+        }
+      }
+    }
+    .interact {
+      @include flex(row, flex-start, center);
+      gap: 10px;
+      button {
+        border: none;
+        background-color: transparent;
+        &.add {
+          @include flex(row, center, center);
+          @include transition;
+          width: 100%;
+          margin: 15px 0;
+          text-transform: uppercase;
+          padding: 10px;
+          border: thin solid $black;
+          font-size: large;
+          // border-radius: 4px;
+          background-color: $black;
+          color: $white;
+          &:disabled {
+            background-color: $silver;
+            color: $black;
+          }
+        }
+        &.active {
+          svg {
+            color: $red;
+          }
+        }
+        svg {
+          @include transition();
+          width: 25px;
+          height: 25px;
+          &:hover {
+            color: $red;
+          }
+        }
+      }
+    }
   }
 }
 .lookbook__detail {
@@ -394,6 +516,12 @@
       @include border(transparent, 15px);
       box-shadow: 5px 5px 10px 5px #dbdbdb;
       position: relative;
+      .barcode {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        width: 100%;
+      }
       > div {
         width: 100%;
         position: absolute;

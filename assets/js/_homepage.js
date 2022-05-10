@@ -129,23 +129,24 @@ export const __templates_home = {
   categories() {
     let section = document.createElement("section");
     section.className = "categories__banner";
+    section.innerHTML = `
+      <div data-type="for-him"></div>
+      <div data-type="for-her"></div>
+    `
+    let cate_banner = section.querySelectorAll('div');
+    cate_banner.forEach(dom => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://sss-dashboard.leanservices.work/w/categories/detail?type=${dom.dataset.type}`,
+        },
+        ({ data }) => {
+          dom.innerHTML = `<div><a href="${data.slug}">${data.title}</a></div>
 
-    __requests(
-      {
-        method: "GET",
-        url: "https://sss-dashboard.leanservices.work/w/categories/get",
-      },
-      ({ data }) => {
-        let cat_item = (data || [])
-          .map((item) => {
-            return `
-          <div><a href="${item.slug}">${item.title}</a></div>
           `;
-          })
-          .join("");
-        section.innerHTML = cat_item;
-      }
-    );
+        }
+      );
+    })
     return section;
   },
 
@@ -256,7 +257,7 @@ export const __templates_home = {
     let section = document.createElement("section");
     section.className = "new-arrivals__slide";
     section.innerHTML = `
-      <a href="/c/for-him" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647935739373.jpeg)"></a>
+      <a href="/new-arrivals" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647935739373.jpeg)"></a>
     `;
     let init_new_arrivals = (params = "3vvRIM") => {
       __requests(
@@ -391,7 +392,7 @@ export const __templates_home = {
     let section = document.createElement("section");
     section.className = "stylepick__slide";
     section.innerHTML = `
-      <h2>picker for you</h2>
+      <h2>style pick</h2>
       <div class="products__slider">
         <div class="glide active" id="stylepick">
           <div class="glide__track" data-glide-el="track">
@@ -399,16 +400,20 @@ export const __templates_home = {
                 ${__templates.busy_loading("show")}
             </ul>
           </div>
+          <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
+          </div>
         </div>
       </div>
     `;
     __requests(
       {
         method: "GET",
-        url: `https://api.ssstutter.com/product/filter/web?limit=10&sort=down&media=true&webStock=true`,
+        url: "https://sss-dashboard.leanservices.work/w/section/detail?type=style_pick",
       },
       ({ data }) => {
-        let product = data
+        let product = data.products
           .map(
             (item) =>
               `
@@ -423,7 +428,7 @@ export const __templates_home = {
                       </div>
                       <div class="detail">
                         <div class="info">
-                          <h6 class="name">${item.name.toLowerCase()}</h6>
+                          <h6 class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</h6>
                           <div class="price">
                             ${
                               item.salePrice
@@ -454,8 +459,8 @@ export const __templates_home = {
           type: "carousel",
           bound: true,
           perView: 3,
-          autoplay: 4000,
-          gap: 1,
+          autoplay: 5000,
+          gap: 10,
           hoverpause: true,
           breakpoints: {
             800: {
@@ -491,10 +496,10 @@ export const __templates_home = {
       __requests(
         {
           method: "GET",
-          url: `https://api.ssstutter.com/product/filter/web?limit=6&catId=${params}&sort=up&sortBy=stock&media=true&webStock=true`,
+          url: `https://sss-dashboard.leanservices.work/w/section/detail?type=weekly_best&catId=${params}`,
         },
         ({ data }) => {
-          let products = data
+          let products = data.products
             .map(
               (item) => ` 
             <li data-cate="${item.catId[0][0]}">
@@ -504,6 +509,7 @@ export const __templates_home = {
                 item.extensions.media.featured
               })"></span></a>
                 </div>
+                
               </div>
             </li>`
             )
