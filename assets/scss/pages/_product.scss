@@ -1,7 +1,11 @@
 .product__page {
   @include grid(repeat(6, 1fr), null, 0);
+  .status__bar {
+    grid-area: 1 / 1 / 2 / 7;
+
+  }
   .gallery {
-    grid-area: 1 / 1 / 2 / 5;
+    grid-area: 2 / 1 / 3 / 5;
     width: 100%;
     ul {
       @include grid(repeat(2, 1fr));
@@ -121,7 +125,7 @@
     grid-area: 6 / 1 / 7 / 7;
   }
   .variation {
-    grid-area: 1 / 5 / 6 / 7;
+    grid-area: 2 / 5 / 6 / 7;
     padding: 0 5%;
     position: relative;
     >div {
@@ -397,10 +401,6 @@
 }
 
 @media (max-width: 575px) {
-  .status__bar {
-    grid-area: 1 / 1 / 2 / 7;
-
-  }
   .product__page {
     // padding-top: 0;
     .gallery {

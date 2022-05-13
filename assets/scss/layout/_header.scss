@@ -35,27 +35,27 @@
     }
   }
   .promotion__popup {
-    a {
+    .glide {
       background-color: $black;
       color: $white;
       width: 100%;
-      p {
+      li {
         text-align: center;
         padding: 10px;
         font-size: x-small;
         letter-spacing: 1.2px;
       }
-      .clock {
-        @include flex(row, center, center);
-        div {
-          margin: 0 10px;
-          span {
-            @include font(medium, center, 600);
-            margin-right: 5px;
+      // .clock {
+      //   @include flex(row, center, center);
+      //   div {
+      //     margin: 0 10px;
+      //     span {
+      //       @include font(medium, center, 600);
+      //       margin-right: 5px;
             
-          }
-        }
-      }
+      //     }
+      //   }
+      // }
     }
   }
 .header {

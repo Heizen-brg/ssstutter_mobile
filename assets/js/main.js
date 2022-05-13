@@ -168,9 +168,6 @@ export const __render = {
     let banner = mobile
       ? __templates_home.mobile_banner()
       : __templates_home.banner();
-    let new_arrivals = mobile
-      ? __templates_home.mobile_new_arrivals()
-      : __templates_home.new_arrivals();
 
     let blocks = [
       __templates_header.header({
@@ -292,13 +289,14 @@ export const __render = {
       __templates_header.search({
         option: __templates.related_product(),
       }),
+      __templates_header.statusbar(),
       __templates_checkout.checkout_form(),
       __templates_checkout.checkout__method(),
       __templates_checkout.checkout__cart(),
     ];
     this.build("checkout__page", blocks);
     __templates.api_loading("hide");
-    if (fbq) fbq("track", "InitiateCheckout");
+    // if (fbq !== undefined) fbq("track", "InitiateCheckout");
   },
 
   order_page(params) {

@@ -171,12 +171,22 @@ export const __templates_header = {
     let div = document.createElement("div");
     div.className = "promotion__popup";
     div.innerHTML = `
-      <a>
-        <div></div>
-        <p>Free ship cho hoá đơn trên 600k</p>
-        <div class="clock"></div>
-      </a>
+      <div class="glide" id="promo_glide">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides banner__container">
+            <li class="glide__slide">Freeship nội thành cho đơn từ 300.000 </li>
+            <li class="glide__slide">Freeship toàn quốc cho đơn từ 600.000</li>
+          </ul>
+        </div>
+      </div>  
     `;
+  setTimeout(() => {
+    new Glide("#promo_glide", {
+      type: "slider",
+      perView: 1,
+      autoplay: 5000,
+    }).mount();
+  }, 200);
     // window.onscroll = function () {
     //   if (window.pageYOffset > params.page_y_offset) {
     //     if (document.querySelector(".header .freeship")) {

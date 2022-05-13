@@ -150,108 +150,108 @@ export const __templates_home = {
     return section;
   },
 
-  new_arrivals(product = {}) {
-    let section = document.createElement("section");
-    section.className = "new-arrivals__slide";
-    section.innerHTML = `
-      <h2><a href="/">what's new</a></h2>
-      <div class="gender__toggle">
-        <button class="active" data-cate="3vvRIM">For Him</button>
-        <button data-cate="y8Q15I">For Her</button>
-      </div>
-      <div class="products__slider">
-        <div class="glide active" id="new_arrivals">
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides" >
-                ${__templates.busy_loading("show")}
-            </ul>
-          </div>
-        </div>
-      </div>
-    `;
-    let init_new_arrivals = (params = "3vvRIM") => {
-      __requests(
-        {
-          method: "GET",
-          url: `https://api.ssstutter.com/product/filter/web?limit=10&catId=${params}&sort=down&media=true&webStock=true`,
-        },
-        ({ data }) => {
-          let products = data
-            .map(
-              (item) =>
-                `
-            <li class="glide__slide" data-cate="${item.catId[0][0]}">
-              <div class="product">
-                <div class="thumbnail">
-                  <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-                  item.extensions.media.featured
-                })"></span></a>
-                </div>
-                <div class="detail">
-                  <div class="info">
-                    <h6 class="name">${item.name.toLowerCase()}</h6>
-                    <div class="price">
-                      ${
-                        item.salePrice
-                          ? `<p>${__currency_format(item.salePrice)}</p>
-                        <p class="discount">${__currency_format(item.price)}</p> `
-                          : `<p>${__currency_format(item.price)}</p>`
-                      }
-                    </div>
-                    ${
-                      item.salePrice || item.salePrice === 0
-                        ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
-                        : ""
-                    }
-                    <div class="color">
-                      <p>+${item.color.length} màu</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          `
-            )
-            .join("");
-          let glide__track = section.querySelector(".glide__slides");
-          glide__track.innerHTML = products;
-          new Glide(`#new_arrivals`, {
-            type: "carousel",
-            bound: true,
-            perView: 4,
-            autoplay: 5000,
-            gap: 20,
-            hoverpause: true,
-            peek: {
-              before: 0,
-              after: 100,
-            },
-            breakpoints: {
-              1024: {
-                perView: 3,
-              },
-              480: {
-                perView: 2,
-              },
-            },
-          }).mount();
+  // new_arrivals(product = {}) {
+  //   let section = document.createElement("section");
+  //   section.className = "new-arrivals__slide";
+  //   section.innerHTML = `
+  //     <h2><a href="/">what's new</a></h2>
+  //     <div class="gender__toggle">
+  //       <button class="active" data-cate="3vvRIM">For Him</button>
+  //       <button data-cate="y8Q15I">For Her</button>
+  //     </div>
+  //     <div class="products__slider">
+  //       <div class="glide active" id="new_arrivals">
+  //         <div class="glide__track" data-glide-el="track">
+  //           <ul class="glide__slides" >
+  //               ${__templates.busy_loading("show")}
+  //           </ul>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   `;
+  //   let init_new_arrivals = (params = "3vvRIM") => {
+  //     __requests(
+  //       {
+  //         method: "GET",
+  //         url: `https://api.ssstutter.com/product/filter/web?limit=10&catId=${params}&sort=down&media=true&webStock=true`,
+  //       },
+  //       ({ data }) => {
+  //         let products = data
+  //           .map(
+  //             (item) =>
+  //               `
+  //           <li class="glide__slide" data-cate="${item.catId[0][0]}">
+  //             <div class="product">
+  //               <div class="thumbnail">
+  //                 <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+  //                 item.extensions.media.featured
+  //               })"></span></a>
+  //               </div>
+  //               <div class="detail">
+  //                 <div class="info">
+  //                   <h6 class="name">${item.name.toLowerCase()}</h6>
+  //                   <div class="price">
+  //                     ${
+  //                       item.salePrice
+  //                         ? `<p>${__currency_format(item.salePrice)}</p>
+  //                       <p class="discount">${__currency_format(item.price)}</p> `
+  //                         : `<p>${__currency_format(item.price)}</p>`
+  //                     }
+  //                   </div>
+  //                   ${
+  //                     item.salePrice || item.salePrice === 0
+  //                       ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
+  //                       : ""
+  //                   }
+  //                   <div class="color">
+  //                     <p>+${item.color.length} màu</p>
+  //                   </div>
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           </li>
+  //         `
+  //           )
+  //           .join("");
+  //         let glide__track = section.querySelector(".glide__slides");
+  //         glide__track.innerHTML = products;
+  //         new Glide(`#new_arrivals`, {
+  //           type: "carousel",
+  //           bound: true,
+  //           perView: 4,
+  //           autoplay: 5000,
+  //           gap: 20,
+  //           hoverpause: true,
+  //           peek: {
+  //             before: 0,
+  //             after: 100,
+  //           },
+  //           breakpoints: {
+  //             1024: {
+  //               perView: 3,
+  //             },
+  //             480: {
+  //               perView: 2,
+  //             },
+  //           },
+  //         }).mount();
 
-        }
-      );
-    };
+  //       }
+  //     );
+  //   };
 
-    init_new_arrivals();
+  //   init_new_arrivals();
 
-    let toggle_gender = section.querySelectorAll("[data-cate]");
-    toggle_gender.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        toggle_gender.forEach((i) => i.classList.remove("active"));
-        btn.classList.toggle("active");
-        init_new_arrivals(btn.dataset.cate)
-      });
-    });
-    return section;
-  },
+  //   let toggle_gender = section.querySelectorAll("[data-cate]");
+  //   toggle_gender.forEach((btn) => {
+  //     btn.addEventListener("click", () => {
+  //       toggle_gender.forEach((i) => i.classList.remove("active"));
+  //       btn.classList.toggle("active");
+  //       init_new_arrivals(btn.dataset.cate)
+  //     });
+  //   });
+  //   return section;
+  // },
 
   mobile_new_arrivals() {
     let section = document.createElement("section");
@@ -259,131 +259,131 @@ export const __templates_home = {
     section.innerHTML = `
       <a href="/new-arrivals" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647935739373.jpeg)"></a>
     `;
-    let init_new_arrivals = (params = "3vvRIM") => {
-      __requests(
-        {
-          method: "GET",
-          url: `https://api.ssstutter.com/product/filter/web?limit=10&catId=${params}&sort=down&media=true&webStock=true`,
-        },
-        ({ data }) => {
-          let item_per_view = 4;
-          let stop_loop = Math.ceil(data.length / item_per_view);
-          let products = data
-            .map((item, index) => {
-              let current_index = index * 2;
-              if (index - 1 > stop_loop) return "";
-              item = data[current_index];
-              if (!item) return "";
-              let next_item = data[current_index + 1];
-              if (next_item) {
-                next_item = `
-            <div class="product">
-              <div class="thumbnail">
-                <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-                  next_item.extensions.media.featured
-                })"></span></a>
-              </div>
-              <div class="detail">
-                <div class="info">
-                  <h6 class="name">${next_item.name.toLowerCase()}</h6>
-                  <div class="price">
-                    ${
-                      next_item.salePrice
-                        ? `<p>${__currency_format(next_item.salePrice)}</p>
-                      <p class="discount">${__currency_format(next_item.price)}</p> `
-                        : `<p>${__currency_format(next_item.price)}</p>`
-                    }
-                  </div>
-                  ${
-                    next_item.salePrice || next_item.salePrice === 0
-                      ? `<p class="tag">${Math.floor(100 - (next_item.salePrice / next_item.price) * 100)}%</p>`
-                      : ""
-                  }
-                  <div class="color">
-                    <p>+${next_item.color.length} màu</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            `;
-              } else next_item = "";
+    // let init_new_arrivals = (params = "3vvRIM") => {
+    //   __requests(
+    //     {
+    //       method: "GET",
+    //       url: `https://api.ssstutter.com/product/filter/web?limit=10&catId=${params}&sort=down&media=true&webStock=true`,
+    //     },
+    //     ({ data }) => {
+    //       let item_per_view = 4;
+    //       let stop_loop = Math.ceil(data.length / item_per_view);
+    //       let products = data
+    //         .map((item, index) => {
+    //           let current_index = index * 2;
+    //           if (index - 1 > stop_loop) return "";
+    //           item = data[current_index];
+    //           if (!item) return "";
+    //           let next_item = data[current_index + 1];
+    //           if (next_item) {
+    //             next_item = `
+    //         <div class="product">
+    //           <div class="thumbnail">
+    //             <a href="/p/${next_item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+    //               next_item.extensions.media.featured
+    //             })"></span></a>
+    //           </div>
+    //           <div class="detail">
+    //             <div class="info">
+    //               <h6 class="name">${next_item.name.toLowerCase()}</h6>
+    //               <div class="price">
+    //                 ${
+    //                   next_item.salePrice
+    //                     ? `<p>${__currency_format(next_item.salePrice)}</p>
+    //                   <p class="discount">${__currency_format(next_item.price)}</p> `
+    //                     : `<p>${__currency_format(next_item.price)}</p>`
+    //                 }
+    //               </div>
+    //               ${
+    //                 next_item.salePrice || next_item.salePrice === 0
+    //                   ? `<p class="tag">${Math.floor(100 - (next_item.salePrice / next_item.price) * 100)}%</p>`
+    //                   : ""
+    //               }
+    //               <div class="color">
+    //                 <p>+${next_item.color.length} màu</p>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //         `;
+    //           } else next_item = "";
 
-              return `
-        <li class="glide__slide" data-cate="${item.catId[0][0]}">
-          <div class="product">
-            <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-                item.extensions.media.featured
-              })"></span></a>
-            </div>
-            <div class="detail">
-              <div class="info">
-                <h6 class="name">${item.name.toLowerCase()}</h6>
-                <div class="price">
-                  ${
-                    item.salePrice
-                      ? `<p>${__currency_format(item.salePrice)}</p>
-                    <p class="discount">${__currency_format(item.price)}</p> `
-                      : `<p>${__currency_format(item.price)}</p>`
-                  }
-                </div>
-                ${
-                  item.salePrice || item.salePrice === 0
-                    ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
-                    : ""
-                }
-                <div class="color">
-                  <p>+${item.color.length} màu</p>
-                </div>
-              </div>
-            </div>
-          </div>
-            ${next_item}
-        </li>
-          `;
-            })
-            .join("");
-          let glide__track = section.querySelector(".glide__slides");
-          glide__track.innerHTML = products;
-          new Glide(`#mobile_new_arrivals`, {
-            type: "slider",
-            bound: true,
-            perView: 2,
-            autoplay: 3000,
-            gap: 10,
-            hoverpause: true,
-            peek: {
-              before: 0,
-              after: 100,
-            },
-            breakpoints: {
-              1024: {
-                perView: 3,
-              },
-              480: {
-                perView: 2,
-                peek: {
-                  before: 0,
-                  after: 0,
-                },
-              },
-            },
-          }).mount();
-        }
-      );
-    };
+    //           return `
+    //     <li class="glide__slide" data-cate="${item.catId[0][0]}">
+    //       <div class="product">
+    //         <div class="thumbnail">
+    //           <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+    //             item.extensions.media.featured
+    //           })"></span></a>
+    //         </div>
+    //         <div class="detail">
+    //           <div class="info">
+    //             <h6 class="name">${item.name.toLowerCase()}</h6>
+    //             <div class="price">
+    //               ${
+    //                 item.salePrice
+    //                   ? `<p>${__currency_format(item.salePrice)}</p>
+    //                 <p class="discount">${__currency_format(item.price)}</p> `
+    //                   : `<p>${__currency_format(item.price)}</p>`
+    //               }
+    //             </div>
+    //             ${
+    //               item.salePrice || item.salePrice === 0
+    //                 ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
+    //                 : ""
+    //             }
+    //             <div class="color">
+    //               <p>+${item.color.length} màu</p>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //         ${next_item}
+    //     </li>
+    //       `;
+    //         })
+    //         .join("");
+    //       let glide__track = section.querySelector(".glide__slides");
+    //       glide__track.innerHTML = products;
+    //       new Glide(`#mobile_new_arrivals`, {
+    //         type: "slider",
+    //         bound: true,
+    //         perView: 2,
+    //         autoplay: 3000,
+    //         gap: 10,
+    //         hoverpause: true,
+    //         peek: {
+    //           before: 0,
+    //           after: 100,
+    //         },
+    //         breakpoints: {
+    //           1024: {
+    //             perView: 3,
+    //           },
+    //           480: {
+    //             perView: 2,
+    //             peek: {
+    //               before: 0,
+    //               after: 0,
+    //             },
+    //           },
+    //         },
+    //       }).mount();
+    //     }
+    //   );
+    // };
 
     // init_new_arrivals();
 
 
-    let toggle_gender = section.querySelectorAll("[data-cate]");
-    toggle_gender.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        toggle_gender.forEach((i) => i.classList.remove("active"));
-        btn.classList.toggle("active");
-        init_new_arrivals(btn.dataset.cate)
-      });
-    });
+    // let toggle_gender = section.querySelectorAll("[data-cate]");
+    // toggle_gender.forEach((btn) => {
+    //   btn.addEventListener("click", () => {
+    //     toggle_gender.forEach((i) => i.classList.remove("active"));
+    //     btn.classList.toggle("active");
+    //     init_new_arrivals(btn.dataset.cate)
+    //   });
+    // });
 
     return section;
   },

@@ -8,7 +8,17 @@
       padding: 20px 0;
     }
     ul {
-      @include grid(repeat(4, minmax(auto, 22%)), null, 1px);
+      @include grid(repeat(auto-fill, minmax(25%, 1fr)), null, 1px);
+      li {
+        &:first-child {
+         grid-row: span 2;
+         grid-column: span 2;
+        }
+        &:nth-child(4n + 1) {
+          grid-row: span 2;
+          grid-column: span 2;
+        }
+      }
       position: relative;
       h2 {
         position: absolute;

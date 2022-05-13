@@ -1,10 +1,14 @@
 .checkout__page {
   @include grid(repeat(6, 1fr), null, 20px);
   background-color: $light;
+  .status__bar {
+    grid-area: 1 / 1 / 2 / 7;
+
+  }
   .checkout__form {
     @include grid(1fr, null, 0);
     @include border($silver, 0);
-    grid-area: 1 / 1 / 3 / 4;
+    grid-area: 2 / 1 / 3 / 4;
     margin-top: 20px;
     margin-left: 40px;
     padding: 20px;
@@ -97,7 +101,7 @@
     }
   }
   .checkout__cart {
-    grid-area: 1 / 4 / 4 / 7;
+    grid-area: 2 / 4 / 4 / 7;
     @include border($silver, 0);
     background-color: $white;
     border-radius: 4px;
@@ -260,11 +264,11 @@
   .checkout__page {
     grid-gap: 20px;
     .checkout__form {
-      grid-area: 1 /1 /3/ 5;
+      grid-area: 2 /1 /3/ 5;
       margin: 20px 0 0 20px;
     }
     .checkout__cart {
-      grid-area: 1 / 5 / 4 / 7;
+      grid-area: 2 / 5 / 4 / 7;
     }
     .checkout__method {
       grid-area: 3/1/4/5;
@@ -275,8 +279,9 @@
 @media (max-width: 900px) {
   .checkout__page {
     grid-gap: 20px;
+
     .checkout__form {
-      grid-area: 1 /1 /3/ 7;
+      grid-area: 2 /1 /3/ 7;
       padding: 20px;
       margin: 20px;
     }

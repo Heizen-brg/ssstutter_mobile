@@ -497,10 +497,10 @@ export const __calc_final_amount = (div, callback) => {
       <h6>QUÀ ƯU ĐÃI</h6>
         <small>${text}</small>
       <div class="price">
-        <p>0</p>
+        <p>Ấn vào để chọn màu và size</p>
       </div>
       <span class="product__variation">
-        <p>Ấn vào để chọn màu và size</p>
+        <p></p>
       </span>
     </div>
     `;

@@ -419,7 +419,7 @@ export const __templates_modal = {
         let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
           ? JSON.parse(localStorage.getItem("cartItem"))
           : [];
-        let cart_menu = document.querySelector('[data-menu="cart"]');
+        let cart_menu = document.querySelector('[data-menu="cart"]') || document.querySelector('.checkout__cart');
         let variation = params.variation;
         e.preventDefault();
         user_selection.variation = variation.find(
@@ -737,6 +737,19 @@ export const __templates_modal = {
       }).mount();
     }, 500);
     return div;
+  },
+
+  survey_modal(data) {
+    let div = document.createElement('div');
+    div.className = 'survey__modal';
+    div.innerHTML = `
+      <h1>Hòm thư góp ý</h1>
+      <form>
+        <input data-value="customer_email" type="email" placeholder="Email" />
+        <input data-value="customer_phone" type="text" placeholder="* Số điện thoại" required />
+        <textarea data-value="customer_note" placeholder="Nội dung"></textarea>
+      </form>
+    `
   },
 
   //loyalty modal

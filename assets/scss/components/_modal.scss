@@ -281,7 +281,7 @@
 .gift__promotion {
   width: 90vw;
   .featured {
-    @include ratio(4, 5);
+    @include ratio(4, 3);
   }
   .info {
     padding: 10px;

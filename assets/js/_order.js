@@ -38,7 +38,7 @@ export const __templates_order = {
     return div;
   },
   order_items(params) {
-    console.log(params);
+    // console.log(params);
     let div = document.createElement("div");
     div.className = "order__items";
     div.innerHTML = `
@@ -70,13 +70,13 @@ export const __templates_order = {
           </div>
           <div class="ship__fee">
             <p>Phí ship:</p>
-            <strong>+${__currency_format(params.shipping ? params.shipping[0].fee : 0)}</strong>
+            <strong>+${__currency_format(params.shipping ? params.shipping.fee : 0)}</strong>
           </div>
         </div>
         <div class="total">
           <p>Tổng:</p>
           <strong>${__currency_format(
-            params.shipping ? params.moneyTotal + params.shipping[0].fee : params.moneyTotal
+            params.shipping ? params.moneyTotal + params.shipping.fee : params.moneyTotal
           )}</strong>
         </div>
     `;

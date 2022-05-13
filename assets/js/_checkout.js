@@ -239,7 +239,7 @@ export const __templates_checkout = {
       let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
       let gift_purchased = JSON.parse(localStorage.getItem("giftItem")) || "";
       let gift2_purchased = JSON.parse(localStorage.getItem("giftItem2")) || "";
-
+      let cart_menu_gift = div.querySelector('.blackfriday__gift');
       let order_item_format = items_purchased.map((item) => {
         return {
           id: item.variation.id,
@@ -255,8 +255,8 @@ export const __templates_checkout = {
       }, 0);
       cart_quantity = parseInt(cart_quantity);
       let note = "";
-      if (cart_quantity === 3) note = "Quà 1: " + gift_purchased;
-      if (cart_quantity >= 4) note = "Quà 1: " + gift_purchased + " || Quà 2: " + gift2_purchased;
+      // if (cart_quantity === 3) note = "Quà 1: " + gift_purchased;
+      // if (cart_quantity >= 4) note = "Quà 1: " + gift_purchased + " || Quà 2: " + gift2_purchased;
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
       order_data.note = note;
@@ -271,6 +271,9 @@ export const __templates_checkout = {
       ) {
         __push_notification("fail", "Vui lòng điển đủ thông tin");
         return;
+      } else if (cart_menu_gift) {
+        __push_notification("fail", "Bạn chưa chọn quà ưu đãi");
+
       }
       __templates.api_loading("show");
       __requests(
@@ -284,9 +287,7 @@ export const __templates_checkout = {
         ({ data, error }) => {
           if (data.paymentUrl) {
             __templates_modal.overlay({ content: __templates_modal.card_payment_progress() });
-            // window.open(data.paymentUrl, "_blank");
             window.location.href = data.paymentUrl;
-            // windowReference.location = data.paymentUrl;
           } else {
             __render.order_page(data);
           }
