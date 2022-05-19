@@ -14,19 +14,14 @@ export const __templates_login = {
     let div = document.createElement("div");
     div.className = "login__form";
     div.innerHTML = `
-     <div class="coming__soon">
-      <h1>${__icons.ssstutter}</h1>
-      <h1>COMING SOON !!!</h1>
-      <p>Tính năng đang trong quá trình thử nghiệm, SSSTUTTER sẽ mang đến cho các bạn hệ thống Thành Viên trong thời gian sớm nhất, xin cảm ơn !</p>
-     </div>
      <div class="login__form--logo">${__icons.ssstutter}</div>
      <div class="login__form--login">
         <div class="login__form--label">
           <input data-input="phone" type="number" placeholder="Số điện thoại"/>
         </div>
         <button data-action="login">Đăng nhập</button>
-       <!-- <p><a href="/register">Đăng ký ngay tại đây</a></p> --!>
-        <small data-action="forgot_pwd">Quên mật khẩu?</small>
+        <p><a href="/register">Chưa là thành viên? Đăng ký ngay</a></p>
+        <small data-action="forgot_pwd">*Lưu ý : Nếu bạn đã từng mua hàng tại store hoặc đã là thành viên thì mật khẩu đăng nhập mặc định chính là số điện thoại của bạn </small>
      </div>
     `;
     let login_btn = div.querySelector('[data-action="login"]');
@@ -59,6 +54,8 @@ export const __templates_login = {
             },
             ({ data }) => {
               console.log(data);
+              __push_notification('success',`Xin chào ${data.name}`)
+              localStorage.setItem('token', data.token)
               localStorage.setItem('user', JSON.stringify(data))
               window.location.href = "/loyalty";
             },({error}) => {

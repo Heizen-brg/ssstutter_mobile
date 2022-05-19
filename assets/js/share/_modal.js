@@ -1,9 +1,11 @@
 import { CONFIG } from "../config.js";
 import { __render, __requests } from "../main.js";
+import { __templates } from "./_components.js";
 import { __size_guide_data } from "./_data.js";
 import {
   __currency_format,
   __get_voucher,
+  __output_date,
   __push_notification,
   __show_cart_item,
   __show_cart_quantity,
@@ -14,7 +16,9 @@ export const __templates_modal = {
     let main_body = document.querySelector("#root");
     let div = document.createElement("div");
     div.className = "modal__overlay";
-    params.close == "show" ? (div.innerHTML = `<div class="close__btn">${__icons.close}<div>`) : "";
+    params.close == "show"
+      ? (div.innerHTML = `<div class="close__btn">${__icons.close}<div>`)
+      : "";
     let content = document.createElement("div");
     content.className = `modal__content ${params.style ? params.style : ""} `;
     if (params.content)
@@ -295,8 +299,13 @@ export const __templates_modal = {
             cart_selected = [...cart_selected, ...data];
             localStorage.setItem("cartItem", JSON.stringify(cart_selected));
             cart_menu.classList.add("active");
-            __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-            __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+            __show_cart_item(
+              cart_menu.querySelector("ul"),
+              cart_menu.querySelector("[data-amount]")
+            );
+            __show_cart_quantity(
+              document.querySelector('[data-toggle="cart_toggle"]')
+            );
             __get_voucher({ discountDiv: cart_menu });
           }
         );
@@ -311,7 +320,9 @@ export const __templates_modal = {
     let div = document.createElement("div");
     div.className = `gift__promotion`;
     div.innerHTML = `
-      <div class="featured" style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${params.extensions.media.featured.replace(".jpeg", ".jpeg")})">
+      <div class="featured" style="background-image:url(${
+        CONFIG.DOMAIN_IMG_CDN
+      }/${params.extensions.media.featured.replace(".jpeg", ".jpeg")})">
       </div>
       <div class="info">
         <h1>${info.name}</h1>
@@ -365,7 +376,9 @@ export const __templates_modal = {
           return `
         <li><button data-index="${index}" class=" size__variation ${
             index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${i.size}">${i.size}</button></li>`;
+          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${
+            i.size
+          }">${i.size}</button></li>`;
         })
         .join("");
       size_wrapper.innerHTML = size_render;
@@ -399,7 +412,9 @@ export const __templates_modal = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
+                  `<li style="background-image:url(${
+                    CONFIG.DOMAIN_IMG_CDN
+                  }/${img.o.replace("jpeg", "jpeg")})"></li>`
               )
               .join("")}
           </ul>
@@ -419,44 +434,56 @@ export const __templates_modal = {
         let cart_selected = JSON.parse(localStorage.getItem("cartItem"))
           ? JSON.parse(localStorage.getItem("cartItem"))
           : [];
-        let cart_menu = document.querySelector('[data-menu="cart"]') || document.querySelector('.checkout__cart');
+        let cart_menu =
+          document.querySelector('[data-menu="cart"]') ||
+          document.querySelector(".checkout__cart");
         let variation = params.variation;
         e.preventDefault();
         user_selection.variation = variation.find(
-          (item) => item.color == user_selection.colorId && item.size == user_selection.size
+          (item) =>
+            item.color == user_selection.colorId &&
+            item.size == user_selection.size
         );
         if (!user_selection.variation) {
-          __push_notification('fail', 'Vui lòng chọn màu và size')
-          return false
+          __push_notification("fail", "Vui lòng chọn màu và size");
+          return false;
         }
         let new_selected_item = { ...user_selection };
-        let [product_in_cart] = cart_selected.filter((i) => i.variation.id === new_selected_item.variation.id);
+        let [product_in_cart] = cart_selected.filter(
+          (i) => i.variation.id === new_selected_item.variation.id
+        );
         to_cart_btn.disabled = true;
         if (product_in_cart) {
           __requests(
             {
               method: "GET",
-              url: `product/variation/check-stock?id=${product_in_cart.variation.id}&stock=${
-                product_in_cart.quantity + 1
-              }`,
+              url: `product/variation/check-stock?id=${
+                product_in_cart.variation.id
+              }&stock=${product_in_cart.quantity + 1}`,
             },
             ({ data }) => {
               to_cart_btn.disabled = false;
-              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!");
+              if (!data)
+                return __push_notification("fail", "Sản phẩm hết hàng!");
               cart_selected = cart_selected.map((i) => {
-                if (i.variation.id === new_selected_item.variation.id) i.quantity = parseInt(i.quantity) + 1;
+                if (i.variation.id === new_selected_item.variation.id)
+                  i.quantity = parseInt(i.quantity) + 1;
                 return i;
               });
 
               localStorage.setItem("cartItem", JSON.stringify(cart_selected));
               cart_menu.classList.add("active");
-              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+              __show_cart_item(
+                cart_menu.querySelector("ul"),
+                cart_menu.querySelector("[data-amount]")
+              );
+              __show_cart_quantity(
+                document.querySelector('[data-toggle="cart_toggle"]')
+              );
               __get_voucher({ discountDiv: cart_menu });
             }
           );
         } else {
-          
           __requests(
             {
               method: "GET",
@@ -464,12 +491,21 @@ export const __templates_modal = {
             },
             ({ data }) => {
               to_cart_btn.disabled = false;
-              if (!data) return __push_notification("fail", "Sản phẩm hết hàng!  Vui lòng chọn màu và size khác");
+              if (!data)
+                return __push_notification(
+                  "fail",
+                  "Sản phẩm hết hàng!  Vui lòng chọn màu và size khác"
+                );
               cart_selected.push(new_selected_item);
 
               localStorage.setItem("cartItem", JSON.stringify(cart_selected));
-              __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-              __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+              __show_cart_item(
+                cart_menu.querySelector("ul"),
+                cart_menu.querySelector("[data-amount]")
+              );
+              __show_cart_quantity(
+                document.querySelector('[data-toggle="cart_toggle"]')
+              );
               __get_voucher({ discountDiv: cart_menu });
               this.close();
             }
@@ -502,7 +538,9 @@ export const __templates_modal = {
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
           style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null ? "no_image.png" : item.photo.x400.replace(".jpeg", ".jpeg")
+          item.photo == null
+            ? "no_image.png"
+            : item.photo.x400.replace(".jpeg", ".jpeg")
         })"
         >
         </button>
@@ -541,13 +579,19 @@ export const __templates_modal = {
         <li>
           <div class="product">
             <div class="thumbnail">
-              <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+              <a href="/p/${
+                item.slug
+              }"><span style="background-image:url(https://cdn.ssstutter.com/products/${
               item.extensions.media.featured
             })"></span></a>
             </div>
             <h6 class="name">${item.name.toLowerCase()}</h6>
             <div class="price">
-              ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
+              ${
+                item.salePrice
+                  ? `<p class="discount">${__currency_format(item.price)}</p>`
+                  : ""
+              }
               <p>${__currency_format(item.salePrice || item.price)}</p>
             </div>
             ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
@@ -602,13 +646,23 @@ export const __templates_modal = {
         `Chúc mừng bạn đã nhận được ${indicatedSegment.text}, phần quà đã được thêm vào giỏ hàng`
       );
       cart_selected = [...cart_selected];
-      if (!gift1) localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
-      if (gift1 && !gift2) localStorage.setItem("giftItem2", JSON.stringify(indicatedSegment.text));
+      if (!gift1)
+        localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
+      if (gift1 && !gift2)
+        localStorage.setItem(
+          "giftItem2",
+          JSON.stringify(indicatedSegment.text)
+        );
       localStorage.setItem("cartItem", JSON.stringify(cart_selected));
       // localStorage.setItem("giftItem", JSON.stringify(indicatedSegment.text));
       cart_menu.classList.add("active");
-      __show_cart_item(cart_menu.querySelector("ul"), cart_menu.querySelector("[data-amount]"));
-      __show_cart_quantity(document.querySelector('[data-toggle="cart_toggle"]'));
+      __show_cart_item(
+        cart_menu.querySelector("ul"),
+        cart_menu.querySelector("[data-amount]")
+      );
+      __show_cart_quantity(
+        document.querySelector('[data-toggle="cart_toggle"]')
+      );
       __get_voucher({ discountDiv: cart_menu, gift: indicatedSegment.text });
       if (cart_quantity === 3 && localStorage.getItem("giftItem")) {
         spin_btn.disabled = true;
@@ -616,7 +670,11 @@ export const __templates_modal = {
         return;
       }
 
-      if (cart_quantity >= 4 && localStorage.getItem("giftItem") && localStorage.getItem("giftItem2")) {
+      if (
+        cart_quantity >= 4 &&
+        localStorage.getItem("giftItem") &&
+        localStorage.getItem("giftItem2")
+      ) {
         spin_btn.disabled = true;
         spin_btn.innerHTML = "Bạn đã hết lượt quay";
         return;
@@ -740,8 +798,8 @@ export const __templates_modal = {
   },
 
   survey_modal(data) {
-    let div = document.createElement('div');
-    div.className = 'survey__modal';
+    let div = document.createElement("div");
+    div.className = "survey__modal";
     div.innerHTML = `
       <h1>Hòm thư góp ý</h1>
       <form>
@@ -749,12 +807,12 @@ export const __templates_modal = {
         <input data-value="customer_phone" type="text" placeholder="* Số điện thoại" required />
         <textarea data-value="customer_note" placeholder="Nội dung"></textarea>
       </form>
-    `
+    `;
   },
 
   //loyalty modal
   account_modal(params) {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = "loyalty__account";
     div.innerHTML = `
       <div class="account__header">
@@ -762,107 +820,177 @@ export const __templates_modal = {
         <h3>Thông tin cá nhân</h3>
       </div>
       <div class="account__overview">
-        <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647397717026.jpeg)">
+        <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/5-2022/1652687671783.jpeg)">
           <img class="barcode" id="account_barcode"/>
           <div>
             <div class="loyalty__info">
-              <h3>${params.name}</h3>
-              <p>${params.grade}</p>
+              <h3 class="loyalty__profile--name">${params.name}</h3>
+              <p>${params.grade ? params.grade :'member'}</p>
             </div>
-            <div class="loyalty__point">
-              <h3>Tiêu dùng: ${params.totalPayment}</h3>
-              <p>Điểm thưởng: ${params.totalPoint}</p>
+            <div class="loyalty__info">
+             <!-- <small>${params.totalPoint} points</small> --!>
             </div>
           </div>
+        </div>
+        <div class="member__ranking mt-5">
+            <div class=" relative h-3 w-full bg-zinc-200 rounded">
+                <p class="absolute top-0 left-0 h-3 rounded bg-amber-400 max-w-full" style="width:${(params.totalPayment/ 6000000)*100}%">
+                </p>
+                <small class="w-full absolute top-auto text-xs left-0 h-3 rounded text-center">${__currency_format(params.totalPayment)}/${__currency_format(6000000)}</small>
+                <ul class="flex absolute flex-row max-w-full w-full top-3">
+                  <li class="text-xs uppercase absolute py-2 px-1 top-0 left-[${(0/6000000)*100}%]"><span class="block absolute w-0.5 h-5 left-0 top-[-10px] bg-zinc-500"></span>member</li>
+                  <li class="text-xs uppercase absolute py-2 px-1 top-0 left-[${(2500000/6000000)*100}%]"><span class="block absolute w-0.5 h-5 left-0 top-[-10px] bg-zinc-500"></span>loyal</li>
+                  <li class="text-xs uppercase absolute py-2 px-1 top-0 left-[calc(${(6000000/6000000)*100}%-25px)]">vip<span class="block absolute w-0.5 h-5 right-0 top-[-10px] bg-zinc-500"></span></li>
+                </ul>
+            </div>
         </div>
       </div>
       <div class="account__form">
         <label>
             <p>Họ và tên</p>
-            <input type="text" value="${params.name}"/>
+            <input data-input="customer_name" type="text" value="${
+              params.name
+            }"/>
         </label>
         <label>
             <p>Email</p>
-            <input type="email" value="${params.email}"/>
+            <input data-input="customer_email" type="email" value="${
+              params.email
+            }"/>
         </label>
         <label>
             <p>Số điện thoại</p>
-            <input type="number" value="${params.phone}"/>
+            <input data-input="customer_phone" type="number" value="${
+              params.phone
+            }"/>
+        </label>
+        <label>
+            <p>Ngày sinh</p>
+            <input data-input="customer_birthday" type="date" value="${__output_date(
+              params.birthday
+            )}"/>
+        </label>
+        <label>
+            <p>Giới tính</p>
+            <select data-input="customer_gender">
+              <option selected disabled hidden value>${params.gender == "male" ? "Nam" : "Nữ"}</option>
+              <option value="male">Nam</option>
+              <option value="famale">Nữ</option>
+              <option value="other">Khác</option>
+            </select>
         </label>
         <label>
             <p>Địa chỉ</p>
-            <textarea value="${params.address}"></textarea>
+            <textarea data-input="customer_address" value="${params.address}">${
+      params.address
+    }</textarea>
         </label>
+      </div>
+      <div class="flex justify-center items-center p-5">
+        <button data-action="update_btn" class="drop-shadow p-4 bg-gray-200 rounded">Cập nhật thông tin</button>
       </div>
     `;
     let back_btn = div.querySelector('[data-action="close"]');
-    back_btn.addEventListener('click',(e)=> {
+    let update_btn = div.querySelector('[data-action="update_btn"]');
+    let customer_name = div.querySelector('[data-input="customer_name"]');
+    let customer_gender = div.querySelector('[data-input="customer_gender"]');
+    let customer_phone = div.querySelector('[data-input="customer_phone"]');
+    let customer_birthday = div.querySelector(
+      '[data-input="customer_birthday"]'
+    );
+    let customer_email = div.querySelector('[data-input="customer_email"]');
+    let customer_address = div.querySelector('[data-input="customer_address"]');
+    let user_data = params;
+
+    update_btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      user_data.name = customer_name.value;
+      user_data.phone = customer_phone.value;
+      user_data.email = customer_email.value;
+      user_data.birthday = new Date(customer_birthday.value).getTime();
+      user_data.address = customer_address.value;
+      user_data.gender = customer_gender.value;
+      let token = localStorage.getItem("token");
+      if (!token) return false;
+      console.log(user_data);
+      __templates.api_loading("show");
+      __requests(
+        {
+          method: "PUT",
+          url: `https://leanservices.work/cs/customer/update-profile`,
+          auth: token,
+          body: JSON.stringify(user_data),
+        },
+        ({ data }) => {
+          __templates.api_loading("hide");
+          __push_notification(
+            "success",
+            "Cập nhật thông tin cá nhân thành công"
+          );
+          console.log(data);
+        }
+      );
+    });
+
+    back_btn.addEventListener("click", (e) => {
       this.close();
-    })
+    });
+
     setTimeout(() => {
       JsBarcode("#account_barcode", params.id, {
-        width:2,
-        height:20,
-        background : 'transparent',
-        lineColor : 'black',
-        displayValue: false
-
+        width: 2,
+        height: 20,
+        background: "white",
+        lineColor: "black",
+        displayValue: false,
       });
     }, 100);
     return div;
   },
 
   voucher_modal(params) {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = "voucher__modal";
     div.innerHTML = `
     <div class="voucher__header">
       <span data-action="close">${__icons.back}</span>
-      <h3>Mã giảm giá</h3>
+      <h3>Mã ưu đãi</h3>
     </div>
     <ul class="voucher__list">
-      <li class="voucher__item">
-        <div class="voucher__item--img">
-          <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
-        </div>
-        <div class="voucher__item--info">
-          <h3>SSST1503A</h3>
-          <p>Giảm 100% max 50k</p>
-          <small>HSD: 12/3/2022 - 12/4/2022 </small>
-
-        </div>
-      </li>
-      <li class="voucher__item">
-        <div class="voucher__item--img">
-          <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
-        </div>
-        <div class="voucher__item--info">
-          <h3>SSST1503A</h3>
-          <p>Giảm 100% max 50k</p>
-          <small>HSD: 12/3/2022 - 12/4/2022 </small>
-
-        </div>
-      </li>
-      <li class="voucher__item">
-        <div class="voucher__item--img">
-          <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
-        </div>
-        <div class="voucher__item--info">
-          <h3>SSST1503A</h3>
-          <p>Giảm 100% max 50k</p>
-          <small>HSD: 12/3/2022 - 12/4/2022 </small>
-        </div>
-      </li>
+      <p class="text-center">Bạn chưa có mã ưu đãi nào</p>
     <ul>
     `;
+    let voucher_list = div.querySelector(".voucher__list");
+    let _init_voucher_data = () => {
+      let token = localStorage.getItem("token");
+      if (!token) return false;
+      let voucher = params.voucher
+        .map((item) => {
+          return `
+        <li class="voucher__item">
+          <div class="voucher__item--img">
+            <span style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647486888220.jpeg)"></span>
+          </div>
+          <div class="voucher__item--info">
+            <h3>${item.name}</h3>
+            <p>${item.des}</p>
+            <small>HSD: ${item.startDate} - ${item.endDate} </small>
+          </div>
+        </li>
+        `;
+        })
+        .join("");
+      voucher_list.innerHTML = voucher;
+    };
     let back_btn = div.querySelector('[data-action="close"]');
-    back_btn.addEventListener('click',(e)=> {
+    back_btn.addEventListener("click", (e) => {
       this.close();
-    })
-    return div
+    });
+    return div;
   },
+
   history_modal() {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = "history__modal";
     div.innerHTML = `
     <div class="history__header">
@@ -871,13 +999,14 @@ export const __templates_modal = {
     </div>
     `;
     let back_btn = div.querySelector('[data-action="close"]');
-    back_btn.addEventListener('click',(e)=> {
+    back_btn.addEventListener("click", (e) => {
       this.close();
-    })
-    return div
+    });
+    return div;
   },
+
   order_modal(params) {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = "order__modal";
     div.innerHTML = `
     <div class="order__header">
@@ -885,49 +1014,58 @@ export const __templates_modal = {
       <h3>Quản lý đơn hàng</h3>
     </div>
     <ul class="order__list">
-      <li data-id="1" class="order__list--item">
-        <h5>Đơn hàng: 12345678910JQK</h5>
-        <div class="order__item--info">
-          <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
-          <div>
-            <h5>name</h5>
-            <small>variation</small>
-          </div>
-        </div>
-        <div class="see__more"><button>Xem thêm</button></div>
-      </li>
-      <li data-id="1" class="order__list--item">
-        <h5>Đơn hàng: 12345678910JQK</h5>
-        <div class="order__item--info">
-          <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
-          <div>
-            <h5>name</h5>
-            <small>variation</small>
-          </div>
-        </div>
-        <div class="see__more"><button>Xem thêm</button></div>
-      </li>
+      
     </ul>
     `;
-    
+    let order_list = div.querySelector('.order__list');
     let back_btn = div.querySelector('[data-action="close"]');
-    back_btn.addEventListener('click',(e)=> {
+    back_btn.addEventListener("click", (e) => {
       this.close();
-    })
+    });
 
-    let show_order_detail = () => {
-      let order_list = div.querySelectorAll(".order__list--item");
-      order_list.forEach(item => {
-        item.addEventListener('click',(e) => {
-            this.overlay({content: this.order_detail()})
-        })
+    let init_order_data = () => {
+      let token = localStorage.getItem('token');
+      if(!token) return false;
+      __requests({
+        method: "GET",
+        url : `https://leanservices.work/cs/customer/my-orders?id=${params.id}`,
+        auth: token,
+      },({data})=> {
+        if (!data.length) {
+          order_list.innerHTML = '<li class="text-center">Bạn không có đơn hàng nào</li>';
+          return false
+        }
+        let order = data.map(ticket => {
+          return `
+          <li data-ticket='${JSON.stringify(ticket)}' class="order__list--item">
+            <h5>Đơn hàng: ${ticket.ticketId}</h5>
+            <div class="order__item--info">
+              <span style="background-image:url(https://cdn.ssstutter.com/products/${ticket.items[0].thumbnail.o})"></span>
+              <div>
+                <h5>${ticket.items[0].name}</h5>
+                <small>${__currency_format(ticket.items[0].price)}</small>
+              </div>
+            </div>
+            <div class="see__more"><button>Xem thêm</button></div>
+          </li>
+          `
+        }).join('');
+        order_list.innerHTML = order;
+        let orders = div.querySelectorAll(".order__list--item");
+        orders.forEach((item) => {
+          item.addEventListener("click", (e) => {
+            let ticket_data = JSON.parse(item.dataset.ticket)
+            this.overlay({ content: this.order_detail(ticket_data) });
+          });
+        });
       })
-    };
-  show_order_detail();
-    return div
+    }
+    init_order_data();
+    return div;
   },
+
   setting_modal(params) {
-    let div = document.createElement('div');
+    let div = document.createElement("div");
     div.className = "setting__modal";
     div.innerHTML = `
     <div class="setting__header">
@@ -936,61 +1074,101 @@ export const __templates_modal = {
     </div>
     <div class="setting__menu">
       <ul>
-        <li>Đổi mật khẩu </li>
-        <li>Liên kết thẻ ngân hàng</li>
-        <li>Hỗ trợ</li>
+        <li class="p-2">
+          <p data-toggle="change_pass" class="p-2">Đổi mật khẩu</p>
+          <div class="flex flex-col hidden">
+            <input type="text" data-input="old_password" class="p-2 my-2" placeholder="Nhập mật khẩu cũ"/>
+            <input type="text" data-input="new_password" class="p-2 my-2" placeholder="Nhập mật khẩu mới"/>
+            <button data-action="submit" class="p-3 drop-shadow bg-gray-50">Xác nhận</button>
+          </div>
+        </li>
+        <li class="p-2">
+           <p data-toggle="support" class="p-2">Hỗ trợ</p>
+           <div class="flex flex-col hidden">
+              <p class="p-2 my-2">Hotline: 086 993 6266</p>
+              <p class="p-2 my-2">Email: info@ssstutter.com</p>
+           </div> 
+        </li>
       </ul>
     </div>
     `;
     let back_btn = div.querySelector('[data-action="close"]');
-    back_btn.addEventListener('click',(e)=> {
+    let toggle_setting = div.querySelectorAll("[data-toggle]");
+    let old_pwd = div.querySelector('[data-input="old_password"]');
+    let new_pwd = div.querySelector('[data-input="new_password"]');
+    let submit_btn = div.querySelector('[data-action="submit"]');
+    let user_data = params;
+    toggle_setting.forEach((menu) => {
+      menu.addEventListener("click", (e) => {
+        let content = menu.parentNode.querySelector("div");
+        content.classList.toggle("hidden");
+      });
+    });
+
+    submit_btn.addEventListener("click", (e) => {
+      __templates.api_loading("show");
+      let token = localStorage.getItem("token");
+      if (!token) return false;
+      user_data.password = old_pwd.value;
+      user_data.newPassword = new_pwd.value;
+      __requests({
+        method: "PUT",
+        url: `https://leanservices.work/cs/customer/update-profile`,
+        auth: token,
+        body: JSON.stringify(user_data),
+      },({data})=> {
+        __templates.api_loading("hide");
+        __push_notification(
+          "success",
+          "Cập nhật mật khẩu thành công"
+        );
+        console.log(data);
+      });
+    });
+
+    back_btn.addEventListener("click", (e) => {
       this.close();
-    })
+    });
     return div;
   },
 
-  order_detail (params) {
-    let div = document.createElement('div');
+  order_detail(params) {
+    console.log(params);
+    let div = document.createElement("div");
     div.className = "order__detail--modal";
     div.innerHTML = `
-      <h5>Đơn hàng: 12345678910JQK</h5>
+      <h5>Đơn hàng: ${params.ticketId}</h5>
       <div class="order__info">
         <h1>Thông tin</h1>
         <div class="overview">
-            <p>Khách hàng : Nguyễn Minh Duông</p>
-            <p>Điện thoại : 0966868496</p>
-            <p>Địa chỉ nhận hàng : Số 17 ngõ 238/106 Cổ Bi, Gia Lâm, Hà Nội</p>
+            <p>Khách hàng : ${params.customerName}</p>
+            <p>Điện thoại : ${params.customerPhone}</p>
+            <p>Địa chỉ nhận hàng : ${params.shippingAddress}</p>
         </div>
         <div class="purchase__list">
           <div class="class="glide__track" data-glide-el="track"">
             <ul class="glide__slides">
-              <li class="glide__slide">
-                <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
-                <div class="item__info">
-                  <h5>name</h5>
-                  <small>variation</small>
-                  <div><p>200.000</p><em>x5</em></div>
-                </div>
-                <div class="item__total">Total : <strong>1.000.000</strong></div>
-              </li>
-              <li>
-                <span style="background-image:url(https://cdn.ssstutter.com/products/nCRHI1bpbr1ZIsxG/012022/1641868761199_100_125.jpeg)"></span>
-                <div class="item__info">
-                  <h5>name</h5>
-                  <small>variation</small>
-                  <div><p>200.000</p><em>x5</em></div>
-                </div>
-                <div class="item__total">Total : <strong>1.000.000</strong></div>
-              </li>
+         ${params.items.map(product => {
+           return `
+            <li class="glide__slide">
+              <span style="background-image:url(https://cdn.ssstutter.com/products/${product.thumbnail.o})"></span>
+              <div class="item__info">
+                <h5>${product.name}</h5>
+                <div><p>${__currency_format(product.price)}</p><em>x${product.quantity}</em></div>
+              </div>
+              <div class="item__total">Tổng : <strong>${__currency_format(product.quantity* product.price)}</strong></div>
+            </li>
+           `
+         }).join('')}
             </ul>
           </div>
         </div> 
         <div class="total__bill">
           <h1>Tổng hoá đơn:</h1>
-          <strong>2.000.000</strong>
+          <strong>${__currency_format(params.moneyTotal)}</strong>
         </div>
       </div>
-      <div class="order__tracking">
+       <!--<div class="order__tracking">
       <h1>Hành trình</h1>
         <ul>
           <li class="active">
@@ -1001,16 +1179,17 @@ export const __templates_modal = {
             <i>13/2/2022</i>
             <p>Đang giao cho hãng vận chuyển</p>          
           </li>
-        </ul>
+        </ul> --!>
+
       </div>
     `;
     setTimeout(() => {
       new Glide(".purchase__list", {
-        type: "carousel",
+        type: "slider",
         perView: 1,
         peek: {
-          before : 0,
-          after : 50
+          before: 0,
+          after: 50,
         },
         autoplay: 5000,
       }).mount();
@@ -1018,8 +1197,8 @@ export const __templates_modal = {
     return div;
   },
 
-  logout_modal () {
-    let div = document.createElement('div');
+  logout_modal() {
+    let div = document.createElement("div");
     div.className = "logout__modal";
     div.innerHTML = `
       <h3>Bạn có muốn đăng xuất</h3>
@@ -1030,14 +1209,16 @@ export const __templates_modal = {
     `;
     let logout = div.querySelector('[data-action="logout"]');
     let back_btn = div.querySelector('[data-action="close"]');
-    back_btn.addEventListener('click',(e)=> {
+    back_btn.addEventListener("click", (e) => {
       this.close();
-    })
+    });
 
-    logout.addEventListener('click',(e)=> {
-      window.location.href = '/'
-    })
-    
+    logout.addEventListener("click", (e) => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    });
+
     return div;
-  }
+  },
 };

@@ -31,12 +31,6 @@ export const __templates_home = {
           
           </ul>
         </div>
-        <!--
-        <div class="glide__arrows" data-glide-el="controls">
-          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
-          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
-        </div>
-        -->
       </div>  
       `;
       let get_banner_list = () => {
@@ -60,12 +54,12 @@ export const __templates_home = {
             })
             .join("");
           banner_container.innerHTML = banner_item;
+          new Glide("#banner_glide", {
+            type: "slider",
+            perView: 1,
+            autoplay: 5000,
+          }).mount();
           setTimeout(() => {
-            new Glide("#banner_glide", {
-              type: "slider",
-              perView: 1,
-              autoplay: 5000,
-            }).mount();
           }, 100);
         }
       );
@@ -78,17 +72,11 @@ export const __templates_home = {
     let section = document.createElement("section");
     section.className = "slide__banner";
     section.innerHTML = `
-      <div class="glide">
+      <div class="glide" id="mobile_banner_slide">
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides banner__container">
           </ul>
         </div>
-        <!--
-        <div class="glide__arrows" data-glide-el="controls">
-          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
-          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
-        </div>
-        -->
       </div>  
       `;
     let get_banner_list = () => {
@@ -112,7 +100,7 @@ export const __templates_home = {
             .join("");
           banner_container.innerHTML = banner_item;
           setTimeout(() => {
-            new Glide(".glide", {
+            new Glide("#mobile_banner_slide", {
               type: "slider",
               perView: 1,
               autoplay: 5000,

@@ -1,11 +1,11 @@
 .loyalty__page {
   width: 100%;
   .loyalty__header {
-    @include grid(50px 1fr 50px , null , 10px);
+    @include grid(50px 1fr 50px, null, 10px);
     padding: 10px;
     align-items: center;
     h4 {
-      @include font(large, center, 700 );
+      @include font(large, center, 700);
     }
     p {
       text-align: center;
@@ -29,21 +29,28 @@
       @include shadow_box();
       @include border(transparent, 15px);
       .card {
-        @include ratio(16,9);
-        @include border(transparent, 15px);
+        @include ratio(16, 9);
+        border: none;
+        border-radius: 10px;
         box-shadow: 5px 5px 10px 5px #dbdbdb;
         position: relative;
-        >div {
+        > div {
           position: absolute;
           bottom: 20px;
           left: 20px;
           color: $white;
           .loyalty__profile--name {
-            letter-spacing: 2px;
+            letter-spacing:5px;
+            text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3),
+              1px 1px 0px rgba(0, 0, 0, 0.8);
+              font-size: x-small;
           }
           p {
-            text-transform: capitalize;
+            text-transform: uppercase;
             margin-top: 15px;
+            text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3),
+              1px 1px 0px rgba(0, 0, 0, 0.8);
+            letter-spacing: 5px;
           }
         }
       }
@@ -54,27 +61,26 @@
         width: 100%;
       }
     }
-
   }
   .loyalty__menu {
     width: 100%;
     hr {
       display: block;
       width: 60%;
-      @include border($light,0)
+      @include border($light, 0);
     }
     ul {
       width: 100%;
       padding: 10px 20px;
       margin-top: 20px;
       li {
-        @include flex(row,flex-start,center);
+        @include flex(row, flex-start, center);
         @include shadow_box();
-        @include border(transparent,15px);
-        padding: 15px;      
-        margin: 10px 0;  
+        @include border(transparent, 15px);
+        padding: 15px;
+        margin: 10px 0;
 
-         >span {
+        > span {
           @include border($light, 15px);
           display: grid;
           padding: 10px;
@@ -83,26 +89,43 @@
             width: 20px;
             height: 20px;
           }
-         }
-         > div {
+        }
+        > div {
           small {
             color: $silver;
             font-size: 12px;
           }
-         }
+        }
       }
     }
     .logout {
       margin-top: 40px;
-      @include flex(row,flex-end,center);
+      @include flex(row, flex-end, center);
       button {
-        @include border(transparent,0);
+        @include border(transparent, 0);
         @include shadow_box;
-        @include font(medium,center,700);
+        @include font(medium, center, 700);
         width: 40%;
-        padding: 15px;
+        padding: 5px;
         background-color: $white;
         border-bottom-left-radius: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .loyalty__profile {
+    &--avt {
+      .card {
+        > div {
+          .loyalty__profile--name {
+            font-size: smaller;
+          }
+          p {
+            font-size: smaller;
+          }
+        }
       }
     }
   }

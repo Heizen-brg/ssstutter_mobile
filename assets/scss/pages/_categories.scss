@@ -191,7 +191,7 @@
     }
     > ul {
       @include grid(repeat(auto-fill, minmax(32%, 1fr)), null, 10px);
-      padding: 20px;
+      padding: 20px 0;
       position: relative;
       @media (min-width: 1024px) {
         @include grid(repeat(auto-fill, minmax(30%, 1fr)), null, 20px);

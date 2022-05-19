@@ -24,11 +24,11 @@ export const __templates_loyalty = {
     div.className = 'loyalty__profile';
     div.innerHTML = `
       <div class="loyalty__profile--avt">
-        <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647397717026.jpeg)">
+        <div class="card" style="background-image:url(https://sss-dashboard.leanservices.work/upload/5-2022/1652687671783.jpeg)">
           <img class="barcode" id="barcode"/>
           <div>
             <h3 class="loyalty__profile--name">${params.name}</h3>
-            <p>${params.grade}</p>
+            <p>${params.grade ? params.grade :'member'}</p>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ export const __templates_loyalty = {
       JsBarcode("#barcode", params.id, {
         width:2,
         height:20,
-        background : 'transparent',
+        background : 'white',
         lineColor : 'black',
         displayValue: false
 
@@ -51,7 +51,7 @@ export const __templates_loyalty = {
     let div = document.createElement('div');
     div.className = "loyalty__menu";
     div.innerHTML = `
-      <hr>
+      <hr class="m-auto">
       <ul>
         <li data-action="account">
           <span>${__icons.user}</span>

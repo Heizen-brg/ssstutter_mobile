@@ -1,6 +1,6 @@
 .login__form {
   @include grid(1fr , null ,50px);
-  padding: 30% 20%;
+  padding: 20%;
   .coming__soon {
     position: fixed;
     top: 0;
@@ -35,7 +35,10 @@
     }
     small {
       @include font(x-small,center,500);
-      margin-top: 100px;
+      @include shadow_box;
+      padding: 10px;
+      margin-top: 70px;
+      color: $red;
     }
     button {
       @include shadow_box();

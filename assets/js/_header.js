@@ -124,10 +124,10 @@ export const __templates_header = {
     let div = document.createElement("div");
     div.className = "nav__left--items";
       div.innerHTML = `
-      <div data-active="" data-action="home" class="${params.home}"><a href="https://m.ssstutter.com/">${__icons.home} <p>home</p></a></div>
-      <div data-active="" data-action="history" class="${params.history}"><a href="/history">${__icons.history} <p>history</p></a></div>
-      <div data-active="" data-action="loyalty" class="${params.loyalty}"><a href="/login">${__icons.user} <p>user</p></a></div>
-      <div data-active="" data-action="side_nav"><a>${__icons.nav} <p>menu</p></a></div>
+      <div data-active="" data-action="home" class="${params.home}"><a class="flex flex-col justify-center items-center" href="https://m.ssstutter.com/">${__icons.home} <p class="mt-2">home</p></a></div>
+      <div data-active="" data-action="history" class="${params.history}"><a class="flex flex-col justify-center items-center" href="/history">${__icons.history} <p class="mt-2">history</p></a></div>
+      <div data-active="" data-action="loyalty" class="${params.loyalty}"><a class="flex flex-col justify-center items-center" href="/login">${__icons.user} <p class="mt-2">user</p></a></div>
+      <div data-active="" data-action="side_nav"><a class="flex flex-col justify-center items-center" >${__icons.nav} <p class="mt-2">menu</p></a></div>
     `;
     let menu = div.querySelectorAll("[data-action]");
     menu.forEach((item) => {
@@ -248,7 +248,7 @@ export const __templates_header = {
           method: "GET",
           url: `product/attribute/category/get`,
         },
-        ({ data, error }) => {
+        ({ data }) => {
           let parent_cat_arr = data.filter((item) => item.parentId == params.category);
           let cat_item = (parent_cat_arr || [])
             .map(

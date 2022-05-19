@@ -279,7 +279,7 @@ export const __show_cart_item = (wrapper, total, div) => {
       e.preventDefault();
       init_quantity_value(e.target.value, e.target.dataset.index);
     });
-    let init_quantity_value = (value, index) => {
+    let init_quantity_value = (value, index = 0) => {
       purchase_items_list[index].quantity = value;
 
       let total_amount = purchase_items_list.reduce((total, current) => {
@@ -516,8 +516,16 @@ export const __calc_final_amount = (div, callback) => {
       })
     })
   };
-  if (final_amount>= 99000 &&!cart_selected.some(item => item.id == 'i09nOsLTQCg1si1Cdbnk64BAS2J3sxPO') ) {
-    promotion_sale('GREATE LIFE TEE')
+  if (final_amount>= 99000 ) {
+    let totalGLT = cart_selected.reduce((total,current)=>{
+      if(current.id==="i09nOsLTQCg1si1Cdbnk64BAS2J3sxPO")total+=parseInt(current.quantity)
+      return total
+    },0)
+    let otherItem = cart_selected.filter((item)=>item.id!=="i09nOsLTQCg1si1Cdbnk64BAS2J3sxPO")
+    if((totalGLT===1&&!otherItem.length) || (otherItem.length && !totalGLT)){
+
+      promotion_sale('GREATE LIFE TEE')
+    }
   }
   total_amount.innerHTML = `${__currency_format(final_amount)}`;
 };
@@ -769,3 +777,12 @@ export const __snow_drop = () => {
 
   ready(appendSnow);
 };
+
+export const __output_date = timestamp => {
+  let date = new Date(timestamp)
+  let day = ('0' + date.getDate()).slice(-2);
+  let month = ('0' + (date.getMonth() + 1)).slice(-2);
+  let year = date.getFullYear();
+
+  return [year, month, day].join('-')
+}

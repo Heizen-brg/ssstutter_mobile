@@ -12,6 +12,8 @@ import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
 let typing_timer = null;
 let items_purchased = JSON.parse(localStorage.getItem("cartItem"));
+let user = localStorage.getItem('user');
+user = user ? JSON.parse(user) : ''
 let order_data = {
   customerPhone: "",
   customerName: "",
@@ -36,9 +38,9 @@ export const __templates_checkout = {
     div.innerHTML = `
       <h1>Thông tin giao hàng</h1>
       <form>
-        <input data-value="customer_name" type="text" placeholder="* Họ & Tên" required />
-        <input data-value="customer_email" type="email" placeholder="Email" />
-        <input data-value="customer_phone" type="text" placeholder="* Số điện thoại" required />
+        <input data-value="customer_name" type="text" value="${user.name || ''}" placeholder="* Họ & Tên" required />
+        <input data-value="customer_email" type="email" value="${user.email || ''}" placeholder="Email" />
+        <input data-value="customer_phone" type="text" value="${user.phone || ''}" placeholder="* Số điện thoại" required />
         <div>
           <select data-value="customer_city" required>
             <option selected value="none" hidden>* Chọn Tỉnh/Thành Phố</option>
@@ -50,7 +52,7 @@ export const __templates_checkout = {
             <option selected value="none" hidden>* Chọn Phường/Xã</option>
           </select>
         </div>
-        <input data-value="customer_address" required type="text" placeholder="* Số nhà tên đường..." />
+        <input data-value="customer_address" required type="text" value="${user.address || ''}" placeholder="* Số nhà tên đường..." />
       </form>
       <small style="color:gray">(*) là trường không được để trống</small>
     `;

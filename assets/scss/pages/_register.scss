@@ -1,6 +1,6 @@
 .register__form {
   @include grid(1fr , null ,50px);
-  padding: 30% 20%;
+  padding: 20%;
   &--logo {
     place-self: center;
     svg {
@@ -9,15 +9,18 @@
     }
   }
   &--register {
-    @include grid(1fr,null,50px);
-    input {
+    @include grid(1fr,null,20px);
+    input, select {
       border: none;
       border-bottom: thin solid $silver;
       width: 100%;
+      padding: 5px;
+      margin: 10px 0;
     }
+   
     small {
       @include font(x-small,center,500);
-      margin-top: 100px;
+      margin-top: 20px;
     }
     button {
       @include shadow_box();

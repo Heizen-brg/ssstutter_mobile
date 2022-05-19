@@ -513,7 +513,8 @@
     place-self: center;
     .card {
       @include ratio(16, 9);
-      @include border(transparent, 15px);
+      border: none;
+      border-radius: 10px;
       box-shadow: 5px 5px 10px 5px #dbdbdb;
       position: relative;
       .barcode {
@@ -528,18 +529,24 @@
         bottom: 10px;
         padding: 10px;
         color: $white;
-        @include flex(row,space-between,center);
+        @include flex(row,space-between,end);
         > div {
-          width: 50%;
-        }
-        .loyalty__point {
-          h3 {
-            text-align: end;
+          .loyalty__profile--name {
+            letter-spacing: 5px;
+            text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3),
+              1px 1px 0px rgba(0, 0, 0, 0.8);
+              font-size: x-small;
+
           }
           p {
-            text-align: end;
+            text-transform: uppercase;
+            margin-top: 15px;
+            text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3),
+              1px 1px 0px rgba(0, 0, 0, 0.8);
+            letter-spacing: 5px;
           }
         }
+
       }
     }
   }
@@ -552,7 +559,7 @@
       p {
         color: $silver;
       }
-      input,textarea {
+      input,textarea,select {
         @include border(transparent, 4px);
         @include shadow_box();
         width: 100%;
@@ -636,21 +643,27 @@
       @include shadow_box();
       padding: 15px;
       place-content: center;
+      margin: 5px 0;
       .order__item--info {
         @include grid(60px 1fr , null,15px);
         margin: 10px 0;
         padding: 10px;
-        span {
+        >span {
           @include ratio(1,1);
+        }
+        h5 {
+          @include font(smallstart,600)
         }
       }
       .see__more {
         @include flex(row,center,center);
+
         button {
           padding: 10px;
           border: none;
           font-size: 10px;
           background-color: transparent;
+          border-top: thin solid $silver;
         }
       }
     }
@@ -702,6 +715,9 @@
             @include flex(row,space-between,center);
             em {
               color: $silver;
+            }
+            h5 {
+              @include font(small,start,600)
             }
           }
         }
@@ -790,9 +806,7 @@
     padding: 10px;
      ul {
        li {
-        padding: 10px;
-        border-bottom: thin solid $silver;
-         
+        border-bottom: thin solid $silver;         
        }
      }
   }

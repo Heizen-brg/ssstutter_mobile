@@ -510,32 +510,40 @@ export const __render = {
   },
 
   loyalty_page(params) {
-    let user = localStorage.getItem('user');
-    if (!user) window.location.href = '/login';
-    user = JSON.parse(user)
-    let blocks = [
-      __templates_header.header({
-        left: __templates_header.left({loyalty:'active'}),
-        right: __templates_header.right(),
-        mobile: __templates_header.mobile(),
-        page_y_offset: 500,
-      }),
-      __templates_header.megamenu(),
-      __templates_header.search({
-        option: __templates.related_product(),
-      }),
-      __templates_header.cart(),
-      __templates_loyalty.header(),
-      __templates_loyalty.profile(user),
-      __templates_loyalty.customer_menu(user),
-    ];
-    this.build("loyalty__page", blocks);
-    __templates.api_loading("hide");
+    let token = localStorage.getItem('token');
+    __requests({
+      method : 'GET',
+      url : `https://leanservices.work/cs/customer/my-profile`,
+      auth : token
+    },({data})=> {
+      let blocks = [
+        __templates_header.header({
+          left: __templates_header.left({loyalty:'active'}),
+          right: __templates_header.right(),
+          mobile: __templates_header.mobile(),
+          page_y_offset: 500,
+        }),
+        __templates_header.megamenu(),
+        __templates_header.search({
+          option: __templates.related_product(),
+        }),
+        __templates_header.cart(),
+        __templates_loyalty.header(),
+        __templates_loyalty.profile(data),
+        __templates_loyalty.customer_menu(data),
+      ];
+      this.build("loyalty__page", blocks);
+      __templates.api_loading("hide");
+    },({error})=> {
+      localStorage.removeItem('token')
+      if (error) window.location.href = '/login';
+    })
+   
   },
 
   login_page (params) {
-    let user = localStorage.getItem('user');
-    if (user) window.location.href = '/loyalty';
+    let token = localStorage.getItem('token');
+    if (token) window.location.href = '/loyalty';
     let blocks = [
       __templates_header.header({
         left: __templates_header.left({loyalty:'active'}),

@@ -74,11 +74,11 @@ export const __templates_arrivals = {
     __requests(
     {
       method: "GET",
-      url: `https://api.ssstutter.com/product/filter/web?catId=newArrivals&media=true&webStock=true`,
+      url: `https://sss-dashboard.leanservices.work/w/section/detail?type=new_arrivals&catId=${product_container.dataset.cate}`,
     },
     ({ data, error }) => {
       __templates.api_loading("hide");
-      let products = (data.filter(i=>i.catId.join().includes(product_container.dataset.cate))).map((item) => {
+      let products = data.products.map((item) => {
         return `
               <li>
                 <div class="product">
@@ -148,11 +148,11 @@ export const __templates_arrivals = {
     __requests(
       {
         method: "GET",
-        url: `https://api.ssstutter.com/product/filter/web?catId=newArrivals&media=true&webStock=true`,
+        url: `https://sss-dashboard.leanservices.work/w/section/detail?type=new_arrivals&catId=${product_container.dataset.cate}`,
       },
       ({ data, error }) => {
         __templates.api_loading("hide");
-        let products = (data.filter(i=>i.catId.join().includes(product_container.dataset.cate))).map((item) => {
+        let products = data.products.map((item) => {
           return `
                 <li>
                   <div class="product">

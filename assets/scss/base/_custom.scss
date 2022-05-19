@@ -2,8 +2,13 @@ svg {
   width: 25px;
   height: 25px;
 }
+input[type='date'], input[type='time'] {
+  -webkit-appearance: none;
+  background-color: $white;
+}
 input {
   @include border($silver, 4px);
+  -webkit-appearance: none;
   padding: 10px 15px;
   line-height: 1.5;
   &.error {
@@ -15,6 +20,10 @@ input {
   &:focus {
     @include border($black, 4px);
   }
+}
+textarea {
+  -webkit-appearance: none;
+
 }
 .glide {
   position: relative;
