@@ -8,7 +8,7 @@ input[type='date'], input[type='time'] {
 }
 input {
   @include border($silver, 4px);
-  -webkit-appearance: none;
+  // -webkit-appearance: none;
   padding: 10px 15px;
   line-height: 1.5;
   &.error {

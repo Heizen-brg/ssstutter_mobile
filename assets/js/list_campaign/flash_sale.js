@@ -1,190 +1,487 @@
-function flash_sale_page() {
-  function create_element(e) {
-    let dom_create = document.createElement(e);
+import { __icons } from "../share/_icons.js";
+import { __size_arr } from "../share/_data.js";
+import { __templates } from "../share/_components.js";
+import { __render, __requests } from "../main.js";
+import {
+  __remove_item_in_array,
+  __init_filter,
+  __init_product_list,
+  __to_slug,
+  __keep_scroll_postion,
+} from "../share/_function.js";
+let mobile = window.innerWidth <= 425;
 
-    return dom_create;
-  }
+window.data_filter = {
+  existed_ids: [],
+  q: [{
+      tax: "color",
+      data: [],
+    },
+    {
+      tax: "size",
+      data: [],
+    },
+    {
+      tax: "price",
+      data: []
+    },
+    {
+      tax: "sortBy=price&sort",
+      data: []
+    },
+  ],
+  price: null,
+};
 
-  function remove_element(e) {
-    if (document.querySelector(e)) document.querySelector(e).remove();
-  }
-
-  let template = create_element("div");
-  template.classList.add("flash-sale-page-wrapper");
-
-  function section_header() {
-    let div = create_element("section");
-    div.className = "campaign-detail";
-    div.innerHTML = `
-    <div class="clock"></div>
-    <h2>Flash sale / Ưu đãi giới hạn</h2>
-    <p>Sản phẩm chỉ từ 89.000đ</p>
-    <p>Kéo xuống để xem danh sách sản phẩm</p>
-    `;
-
-    let end_date = new Date("Oct 31, 2021 10:00:00").getTime();
-
-    let countdown = setInterval(() => {
-      let distance = end_date - Date.now();
-
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      div.querySelector(".clock").innerHTML = `
-      Kết thúc trong 
-      <span>${hours}</span> giờ 
-      <span>${minutes}</span> phút 
-      <span>${seconds}</span> giây
+export const __templates_sale = {
+    infomation(params = {}) {
+      let section = document.createElement("section");
+      section.className = "categories__info";
+      section.innerHTML = `
+    <h1 class="info__title">${params.category.name.replace("-", "")}</h1>
+    <p>Tất cả những sản phẩm Mới nhất nằm trong BST được mở bán Hàng Tuần sẽ được cập nhật liên tục tại đây. Chắc chắn bạn sẽ tìm thấy những sản phẩm Đẹp Nhất - Vừa Vặn Nhất - Phù Hợp nhất với phong cách của mình.
+    </p>
+  `;
+      return section;
+    },
+    banner() {
+      let div = document.createElement("div");
+      div.className = "hero__banner";
+      div.innerHTML = `
+        <div style="background-image:url(https://sss-dashboard.leanservices.work.jpeg)"></div>
       `;
+      return div;
+    },
+    categories(params = {}) {
+      let section = document.createElement("section");
+      section.className = "categories__list";
+      __requests({
+            method: "GET",
+            url: `product/attribute/category/get`,
+          },
+          ({ data, error }) => {
+            let top_cat = data.filter(i => !i.parentId).map(i => i.id)
+            let parent_cat_arr
+            if (top_cat.includes(params.category.id)) {
+              parent_cat_arr = data.filter(
+                (item) => item.parentId === params.category.id
+              );
 
-      if (distance < 0) {
-        clearInterval(countdown);
-        div.querySelector(".clock").innerHTML = `
-        Sự kiện đã kết thúc
-        `;
-      }
-    }, 1000);
-
-    return div;
-  }
-
-  function section_banner() {
-    let img_size = "pc";
-    if (window.innerWidth < 768) img_size = "mobile";
-
-    let div = create_element("section");
-    div.classList.add("section-banner");
-    div.innerHTML = `
-    <div class="grid-row">
-      <div data-filter="nu" style="background-image: url(/assets/img/flash_sale/fs-her-${img_size}.jpg)"></div>
-      <div data-filter="nam" style="background-image: url(/assets/img/flash_sale/fs-him-${img_size}.jpg)"></div>
-    </div>
-    `;
-
-    div.querySelectorAll(".grid-row div").forEach((banner) => {
-      banner.addEventListener("click", (e) => {
-        let data_filter = e.target.getAttribute("data-filter");
-
-        document.querySelector("#san-pham-flash-sale").scrollIntoView({ behavior: "smooth" });
-        if (document.querySelector(`#san-pham-flash-sale .product-filter .active`)) {
-          document.querySelector(`#san-pham-flash-sale .product-filter .active`).classList.remove("active");
-        }
-
-        document.querySelector(`#san-pham-flash-sale [data-filter="${data_filter}"]`).classList.add("active");
-        document.querySelector(`#san-pham-flash-sale [data-filter="${data_filter}"]`).click();
-      });
-    });
-
-    return div;
-  }
-
-  function section_product() {
-    let cat_id = "";
-
-    let div = create_element("section");
-    div.classList.add("section-product");
-    div.setAttribute("id", "san-pham-flash-sale");
-    div.innerHTML = `
-    <div class="product-filter">
-      <span data-filter="nam">Sản phẩm Nam</span>
-      <span style="text-decoration: none;">/</span>
-      <span data-filter="nu">Sản phẩm Nữ</span>
-    </div>
-    <ul></ul>
-    `;
-
-    fetch(`https://api.leanservices.work/product/services/flash-sale${cat_id}`, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.stauts);
-          return false;
-        }
-        return response.json();
-      })
-      .then((data) => {
-        get_product(data);
-      })
-      .catch((error) => console.log(error));
-
-    div.querySelectorAll(".product-filter span").forEach((item) => {
-      item.addEventListener("click", () => {
-        div.querySelector("ul").innerHTML = "";
-        if (div.querySelector(".product-filter .active")) {
-          div.querySelector(".product-filter .active").classList.remove("active");
-        }
-        item.classList.add("active");
-
-        let data_filter = item.getAttribute("data-filter");
-        if (data_filter == "nam") cat_id = "?catId=3vvRIM";
-        if (data_filter == "nu") cat_id = "?catId=y8Q15I";
-
-        fetch(`https://api.leanservices.work/product/services/flash-sale${cat_id}`, {
-          method: "GET",
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(response.stauts);
-              return false;
+            } else {
+              parent_cat_arr = data.filter(
+                (item) => item.parentId === params.category.parentId
+              );
             }
-            return response.json();
-          })
-          .then((data) => {
-            get_product(data);
-          })
-          .catch((error) => console.log(error));
+            // console.log(parent_cat_arr);
+            section.innerHTML = `
+        <ul>
+          ${(parent_cat_arr || [])
+            .map(
+              (cate) =>
+                `<li><a href="/c/${cate.slug}">${cate.name.replace("-", "")}</a></li>`
+            )
+            .join("")}
+        </ul>
+    `;
+      }
+    );
+
+    return section;
+  },
+
+  products(params = {}) {
+    let div = document.createElement("div");
+    div.className = "categories__products";
+    div.innerHTML = ` 
+    <ul data-cate="${params.category.id}">
+      ${__templates.busy_loading("show")}
+    </ul>
+    <button class="back__top">${__icons.up}</button>
+    `;
+    let product_container = params.container? params.container: div.querySelector("ul");
+    let current_skip_item = sessionStorage.getItem('current_product');
+    let top_btn = div.querySelector(".back__top");
+
+    top_btn.addEventListener('click',(e)=> {
+      product_container.scrollIntoView({behavior: "smooth"})
+    })
+
+    if (!current_skip_item) {
+      __init_product_list({
+        container: product_container,
+        query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+      });
+    } else {
+      __keep_scroll_postion({container:product_container,query: product_container.dataset.cate });
+
+    }
+    return div;
+  },
+
+  filter(params = {}) {
+    let div = document.createElement("div");
+    div.className = "categories__filter";
+    div.innerHTML = `
+    <div class="filter__toggle">
+      <span class="mobile-cate-trigger" style="text-transform: capitalize">${params.category.name.replace("-", "").toLowerCase()} ${__icons.down}</span>
+      <span data-toggle="filter">${__icons.plus} Filter </span>
+    </div>
+    <div class="filter__list">
+      <ul class="filter__list--wrapper">
+        <li class="color">
+          <h4>Màu sắc
+            ${__icons.right}
+          </h4>
+          <ul class="color__list">
+          </ul>
+        </li>
+        <li class="size">
+          <h4>
+            Size quần/áo
+            ${__icons.right}
+          </h4>
+          <ul>
+          ${__size_arr[0].size
+        .map(
+          (item) => `
+              <li data-name="pa_size" data-size="${item}">
+                <label>
+                  <input type="checkbox"><span>${item}</span>
+                </label>
+              </li>
+          `
+        )
+        .join("")}
+          </ul>
+        </li>
+        <li class="size">
+          <h4>Size quần jeans
+            ${__icons.right}
+          </h4>
+          <ul>
+          ${__size_arr[1].size
+        .map(
+          (item) => `
+          <li data-name="pa_size" data-size="${item}">
+            <label>
+              <input type="checkbox"><span>${item}</span>
+            </label>
+          </li>
+       `
+        )
+        .join("")}
+          </ul>
+        </li>
+        <li class="size">
+          <h4>Size giày
+            ${__icons.right}
+          </h4>
+          <ul>
+          ${__size_arr[2].size
+        .map(
+          (item) => `
+          <li data-name="pa_size" data-size="${item}">
+            <label>
+              <input type="checkbox"><span>${item}</span>
+            </label>
+          </li>
+       `
+        )
+        .join("")}
+          </ul>
+        </li>
+        <li class="sort">
+          <h4>Mức giá
+            ${__icons.right}
+          </h4>
+          <ul>
+            <li data-name="pa_price" data-price="0,100000">
+              <label>
+                <input type="radio" name="price">
+                <span>Dưới 100k</span>
+              </label>
+            </li>
+            <li data-name="pa_price" data-price="100000,300000">
+              <label>
+                <input type="radio" name="price">
+                <span>100k - 300k</span>
+              </label>
+            </li>
+            <li data-name="pa_price" data-price="300000,500000">
+              <label>
+                <input type="radio" name="price">
+                <span>300k - 500k</span>
+              </label>
+            </li>
+            <li data-name="pa_price" data-price="500000">
+              <label>
+                <input type="radio" name="price">
+                <span>Trên 500k</span>
+              </label>
+            </li>
+          </ul>
+        </li>
+        <li class="sort">
+          <h4>Sắp xếp
+            ${__icons.right}
+          </h4>
+          <ul>
+            <li data-name="pa_sort" data-sort="up">
+              <label>
+                <input type="radio" name="sort">
+                <span>Giá tăng dần</span>
+              </label>
+            </li>
+            <li data-name="pa_sort" data-sort="down">
+              <label>
+                <input type="radio" name="sort">
+                <span>Giá giảm dần</span>
+              </label>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="filter__action">
+        <button data-action="apply_filter">Áp dụng</button>
+        <button data-toggle="filter">Trở lại</button>
+      </div>
+    </div>
+    `;
+    __requests(
+      {
+        method: "GET",
+        url: `product/attribute/color/get`,
+      },
+      ({ data }) => {
+        let colors_arr = data;
+        colors_arr.map((color) => {
+          let li = document.createElement("li");
+          li.dataset.name = "pa_color";
+          li.dataset.color = color.id;
+          li.innerHTML = `
+        <label>
+          <input type="checkbox">
+          <span>${color.name}</span>
+        </label>
+        `;
+          let color_list = div.querySelector(".color__list");
+          color_list.appendChild(li);
+          li.addEventListener("click", (e) => {
+            let product_container = document.querySelector(
+              ".categories__products > ul"
+            );
+            e.preventDefault();
+            if (!li.dataset.name) return false;
+            let color_attr = li.dataset.color;
+            let btn_input = li.querySelector("input");
+            btn_input.checked = true;
+            if (li.classList.contains("active")) {
+              if (window.data_filter.q[0].data) {
+                let d = window.data_filter.q[0].data;
+                window.data_filter.q[0].data = __remove_item_in_array(
+                  color_attr,
+                  d
+                );
+                btn_input.checked = false;
+              }
+              li.classList.remove("active");
+            } else {
+              li.classList.add("active");
+              if (color_attr) {
+                window.data_filter.q[0].data.push(color_attr);
+                btn_input.checked = true;
+              }
+            }
+            if (mobile) {
+              let apply_btn = div.querySelector('[data-action="apply_filter"]');
+              apply_btn.addEventListener("click", (e) => {
+                div.querySelector(".filter__list").classList.remove("active");
+                e.preventDefault();
+                __init_product_list({
+                  infinity: false,
+                  container: product_container,
+                  query:__init_filter({data:window.data_filter,container: product_container, skip: 0})
+                });
+              });
+            } else {
+              __init_product_list({
+                infinity: false,
+                container: product_container,
+                query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+              });
+            }
+          });
+          return li;
+        });
+      }
+    );
+
+    let filter_toggle = div.querySelectorAll('[data-toggle="filter"');
+    filter_toggle.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        if (div.querySelector(".filter__list").classList.contains("active")) {
+          div.querySelector(".filter__list").classList.remove("active");
+        } else {
+          div.querySelector(".filter__list").classList.add("active");
+        }
       });
     });
 
-    return div;
-  }
-
-  template.appendChild(section_header());
-  template.appendChild(section_banner());
-  template.appendChild(section_product());
-
-  function get_product(data) {
-    data.data.map((item) => {
-      let product_item = create_element("li");
-      product_item.classList.add("product");
-      product_item.innerHTML = `
-      <div class="thumbnail">
-        <a href="/p/${item.slug}">
-          <span style="background-image:url(https://cdn.ssstutter.com/products/${
-            item.extensions.media.featured
-          })"></span>
-        </a>
-      </div>
-      <div class="detail">
-        <h6 class="name">${item.name}</h6>
-        <div class="price">
-          ${
-            item.salePrice
-              ? `
-          <p>${item.salePrice.toLocaleString("en-US")} <span class="currency-symbol">₫</span></p> 
-          <p class="discount">${item.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span></p>
-          `
-              : `
-              <p>${item.price.toLocaleString("en-US")} <span class="currency-symbol">₫</span></p> 
-              `
-          }
-          
-        </div>
-        <div class="color">
-          <p>+${item.color.length} màu</p>
-        </div>
-      </div>
-      `;
-
-      template.querySelector(".section-product ul").appendChild(product_item);
-      return product_item;
+    let filter_label = div.querySelectorAll(".filter__list--wrapper > li");
+    filter_label.forEach((label) => {
+      let trigger = label.querySelector("h4");
+      let ul = label.querySelector("ul");
+      trigger.addEventListener("click", () => {
+        if (ul.classList.contains("active")) {
+          ul.classList.remove("active");
+        } else {
+          ul.classList.add("active");
+        }
+      });
     });
+
+    let size_filter_list = div.querySelectorAll('[data-name="pa_size"]');
+    size_filter_list.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        let product_container = document.querySelector(
+          ".categories__products > ul"
+        );
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let size_attr = btn.dataset.size;
+        let btn_input = btn.querySelector("input");
+        btn_input.checked = true;
+        if (btn.classList.contains("active")) {
+          if (window.data_filter.q[1].data) {
+            let d = window.data_filter.q[1].data;
+            window.data_filter.q[1].data = __remove_item_in_array(size_attr, d);
+            btn_input.checked = false;
+          }
+          btn.classList.remove("active");
+        } else {
+          btn.classList.add("active");
+          if (size_attr) {
+            window.data_filter.q[1].data.push(size_attr);
+            btn_input.checked = true;
+          }
+        }
+        if (mobile) {
+          let apply_btn = div.querySelector('[data-action="apply_filter"]');
+          apply_btn.addEventListener("click", (e) => {
+            div.querySelector(".filter__list").classList.remove("active");
+            e.preventDefault();
+            __init_product_list({
+              infinity: false,
+              container: product_container,
+              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+            });
+          });
+        } else {
+          __init_product_list({
+            infinity: false,
+            container: product_container,
+            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+          });
+        }
+      });
+    });
+    
+    let price_range_list = div.querySelectorAll('[data-name="pa_price"]');
+    price_range_list.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        let product_container = document.querySelector(".categories__products > ul");
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let price_range = btn.dataset.price;
+        let btn_input = btn.querySelector("input");
+        btn_input.checked = true;
+        if (btn.classList.contains("active")) {
+          if (window.data_filter.q[2].data) {
+            let d = window.data_filter.q[2].data;
+            window.data_filter.q[2].data = [];
+            btn_input.checked = false;
+          }
+          btn.classList.remove("active");
+        } else {
+          btn.classList.add("active");
+          if (price_range) {
+            window.data_filter.q[2].data =[]
+            window.data_filter.q[2].data.push(price_range);
+            btn_input.checked = true;
+          }
+        }
+        if (mobile) {
+          let apply_btn = div.querySelector('[data-action="apply_filter"]');
+          apply_btn.addEventListener("click", (e) => {
+            div.querySelector(".filter__list").classList.remove("active");
+            e.preventDefault();
+     
+          });
+        } else {
+ 
+        }
+      });
+    });
+
+    let sort_list = div.querySelectorAll('[data-name="pa_sort"]');
+    sort_list.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        let product_container = document.querySelector(".categories__products > ul");
+        e.preventDefault();
+        if (!btn.dataset.name) return false;
+        let sort_type = btn.dataset.sort;
+        let btn_input = btn.querySelector("input");
+        btn_input.checked = true;
+        if (btn.classList.contains("active")) {
+          if (window.data_filter.q[3].data) {
+            let d = window.data_filter.q[3].data;
+            window.data_filter.q[3].data = [];
+            btn_input.checked = false;
+          }
+          btn.classList.remove("active");
+        } else {
+          btn.classList.add("active");
+          if (sort_type) {
+            window.data_filter.q[3].data =[]
+            window.data_filter.q[3].data.push(sort_type);
+            btn_input.checked = true;
+          }
+        }
+        if (mobile) {
+          let apply_btn = div.querySelector('[data-action="apply_filter"]');
+          apply_btn.addEventListener("click", (e) => {
+            div.querySelector(".filter__list").classList.remove("active");
+            e.preventDefault();
+            __init_product_list({
+              infinity: false,
+              container: product_container,
+              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+            });
+          });
+        } else {
+          __init_product_list({
+            infinity: false,
+            container: product_container,
+            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
+          });
+        }
+      });
+    });
+
+    //
+    // Show / hide cate mobile
+    //
+    div.querySelector('.mobile-cate-trigger').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelector('.categories__list').classList.toggle('show');
+    });
+
+    return div;
+  },
+};
+
+document.addEventListener('mouseup', (e) => {
+  if (!e.target.classList.contains('mobile-cate-trigger')) {
+    if (document.querySelector('.categories__list')) document.querySelector('.categories__list').classList.remove('show');
   }
-
-  return template;
-}
-
-export default flash_sale_page;
+});

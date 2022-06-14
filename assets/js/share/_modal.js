@@ -1039,8 +1039,9 @@ export const __templates_modal = {
           return `
           <li data-ticket='${JSON.stringify(ticket)}' class="order__list--item">
             <h5>Đơn hàng: ${ticket.ticketId}</h5>
+            <div class="status">Trạng thái: ${ticket.mapStatus}</div>
             <div class="order__item--info">
-              <span style="background-image:url(https://cdn.ssstutter.com/products/${ticket.items[0].thumbnail.o})"></span>
+              <span style="background-image:url(https://cdn.ssstutter.com/products/${ticket.items[0].thumbnail? ticket.items[0].thumbnail.o : 'no_image.png'})"></span>
               <div>
                 <h5>${ticket.items[0].name}</h5>
                 <small>${__currency_format(ticket.items[0].price)}</small>
@@ -1137,7 +1138,7 @@ export const __templates_modal = {
     let div = document.createElement("div");
     div.className = "order__detail--modal";
     div.innerHTML = `
-      <h5>Đơn hàng: ${params.ticketId}</h5>
+      <h5>Đơn hàng: ${params.ticketId} <p>${params.mapStatus}</p></h5>
       <div class="order__info">
         <h1>Thông tin</h1>
         <div class="overview">
@@ -1151,7 +1152,7 @@ export const __templates_modal = {
          ${params.items.map(product => {
            return `
             <li class="glide__slide">
-              <span style="background-image:url(https://cdn.ssstutter.com/products/${product.thumbnail.o})"></span>
+              <span style="background-image:url(https://cdn.ssstutter.com/products/${product.thumbnail ? product.thumbnail.o : 'no_image.png'})"></span>
               <div class="item__info">
                 <h5>${product.name}</h5>
                 <div><p>${__currency_format(product.price)}</p><em>x${product.quantity}</em></div>

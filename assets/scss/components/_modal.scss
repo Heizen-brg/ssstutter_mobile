@@ -644,6 +644,7 @@
       padding: 15px;
       place-content: center;
       margin: 5px 0;
+      position: relative;
       .order__item--info {
         @include grid(60px 1fr , null,15px);
         margin: 10px 0;
@@ -657,7 +658,6 @@
       }
       .see__more {
         @include flex(row,center,center);
-
         button {
           padding: 10px;
           border: none;
@@ -666,6 +666,12 @@
           border-top: thin solid $silver;
         }
       }
+      .status {
+        color: $silver;
+        text-transform: uppercase;
+        @include border(transparent,4px);
+        @include font (x-small,start,500);
+      }
     }
   }
 }
@@ -673,9 +679,17 @@
   height: 80vh;
   overflow: auto;
   >h5 {
-    @include font(large,center,700);
+    @include font(small,center,700);
+    @include flex(row,space-between,center);
     @include shadow_box();
     padding: 15px;
+    p {
+     @include shadow_box;
+     @include font(x-small,center,500);
+     background-color: $black;
+     color: $white;
+     padding: 5px;
+    }
   }
   .order__menu {
     @include grid (1fr 1fr,null,0);

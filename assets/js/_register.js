@@ -79,7 +79,7 @@ export const __templates_register = {
         __templates.api_loading('hide')
         form_register.innerHTML = `
         <h2 class="text-center">Chào mừng ${data.name} đến với SSSTUTTER</h2>
-        <button data-action="register"><a class="text-center" href="/login">Đăng nhập ngay</a>
+        <a class="w-full text-center p-5 drop-shadow rounded" href="/login">Đăng nhập ngay</a>
         </button>
       `
       })

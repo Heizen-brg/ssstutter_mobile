@@ -417,6 +417,15 @@ app.get("/self-portrait", (req, res, next) => {
     })
   );
 });
+app.get("/sale-nua-gia", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+    client_view.html({
+      title: "MUA HÀNG THEO SIZE, GIẢM NGAY NỬA GIA",
+      command: "",
+    })
+  );
+});
 
 app.get("/self-portrait/product/:slug", async (req, res, next) => {
   let { slug } = req.params;

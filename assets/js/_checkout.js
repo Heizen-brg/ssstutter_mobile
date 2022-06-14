@@ -96,7 +96,10 @@ export const __templates_checkout = {
         }
       );
     };
-
+    order_data.customerName = customer_name.value;
+    order_data.customerEmail = customer_email.value;
+    order_data.customerPhone = customer_phone.value;
+    shippingFormat.address = customer_address.value;
     //  address shipping
 
     get_location_data(customer_city);
@@ -262,6 +265,7 @@ export const __templates_checkout = {
       order_data.shippingAddress = `${shippingFormat.address}, ${shippingFormat.ward},${shippingFormat.district},${shippingFormat.city}`;
       order_data.items = order_item_format;
       order_data.note = note;
+      console.log(order_data);
       if (
         !order_data.customerName ||
         !order_data.customerPhone ||

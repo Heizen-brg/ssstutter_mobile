@@ -245,7 +245,7 @@ export const __templates_home = {
     let section = document.createElement("section");
     section.className = "new-arrivals__slide";
     section.innerHTML = `
-      <a href="/new-arrivals" style="background-image:url(https://sss-dashboard.leanservices.work/upload/3-2022/1647935739373.jpeg)"></a>
+      <a href="/new-arrivals" style="background-image:url(https://sss-dashboard.leanservices.work/upload/5-2022/1653448408095.jpeg)"></a>
     `;
     // let init_new_arrivals = (params = "3vvRIM") => {
     //   __requests(
@@ -487,7 +487,7 @@ export const __templates_home = {
           url: `https://sss-dashboard.leanservices.work/w/section/detail?type=weekly_best&catId=${params}`,
         },
         ({ data }) => {
-          let products = data.products
+          let products = data.products.splice(0,8)
             .map(
               (item) => ` 
             <li data-cate="${item.catId[0][0]}">

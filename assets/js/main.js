@@ -88,7 +88,7 @@ export const __render = {
       "/thankyou": () => __render.thankyou_page(),
       "/canceled": () => __render.canceled_page(),
       "/editorial": (params) => __render.landing_page(params),
-      "/flash-sale": () => __render.flash_sale(),
+      "/sale-nua-gia": () => __render.flash_sale(),
       "/loyalty": (params) => __render.loyalty_page(params),
       "/login": () => __render.login_page(),
       "/register": () => __render.register_page(),
@@ -186,7 +186,7 @@ export const __render = {
       __templates_home.mobile_new_arrivals(),
       __templates_home.weekly(),
       __templates_home.stylepick(),
-      __templates_home.instagram()
+      // __templates_home.instagram()
     ];
 
     this.build("home", blocks);
