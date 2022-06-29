@@ -1,11 +1,19 @@
 import { __requests } from "./main.js";
 import { __templates } from "./share/_components.js";
 import {
-  __currency_format,
-  __get_voucher,
-  __push_notification,
-  __show_cart_item,
-  __show_cart_quantity,
+    SimpleImage,
+    Header,
+    Paragraph,
+    List,
+    Button,
+} from "./editor-plugin/plugin-list.js";
+
+import {
+    __currency_format,
+    __get_voucher,
+    __push_notification,
+    __show_cart_item,
+    __show_cart_quantity,
 } from "./share/_function.js";
 import { __icons } from "./share/_icons.js";
 import { __templates_modal } from "./share/_modal.js";
@@ -15,11 +23,11 @@ import { __size_guide_data } from "./share/_data.js";
 let user_selection = {};
 export const __templates_product = {
   product_gallery(params = {}) {
-    let gallery = params.extensions ? params.extensions.media : {};
-    let color = params.color[0].id;
-    let div = document.createElement("div");
-    div.className = "gallery";
-    div.innerHTML = `
+            let gallery = params.extensions ? params.extensions.media : {};
+            let color = params.color[0].id;
+            let div = document.createElement("div");
+            div.className = "gallery";
+            div.innerHTML = `
     <ul>
       ${(gallery[`color_${color}_gallery`] || [])
         .map(
@@ -34,6 +42,7 @@ export const __templates_product = {
     `;
     return div;
   },
+ 
   model_info(params = {}) {
     let div = document.createElement("div");
     div.className = "model";
@@ -55,14 +64,23 @@ export const __templates_product = {
     `;
     return div;
   },
+
   flatlay_view(params = {}) {
     let div = document.createElement("div");
     div.className = "flatlay";
     div.innerHTML = `
       <h1>Chi tiết</h1>
-        <ul>
-        </ul>
-      </div>
+        <ul class="glide" id="flatlay_glide">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides flatlay__container">
+            
+            </ul>
+          </div>
+          <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
+          </div>
+        </ul>  
     `;
     let init_flatlay_img = () => {
       let media = params.extensions.media;
@@ -73,176 +91,46 @@ export const __templates_product = {
           photo: media[`color_${color.id}_thumbnail`],
         };
       });
-      color_value.map((item, index) => {
-        let flat_img = document.createElement("li");
-        flat_img.style.backgroundImage = `url(${CONFIG.DOMAIN_IMG_CDN}/${
-          item.photo == null
-            ? "no_image.png"
-            : item.photo.o.replace(".jpeg", ".jpeg")
-        })`;
-        let color_variation = div.querySelector(".flatlay > ul");
-        color_variation.appendChild(flat_img);
-        return flat_img;
-      });
+      let flat_img = color_value
+        .map((item, index) => {
+          return `
+          <li class="glide__slider">
+            <span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${
+            item.photo == null
+              ? "no_image.png"
+              : item.photo.o.replace(".jpeg", ".jpeg")
+          })"></span>
+          </li>
+        `;
+        }).join("");
+      let color_variation = div.querySelector(".flatlay__container");
+      color_variation.innerHTML = flat_img;
+      setTimeout(() => {
+        new Glide("#flatlay_glide", {
+          type: "slider",
+          perView: 1,
+          peek: {
+            before: 200,
+            after: 200,
+          },
+          breakpoints: {
+            1024: {
+              perView: 1,
+            },
+            480: {
+              perView: 1,
+              gap: 10,
+              peek: {
+                before: 0,
+                after: 0,
+              },
+            },
+          },
+          autoplay: false,
+        }).mount();
+      }, 200);
     };
     init_flatlay_img();
-    return div;
-  },
-  attributes(params = {}) {
-    let div = document.createElement("div");
-    div.className = "attributes";
-    div.innerHTML = `
-    <h1>Thông số sản phẩm</h1>
-    <table>
-      <tbody>
-        <tr>
-          <th>Độ vừa vặn</th>
-          <td>
-            <label for="Rất bó">
-              <input id="Rất bó" type="checkbox" readonly="readonly" hidden="">
-              <p>Rất bó</p>
-            </label>
-          </td>
-          <td>
-            <label for="Bó">
-              <input id="Bó" type="checkbox" readonly="readonly" hidden="">
-              <p>Bó</p>
-            </label>
-          </td>
-          <td>
-            <label for="Vừa vặn">
-              <input id="Vừa vặn" type="checkbox" readonly="readonly" hidden="">
-              <p>Vừa vặn</p>
-            </label>
-          </td>
-          <td>
-            <label for="Xuông">
-              <input id="Xuông" type="checkbox" readonly="readonly" hidden="">
-              <p>Xuông</p>
-            </label>
-          </td>
-          <td>
-            <label for="Rộng">
-              <input id="Rộng" type="checkbox" readonly="readonly" hidden="">
-              <p>Rộng</p>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>Độ co giãn</th>
-          <td>
-            <label for="Không">
-              <input id="Không" type="checkbox" readonly="readonly" hidden="">
-              <p>Không</p>
-            </label>
-          </td>
-          <td>
-            <label for="Vừa phải">
-              <input id="Vừa phải" type="checkbox" readonly="readonly" hidden="">
-              <p>Vừa phải</p>
-            </label>
-          </td>
-          <td>
-            <label for="Nhiều">
-              <input id="Nhiều" type="checkbox" readonly="readonly" hidden="">
-              <p>Nhiều</p>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>Độ trong suốt</th>
-          <td>
-            <label for="Không">
-              <input id="Không" type="checkbox" readonly="readonly" hidden="">
-              <p>Không</p>
-            </label>
-          </td>
-          <td>
-            <label for="Vừa phải">
-              <input id="Vừa phải" type="checkbox" readonly="readonly" hidden="">
-              <p>Vừa phải</p>
-            </label>
-          </td>
-          <td>
-            <label for="Nhiều">
-              <input id="Nhiều" type="checkbox" readonly="readonly" hidden="">
-              <p>Nhiều</p>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>Độ dày</th>
-          <td>
-            <label for="Mỏng">
-              <input id="Mỏng" type="checkbox" readonly="readonly" hidden="">
-              <p>Mỏng</p>
-            </label>
-          </td>
-          <td>
-            <label for="Dày vừa">
-              <input id="Dày vừa" type="checkbox" readonly="readonly" hidden="">
-              <p>Dày vừa</p>
-            </label>
-          </td>
-          <td>
-            <label for="Dày">
-              <input id="Dày" type="checkbox" readonly="readonly" hidden="">
-              <p>Dày</p>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>Lớp lót</th>
-          <td>
-            <label for="Không">
-              <input id="Không" type="checkbox" readonly="readonly" hidden="">
-              <p>Không</p>
-            </label>
-          </td>
-          <td>
-            <label for="Một phần">
-              <input id="Một phần" type="checkbox" readonly="readonly" hidden="">
-              <p>Một phần</p>
-            </label>
-          </td>
-          <td>
-            <label for="Toàn bộ">
-              <input id="Toàn bộ" type="checkbox" readonly="readonly" hidden="">
-              <p>Toàn bộ</p>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <th>Phù hợp mùa</th>
-          <td>
-            <label for="Xuân">
-              <input id="Xuân" type="checkbox" readonly="readonly" hidden="">
-              <p>Xuân</p>
-            </label>
-          </td>
-          <td>
-            <label for="Hạ">
-              <input id="Hạ" type="checkbox" readonly="readonly" hidden="">
-              <p>Hạ</p>
-            </label>
-          </td>
-          <td>
-            <label for="Thu">
-              <input id="Thu" type="checkbox" readonly="readonly" hidden="">
-              <p>Thu</p>
-            </label>
-          </td>
-          <td>
-            <label for="Đông">
-              <input id="Đông" type="checkbox" readonly="readonly" hidden="">
-              <p>Đông</p>
-            </label>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    `;
     return div;
   },
   variation(params = {}) {
@@ -266,10 +154,10 @@ export const __templates_product = {
           <meta itemprop="priceCurrency" content="VND">
         </div>
       </div>
-      <div>
+      <div class="product__overview">
         <div class="detail">
           <div class="info">
-            <h1 class="name">${info.name}</h1>
+            <h1 class="name">${info.name.replace("II", "Ⅱ")}</h1>
             <div class="price">
             ${
               info.salePrice
@@ -291,7 +179,9 @@ export const __templates_product = {
           </ul>
         </div>
         <div class="size">
-          <p>chọn size</p>
+          <div><p>chọn size : <strong class="size__name"> </strong></p><span data-action="size_check">${
+            __icons.rule
+          } Bảng size </span></div>
           <ul>
 
           </ul>
@@ -300,147 +190,51 @@ export const __templates_product = {
           <button class="add"><h1>Thêm vào giỏ hàng</h1></button>
         </div>  
         <ul class="guide">
-          <li data-action="size_check">Hướng dẫn chọn size ${__icons.right}</li>
-          <li style="margin: 0; border: 0; cursor: default; padding: 0;">
-            <div id="size_check" class="mobile-variation">
-              <div class="info">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Kích thước</th>
-                      <th>Chiều cao (cm)</th>
-                      <th>Cân nặng (kg)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>S(0)</td>
-                      <td>160-170</td>
-                      <td>49-54</td>
-                    </tr>
-                    <tr>
-                      <td>M(1)</td>
-                      <td>166-174</td>
-                      <td>55-60</td>
-                    </tr>
-                    <tr>
-                      <td>L(2)</td>
-                      <td>170-177</td>
-                      <td>61-66</td>
-                    </tr>
-                    <tr>
-                      <td>XL(3)</td>
-                      <td>175-180</td>
-                      <td>67-72</td>
-                    </tr>
-                    <tr>
-                      <td>XXL(4)</td>
-                      <td>178-185</td>
-                      <td>73-78</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <form class="form">
-                <p>Giúp bạn tìm size phù hợp</p><br>
-                <div class="grid-row">
-                  <div class="size__input">
-                    <p>Chiều cao (cm)</p>
-                    <input class="height__input" type="number" placeholder="..." required>
-                  </div>
-                  <div class="size__input">
-                    <p>Cân nặng (kg)</p>
-                    <input class="weight__input" type="number" placeholder="..." required>
-                  </div>
-                </div>
-                <button type="button" class="find-size">Tìm size</button>
-                <p class="response"></p>
-              </form>
-            </div>
-          </li>
-          
-          <li  data-action="refund_policy">Hướng dẫn đổi trả ${
-            __icons.right
-          }</li>
-          <li style="margin: 0; border: 0; cursor: default; padding: 0;">
-            <div id="refund_policy" class="mobile-variation">
-              <p>
-                – Bạn có thể đổi hàng trong 14 ngày kể từ ngày mua hàng.
-                <br>
-                – Mặt hàng phải ở trong tình trạng ban đầu, còn nguyên tem mác, chưa qua sử dụng, chưa giặt giũ và có hoá đơn tương ứng.
-                <br>
-                – Bạn vui lòng giữ lại hoá đơn để được đổi hàng. Bạn có thể xuất trình hóa đơn mua hàng dưới dạng giấy in hoặc định dạng điện tử trên điện thoại di động của bạn.
-                <br>
-                – Mỗi hoá đơn chỉ được đổi một lần.
-                <br>
-                – Nếu hoá đơn đã mua có giá trị cao hơn hoá đơn được đổi, SSSTUTTER sẽ không hoàn tiền lại. Ngược lại, hoá đơn được đổi có giá cao hơn thì bạn vui lòng bù thêm phần chênh lệch.
-                <br>
-                – Không áp dụng đổi hàng với hoá đơn khuyến mãi, giảm giá trên 30%.
-                <br>
-                – Không có chính sách trả hàng với bất kì sản phẩm nào của SSSTUTTER.
-                <br>
-                – Phụ kiện: Không được đổi hoặc trả lại các phụ kiện như Vòng đeo tay, Kính mát, Thắt lưng, Tất, Pin cài áo, Mũ len, Mũ, Khăn choàng, Ví và các phụ kiện nhỏ.
-                <br>
-                – Bạn có thể đổi hàng tại tất cả các chi nhanh của SSSTUTTER.
-                <br>
-                Mọi thắc mắc khác bạn vui lòng gọi số  086.993.6266  hoặc liên hệ fanpage SSSTUTTER để được hỗ trợ ngay nhé.
-              </p>
-            </div>
-          </li>
+          <li data-action="refund_policy">${
+            __icons.refund
+          } Chính sách đổi trả</li>
         </ul>
+          ${
+            params.shortDescription && params.shortDescription.blocks && params.shortDescription.blocks.length ? `
+            <div class="description">
+              <p>Chi tiết :</p>
+              <div id="product_des"></div>
+            </div>
+            ` : ''
+          }
       </div>
     `;
-
-    div.querySelector(".find-size").addEventListener("click", () => {
-      let height_input = div.querySelector(".height__input");
-      let weight_input = div.querySelector(".weight__input");
-      let user_info = {
-        w: weight_input.value,
-        h: height_input.value,
-      };
-      size_calc(user_info);
+    if (params.shortDescription && params.shortDescription.blocks && params.shortDescription.blocks.length)  {
+      new EditorJS({
+      holder: 'product_des',
+      readOnly: true,
+      tools: {
+        header: {
+          class: Header,
+          inlineToolbar: true,
+        },
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true,
+        },
+        image: {
+          class: SimpleImage,
+          inlineToolbar: true,
+        },
+        list: {
+          class: List,
+          inlineToolbar: true,
+        },
+        button: {
+          class: Button,
+          inlineToolbar: true,
+        },
+      },
+      data: {
+        blocks: params.shortDescription.blocks,
+      },
     });
-    let size_calc = (params) => {
-      let response_size = div.querySelector(".response");
-      // console.log(params);
-      if ((params.w || params.h) == "") return false;
-      let balance = __size_guide_data.balance;
-      let size_found = null;
-      for (let [k, v] of Object.entries(__size_guide_data)) {
-        if (v.constructor != Object) continue;
-        if (params.h >= v.height.min && params.h <= v.height.max) {
-          size_found = k;
-          if (params.w >= v.weight.max + balance) {
-            continue;
-          } else {
-            break;
-          }
-        } else {
-          if (params.h < v.height.max + balance) {
-            size_found = k;
-          } else {
-            continue;
-          }
-        }
-        if (params.w >= v.weight.min && params.w <= v.weight.max) {
-          size_found = k;
-          break;
-        } else {
-          if (params.w < v.weight.max + balance) {
-            size_found = k;
-          } else {
-            continue;
-          }
-        }
-      }
-      if (size_found) {
-        response_size.innerHTML = `Size phù hợp với bạn là size ${size_found}`;
-        return __size_guide_data[size_found];
-      } else {
-        response_size.innerHTML = `Không tìm được size phù hợp với bạn, vui lòng thử lại !`;
-        return false;
-      }
-    };
+    }
 
     user_selection = {
       name: info.name,
@@ -457,6 +251,7 @@ export const __templates_product = {
       slug: info.slug,
       quantity: 1,
     };
+
     let init_flatlay_img = (value) => {
       let media = info.extensions.media;
       let colors_arr = info.color;
@@ -470,14 +265,14 @@ export const __templates_product = {
       });
       color_value.map((item, index) => {
         let isStock = Object.values(info.variation)
-          .filter((i) => i.color === item.id)
+          .filter((i) => String(i.color) === String(item.id))
           .some((i) => i.isStock);
-        if (!info.preOrder && !isStock) return;
+        // if (!info.preOrder && !isStock) return;
         let flat_color = document.createElement("li");
         flat_color.innerHTML = `
         <button 
-          class="color__variation 
-          ${index == 0 && info.variation[index].isStock ? "active" : ""}" 
+          class="color__variation" 
+          ${isStock ? "" : "disabled"}
           data-product='${JSON.stringify(info).replace("'", "")}'
           data-color='${JSON.stringify(item)}'
           data-index="${index}"
@@ -491,7 +286,7 @@ export const __templates_product = {
         `;
         let color_variation = div.querySelector(".color > ul");
         color_variation.appendChild(flat_color);
-        if (index == 0) init_size(item.id);
+        init_size(color_value[0].id);
         return flat_color;
       });
     };
@@ -499,7 +294,7 @@ export const __templates_product = {
       user_selection.size = 0;
       let size_wrapper = div.querySelector(".size > ul");
       let size_arr = Object.values(info.variation)
-        .filter((i) => i.color === params)
+        .filter((i) => String(i.color) === String(params))
         .map((j) => {
           return {
             size: j.size,
@@ -511,8 +306,9 @@ export const __templates_product = {
         .map((i, index) => {
           return `
         <li><button data-index="${index}" class=" size__variation ${
-            index == 0 && info.variation[index].isStock ? "active" : ""
-          }" ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${
+            user_selection.size ? "active" : ""
+          }" 
+          ${i.isStock || info.preOrder ? "" : "disabled"} data-value="${
             i.size
           }">${i.size}</button></li>`;
         })
@@ -521,10 +317,13 @@ export const __templates_product = {
       let size_variation = div.querySelectorAll(".size__variation");
       size_variation.forEach((btn) => {
         btn.addEventListener("click", (e) => {
+          let size_select = div.querySelector(".size__name");
+          size_select.innerHTML = btn.dataset.value;
           e.preventDefault();
           size_variation.forEach((btn) => btn.classList.remove("active"));
           btn.classList.add("active");
           user_selection.size = btn.dataset.value;
+          
         });
       });
     };
@@ -548,9 +347,7 @@ export const __templates_product = {
             ${(gallery[`color_${color.id}_gallery`] || [])
               .map(
                 (img) =>
-                  `<li style="background-image:url(${
-                    CONFIG.DOMAIN_IMG_CDN
-                  }/${img.o.replace("jpeg", "jpeg")})"></li>`
+                  `<li style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${img.o.replace("jpeg", "jpeg")})"></li>`
               )
               .join("")}
           </ul>
@@ -579,10 +376,6 @@ export const __templates_product = {
               item.color == user_selection.colorId &&
               item.size == user_selection.size
           );
-          if (!user_selection.variation) {
-            __push_notification('fail', 'Vui lòng chọn màu và size')
-            return false
-          }
           let new_selected_item = { ...user_selection };
           let [product_in_cart] = cart_selected.filter(
             (i) => i.variation.id === new_selected_item.variation.id
@@ -606,10 +399,6 @@ export const __templates_product = {
 
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
                 cart_menu.classList.add("active");
-                let final_amount = cart_selected.reduce((total, current) => {
-                  if (current.salePrice) return total + current.quantity * current.salePrice;
-                  return total + current.quantity * current.price;
-                }, 0);
                 __show_cart_item(
                   cart_menu.querySelector("ul"),
                   cart_menu.querySelector("[data-amount]")
@@ -630,12 +419,11 @@ export const __templates_product = {
                 if (!data)
                   return __push_notification("fail", "Sản phẩm hết hàng!");
                 cart_selected.push(new_selected_item);
+                let cart_quantity = cart_selected.reduce((total, current) => {
+                  return total + current.quantity;
+                }, 0);
                 localStorage.setItem("cartItem", JSON.stringify(cart_selected));
                 cart_menu.classList.add("active");
-                let final_amount = cart_selected.reduce((total, current) => {
-                  if (current.salePrice) return total + current.quantity * current.salePrice;
-                  return total + current.quantity * current.price;
-                }, 0);
                 __show_cart_item(
                   cart_menu.querySelector("ul"),
                   cart_menu.querySelector("[data-amount]")
@@ -647,44 +435,442 @@ export const __templates_product = {
               }
             );
           }
+          if (fbq) fbq("track", "AddToCart", {
+            content_type: 'product',
+            contents : cart_selected,
+            content_ids : cart_selected.map(item => item.id),
+            currency : 'VND',
+            value : new_selected_item.price
+        });
         });
       }
     };
 
-    let init_favorite_item = () => {
-      let current_item = localStorage.getItem("history_item");
-      let history_item = [];
-      if (current_item) history_item = JSON.parse(current_item);
-      let [product_in_cart] = history_item.filter((i) => i.id === info.id);
-      if (product_in_cart) {
-        return false;
-      } else {
-        history_item.push(info);
-        localStorage.setItem("history_item", JSON.stringify(history_item));
-      }
-    };
+   
     let triggers = div.querySelectorAll("[data-action]");
     triggers.forEach((btn) => {
-      if (window.innerWidth > 767) {
-        btn.addEventListener("click", () => {
-          __templates_modal.overlay({
-            content: __templates_modal[btn.dataset.action](),
-          });
+      btn.addEventListener("click", () => {
+        __templates_modal.overlay({
+          content: __templates_modal[btn.dataset.action](params),
         });
-      } else {
-        if (btn.parentElement.querySelector(".mobile-variation")) {
-          btn.addEventListener("click", () => {
-            btn.parentElement
-              .querySelector("#" + btn.getAttribute("data-action"))
-              .classList.toggle("show");
-          });
-        }
-      }
+      });
     });
     init_flatlay_img();
     on_change_variation();
     init_add_to_cart(info);
-    init_favorite_item();
     return div;
   },
+  suggest_product(params) {
+    let div = document.createElement("div");
+    div.className = "suggest__product";
+    div.innerHTML = `
+    <h1>SẢN PHẨM TƯƠNG TỰ</h1>
+    <ul class="suggest__product--list">
+      ${
+        params.mixItems.map(item => {
+          return `
+            <li>
+              <div class="product">
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}">
+                    <span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span>
+                  </a>
+                </div>
+                <div class="detail">
+                  <div class="info">
+                  <a href="/p/${item.slug}" class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</a>
+                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+                  </div>
+                </div>
+              </div>
+            </li>
+          `
+        }).join('')
+      }
+    </ul>
+  `;
+    let randomCate;
+    if (params) {
+      let catId = params.catId.join("").split(",");
+      randomCate = catId[catId.length - 1];
+    }
+    let url = !params ? "" : `&catId=${randomCate}&sortBy=stock`;
+    let shuffle;
+    let container = div.querySelector(".suggest__product--list");
+    let get_relative_item = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://api.ssstutter.com/product/filter/web?${params.url}&limit=20&sort=down&media=true&webStock=true&showStock=true`,
+          header: {
+            authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+          },
+        },
+        ({ data = [] }) => {
+          params.products
+            ? (shuffle = data
+                .sort(() => 0.5 - Math.random())
+                .filter((i) => i.id != params.products.id))
+            : (shuffle = data.sort(() => 0.5 - Math.random()));
+          (shuffle || []).splice(0, params.limit).map((item) => {
+            let product_template = document.createElement("li");
+            product_template.innerHTML = `
+            <div class="product">
+              <div class="thumbnail">
+                <a href="/p/${item.slug}">
+                  <span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span>
+                </a>
+              </div>
+              <div class="detail">
+                <div class="info">
+                  <h6 class="name">${item.name.toLowerCase()}</h6>
+                  ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+              </div>
+            `;
+            container.appendChild(product_template);
+            return product_template;
+          });
+        }
+      );
+    };
+    get_relative_item({url : url , products: params, limit: (4 - container.children.length)});
+    return div;
+  },
+  cross_product(params = {}) {
+    let div = document.createElement("div");
+    div.className = "cross__product";
+    div.innerHTML = `
+    <h1>SẢN PHẨM ĐƯỢC YÊU THÍCH</h1>
+    <div class="glide" id="cross_product">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides" >
+            ${__templates.busy_loading("show")}
+        </ul>
+      </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">${__icons.left}</button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">${__icons.right}</button>
+      </div>
+    </div>
+    `;
+    let init_cross_product = (params = "3vvRIM") => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://leanservices.work/pd/master/cross-items`,
+        },
+        ({ data }) => {
+          let products = data.splice(0, 10)
+            .map(
+              (item) =>
+                `
+            <li class="glide__slide" }">
+              <div class="product">
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}">
+                    <span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span>
+                  </a>
+                </div>
+                <div class="detail">
+                  <div class="info">
+                    <a href="/p/${item.slug}" class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</a>
+                    <div class="price">
+                      ${
+                        item.salePrice
+                          ? `<p>${__currency_format(item.salePrice)}</p>
+                        <p class="discount">${__currency_format(
+                          item.price
+                        )}</p> `
+                          : `<p>${__currency_format(item.price)}</p>`
+                      }
+                    </div>
+                    ${
+                      item.salePrice || item.salePrice === 0
+                        ? `<p class="tag">${Math.floor(
+                            100 - (item.salePrice / item.price) * 100
+                          )}%</p>`
+                        : ""
+                    }
+                  </div>
+                </div>
+              </div>
+            </li>
+          `
+            )
+            .join("");
+          let glide__track = div.querySelector(".glide__slides");
+          glide__track.innerHTML = products;
+          new Glide(`#cross_product`, {
+            type: "slider",
+            bound: true,
+            perView: 4,
+            autoplay: 5000,
+            gap: 20,
+            hoverpause: true,
+            peek: {
+              before: 0,
+              after: 100,
+            },
+            breakpoints: {
+              1024: {
+                perView: 3,
+              },
+              480: {
+                perView: 2,
+                gap: 10,
+                peek: {
+                  before: 0,
+                  after: 50,
+                },
+              },
+            },
+          }).mount();
+        }
+      );
+    };
+    init_cross_product();
+    return div;
+  },
+  mobile_suggest_product(params ={}) {
+    let div = document.createElement('div');
+    div.className = 'mobile__suggest';
+    div.innerHTML = `
+    <div class="block__toggle">
+      <button class="active" data-action="mobile_mix_suggest">SẢN PHẨM TƯƠNG TỰ</button>
+      <button data-action="mobile_cross_suggest">SẢN PHẨM ĐƯỢC YÊU THÍCH</button>
+    </div>
+    <div class="products__slider">
+      <div class="glide" id="mobile_mix_suggest">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides" >
+
+          </ul>
+        </div>
+      </div>
+      <div class="glide deactive" id="mobile_cross_suggest">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides" >
+              ${__templates.busy_loading("show")}
+          </ul>
+        </div>
+      </div>
+    </div> 
+    `;
+    let suggest_slide = div.querySelectorAll('.glide');
+    let randomCate;
+    if (params) {
+      let catId = params.catId.join("").split(",");
+      randomCate = catId[catId.length - 1];
+    }
+    let url = !params ? "" : `&catId=${randomCate}&sortBy=stock`;
+    let shuffle;
+    let container = div.querySelector("#mobile_mix_suggest .glide__slides ");
+    let get_relative_item = (params) => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://api.ssstutter.com/product/filter/web?${params.url}&limit=20&sort=down&media=true&webStock=true&showStock=true`,
+          header: {
+            authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+          },
+        },
+        ({ data = [] }) => {
+          params.products ? (shuffle = data.sort(() => 0.5 - Math.random()).filter((i) => i.id != params.products.id))
+            : (shuffle = data.sort(() => 0.5 - Math.random()));
+          let relative_item = (shuffle || []).splice(0, params.limit).map((item) => {
+            return `       
+            <li class="glide__slide">
+              <div class="product">
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}">
+                    <span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span>
+                  </a>
+                </div>
+                <div class="detail">
+                  <div class="info">
+                  <a href="/p/${item.slug}" class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</a>
+                  <div class="price">
+                      ${
+                        item.salePrice
+                          ? `<p>${__currency_format(item.salePrice)}</p>
+                        <p class="discount">${__currency_format(
+                          item.price
+                        )}</p> `
+                          : `<p>${__currency_format(item.price)}</p>`
+                      }
+                    </div>
+                    ${
+                      item.salePrice || item.salePrice === 0
+                        ? `<p class="tag">${Math.floor(
+                            100 - (item.salePrice / item.price) * 100
+                          )}%</p>`
+                        : ""
+                    }
+                  </div>
+                </div>
+              </div>
+            </li>
+            `;
+          }).join('');
+          container.innerHTML = relative_item;
+             // add mix item
+         params.products.mixItems.map(item => {
+          let mix_dom = document.createElement('li');
+          mix_dom.className = "glide__slide";
+          mix_dom.innerHTML = `
+          <div class="product">
+            <div class="thumbnail">
+              <a href="/p/${item.slug}">
+                <span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span>
+              </a>
+            </div>
+            <div class="detail">
+              <div class="info">
+              <a href="/p/${item.slug}" class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</a>
+                <div class="price">
+                  ${
+                    item.salePrice
+                      ? `<p>${__currency_format(item.salePrice)}</p>
+                    <p class="discount">${__currency_format(
+                      item.price
+                    )}</p> `
+                      : `<p>${__currency_format(item.price)}</p>`
+                  }
+                </div>
+                ${
+                  item.salePrice || item.salePrice === 0
+                    ? `<p class="tag">${Math.floor(
+                        100 - (item.salePrice / item.price) * 100
+                      )}%</p>`
+                    : ""
+                }
+                ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+              </div>
+            </div>
+          </div>
+          `;
+          container.insertBefore(mix_dom,container.firstChild)
+         }).join('');
+          setTimeout(() => {
+            new Glide(`#mobile_mix_suggest`, {
+              type: "slider",
+              bound: true,
+              perView: 4,
+              autoplay: false,
+              gap: 20,
+              hoverpause: true,
+              peek: {
+                before: 0,
+                after: 100,
+              },
+              breakpoints: {
+                1024: {
+                  perView: 3,
+                },
+                480: {
+                  perView: 2,
+                  gap: 10,
+                  peek: {
+                    before: 0,
+                    after: 50,
+                  },
+                },
+              },
+            }).mount();
+          }, 200);
+        }
+      );
+    };
+    let init_cross_product = () => {
+      __requests(
+        {
+          method: "GET",
+          url: `https://leanservices.work/pd/master/cross-items`,
+        },
+        ({ data }) => {
+          let products = data
+            .map(
+              (item) =>
+                `
+            <li class="glide__slide">
+              <div class="product">
+                <div class="thumbnail">
+                  <a href="/p/${item.slug}">
+                    <span style="background-image:url(https://cdn.ssstutter.com/products/${item.extensions.media.featured})"></span>
+                  </a>
+                </div>
+                <div class="detail">
+                  <div class="info">
+                    <a href="/p/${item.slug}" class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</a>
+                    <div class="price">
+                      ${
+                        item.salePrice
+                          ? `<p>${__currency_format(item.salePrice)}</p>
+                        <p class="discount">${__currency_format(
+                          item.price
+                        )}</p> `
+                          : `<p>${__currency_format(item.price)}</p>`
+                      }
+                    </div>
+                    ${
+                      item.salePrice || item.salePrice === 0
+                        ? `<p class="tag">${Math.floor(
+                            100 - (item.salePrice / item.price) * 100
+                          )}%</p>`
+                        : ""
+                    }
+                  </div>
+                </div>
+              </div>
+            </li>
+          `
+            )
+            .join("");
+          let glide__track = div.querySelector("#mobile_cross_suggest .glide__slides");
+          glide__track.innerHTML = products;
+          setTimeout(() => {
+            new Glide(`#mobile_cross_suggest`, {
+              type: "slider",
+              bound: true,
+              perView: 3,
+              autoplay: false,
+              gap: 20,
+              hoverpause: true,
+              peek: {
+                before: 0,
+                after: 50,
+              },
+              breakpoints: {
+                1024: {
+                  perView: 3,
+                },
+                480: {                 
+                  perView: 2,
+                  gap: 10,
+                  peek: {
+                    before: 0,
+                    after: 50,
+                  },
+                },
+              },
+            }).mount();
+          }, 200);
+        }
+      );
+    };
+    get_relative_item({url : url , products: params, limit: (4 - container.children.length)});
+
+    init_cross_product();
+    let toggle_block = div.querySelectorAll("[data-action]");
+    toggle_block.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        let product_block = div.querySelector(`#${btn.dataset.action}`);
+        suggest_slide.forEach((i) => i.classList.add("deactive"));
+        toggle_block.forEach((i) => i.classList.remove("active"));
+        btn.classList.add("active");
+        product_block.classList.remove('deactive')
+      });
+    });
+    return div;
+  }
 };

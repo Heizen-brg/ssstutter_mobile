@@ -31,7 +31,33 @@
       }
     }
   }
-
+  .minor__banner {
+    width: 100%;
+    padding: 5% 0;
+    .glide__slide {
+      a {
+        width: 100%;
+        display: block;
+        div {
+          @include ratio(18, 5);
+          position: relative;
+          button {
+            position: absolute;
+            min-width: 100px;
+            left: 50%;
+            bottom: 20px;
+            transform: translate(-50%, 0);
+            padding: 10px 15px;
+            background-color: $red;
+            border: none;
+            color: $white;
+            text-transform: uppercase;
+            @include font(small, center, 500);
+          }
+        }
+      }
+    }
+  }
   .categories__banner {
     @include grid(repeat(2, 1fr), 1fr, 10px);
     padding: 10px 0;
@@ -107,7 +133,7 @@
 
   .stylepick__slide {
     padding: 5%;
-    background-color: #103832;
+    background-color: #aabec6;
     h2 {
       @include font(3rem, center, bold);
       color: $white;

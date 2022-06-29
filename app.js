@@ -427,6 +427,43 @@ app.get("/sale-nua-gia", (req, res, next) => {
   );
 });
 
+app.get("/everyday-white", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+      client_view.html({
+          title: "EVERYDAY WHITE",
+          command: "",
+      })
+  );
+});
+app.get("/landing/smart-pant", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+      client_view.html({
+          title: "SMART PANT - SUMMER SALE",
+          command: "",
+      })
+  );
+});
+app.get("/landing/fit-pant", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+      client_view.html({
+          title: "FIT PANT - SUMMER SALE",
+          command: "",
+      })
+  );
+});
+
+app.get("/stripe-collection", (req, res, next) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(
+      client_view.html({
+          title: "STRIPE COLLECTION - SSSTUTTER",
+          command: "",
+      })
+  );
+});
 app.get("/self-portrait/product/:slug", async (req, res, next) => {
   let { slug } = req.params;
   let product_data;

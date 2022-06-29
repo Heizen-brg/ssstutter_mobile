@@ -8,12 +8,15 @@ import {
   __init_product_list,
   __to_slug,
   __keep_scroll_postion,
+  __currency_format,
+  __init_sale_list,
 } from "../share/_function.js";
-let mobile = window.innerWidth <= 425;
+let mobile = window.innerWidth <= 525;
 
 window.data_filter = {
   existed_ids: [],
-  q: [{
+  q: [
+    {
       tax: "color",
       data: [],
     },
@@ -22,326 +25,222 @@ window.data_filter = {
       data: [],
     },
     {
-      tax: "price",
-      data: []
+      tax: "salePrice",
+      data: [],
     },
     {
       tax: "sortBy=price&sort",
-      data: []
+      data: [],
     },
   ],
   price: null,
 };
 
 export const __templates_sale = {
-    infomation(params = {}) {
-      let section = document.createElement("section");
-      section.className = "categories__info";
-      section.innerHTML = `
-    <h1 class="info__title">${params.category.name.replace("-", "")}</h1>
-    <p>Tất cả những sản phẩm Mới nhất nằm trong BST được mở bán Hàng Tuần sẽ được cập nhật liên tục tại đây. Chắc chắn bạn sẽ tìm thấy những sản phẩm Đẹp Nhất - Vừa Vặn Nhất - Phù Hợp nhất với phong cách của mình.
-    </p>
-  `;
-      return section;
-    },
-    banner() {
-      let div = document.createElement("div");
-      div.className = "hero__banner";
-      div.innerHTML = `
-        <div style="background-image:url(https://sss-dashboard.leanservices.work.jpeg)"></div>
+  banner() {
+    let div = document.createElement("div");
+    div.className = "hero__banner";
+    div.innerHTML = `
+        <div style="background-image:url(${
+          mobile
+            ? "https://sss-dashboard.leanservices.work/upload/6-2022/1655780507245.jpeg"
+            : "https://sss-dashboard.leanservices.work/upload/6-2022/1655780500984.jpeg"
+        })"></div>
       `;
-      return div;
-    },
-    categories(params = {}) {
-      let section = document.createElement("section");
-      section.className = "categories__list";
-      __requests({
-            method: "GET",
-            url: `product/attribute/category/get`,
-          },
-          ({ data, error }) => {
-            let top_cat = data.filter(i => !i.parentId).map(i => i.id)
-            let parent_cat_arr
-            if (top_cat.includes(params.category.id)) {
-              parent_cat_arr = data.filter(
-                (item) => item.parentId === params.category.id
-              );
-
-            } else {
-              parent_cat_arr = data.filter(
-                (item) => item.parentId === params.category.parentId
-              );
-            }
-            // console.log(parent_cat_arr);
-            section.innerHTML = `
-        <ul>
-          ${(parent_cat_arr || [])
-            .map(
-              (cate) =>
-                `<li><a href="/c/${cate.slug}">${cate.name.replace("-", "")}</a></li>`
-            )
-            .join("")}
-        </ul>
-    `;
-      }
-    );
-
-    return section;
+    return div;
   },
+  campaign_filter() {
+    let div = document.createElement("div");
+    div.className = "campaign__filter";
+    div.innerHTML = `
+        <ul class="gender__filter">
+          <li class="active" data-filter="catId" data-catId="3vvRIM" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637640613530.jpeg)" ></li>
+          <li data-filter="catId" data-catId="y8Q15I" style="background-image:url(https://sss-dashboard.leanservices.work/upload/11-2021/1637640619351.jpeg)" ></li>
+        </ul>
+       <!-- <ul class="size__filter">
+        ${__size_arr[0].size
+          .map(
+            (item) => `
+            <li data-filter="size" data-size="${item}">
+              <label>
+                <input type="checkbox" hidden><span>Size ${item}</span>
+              </label>
+            </li>
+        `
+          )
+          .join("")}
+        </ul> --!>
+        `;
+    let filter_btn = div.querySelectorAll("[data-filter]");
+    filter_btn.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        filter_btn.forEach((i) => i.classList.remove("active"));
+        btn.classList.add("active");
+        e.preventDefault();
+        if (btn.dataset.catid) {
+          div
+            .querySelectorAll('[data-filter="size"]')
+            .forEach((i) => (i.dataset.catid = btn.dataset.catid));
+        }
+        let product_container = document.querySelector("#sale_products");
+        product_container.dataset.cate = btn.dataset.catid;
+        product_container.innerHTML = __templates.busy_loading("show");
 
-  products(params = {}) {
+        let init_sale_products = ({
+          skip = 0,
+          limit = 10,
+          catId,
+          price,
+          size
+        } = {}) => {
+          let query = "";
+          if (skip) query += `skip=${skip}&`;
+          if (limit) query += `limit=${limit}&`;
+          if (catId) query += `catId=${catId}&`;
+          if (price) query += `salePrice=${price}&`;
+          if (size) query += `size=${size}&`;
+          __requests(
+            {
+              method: "GET",
+              url: `https://leanservices.work/pd/services/campaign-sale-list?${query}`,
+            },
+            ({ data }) => {
+              if (!data.length)
+                product_container.innerHTML += ` <p style="text-align:center">Không tìm thấy sản phẩm phù hợp</p>`;
+              let product_items = (data || []).map((item) => {
+                item.catId = item.catId.join(",").split(",");
+                let product_template = document.createElement("li");
+                product_template.dataset.cat = item.catId[0];
+                product_template.className = "product";
+                product_template.innerHTML = `
+                  <div class="thumbnail">
+                    <a href="/p/${
+                      item.slug
+                    }"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+                  item.extensions.media.featured
+                    ? item.extensions.media.featured
+                    : "no_image.png"
+                })"></span></a>
+                  </div>
+                  <div class="detail">
+                    <div class="info">
+                      <h6 class="name">${item.name.toLowerCase()}</h6>
+                      <div class="price">
+                        ${
+                          item.salePrice
+                            ? `<p>${__currency_format(item.salePrice)}</p>
+                          <p class="discount">${__currency_format(
+                            item.price
+                          )}</p> `
+                            : `<p>${__currency_format(item.price)}</p>`
+                        }
+                      </div>
+                      ${
+                        item.salePrice || item.salePrice === 0
+                          ? `<p class="tag">${Math.floor(
+                              100 - (item.salePrice / item.price) * 100
+                            )}%</p>`
+                          : ""
+                      }
+                      <div class="color">
+                        <p>+${item.color.length} màu</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                product_container.appendChild(product_template);
+                return product_template;
+              });
+              if (data.length >= 10)
+                infinity_scroll(
+                  product_items[product_items.length - 2],
+                  product_container,
+                  {
+                    skip,
+                    limit,
+                    catId,
+                    price,
+                  }
+                );
+              __templates.busy_loading("hide");
+            }
+          );
+        };
+        let infinity_scroll = (anchor, container, query) => {
+          if (!anchor) return false;
+          let block_loader = new IntersectionObserver(function (
+            entries,
+            observer
+          ) {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                let block = entry.target;
+                container.innerHTML += __templates.busy_loading("show");
+                init_sale_products({ ...query, skip: query.skip + 10 });
+                block_loader.unobserve(block);
+              }
+            });
+          });
+          block_loader.observe(anchor);
+        };
+        init_sale_products({
+          catId: btn.dataset.catid || "",
+          price: btn.dataset.price || "",
+          size: btn.dataset.size || ""
+        });
+      });
+    });
+
+    return div;
+  },
+  sale_products(params = {}) {
     let div = document.createElement("div");
     div.className = "categories__products";
     div.innerHTML = ` 
-    <ul data-cate="${params.category.id}">
+    <ul id="sale_products" data-cate="3vvRIM">
       ${__templates.busy_loading("show")}
     </ul>
-    <button class="back__top">${__icons.up}</button>
     `;
-    let product_container = params.container? params.container: div.querySelector("ul");
-    let current_skip_item = sessionStorage.getItem('current_product');
-    let top_btn = div.querySelector(".back__top");
 
-    top_btn.addEventListener('click',(e)=> {
-      product_container.scrollIntoView({behavior: "smooth"})
-    })
-
-    if (!current_skip_item) {
-      __init_product_list({
-        container: product_container,
-        query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
-      });
-    } else {
-      __keep_scroll_postion({container:product_container,query: product_container.dataset.cate });
-
-    }
+    let product_sale_container = div.querySelector("ul");
+    __init_sale_list({
+      infinity: false,
+      container: product_sale_container,
+      query: __init_filter({
+        data: window.data_filter,
+        container: product_sale_container,
+        skip: 0,
+      }),
+    });
     return div;
   },
-
-  filter(params = {}) {
+  filter() {
     let div = document.createElement("div");
     div.className = "categories__filter";
     div.innerHTML = `
-    <div class="filter__toggle">
-      <span class="mobile-cate-trigger" style="text-transform: capitalize">${params.category.name.replace("-", "").toLowerCase()} ${__icons.down}</span>
-      <span data-toggle="filter">${__icons.plus} Filter </span>
-    </div>
-    <div class="filter__list">
-      <ul class="filter__list--wrapper">
-        <li class="color">
-          <h4>Màu sắc
-            ${__icons.right}
-          </h4>
-          <ul class="color__list">
-          </ul>
+    <h1>Chọn size của bạn</h1>
+    <ul class="size__filter">
+    ${__size_arr[0].size
+      .map(
+        (item) => `
+        <li data-name="pa_size" data-size="${item}">
+          <label>
+            <input type="checkbox" hidden><span>Size ${item}</span>
+          </label>
         </li>
-        <li class="size">
-          <h4>
-            Size quần/áo
-            ${__icons.right}
-          </h4>
-          <ul>
-          ${__size_arr[0].size
-        .map(
-          (item) => `
-              <li data-name="pa_size" data-size="${item}">
-                <label>
-                  <input type="checkbox"><span>${item}</span>
-                </label>
-              </li>
-          `
-        )
-        .join("")}
-          </ul>
-        </li>
-        <li class="size">
-          <h4>Size quần jeans
-            ${__icons.right}
-          </h4>
-          <ul>
-          ${__size_arr[1].size
-        .map(
-          (item) => `
-          <li data-name="pa_size" data-size="${item}">
-            <label>
-              <input type="checkbox"><span>${item}</span>
-            </label>
-          </li>
-       `
-        )
-        .join("")}
-          </ul>
-        </li>
-        <li class="size">
-          <h4>Size giày
-            ${__icons.right}
-          </h4>
-          <ul>
-          ${__size_arr[2].size
-        .map(
-          (item) => `
-          <li data-name="pa_size" data-size="${item}">
-            <label>
-              <input type="checkbox"><span>${item}</span>
-            </label>
-          </li>
-       `
-        )
-        .join("")}
-          </ul>
-        </li>
-        <li class="sort">
-          <h4>Mức giá
-            ${__icons.right}
-          </h4>
-          <ul>
-            <li data-name="pa_price" data-price="0,100000">
-              <label>
-                <input type="radio" name="price">
-                <span>Dưới 100k</span>
-              </label>
-            </li>
-            <li data-name="pa_price" data-price="100000,300000">
-              <label>
-                <input type="radio" name="price">
-                <span>100k - 300k</span>
-              </label>
-            </li>
-            <li data-name="pa_price" data-price="300000,500000">
-              <label>
-                <input type="radio" name="price">
-                <span>300k - 500k</span>
-              </label>
-            </li>
-            <li data-name="pa_price" data-price="500000">
-              <label>
-                <input type="radio" name="price">
-                <span>Trên 500k</span>
-              </label>
-            </li>
-          </ul>
-        </li>
-        <li class="sort">
-          <h4>Sắp xếp
-            ${__icons.right}
-          </h4>
-          <ul>
-            <li data-name="pa_sort" data-sort="up">
-              <label>
-                <input type="radio" name="sort">
-                <span>Giá tăng dần</span>
-              </label>
-            </li>
-            <li data-name="pa_sort" data-sort="down">
-              <label>
-                <input type="radio" name="sort">
-                <span>Giá giảm dần</span>
-              </label>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <div class="filter__action">
-        <button data-action="apply_filter">Áp dụng</button>
-        <button data-toggle="filter">Trở lại</button>
-      </div>
-    </div>
+    `
+      )
+      .join("")}
+    </ul>
     `;
-    __requests(
-      {
-        method: "GET",
-        url: `product/attribute/color/get`,
-      },
-      ({ data }) => {
-        let colors_arr = data;
-        colors_arr.map((color) => {
-          let li = document.createElement("li");
-          li.dataset.name = "pa_color";
-          li.dataset.color = color.id;
-          li.innerHTML = `
-        <label>
-          <input type="checkbox">
-          <span>${color.name}</span>
-        </label>
-        `;
-          let color_list = div.querySelector(".color__list");
-          color_list.appendChild(li);
-          li.addEventListener("click", (e) => {
-            let product_container = document.querySelector(
-              ".categories__products > ul"
-            );
-            e.preventDefault();
-            if (!li.dataset.name) return false;
-            let color_attr = li.dataset.color;
-            let btn_input = li.querySelector("input");
-            btn_input.checked = true;
-            if (li.classList.contains("active")) {
-              if (window.data_filter.q[0].data) {
-                let d = window.data_filter.q[0].data;
-                window.data_filter.q[0].data = __remove_item_in_array(
-                  color_attr,
-                  d
-                );
-                btn_input.checked = false;
-              }
-              li.classList.remove("active");
-            } else {
-              li.classList.add("active");
-              if (color_attr) {
-                window.data_filter.q[0].data.push(color_attr);
-                btn_input.checked = true;
-              }
-            }
-            if (mobile) {
-              let apply_btn = div.querySelector('[data-action="apply_filter"]');
-              apply_btn.addEventListener("click", (e) => {
-                div.querySelector(".filter__list").classList.remove("active");
-                e.preventDefault();
-                __init_product_list({
-                  infinity: false,
-                  container: product_container,
-                  query:__init_filter({data:window.data_filter,container: product_container, skip: 0})
-                });
-              });
-            } else {
-              __init_product_list({
-                infinity: false,
-                container: product_container,
-                query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
-              });
-            }
-          });
-          return li;
-        });
-      }
-    );
-
-    let filter_toggle = div.querySelectorAll('[data-toggle="filter"');
-    filter_toggle.forEach((toggle) => {
-      toggle.addEventListener("click", () => {
-        if (div.querySelector(".filter__list").classList.contains("active")) {
-          div.querySelector(".filter__list").classList.remove("active");
-        } else {
-          div.querySelector(".filter__list").classList.add("active");
-        }
-      });
-    });
-
-    let filter_label = div.querySelectorAll(".filter__list--wrapper > li");
-    filter_label.forEach((label) => {
-      let trigger = label.querySelector("h4");
-      let ul = label.querySelector("ul");
-      trigger.addEventListener("click", () => {
-        if (ul.classList.contains("active")) {
-          ul.classList.remove("active");
-        } else {
-          ul.classList.add("active");
-        }
-      });
-    });
+    let current_filter = sessionStorage.getItem("filter");
+    if (current_filter) window.data_filter = JSON.parse(current_filter);
 
     let size_filter_list = div.querySelectorAll('[data-name="pa_size"]');
     size_filter_list.forEach((btn) => {
+      if (window.data_filter.q[1].data == btn.dataset.size) {
+        btn.classList.add('active')
+      }
       btn.addEventListener("click", (e) => {
         let product_container = document.querySelector(
           ".categories__products > ul"
@@ -354,42 +253,44 @@ export const __templates_sale = {
         if (btn.classList.contains("active")) {
           if (window.data_filter.q[1].data) {
             let d = window.data_filter.q[1].data;
-            window.data_filter.q[1].data = __remove_item_in_array(size_attr, d);
+            window.data_filter.q[1].data = '';
+            sessionStorage.setItem(
+              "filter",
+              JSON.stringify(window.data_filter)
+            );
             btn_input.checked = false;
           }
           btn.classList.remove("active");
         } else {
+          size_filter_list.forEach(i => i.classList.remove('active'))
           btn.classList.add("active");
           if (size_attr) {
-            window.data_filter.q[1].data.push(size_attr);
+            window.data_filter.q[1].data = size_attr;
+            sessionStorage.setItem(
+              "filter",
+              JSON.stringify(window.data_filter)
+            );
             btn_input.checked = true;
           }
         }
-        if (mobile) {
-          let apply_btn = div.querySelector('[data-action="apply_filter"]');
-          apply_btn.addEventListener("click", (e) => {
-            div.querySelector(".filter__list").classList.remove("active");
-            e.preventDefault();
-            __init_product_list({
-              infinity: false,
-              container: product_container,
-              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
-            });
-          });
-        } else {
-          __init_product_list({
-            infinity: false,
+        __init_sale_list({
+          infinity: false,
+          container: product_container,
+          query: __init_filter({
+            data: window.data_filter,
             container: product_container,
-            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
-          });
-        }
+            skip: 0,
+          }),
+        });
       });
     });
-    
+
     let price_range_list = div.querySelectorAll('[data-name="pa_price"]');
     price_range_list.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        let product_container = document.querySelector(".categories__products > ul");
+        let product_container = document.querySelector(
+          ".categories__products > ul"
+        );
         e.preventDefault();
         if (!btn.dataset.name) return false;
         let price_range = btn.dataset.price;
@@ -405,83 +306,23 @@ export const __templates_sale = {
         } else {
           btn.classList.add("active");
           if (price_range) {
-            window.data_filter.q[2].data =[]
+            window.data_filter.q[2].data = [];
             window.data_filter.q[2].data.push(price_range);
             btn_input.checked = true;
           }
         }
-        if (mobile) {
-          let apply_btn = div.querySelector('[data-action="apply_filter"]');
-          apply_btn.addEventListener("click", (e) => {
-            div.querySelector(".filter__list").classList.remove("active");
-            e.preventDefault();
-     
-          });
-        } else {
- 
-        }
-      });
-    });
-
-    let sort_list = div.querySelectorAll('[data-name="pa_sort"]');
-    sort_list.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        let product_container = document.querySelector(".categories__products > ul");
-        e.preventDefault();
-        if (!btn.dataset.name) return false;
-        let sort_type = btn.dataset.sort;
-        let btn_input = btn.querySelector("input");
-        btn_input.checked = true;
-        if (btn.classList.contains("active")) {
-          if (window.data_filter.q[3].data) {
-            let d = window.data_filter.q[3].data;
-            window.data_filter.q[3].data = [];
-            btn_input.checked = false;
-          }
-          btn.classList.remove("active");
-        } else {
-          btn.classList.add("active");
-          if (sort_type) {
-            window.data_filter.q[3].data =[]
-            window.data_filter.q[3].data.push(sort_type);
-            btn_input.checked = true;
-          }
-        }
-        if (mobile) {
-          let apply_btn = div.querySelector('[data-action="apply_filter"]');
-          apply_btn.addEventListener("click", (e) => {
-            div.querySelector(".filter__list").classList.remove("active");
-            e.preventDefault();
-            __init_product_list({
-              infinity: false,
-              container: product_container,
-              query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
-            });
-          });
-        } else {
-          __init_product_list({
-            infinity: false,
+        __init_sale_list({
+          infinity: false,
+          container: product_container,
+          query: __init_filter({
+            data: window.data_filter,
             container: product_container,
-            query: __init_filter({data:window.data_filter,container: product_container, skip: 0})
-          });
-        }
+            skip: 0,
+          }),
+        });
       });
-    });
-
-    //
-    // Show / hide cate mobile
-    //
-    div.querySelector('.mobile-cate-trigger').addEventListener('click', (e) => {
-      e.preventDefault();
-      document.querySelector('.categories__list').classList.toggle('show');
     });
 
     return div;
   },
 };
-
-document.addEventListener('mouseup', (e) => {
-  if (!e.target.classList.contains('mobile-cate-trigger')) {
-    if (document.querySelector('.categories__list')) document.querySelector('.categories__list').classList.remove('show');
-  }
-});

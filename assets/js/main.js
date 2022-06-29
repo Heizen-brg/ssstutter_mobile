@@ -24,7 +24,8 @@ import { __templates_login } from "./_login.js";
 import { __templates_register } from "./_register.js";
 import { __templates_parisienne } from "./list_campaign/parisienne_landing.js";
 import { __templates_arrivals } from "./_arrivals.js";
-
+import { __templates_sale } from "./list_campaign/flash_sale.js";
+import { __templates_pant } from "./list_campaign/smart_pant_landing.js";
 export const __requests = (params, callback, callback_error = false) => {
   let header = params.header || {
     Accept: "application/json",
@@ -92,9 +93,10 @@ export const __render = {
       "/loyalty": (params) => __render.loyalty_page(params),
       "/login": () => __render.login_page(),
       "/register": () => __render.register_page(),
-      "/new-arrivals":() => __render.arrivals_page(),
-      "/parisienne": () => __render.parisienne_page(),
-
+      "/new-arrivals": () => __render.arrivals_page(),
+      "/stripe-collection": () => __render.parisienne_page(),
+      "/landing/smart-pant": () => __render.landing_smart_pant(),
+      "/landing/fit-pant": () => __render.landing_fit_pant(),
     };
 
     if (pathname.includes(`/p/`)) {
@@ -141,19 +143,19 @@ export const __render = {
       url_data[pathname]();
     }
   },
+  
   build(page, blocks) {
     let app = document.getElementById("root");
     app.className = page;
     app.innerHTML = "";
-    let init_block = (params ={}) => {
+    let init_block = (params = {}) => {
       blocks.map((block) => {
         if (!block) return;
         params.container.appendChild(block);
       });
-    }
+    };
 
-
-    init_block({container : app})
+    init_block({ container: app });
   },
   build_in_block(params = {}) {
     if (!params.block || !params.target) return false;
@@ -171,7 +173,7 @@ export const __render = {
 
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({home:'active'}),
+        left: __templates_header.left({ home: "active" }),
         mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
@@ -184,19 +186,21 @@ export const __render = {
       __templates_home.categories(),
       banner,
       __templates_home.mobile_new_arrivals(),
-      __templates_home.weekly(),
       __templates_home.stylepick(),
+      __templates_home.minor_banner(),
+      __templates_home.weekly(),
       // __templates_home.instagram()
     ];
 
     this.build("home", blocks);
-    
+
     __templates.api_loading("hide");
   },
+
   arrivals_page(params) {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({home:'active'}),
+        left: __templates_header.left({ home: "active" }),
         mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
@@ -214,10 +218,11 @@ export const __render = {
     this.build("arrivals", blocks);
     __templates.api_loading("hide");
   },
+
   categories_page(params) {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({home:'active'}),
+        left: __templates_header.left({ home: "active" }),
         mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
@@ -235,10 +240,11 @@ export const __render = {
     this.build("categories", blocks);
     __templates.api_loading("hide");
   },
+
   parisienne_page() {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({home:'active'}),
+        left: __templates_header.left({ home: "active" }),
         mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
@@ -249,13 +255,17 @@ export const __render = {
       __templates_header.statusbar(),
       __templates_header.popup(),
       __templates_parisienne.parisienne_campaign(),
-      __templates_footer.footer(),
     ];
     this.build("parisienne__page", blocks);
     __templates.api_loading("hide");
   },
+
   product_page(params) {
     // console.log(params);
+    let suggest_block;
+    suggest_block = mobile
+      ? __templates_product.mobile_suggest_product(params.product)
+      : "";
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
@@ -272,6 +282,9 @@ export const __render = {
       __templates_product.product_gallery(params.product),
       __templates_product.flatlay_view(params.product),
       __templates_product.variation(params.product),
+      __templates_product.suggest_product(params.product),
+      suggest_block,
+      __templates_product.cross_product(),
     ];
     this.build("product__page", blocks);
     __templates.api_loading("hide");
@@ -413,12 +426,11 @@ export const __render = {
   },
 
   campaign(params) {
-    let countdown = params.clock == true
-      ? __templates_campaign.campaign_detail(params)
-      : "";
+    let countdown =
+      params.clock == true ? __templates_campaign.campaign_detail(params) : "";
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({home:'active'}),
+        left: __templates_header.left({ home: "active" }),
         mobile: __templates_header.mobile(),
       }),
       __templates_header.megamenu(),
@@ -438,7 +450,7 @@ export const __render = {
     __templates.api_loading("hide");
   },
 
-  landing_page(params) {
+  flash_sale() {
     let blocks = [
       __templates_header.header({
         left: __templates_header.left(),
@@ -451,9 +463,51 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
-      __templates_landing.body(params),
+      __templates_header.popup(),
+      __templates_sale.banner(),
+      __templates_sale.campaign_filter(),
+      __templates_sale.filter(),
+      __templates_sale.sale_products(),
+      __templates_footer.footer(),
+    ];
+    this.build("campaign__page", blocks);
+    __templates.api_loading("hide");
+  },
+
+  landing_page() {
+    let blocks = [
+      __templates_header.header({
+        left: __templates_header.left(),
+        right: __templates_header.right(),
+        mobile: __templates_header.mobile(),
+        page_y_offset: 500,
+      }),
+      __templates_header.megamenu(),
+      __templates_header.search({
+        option: __templates.related_product(),
+      }),
+      __templates_header.cart(),
+      __templates_landing.body(),
     ];
     this.build("landing__page", blocks);
+    __templates.api_loading("hide");
+  },
+
+  landing_smart_pant() {
+    let blocks = [
+      __templates_pant.smart_pant(),
+      __templates_pant.checkout_form("SMP"),
+    ];
+    this.build("pant__landing", blocks);
+    __templates.api_loading("hide");
+  },
+
+  landing_fit_pant() {
+    let blocks = [
+      __templates_pant.fit_pant(),
+      __templates_pant.checkout_form("FIT"),
+    ];
+    this.build("pant__landing", blocks);
     __templates.api_loading("hide");
   },
 
@@ -493,7 +547,7 @@ export const __render = {
   history_page(params) {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({history:'active'}),
+        left: __templates_header.left({ history: "active" }),
         right: __templates_header.right(),
         mobile: __templates_header.mobile(),
         page_y_offset: 500,
@@ -510,43 +564,46 @@ export const __render = {
   },
 
   loyalty_page(params) {
-    let token = localStorage.getItem('token');
-    __requests({
-      method : 'GET',
-      url : `https://leanservices.work/cs/customer/my-profile`,
-      auth : token
-    },({data})=> {
-      let blocks = [
-        __templates_header.header({
-          left: __templates_header.left({loyalty:'active'}),
-          right: __templates_header.right(),
-          mobile: __templates_header.mobile(),
-          page_y_offset: 500,
-        }),
-        __templates_header.megamenu(),
-        __templates_header.search({
-          option: __templates.related_product(),
-        }),
-        __templates_header.cart(),
-        __templates_loyalty.header(),
-        __templates_loyalty.profile(data),
-        __templates_loyalty.customer_menu(data),
-      ];
-      this.build("loyalty__page", blocks);
-      __templates.api_loading("hide");
-    },({error})=> {
-      localStorage.removeItem('token')
-      if (error) window.location.href = '/login';
-    })
-   
+    let token = localStorage.getItem("token");
+    __requests(
+      {
+        method: "GET",
+        url: `https://leanservices.work/cs/customer/my-profile`,
+        auth: token,
+      },
+      ({ data }) => {
+        let blocks = [
+          __templates_header.header({
+            left: __templates_header.left({ loyalty: "active" }),
+            right: __templates_header.right(),
+            mobile: __templates_header.mobile(),
+            page_y_offset: 500,
+          }),
+          __templates_header.megamenu(),
+          __templates_header.search({
+            option: __templates.related_product(),
+          }),
+          __templates_header.cart(),
+          __templates_loyalty.header(),
+          __templates_loyalty.profile(data),
+          __templates_loyalty.customer_menu(data),
+        ];
+        this.build("loyalty__page", blocks);
+        __templates.api_loading("hide");
+      },
+      ({ error }) => {
+        localStorage.removeItem("token");
+        if (error) window.location.href = "/login";
+      }
+    );
   },
 
-  login_page (params) {
-    let token = localStorage.getItem('token');
-    if (token) window.location.href = '/loyalty';
+  login_page(params) {
+    let token = localStorage.getItem("token");
+    if (token) window.location.href = "/loyalty";
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({loyalty:'active'}),
+        left: __templates_header.left({ loyalty: "active" }),
         right: __templates_header.right(),
         mobile: __templates_header.mobile(),
         page_y_offset: 500,
@@ -556,15 +613,16 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
-      __templates_login.login()
+      __templates_login.login(),
     ];
     this.build("login__page", blocks);
     __templates.api_loading("hide");
   },
-  register_page (params) {
+
+  register_page(params) {
     let blocks = [
       __templates_header.header({
-        left: __templates_header.left({loyalty:'active'}),
+        left: __templates_header.left({ loyalty: "active" }),
         right: __templates_header.right(),
         mobile: __templates_header.mobile(),
         page_y_offset: 500,
@@ -574,11 +632,11 @@ export const __render = {
         option: __templates.related_product(),
       }),
       __templates_header.cart(),
-      __templates_register.register()
+      __templates_register.register(),
     ];
     this.build("register__page", blocks);
     __templates.api_loading("hide");
-  }
+  },
 };
 
 __render.website();

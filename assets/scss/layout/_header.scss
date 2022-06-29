@@ -274,6 +274,7 @@
 }
 
 .search__container {
+  @include shadow(1px, 5px, 4px, $light);
   display: none;
   width: 100%;
   padding: 20px 5%;
@@ -304,10 +305,16 @@
   }
   .options__block {
     width: 100%;
+    .search__result {
+      padding: 20px;
+    }
+    h1 {
+      @include font(large,center,700);
+    }
     ul {
       @include grid(repeat(auto-fill, minmax(23%, 1fr)), null, 20px);
       overflow: auto;
-      max-height: 75vh;
+      max-height: 62vh;
       li {
         width: 100%;
       }
@@ -629,9 +636,8 @@
   }
   .search__container {
     padding: 0;
-    height: calc(100vh - 50px);
+    min-height: 100vh;
     overflow: auto;
-
     &.active {
       @include fade-up;
     }
@@ -646,8 +652,11 @@
         width: 80%;
       }
     }
-    .options__block ul {
-      grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+    .options__block {
+        ul {
+          grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+
+        }
       // min-height: 70vh;
     }
   }

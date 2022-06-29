@@ -32,7 +32,6 @@
     width: 100%;
     display: block;
     margin: 0 auto;
-
     @media (min-width: 768px) {
       max-width: 540px;
     }
@@ -44,10 +43,8 @@
       max-width: 1320px;
     }
   }
-
   .section-video {
     margin: 0 auto;
-
     margin-bottom: 20px;
     @media (min-width: 768px) {
       max-width: 365px;
@@ -396,7 +393,6 @@
     svg {
       width: 24px;
     }
-
     span {
       background: #fff;
       padding: 14px;
@@ -523,6 +519,7 @@
     }
   }
 }
+
 .mobile-variation {
   display: none;
   &.show {
@@ -569,6 +566,7 @@
     }
   }
 }
+
 .subscribe-new-product {
   border: 1px solid #cecece;
   padding: 14px;
@@ -590,36 +588,53 @@
     background: #cecece;
   }
 }
+
 .overflow-hidden {
   overflow: hidden !important;
 }
+
 .parisienne__page {
   .text__img {
     width: 100%;
     text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-    @include flex(column,center,center);
+    padding: 0 10px;
+    @include flex(column, center, center);
+    gap: 10px;
     img {
-      width: 30%;
+      width: 40%;
+      &.start {
+        margin-top: 40px;
+      }
       &.small {
-        width: 20%;
+        width: 50%;
       }
     }
   }
   .section__layout {
-    padding: 25px 10px 0;
-    @include flex(column,center,center);
+    padding: 60px 10px;
+    @include flex(column, center, center);
     @media (min-width: 768px) {
-      padding: 40px 8% 0;
+      padding: 60px 8%;
     }
     .hero__layout {
       width: 50%;
-      margin-bottom: 40px;
-      >div {
-        @include ratio(4,5);
+      margin-bottom: 60px;
+      > div {
+        @include ratio(4, 5);
         background-color: $white;
         position: relative;
+        background-size: contain;
+      }
+    }
+    .minor__layout {
+      width: 50%;
+      @include flex(column, center, center);
+      gap: 40px;
+      > div {
+        @include ratio(1, 1);
+        background-color: $white;
+        position: relative;
+        background-size: contain;
       }
     }
     .grid-row {
@@ -672,14 +687,13 @@
           width: 100%;
           cursor: pointer;
         }
-
         .product-content p {
           font-size: medium;
           letter-spacing: 3px;
           font-weight: bold;
           color: $white;
           text-align: center;
-          font-family: NewYork;
+          font-family: "Source Code Pro", monospace;
           text-transform: capitalize;
         }
       }
@@ -741,8 +755,6 @@
       align-items: center;
       position: fixed;
       top: 0;
-      right: 0;
-      bottom: 0;
       left: 0;
       height: 100%;
       width: 100%;
@@ -804,14 +816,239 @@
     }
   }
 }
+.pant__landing {
+  padding-top: 0;
+  img {
+    width: 100%;
+  }
 
+  .main__block {
+    padding: 0 10%;
+    background-color: $white;
+    .video {
+      @include flex(row,center,center);
+      video {
+        width: 40%;
+      }
+    }
+  }
+  .checkout__landing {
+    @include grid(1fr, null, 0);
+    padding: 10px;
+    background-color: #746b61;
+    color: $white;
+    h1 {
+      @include font(medium, center, bold);
+      margin: 15px 0;
+    }
+    p {
+      @include font(small, center);
+    }
+    .landing__form {
+      @include grid(1fr 1fr, null, 20px);
+      padding: 20px;
+      .color {
+        margin: 15px 0;
+        p {
+          @include font(14px, start, 500);
+          text-transform: capitalize;
+        }
+        ul {
+          @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 16px);
+          margin-top: 10px;
+          li {
+            @include ratio(1, 1);
+            @include transition;
+            box-sizing: content-box;
+            position: relative;
+            button {
+              @include border($light, 0);
+              @include ratio(1, 1);
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 100%;
+              height: 100%;
+              background-color: $white;
+              &:hover,
+              &.active {
+                border: 2px solid $black;
+              }
+              &:disabled {
+                cursor: not-allowed;
+                pointer-events: none;
+                &:before,
+                &:after {
+                  content: "";
+                  position: absolute;
+                  width: 100%;
+                  height: 0.5px;
+                  background-color: $white;
+                  bottom: 50%;
+                  left: 50%;
+                  left: 0;
+                  transform: translate(-50%, -50%);
+                }
+                &:before {
+                  -webkit-transform: rotate(45deg);
+                  -moz-transform: rotate(45deg);
+                  transform: rotate(45deg);
+                  left: 0;
+                }
+                &:after {
+                  -webkit-transform: rotate(-45deg);
+                  -moz-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+                  right: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+      .size {
+        margin: 0 0 16px;
+        > div {
+          @include flex(row, space-between, center);
+          p {
+            @include font(14px, start, 500);
+            text-transform: capitalize;
+            cursor: pointer;
+          }
+          span {
+            @include flex(row, start, center);
+            font-size: smaller;
+            padding-bottom: 3px;
+            border-bottom: thin solid $light;
+            cursor: pointer;
+            &:hover {
+              border-bottom: thin solid $black;
+            }
+            svg {
+              width: 15px;
+              height: 15px;
+              margin-right: 5px;
+            }
+          }
+        }
+        ul {
+          @include grid(repeat(auto-fit, minmax(auto, 50px)), null, 18px);
+          margin-top: 10px;
+          li {
+            @include ratio(1, 1);
+            @include transition;
+            position: relative;
+            box-sizing: content-box;
+            button {
+              @include border($light, 0);
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 100%;
+              height: 100%;
+              background-color: $white;
+              padding: 0;
+              &:hover,
+              &.active {
+                border: 2px solid $black;
+              }
+              &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                pointer-events: none;
+                &:before,
+                &:after {
+                  content: "";
+                  position: absolute;
+                  width: 100%;
+                  height: 1px;
+                  background-color: $silver;
+                  bottom: 50%;
+                  left: 50%;
+                  left: 0;
+                  transform: translate(-50%, -50%);
+                }
+                &:before {
+                  -webkit-transform: rotate(45deg);
+                  -moz-transform: rotate(45deg);
+                  transform: rotate(45deg);
+                  left: 0;
+                }
+                &:after {
+                  -webkit-transform: rotate(-45deg);
+                  -moz-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+                  right: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+      form {
+        width: 100%;
+        div {
+          @include grid(repeat(3, 1fr), null, 20px);
+          margin: 10px 0;
+          select {
+            display: block;
+            @include border($white, 4px);
+            padding: 10px 15px;
+            background-color: #746b61;
+          }
+        }
+        input {
+          @include border($white, 4px);
+          padding: 10px 15px;
+          width: 100%;
+          margin: 10px 0;
+          background-color: transparent;
+          line-height: 1.5;
+          color: $white;
+          &::placeholder {
+            color: $white;
+          }
+          &.error {
+            @include border($light-red, 4px);
+          }
+          &:hover {
+            @include border($black, 4px);
+          }
+          &:focus {
+            @include border($black, 4px);
+          }
+        }
+        > button {
+          @include transition;
+          width: 100%;
+          color: #fff;
+          font-size: medium;
+          text-transform: uppercase;
+          background-color: $black;
+          margin-top: 15px;
+          padding: 10px;
+          border: thin solid transparent;
+          border-radius: 4px;
+          color: $white;
+          &:hover {
+            background-color: $white;
+            color: $black;
+            border: thin solid $black;
+          }
+        }
+      }
+    }
+  }
+}
 @media (max-width: 525px) {
   .self__portrait {
     .text__img {
       padding: 0;
       margin-top: 0;
       img {
-        width: 80%;
+        width: 100%;
         padding: 10px;
         &.small {
           width: 60%;
@@ -852,6 +1089,57 @@
     .image {
       p {
         bottom: 0 !important;
+      }
+    }
+  }
+  .parisienne__page {
+    .text__img {
+      img {
+        width: 100%;
+        &.small {
+          width: 100%;
+        }
+      }
+    }
+    .section__layout {
+      padding: 60px 10px;
+      .hero__layout {
+        width: 100%;
+      }
+      .minor__layout {
+        width: 100%;
+      }
+      .grid-row {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        padding: 0;
+        padding-bottom: 10px;
+      }
+    }
+    .section__slide {
+      .look-detail {
+        overflow: auto;
+      }
+    }
+  }
+  .pant__landing {
+    .main__block {
+      padding: 0;
+      .video {
+        video {
+          width: 100%;
+        }
+      }
+    }
+    .checkout__landing {
+      .landing__form {
+        @include grid(repeat(1, 1fr), null, 20px);
+        padding: 5px;
+        form {
+          div {
+            @include grid(repeat(1, 1fr), null, 20px);
+          }
+        }
       }
     }
   }

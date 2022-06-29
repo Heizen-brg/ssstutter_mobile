@@ -136,7 +136,90 @@ export const __init_product_list = (params = { ids: product_ids }) => {
     }
   );
 };
+export const __init_sale_list = (params = { ids: product_ids }) => {
+  params.infinity
+    ? false
+    : ((params.container.innerHTML = ""), __templates.api_loading("show"));
+  window.product_ids =
+    params.ids || (window.product_ids ? window.product_ids : []);
+  let url = !params.query ? `?catId=3vvRIM&` : params.query;
+  __requests(
+    {
+      method: "GET",
+      url: `https://leanservices.work/pd/services/campaign-sale-list${url}&media=true&webStock=true&showStock=true&sortBy=stock&sort=up`,
+    },
+    ({ data, error }) => {
+      __templates.api_loading("hide");
+      if (!data.length) {
+        __templates.busy_loading("hide");
+        return false;
+      }
+      let products = (data || []).map((item) => {
+        window.product_ids.push(item.id);
+        let product_template = document.createElement("li");
+        product_template.dataset.price = item.price;
+        product_template.id = item.id;
+        product_template.innerHTML = `
+                <div class="product fade__in">
+                  <div class="thumbnail">
+                    <a href="/p/${item.slug}"><span style="background-image:url(${CONFIG.DOMAIN_IMG_CDN}/${item.extensions.media.featured? item.extensions.media.featured: "no_image.png"})">
+                    ${
+                      item.stock && item.stock <= 10
+                        ? `<p class="stock">Chỉ còn lại ${item.stock} sản phẩm</p>`
+                        : ""
+                    }
+                    </span></a>
+                  </div>
+                  <div class="detail">
+                    <div class="info">
+                      <a href="/p/${item.slug}" class="name">${item.name.replace('II', 'Ⅱ').toLowerCase()}</a>
+                      <div class="price">
+                        ${
+                          item.salePrice
+                            ? `<p>${__currency_format(item.salePrice)}</p>
+                          <p class="discount">${__currency_format(
+                            item.price
+                          )}</p> `
+                            : `<p>${__currency_format(item.price)}</p>`
+                        }
+                      </div>
+                      ${
+                        item.salePrice || item.salePrice === 0
+                          ? `<p class="tag">${Math.floor(
+                              100 - (item.salePrice / item.price) * 100
+                            )}%</p>`
+                          : ""
+                      }  
+                      <div class="color">
+                        <p>+${item.color.length} màu</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
+        params.container.appendChild(product_template);
+        // mark product position
+        let product_item = params.container.querySelectorAll("li");
+        product_item.forEach((item) => {
+          item.addEventListener("click", (e) => {
+            sessionStorage.setItem("product_id", item.id);
+          });
+        });
+        let last_item_id = sessionStorage.getItem("product_id");
+        let last_item_visit = document.getElementById(last_item_id);
+        if (last_item_visit) {
+          last_item_visit.scrollIntoView({ block: "center" });
+        }
+        // end of  mark product position
 
+        return product_template;
+      });
+      if (data.length >= 10 || params.infinity)
+        __infinity_sale_scroll(products[products.length - 3], params.container);
+      __templates.busy_loading("hide");
+    }
+  );
+};
 export const __infinity_scroll = (anchor, container) => {
   if (!anchor) return false;
   let block_loader = new IntersectionObserver(function (entries, observer) {
@@ -158,7 +241,27 @@ export const __infinity_scroll = (anchor, container) => {
   });
   block_loader.observe(anchor);
 };
-
+export const __infinity_sale_scroll = (anchor, container) => {
+  if (!anchor) return false;
+  let block_loader = new IntersectionObserver(function (entries, observer) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        let block = entry.target;
+        container.innerHTML += __templates.busy_loading("show");
+        __init_sale_list({
+          infinity: true,
+          container: container,
+          query: __init_filter({
+            data: window.data_filter,
+            container: container,
+          }),
+        });
+        block_loader.unobserve(block);
+      }
+    });
+  });
+  block_loader.observe(anchor);
+};
 export const __show_cart_item = (wrapper, total, div) => {
   let purchase_items_list = JSON.parse(localStorage.getItem("cartItem"));
   if (!purchase_items_list) {

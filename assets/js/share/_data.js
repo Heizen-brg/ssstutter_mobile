@@ -91,3 +91,70 @@ export const __size_guide_data = {
     }
   },
 }
+export const __landing_her_data = [{
+  title: 'Look 1',
+  colorId: '100',
+  catId: 'herCate1',
+  featured: '/assets/img/self_portrait/model/1.jpg',
+  gallery: [
+      '/assets/img/self_portrait/model/1.jpg',
+      '/assets/img/self_portrait/model/1.1.jpg',
+      '/assets/img/self_portrait/model/1.2.jpg',
+  ]
+},
+{
+  title: 'Look 2',
+  colorId: '503',
+  catId: 'herCate2',
+  featured: '/assets/img/self_portrait/model/2.jpg',
+  gallery: [
+      '/assets/img/self_portrait/model/2.jpg',
+      '/assets/img/self_portrait/model/2.1.jpg',
+      '/assets/img/self_portrait/model/2.2.jpg',
+  ]
+},
+{
+  title: 'Look 3',
+  colorId: '100',
+  catId: 'herCate3',
+  featured: '/assets/img/self_portrait/model/3.jpg',
+  gallery: [
+      '/assets/img/self_portrait/model/3.jpg',
+      '/assets/img/self_portrait/model/3.1.jpg',
+      '/assets/img/self_portrait/model/3.2.jpg',
+  ]
+},
+{
+  title: 'Look 4',
+  colorId: '100',
+  catId: 'herCate4',
+  featured: '/assets/img/self_portrait/model/4.jpg',
+  gallery: [
+      '/assets/img/self_portrait/model/4.jpg',
+      '/assets/img/self_portrait/model/4.1.jpg',
+      '/assets/img/self_portrait/model/4.2.jpg',
+  ]
+},
+{
+  title: 'Look 5',
+  colorId: '100',
+  catId: 'herCate5',
+  featured: '/assets/img/self_portrait/model/5.jpg',
+  gallery: [
+      '/assets/img/self_portrait/model/5.jpg',
+      '/assets/img/self_portrait/model/5.1.jpg',
+      '/assets/img/self_portrait/model/5.2.jpg',
+  ]
+},
+{
+  title: 'Look 6',
+  colorId: '100',
+  catId: 'herCate6',
+  featured: '/assets/img/self_portrait/model/6.jpg',
+  gallery: [
+      '/assets/img/self_portrait/model/6.jpg',
+      '/assets/img/self_portrait/model/6.1.jpg',
+      '/assets/img/self_portrait/model/6.2.jpg',
+  ]
+},
+]

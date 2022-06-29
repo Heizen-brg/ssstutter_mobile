@@ -174,8 +174,9 @@ export const __templates_header = {
       <div class="glide" id="promo_glide">
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides banner__container">
-            <li class="glide__slide">Freeship nội thành cho đơn từ 300.000 </li>
-            <li class="glide__slide">Freeship toàn quốc cho đơn từ 600.000</li>
+            <li class="glide__slide">Đồng giá ship chỉ 10.000 cho đơn nội thành HN & SG </li>
+            <li class="glide__slide">Đồng giá ship chỉ 20.000 cho đơn toàn quốc</li>
+            <li class="glide__slide">Ưu đãi giảm 10.000 khi thanh toán trả trước</li>
           </ul>
         </div>
       </div>  
@@ -202,7 +203,7 @@ export const __templates_header = {
     // __countdown_timer({div :clock_div, end : end_time })
     return div;
   },
-
+  
   mobile() {
     let ul = document.createElement("ul");
     ul.className = "nav__mobile--items";
@@ -315,7 +316,7 @@ export const __templates_header = {
       target: params.option,
     });
     search_input.addEventListener("keydown", (e) => {
-      get_product_on_search(block.querySelector(".related__product--list"), e);
+      get_product_on_search(block, e);
       if (e.keyCode == 13) {
         window.location.href = `/search?name=${e.target.value}`;
       }
@@ -328,7 +329,7 @@ export const __templates_header = {
           __requests(
             {
               method: "GET",
-              url: `https://api.ssstutter.com/product/filter/web?name=${e.target.value}&media=true&webStock=true`,
+              url: `https://api.ssstutter.com/product/filter/web?name=${e.target.value}&limit=20&media=true&webStock=true`,
             },
             ({ data, error }) => {
               __templates.busy_loading("hide");
@@ -358,7 +359,7 @@ export const __templates_header = {
                           </div>
                          ${
                            item.salePrice || item.salePrice === 0
-                             ? `<p class="tag">${100 - (item.salePrice / item.price) * 100}%</p>`
+                             ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
                              : ""
                          }
                           <div class="color">
@@ -370,7 +371,21 @@ export const __templates_header = {
                 `;
                   })
                   .join("");
-                item_field.innerHTML = products;
+                item_field.innerHTML = `
+                <div class="search__result">
+                  <h1>kết quả tìm kiếm</h1>
+                  <ul>${products}</ul>
+                </div>
+                `;
+              }
+              if(fbq) {
+                fbq(
+                  'track', 'Search', { 
+                    search_string: e.target.value,
+                    content_category: 'Product Search',
+                    content_ids: data.map(i => i.id),
+                  }
+                );
               }
             }
           );

@@ -1,57 +1,55 @@
 .campaign__page {
-  // @include grid(repeat(6, 1fr), null, 25px);
-  display: block;
-  .campaign-detail {
-    padding: 40px;
-    text-align: center;
-    margin: 10vh 0;
-    h2 {
-      font-weight: 600;
-      font-size: 24px;
-      margin-bottom: 12px;
-      font-family: serif;
-      text-transform: capitalize;
+  @include grid(repeat(6, 1fr), null, 0);
+ .promotion__popup {
+  grid-area: 1 / 1 / 2 / 7;
+ }
+ .campaign__detail {
+  grid-area: 3/1/4/7;
+  padding: 40px 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h2 {
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 12px;
+    text-transform: capitalize;
+    @media (min-width: 768px) {
+      font-size: 28px;
     }
-    p {
-      margin-bottom: 12px;
-    }
-    .clock {
+  }
+  p {
+    margin-bottom: 12px;
+  }
+
+  .clock {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    div {
       display: flex;
-      justify-content: center;
-      margin: 22px 0 34px;
-      min-height: 60px;
-      div {
-        display: flex;
-        align-items: center;
-        margin: 0 8px;
-        color: #aeaeae;
-        min-width: 62px;
-        span {
-          color: #191919;
-          display: inline-block;
-          margin-left: 2px;
-          font-size: 18px;
-          margin: 4px;
-          font-weight: 600;
-        }
-      }
-    }
-    a {
-      @include font(large, center, 600);
-      @include border($silver, 2px);
-      @include transition;
-      padding: 15px 25px;
-      &:hover {
-        background-color: $black;
-        color: $white;
+      align-items: center;
+      margin: 0 8px;
+      color: #aeaeae;
+      min-width: 62px;
+      span {
+        color: #191919;
+        display: inline-block;
+        margin-left: 2px;
+        font-size: 18px;
+        margin: 4px;
+        font-weight: 600;
       }
     }
   }
+
+}
   .hero__banner {
-    grid-area: 1 / 1 / 2 / 7;
-    margin-bottom: 50px;
+    grid-area: 2 / 1 / 3 / 7;
     div {
-      @include ratio(18, 7);
+      @include ratio(18, 8);
     }
     h1 {
       @include shadow(1px, 1px, 4px, $silver);
@@ -62,6 +60,8 @@
     }
   }
   .campaign__filter {
+    grid-area: 3 / 1 / 4 / 7;
+    margin: 20px 0;
     .gender__filter {
       @include grid(1fr 1fr, null, 0);
       li {
@@ -113,30 +113,119 @@
         }
       }
     }
+    .size__filter {
+      @include flex(row, space-evenly, center);
+      margin: 40px 0;
+      li {
+        @include border($silver, 2px);
+        @include transition;
+        @include font(medium, center, 600);
+        cursor: pointer;
+        width: auto;
+        min-width: 200px;
+        display: inline-block;
+        padding: 15px 20px;
+        &:hover {
+          background: transparent;
+          color: inherit;
+        }
+        &.active {
+          opacity: 1 !important;
+          background: $black;
+          color: $white;
+        }
+        &.inactive {
+          opacity: 0.25;
+        }
+      }
+    }
   }
-
+  .categories__filter {
+    grid-area: 4 / 1 / 5 / 7;
+    margin: 20px 0;
+    h1 {
+      @include font(large,center,700);
+    }
+    .price__filter {
+      @include flex(row, space-evenly, center);
+      margin: 40px 0;
+      li {
+        @include border($silver, 2px);
+        @include transition;
+        @include font(medium, center, 600);
+        cursor: pointer;
+        width: auto;
+        min-width: 200px;
+        display: inline-block;
+        padding: 15px 20px;
+        &:hover {
+          background: transparent;
+          color: inherit;
+        }
+        &.active {
+          opacity: 1 !important;
+          background: $black;
+          color: $white;
+        }
+        &.inactive {
+          opacity: 0.25;
+        }
+      }
+    }
+    .size__filter {
+      @include flex(row, space-evenly, center);
+      margin: 40px 0;
+      li {
+        @include border($silver, 2px);
+        @include transition;
+        @include font(medium, center, 600);
+        cursor: pointer;
+        width: auto;
+        min-width: 200px;
+        display: inline-block;
+        padding: 15px 20px;
+        &:hover {
+          background: transparent;
+          color: inherit;
+        }
+        &.active {
+          opacity: 1 !important;
+          background: $black;
+          color: $white;
+        }
+        &.inactive {
+          opacity: 0.25;
+        }
+      }
+    }
+  }
   .categories__products {
-    grid-area: 3 / 1 / 5 / 7;
-    padding: 20px 5%;
-    margin-top: 50px;
+    grid-area: 5 / 1 / 6 / 7;
     width: 100%;
+    margin-left: 0;
+    padding: 0 5%;
     ul {
-      @include grid(repeat(auto-fit, minmax(20%, 1fr)), null, 20px);
+      @include grid(repeat(5, minmax(20%, 1fr)), null, 10px);
+      .empty_product {
+        padding: 5%;
+        text-align: center;
+      }
       li {
         width: 100%;
       }
     }
   }
   .footer {
-    grid-area: 5 / 1 / 7 / 7;
+    grid-area: 6 / 1 / 7 / 7;
   }
 }
 
+
 @media (max-width: 575px) {
   .campaign__page {
-    grid-gap: 20px;
+    grid-gap: 0;
     .hero__banner {
-      margin-bottom: 40px;
+      margin-bottom: 10px;
       div {
         @include ratio(4, 5);
       }
@@ -145,44 +234,32 @@
       }
     }
     .categories__filter {
-      grid-area: 3 / 1 / 4 / 7;
-      padding-left: 5%;
-      .filter__toggle {
-        @include flex(row, start, center);
-        display: inline-flex;
-        cursor: pointer;
-        svg {
-          margin-right: 10px;
-          padding: 3px;
+      grid-area: 4 / 1 / 5 / 7;
+      .price__filter {
+        @include grid(1fr 1fr, null, 10px);
+        margin: 0;
+        padding: 10px 0;
+        li {
+          min-width: auto;
+          width: 100%;
         }
       }
-      .filter__list {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: -9999px;
-        background: $white;
-        z-index: 10;
-        @include transition;
-        &.active {
-          left: 0%;
-        }
-        ul {
-          padding: 5%;
-        }
-        .filter__action {
-          @include flex(row, space-around, center);
-          button {
-            @include border($black, 4px);
-            padding: 10px 15px;
-            background-color: transparent;
-            width: 40%;
+      .size__filter {
+        @include grid(repeat(auto-fit, minmax(10%, 1fr)), null, 10px);
+        margin: 0;
+        padding: 10px 0;
+        li {
+          min-width: auto;
+          width: 100%;
+          padding: 10px;
+          span{
+            font-size: x-small;
           }
         }
       }
     }
     .campaign__filter {
+      grid-area: 3 / 1 / 4 / 7;
       .price__filter {
         @include grid(1fr 1fr, null, 10px);
         padding: 20px;
@@ -193,125 +270,16 @@
       }
     }
     .categories__products {
-      padding: 25px 0;
-      grid-area: 4 / 1 / 5 / 7;
+      padding: 0;
+      grid-area: 5 / 1 / 6 / 7;
       ul {
-        grid-gap: 10px;
+        grid-gap: 1px;
         grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
       }
     }
-  }
-}
+    .footer {
+      grid-area: 6 / 1 / 7 / 7;
 
-//
-// Thanh's code
-//
-.flash-sale-page {
-  .campaign-detail {
-    padding: 40px 15px;
-    text-align: center;
-    height: 85vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    h2 {
-      font-weight: 600;
-      font-size: 24px;
-      margin-bottom: 12px;
-      font-family: serif;
-      text-transform: capitalize;
-      @media (min-width: 768px) {
-        font-size: 28px;
-      }
-    }
-    p {
-      margin-bottom: 12px;
-    }
-    .clock {
-      margin-bottom: 14px;
-    }
-    /*
-    .clock {
-      display: flex;
-      justify-content: center;
-      margin: 22px 0 34px;
-      min-height: 60px;
-      div {
-        display: flex;
-        align-items: center;
-        margin: 0 8px;
-        color: #aeaeae;
-        min-width: 62px;
-        span {
-          color: #191919;
-          display: inline-block;
-          margin-left: 2px;
-          font-size: 18px;
-          margin: 4px;
-          font-weight: 600;
-        }
-      }
-    }
-    */
-  }
-  .section-banner {
-    padding: 15px;
-    @media (min-width: 768px) {
-      padding: 15px 5%;
-    }
-    .grid-row {
-      display: grid;
-      grid-gap: 14px;
-      @media (min-width: 768px) {
-        grid-gap: 18px;
-        grid-template: auto / 1fr 1fr;
-      }
-      div {
-        background: #cecece;
-        cursor: pointer;
-        background-size: cover;
-        padding-top: calc(5 / 4 * 100%);
-        @media (min-width: 768px) {
-          padding-top: 100%;
-        }
-      }
-    }
-  }
-  .section-product {
-    padding: 25px 0;
-    @media (min-width: 768px) {
-      padding: 5%;
-    }
-    ul {
-      display: grid;
-      grid-gap: 10px;
-      grid-template: auto / 1fr 1fr;
-      @media (min-width: 768px) {
-        grid-template: auto / 1fr 1fr 1fr;
-      }
-      @media (min-width: 1200px) {
-        grid-template: auto / 1fr 1fr 1fr 1fr;
-      }
-    }
-    .product-filter {
-      text-align: center;
-      margin-bottom: 25px;
-      @media (min-width: 768px) {
-        margin-bottom: 40px;
-      }
-      span {
-        // min-width: 100px;
-        text-decoration: underline;
-        display: inline-block;
-        font-size: 18px;
-        cursor: pointer;
-        opacity: 0.5;
-        font-family: serif;
-        padding: 16px 8px;
-        &.active {
-          opacity: 1;
-        }
-      }
     }
   }
 }

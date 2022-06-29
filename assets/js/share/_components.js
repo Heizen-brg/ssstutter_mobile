@@ -74,49 +74,72 @@ export const __templates = {
     document.body.appendChild(div);
   },
 
-  related_product(params = {}) {
+  related_product(params) {
     let div = document.createElement("div");
     div.className = "related__product";
     div.innerHTML = `
-      <h1>Gợi ý cho bạn</h1>
-     <ul class="related__product--list"></ul>
-    `;
-    __requests(
-      {
-        method: "GET",
-        url: `https://api.ssstutter.com/product/filter/web?limit=4&sort=down&media=true&webStock=true`,
-        header: {
-          authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+    <h1>Có thể bạn sẽ thích</h1>
+   <ul class="related__product--list"></ul>
+  `;
+  let randomCate;
+  if (params) {
+    let catId = params.catId.join('').split(',')
+    randomCate = catId[catId.length-2]
+  }
+  let url = !params ? '' : `&catId=${randomCate}&sortBy=stock`;
+  let shuffle;
+    __requests({
+          method: "GET",
+          url: `https://api.ssstutter.com/product/filter/web?${url}&limit=20&sort=down&media=true&webStock=true&showStock=true`,
+          header: {
+            authorization: "ca246fba-c995-4d53-a22e-40c7416e9be4",
+          },
         },
-      },
-      ({ data }) => {
-        (data || []).map((item) => {
-          let product_template = document.createElement("li");
-          product_template.dataset.gender = item.gender;
-          product_template.dataset.price = item.price;
-          product_template.dataset.sale = item.discount;
-          product_template.innerHTML = `
-        <div class="product">
-          <div class="thumbnail">
-            <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
-            item.extensions.media.featured
-          })"></span></a>
-          </div>
-          <h6 class="name">${item.name}</h6>
-          <div class="price">
-          ${item.salePrice ? `<p class="discount">${__currency_format(item.price)}</p>` : ""}
-          <p>${__currency_format(item.salePrice || item.price)}</p>
-          </div>
-          ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+        ({ data=[] }) => {
+          params ? shuffle = data.sort(()=> 0.5 - Math.random()).filter(i => i.id != params.id) : shuffle = data.sort(()=> 0.5 - Math.random()) ;
+          (shuffle || []).splice(0,4).map((item) => {
+                let product_template = document.createElement("li");
+                product_template.dataset.gender = item.gender;
+                product_template.dataset.price = item.price;
+                product_template.dataset.sale = item.discount;
+                product_template.innerHTML = `
+      <div class="product">
+        <div class="thumbnail">
+          <a href="/p/${item.slug}"><span style="background-image:url(https://cdn.ssstutter.com/products/${
+          item.extensions.media.featured
+        })"></span></a>
         </div>
-        `;
-          let container = div.querySelector(".related__product--list");
-          container.appendChild(product_template);
-          return product_template;
-        });
-      }
-    );
-    return div;
+        <div class="detail">
+          <div class="info">
+            <a href="/p/${item.slug}" class="name">${item.name.replace("II", "Ⅱ").toLowerCase()}</a>
+            <div class="price">
+              ${
+                item.salePrice
+                  ? `<p>${__currency_format(item.salePrice)}</p>
+                <p class="discount">${__currency_format(item.price)}</p> `
+                  : `<p>${__currency_format(item.price)}</p>`
+              }
+            </div>
+            ${item.discount > 0 ? `<p class="tag">${item.discount}%</p>` : ""}
+            <div class="color">
+              <p>+${item.color.length} màu</p>
+            </div>
+          </div>
+        </div>
+        ${
+          item.salePrice || item.salePrice === 0
+            ? `<p class="tag">${Math.floor(100 - (item.salePrice / item.price) * 100)}%</p>`
+            : ""
+        }
+        </div>
+      `;
+        let container = div.querySelector(".related__product--list");
+        container.appendChild(product_template);
+        return product_template;
+      });
+    }
+  );
+  return div;
   },
 
 };
