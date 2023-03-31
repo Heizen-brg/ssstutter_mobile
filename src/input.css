@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
+
+@layer base {
+  .writing-mode {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+
+  .ribbon {
+    display: block;
+    width: 100%;
+    padding-top: calc((5 / 16) * 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .banner {
+    display: block;
+    width: 100%;
+    padding-top: calc((7 / 18) * 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .landscape {
+    display: block;
+    width: 100%;
+    padding-top: calc((9 / 16) * 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .portrait {
+    display: block;
+    width: 100%;
+    padding-top: calc((5 / 4) * 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .square {
+    display: block;
+    width: 100%;
+    padding-top: calc((1 / 1) * 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .retangle {
+    display: block;
+    width: 100%;
+    padding-top: calc((4 / 5) * 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+.active {
+  --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
+}
+.active > span {
+  color: black;
+}
+.carousel .control-dots {
+  width: auto !important;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+.slick-slider {
+  overflow: hidden;
+}
+.slick-dots {
+  width: auto !important;
+  display: flex !important;
+  flex-direction: column;
+  top: 50%;
+  bottom: auto !important;
+  transform: translateY(-50%);
+  right: 5px;
+}
+@media (min-width: 769px) {
+  .slick-track {
+    margin: 0 !important;
+  }
+}
+.codex-editor__redactor {
+  padding-bottom: 0 !important;
+}
+/* .codex-editor--empty {
+  display: none !important;
+}
+.codex-editor--narrow:nth-child(odd) {
+  display: none !important;
+}
+.codex-editor.codex-editor--narrow:nth-child(odd) {
+  display: none !important;
+} */
+@layer utilities {
+  body {
+    font-size: 14px;
+    font-family: "Fira Sans", sans-serif;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+  h2 {
+    font-size: 17px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  h4 {
+    font-size: 15px;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}

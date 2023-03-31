@@ -1,0 +1,5 @@
+export { default as Gallery } from './Gallery'
+export { default as Info } from './Info'
+export { default as Variation } from './Variation'
+export { default as Interact } from './Interact'
+export { default as Relative } from './Relative'
